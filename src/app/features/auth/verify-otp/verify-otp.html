@@ -1,0 +1,50 @@
+<div class="flex min-h-screen items-center justify-center bg-cream-50 px-4 py-12">
+  <div class="w-full max-w-sm">
+    <div class="mb-8 flex flex-col items-center gap-3 text-center">
+      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-900">
+        <span class="font-display text-sm font-bold text-cream-50">AF</span>
+      </div>
+      <div>
+        <h1 class="font-display text-xl font-bold text-forest-900">Vérifiez votre email</h1>
+        <p class="text-sm text-ink-600">Code envoyé à {{ email() }}</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+      <div>
+        <label class="mb-1.5 block text-sm font-medium text-ink-900">Code de vérification</label>
+        <input
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          formControlName="otp"
+          placeholder="123456"
+          class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-center text-lg tracking-[0.3em] text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+        />
+      </div>
+
+      @if (errorMessage()) {
+        <p class="text-sm text-red-600">{{ errorMessage() }}</p>
+      }
+      @if (resendMessage()) {
+        <p class="text-sm text-forest-800">{{ resendMessage() }}</p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="form.invalid || loading()"
+        class="w-full rounded-full bg-accent-500 px-4 py-3 font-display text-sm font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
+      >
+        {{ loading() ? 'Vérification...' : 'Confirmer' }}
+      </button>
+
+      <button
+        type="button"
+        (click)="resend()"
+        class="w-full text-center text-sm font-semibold text-accent-600 hover:text-accent-500"
+      >
+        Renvoyer le code
+      </button>
+    </form>
+  </div>
+</div>

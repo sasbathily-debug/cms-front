@@ -1,0 +1,101 @@
+<div>
+  <div class="mb-7">
+    <h1 class="mb-1.5 font-display text-xl font-bold text-forest-900 sm:text-2xl">Documents patients</h1>
+    <p class="text-sm text-ink-600">Partagez des ordonnances et comptes-rendus avec vos patients</p>
+  </div>
+
+  <div class="mb-8 max-w-xl rounded-2xl border border-border-warm bg-white p-6">
+    <h2 class="mb-4 font-display text-base font-bold text-forest-900">Partager un document</h2>
+    <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-4">
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-forest-900">Patient</label>
+        <app-patient-picker [patients]="patients()" (patientSelected)="onPatientSelected($event)" />
+      </div>
+
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-forest-900">Catégorie</label>
+        <select
+          formControlName="category"
+          class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+        >
+          <option value="ORDONNANCE">Ordonnance</option>
+          <option value="COMPTE_RENDU">Compte-rendu</option>
+          <option value="ANALYSE">Analyse</option>
+          <option value="AUTRE">Autre document</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="mb-1.5 block text-xs font-semibold text-forest-900">Fichier</label>
+        <label
+          class="flex cursor-pointer flex-col items-center gap-2 rounded-2xl border-[1.5px] border-dashed border-[#DCD0B4] bg-cream-50 p-6 text-center"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" /></svg>
+          <span class="text-xs text-ink-600">
+            @if (uploading()) {
+              Envoi en cours...
+            } @else if (pendingFileName()) {
+              {{ pendingFileName() }}
+            } @else {
+              Cliquez pour choisir un fichier (PDF, image)
+            }
+          </span>
+          <input type="file" accept="application/pdf,image/*" class="hidden" (change)="onFileSelected($event)" />
+        </label>
+      </div>
+
+      @if (errorMessage()) {
+        <p class="text-sm text-red-600">{{ errorMessage() }}</p>
+      }
+
+      <button
+        type="submit"
+        [disabled]="saving() || uploading()"
+        class="rounded-full bg-accent-500 px-6 py-2.5 font-display text-sm font-semibold text-white disabled:opacity-50"
+      >
+        {{ saving() ? 'Partage en cours...' : 'Partager le document' }}
+      </button>
+    </form>
+  </div>
+
+  @if (loading()) {
+    <p class="text-sm text-ink-600">Chargement...</p>
+  } @else {
+    <div class="flex flex-col gap-3">
+      @for (doc of documents(); track doc.id) {
+        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-100">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5a1 1 0 001 1h5" /><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z" /></svg>
+            </span>
+            <div>
+              <div class="text-sm font-semibold text-forest-900">{{ doc.fileName }}</div>
+              <div class="text-xs text-ink-600">
+                {{ patientName(doc.userId) }} &middot; {{ categoryLabel(doc.category) }} &middot; {{ doc.uploadedAt | slice: 0 : 10 }}
+              </div>
+            </div>
+          </div>
+          <div class="flex shrink-0 gap-2">
+            <a
+              [href]="doc.fileUrl"
+              target="_blank"
+              rel="noopener"
+              class="rounded-full border border-border-warm px-4 py-2 text-xs font-semibold text-forest-900"
+              >Voir</a
+            >
+            <button
+              type="button"
+              (click)="delete(doc)"
+              [disabled]="deletingId() === doc.id"
+              class="rounded-full border border-[#B2453B] px-4 py-2 text-xs font-semibold text-[#B2453B] disabled:opacity-50"
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <p class="text-sm text-ink-600">Aucun document partagé pour le moment.</p>
+      }
+    </div>
+  }
+</div>

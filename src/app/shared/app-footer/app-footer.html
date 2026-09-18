@@ -1,0 +1,42 @@
+<footer class="bg-forest-900 pt-16">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
+    <div class="flex flex-wrap gap-10 pb-11 sm:gap-14">
+      <div class="min-w-[240px] flex-1 basis-64">
+        <div class="mb-4 flex items-center gap-3">
+          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent-500">
+            <span class="font-display text-[13px] font-bold text-forest-900">AF</span>
+          </span>
+          <span class="font-display text-base font-bold text-white">Dr Aissatou Fall</span>
+        </div>
+        <p class="max-w-[280px] text-[13.5px] leading-relaxed text-[#93A395]">
+          Cabinet d'endocrinologie et de nutrition à Dakar — suivi du diabète, des maladies métaboliques et des
+          troubles hormonaux.
+        </p>
+      </div>
+
+      <div class="min-w-[160px] flex-1 basis-40">
+        <div class="mb-4 font-display text-sm font-bold text-white">Le cabinet</div>
+        <div class="flex flex-col gap-2.5">
+          <a href="#about" class="text-[13.5px] text-[#93A395] hover:text-white">À propos</a>
+          <a href="#services" class="text-[13.5px] text-[#93A395] hover:text-white">Services</a>
+          <a href="#parcours" class="text-[13.5px] text-[#93A395] hover:text-white">Parcours de soins</a>
+          <a href="#faq" class="text-[13.5px] text-[#93A395] hover:text-white">FAQ</a>
+        </div>
+      </div>
+
+      <div class="min-w-[220px] flex-1 basis-56">
+        <div class="mb-4 font-display text-sm font-bold text-white">Contact</div>
+        <div class="flex flex-col gap-2.5">
+          <span class="text-[13.5px] text-[#93A395]">{{ address() }}</span>
+          <span class="text-[13.5px] text-[#93A395]">{{ phone() }}</span>
+          <span class="text-[13.5px] text-[#93A395]">{{ email() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-between gap-2.5 border-t border-white/10 py-5">
+      <span class="text-xs text-[#6E7F71]">© {{ year }} Dr Aissatou Fall — Tous droits réservés</span>
+      <span class="text-xs text-[#6E7F71]">Sacré-Cœur 3, Dakar, Sénégal</span>
+    </div>
+  </div>
+</footer>

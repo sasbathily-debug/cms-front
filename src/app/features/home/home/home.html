@@ -1,0 +1,425 @@
+<div class="min-h-screen bg-cream-50">
+  <app-header variant="public" />
+
+  <section class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14 lg:px-10">
+    <div class="flex flex-wrap items-center gap-10 lg:gap-14">
+      <div class="min-w-[300px] flex-1 basis-[480px]">
+        <div
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-accent-100 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-[#A9611E]"
+        >
+          Cabinet médical · Sacré-Cœur, Dakar
+        </div>
+        <h1 class="mb-5 font-display text-3xl font-bold leading-[1.15] text-forest-900 sm:text-4xl lg:text-[48px]">
+          {{ heroTitle() }}
+        </h1>
+        <p class="mb-8 max-w-[460px] text-base leading-relaxed text-[#4A5449]">
+          {{ heroSubtitle() }}
+        </p>
+        <div class="flex flex-wrap gap-3.5">
+          <button
+            type="button"
+            (click)="scrollToBooking()"
+            class="rounded-full bg-accent-500 px-7 py-3.5 font-display text-sm font-semibold text-white transition hover:bg-accent-600"
+          >
+            Prendre rendez-vous
+          </button>
+          <a
+            href="#services"
+            class="rounded-full border-[1.5px] border-forest-900 px-7 py-3.5 font-display text-sm font-semibold text-forest-900"
+            >Découvrir les services</a
+          >
+        </div>
+      </div>
+
+      <div class="min-w-[280px] flex-1 basis-[380px]">
+        @if (heroImageUrl()) {
+          <div class="h-[300px] overflow-hidden rounded-[28px] sm:h-[420px]">
+            <img [src]="heroImageUrl()" alt="" class="h-full w-full object-cover" />
+          </div>
+        } @else {
+          <div
+            class="relative flex h-[300px] items-center justify-center overflow-hidden rounded-[28px] sm:h-[420px]"
+            style="background: linear-gradient(155deg, #1F3D2E 0%, #142B22 100%)"
+          >
+            <div class="grid grid-cols-4 gap-2 absolute right-8 top-7 opacity-35">
+              @for (dot of [1, 2, 3, 4, 5, 6, 7, 8]; track dot) {
+                <div class="h-[5px] w-[5px] rounded-full bg-cream-100"></div>
+              }
+            </div>
+            <div class="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-accent-500/15">
+              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#F3E9D6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="6" cy="7" r="2.2" /><circle cx="18" cy="7" r="2.2" /><circle cx="12" cy="17" r="2.2" />
+                <path d="M7.7 8.6L10.5 15M16.3 8.6L13.5 15M8.2 7h7.6" />
+              </svg>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="relative z-10 mt-6 flex flex-wrap gap-6 sm:-mt-16">
+      <div
+        class="min-w-[300px] flex-1 basis-[620px] flex-wrap items-center gap-y-4 rounded-3xl bg-white p-6 shadow-[0_18px_40px_rgba(20,43,34,0.12)] sm:flex sm:p-8"
+      >
+        <div class="flex items-center gap-3.5">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-100">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></svg>
+          </div>
+          <div>
+            <div class="font-display text-lg font-bold text-forest-900">{{ yearsExperience() }} ans</div>
+            <div class="text-xs text-ink-600">d'expérience</div>
+          </div>
+        </div>
+        <div class="my-4 h-px w-full bg-border-warm sm:mx-5 sm:my-0 sm:h-11 sm:w-px"></div>
+        <div class="flex items-center gap-3.5">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-100">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2" /><path d="M2.5 19c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5" /><circle cx="17" cy="8.5" r="2.6" /><path d="M15.7 13.7c2.7.4 4.8 2.3 4.8 5.3" /></svg>
+          </div>
+          <div>
+            <div class="font-display text-lg font-bold text-forest-900">{{ patientsCount() }}</div>
+            <div class="text-xs text-ink-600">patients suivis</div>
+          </div>
+        </div>
+        <div class="my-4 h-px w-full bg-border-warm sm:mx-5 sm:my-0 sm:h-11 sm:w-px"></div>
+        <div class="flex items-center gap-3.5">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-100">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#A9611E" stroke="none"><path d="M12 2.5l2.9 6.1 6.6.7-4.9 4.6 1.3 6.6-5.9-3.3-5.9 3.3 1.3-6.6L2.5 9.3l6.6-.7z" /></svg>
+          </div>
+          <div>
+            <div class="font-display text-lg font-bold text-forest-900">{{ satisfactionRating() }}</div>
+            <div class="text-xs text-ink-600">satisfaction patients</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="min-w-[260px] flex-1 basis-[320px] rounded-3xl bg-forest-900 p-7 shadow-[0_18px_40px_rgba(20,43,34,0.18)]">
+        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-[#B9C7BC]">Prochain créneau disponible</div>
+        @if (nextSlotLabel()) {
+          <div class="mb-4 font-display text-lg font-semibold text-white">{{ nextSlotLabel() }}</div>
+          <button
+            type="button"
+            (click)="bookNextSlot()"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 px-5 py-3 font-display text-sm font-semibold text-white"
+          >
+            Réserver ce créneau
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        } @else {
+          <div class="mb-4 font-display text-base font-semibold text-white">Contactez le cabinet pour connaître les disponibilités</div>
+          <button
+            type="button"
+            (click)="scrollToBooking()"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 px-5 py-3 font-display text-sm font-semibold text-white"
+          >
+            Prendre rendez-vous
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-10">
+    <div class="flex flex-wrap items-start gap-12 lg:gap-16">
+      <div class="mx-auto flex-none sm:mx-0">
+        @if (aboutImageUrl()) {
+          <img
+            [src]="aboutImageUrl()"
+            alt="Dr Aissatou Fall"
+            class="h-[200px] w-[200px] rounded-3xl object-cover sm:h-[240px] sm:w-[240px]"
+          />
+        } @else {
+          <div class="flex h-[200px] w-[200px] items-center justify-center rounded-3xl bg-[#EFE4CE] sm:h-[240px] sm:w-[240px]">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>
+          </div>
+        }
+      </div>
+
+      <div class="min-w-[300px] flex-1 basis-[420px]">
+        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">À propos</div>
+        <h2 class="mb-5 font-display text-2xl font-bold text-forest-900 sm:text-[32px]">
+          Une endocrinologue au service de la santé métabolique
+        </h2>
+        <p class="mb-6 text-[15.5px] leading-relaxed text-[#4A5449]">{{ aboutText() }}</p>
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center gap-2.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+            <span class="text-sm text-ink-900">Diplômée en endocrinologie, diabétologie et nutrition</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+            <span class="text-sm text-ink-900">Membre de l'Ordre des Médecins du Sénégal</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+            <span class="text-sm text-ink-900">Consultations en français et en wolof</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full flex-none rounded-[20px] border border-border-warm bg-white p-6 sm:w-auto sm:min-w-[240px] sm:basis-[260px]">
+        <div class="mb-2.5 font-display text-base font-bold text-forest-900">Notre approche</div>
+        <p class="text-sm leading-relaxed text-ink-600">
+          Le Dr Fall combine suivi médical, éducation thérapeutique et accompagnement nutritionnel — avec un dossier
+          centralisé et des rappels de rendez-vous simples pour ne rien laisser de côté.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="bg-cream-100 py-20 sm:py-28">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
+      <div class="mb-12 max-w-[560px]">
+        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Services</div>
+        <h2 class="font-display text-2xl font-bold text-forest-900 sm:text-[32px]">
+          Des soins spécialisés, adaptés à chaque patient
+        </h2>
+      </div>
+      <div class="flex flex-wrap gap-6">
+        @for (service of services(); track service.id) {
+          <div class="min-w-[260px] flex-1 basis-[300px] rounded-[20px] border-t-[3px] border-accent-500 bg-white p-7">
+            <div class="mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-2xl bg-accent-100">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3.5 4.4 6.5 8.4 6.5 11.7a6.5 6.5 0 11-13 0c0-3.3 3-7.3 6.5-11.7z" /></svg>
+            </div>
+            <h3 class="mb-2.5 font-display text-lg font-bold text-forest-900">{{ service.title }}</h3>
+            <p class="text-sm leading-relaxed text-ink-600">{{ service.description }}</p>
+          </div>
+        } @empty {
+          <p class="text-sm text-ink-600">Les services seront bientôt disponibles.</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="parcours" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-10">
+    <div class="mb-12 max-w-[560px]">
+      <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Parcours de soins</div>
+      <h2 class="font-display text-2xl font-bold text-forest-900 sm:text-[32px]">Comment se déroule votre suivi</h2>
+    </div>
+    <div class="flex flex-wrap gap-10">
+      <div class="min-w-[240px] flex-1 basis-[260px]">
+        <div class="mb-3.5 font-display text-4xl font-bold text-[#F0D8B8]">01</div>
+        <h3 class="mb-2 font-display text-base font-bold text-forest-900">Consultation initiale</h3>
+        <p class="text-sm leading-relaxed text-ink-600">
+          Un échange approfondi sur vos antécédents, vos symptômes et vos habitudes de vie, complété par les examens
+          nécessaires.
+        </p>
+      </div>
+      <div class="min-w-[240px] flex-1 basis-[260px]">
+        <div class="mb-3.5 font-display text-4xl font-bold text-[#F0D8B8]">02</div>
+        <h3 class="mb-2 font-display text-base font-bold text-forest-900">Bilan &amp; plan personnalisé</h3>
+        <p class="text-sm leading-relaxed text-ink-600">
+          Analyse des résultats et construction, avec vous, d'un plan de traitement et de suivi nutritionnel réaliste.
+        </p>
+      </div>
+      <div class="min-w-[240px] flex-1 basis-[260px]">
+        <div class="mb-3.5 font-display text-4xl font-bold text-[#F0D8B8]">03</div>
+        <h3 class="mb-2 font-display text-base font-bold text-forest-900">Suivi régulier</h3>
+        <p class="text-sm leading-relaxed text-ink-600">
+          Des rendez-vous réguliers pour ajuster le traitement, avec rappels automatiques et dossier centralisé.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="rdv" class="bg-forest-900 py-20 sm:py-28">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
+      <div class="mb-10 max-w-[560px]">
+        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-500">Rendez-vous</div>
+        <h2 class="mb-3 font-display text-2xl font-bold text-white sm:text-[32px]">Prendre rendez-vous avec le cabinet</h2>
+        <p class="text-sm text-[#B9C7BC]">Remplissez le formulaire ci-dessous, notre équipe vous confirme un créneau sous 24h ouvrées.</p>
+      </div>
+
+      <div class="flex flex-wrap items-start gap-6">
+        <div class="min-w-[280px] flex-1 basis-[560px] rounded-3xl bg-cream-50 p-6 sm:min-h-[420px] sm:p-10">
+          @if (!isAuthenticated()) {
+            <div class="flex min-h-[300px] flex-col items-start justify-center">
+              <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-accent-100">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>
+              </div>
+              <h3 class="mb-2.5 font-display text-xl font-bold text-forest-900">Connectez-vous pour prendre rendez-vous</h3>
+              <p class="mb-6 max-w-[380px] text-sm leading-relaxed text-ink-600">
+                Un compte nous permet de suivre votre demande, de vous prévenir par email à chaque étape et de retrouver
+                l'historique de vos rendez-vous.
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <a
+                  routerLink="/login"
+                  [queryParams]="{ returnUrl: '/?book=1' }"
+                  class="rounded-full bg-accent-500 px-6 py-3 font-display text-sm font-semibold text-white transition hover:bg-accent-600"
+                  >Connexion</a
+                >
+                <a
+                  routerLink="/register"
+                  [queryParams]="{ returnUrl: '/?book=1' }"
+                  class="rounded-full border-[1.5px] border-forest-900 px-6 py-3 font-display text-sm font-semibold text-forest-900"
+                  >Créer un compte</a
+                >
+              </div>
+            </div>
+          } @else if (!submitted()) {
+            <form (ngSubmit)="submit()" [formGroup]="form">
+              <div class="mb-4 flex flex-wrap gap-4">
+                <div class="min-w-[200px] flex-1">
+                  <label class="mb-1.5 block text-xs font-semibold text-forest-900">Nom complet</label>
+                  <input
+                    type="text"
+                    formControlName="fullName"
+                    placeholder="Aminata Diop"
+                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                  />
+                </div>
+                <div class="min-w-[200px] flex-1">
+                  <label class="mb-1.5 block text-xs font-semibold text-forest-900">Téléphone</label>
+                  <input
+                    type="tel"
+                    formControlName="phone"
+                    placeholder="+221 77 000 00 00"
+                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                  />
+                </div>
+              </div>
+              <div class="mb-4 flex flex-wrap gap-4">
+                <div class="min-w-[200px] flex-1">
+                  <label class="mb-1.5 block text-xs font-semibold text-forest-900">Email</label>
+                  <input
+                    type="email"
+                    formControlName="email"
+                    placeholder="vous@exemple.com"
+                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                  />
+                </div>
+                <div class="min-w-[200px] flex-1">
+                  <label class="mb-1.5 block text-xs font-semibold text-forest-900">Motif de consultation</label>
+                  <select
+                    formControlName="reason"
+                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm text-ink-600 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                  >
+                    <option value="" disabled>Sélectionnez un motif</option>
+                    @for (service of services(); track service.id) {
+                      <option [value]="service.title">{{ service.title }}</option>
+                    }
+                    <option value="Autre">Autre</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-6">
+                <label class="mb-2.5 block text-xs font-semibold text-forest-900">Choisissez un créneau</label>
+                <app-slot-picker
+                  [slots]="availableSlots()"
+                  [loading]="loadingSlots()"
+                  [initialDate]="preselectDate()"
+                  [initialTime]="preselectTime()"
+                  (slotSelected)="onSlotSelected($event)"
+                />
+              </div>
+              <div class="mb-6">
+                <label class="mb-1.5 block text-xs font-semibold text-forest-900">Message (optionnel)</label>
+                <textarea
+                  formControlName="message"
+                  rows="3"
+                  placeholder="Ex. : je suis suivie depuis 2 ans pour un diabète de type 2, je souhaite faire le point sur mon traitement."
+                  class="w-full resize-none rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                ></textarea>
+              </div>
+
+              @if (errorMessage()) {
+                <p class="mb-4 text-sm text-red-600">{{ errorMessage() }}</p>
+              }
+
+              <button
+                type="submit"
+                [disabled]="submitting()"
+                class="w-full rounded-full bg-accent-500 py-3.5 font-display text-sm font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
+              >
+                {{ submitting() ? 'Envoi...' : 'Envoyer la demande' }}
+              </button>
+            </form>
+          } @else {
+            <div class="flex min-h-[300px] flex-col items-start justify-center">
+              <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#E3F1E6]">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+              </div>
+              <h3 class="mb-2.5 font-display text-xl font-bold text-forest-900">Demande envoyée !</h3>
+              <p class="mb-6 max-w-[380px] text-sm leading-relaxed text-ink-600">
+                Merci. Notre équipe vous recontacte sous 24h ouvrées pour confirmer votre rendez-vous.
+              </p>
+              <button
+                type="button"
+                (click)="resetForm()"
+                class="rounded-full border-[1.5px] border-forest-900 px-6 py-3 font-display text-sm font-semibold text-forest-900"
+              >
+                Faire une nouvelle demande
+              </button>
+            </div>
+          }
+        </div>
+
+        <div class="min-w-[260px] flex-1 basis-[320px] rounded-3xl bg-forest-800 p-8">
+          <h3 class="mb-5 font-display text-base font-bold text-white">Coordonnées du cabinet</h3>
+          <div class="mb-4 flex gap-3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>
+            <span class="text-sm leading-relaxed text-[#DCE6DF]">{{ settings()?.address || 'Adresse du cabinet, Sacré-Cœur, Dakar' }}</span>
+          </div>
+          <div class="mb-4 flex gap-3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 4h3.2l1.3 4.4L7 10.2a12 12 0 006.8 6.8l1.8-2.5 4.4 1.3V19a2 2 0 01-2.2 2A16 16 0 013 6.2 2 2 0 015 4z" /></svg>
+            <span class="text-sm text-[#DCE6DF]">{{ settings()?.phone || '[Téléphone du cabinet]' }}</span>
+          </div>
+          <div class="mb-7 flex gap-3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5L12 13l8.5-6.5" /></svg>
+            <span class="text-sm text-[#DCE6DF]">{{ settings()?.email || '[Email du cabinet]' }}</span>
+          </div>
+          <div class="mb-5 h-px bg-white/10"></div>
+          @for (line of openingHours().split('\n'); track line) {
+            @if (line.includes(':')) {
+              <div class="mb-2 flex justify-between text-[13.5px] text-[#B9C7BC]">
+                <span>{{ line.split(':')[0] }}</span>
+                <span class="text-white">{{ line.split(':').slice(1).join(':').trim() }}</span>
+              </div>
+            }
+          }
+          <a
+            [href]="whatsappNumber() ? 'https://wa.me/' + whatsappNumber() : '#rdv'"
+            target="_blank"
+            rel="noopener"
+            class="mt-4 flex items-center justify-center gap-2.5 rounded-full bg-accent-500 py-3.5 font-display text-sm font-semibold text-white"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l1-3.8A8 8 0 1112 20a8 8 0 01-4.2-1.2z" /></svg>
+            Écrire sur WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
+    <div class="mb-10">
+      <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Ressources</div>
+      <h2 class="font-display text-2xl font-bold text-forest-900 sm:text-[32px]">Questions fréquentes</h2>
+    </div>
+
+    @for (faq of faqs(); track faq.id) {
+      <div class="border-b border-border-warm">
+        <button
+          type="button"
+          (click)="toggleFaq(faq.id)"
+          class="flex w-full items-center justify-between gap-5 bg-transparent py-6 text-left"
+        >
+          <span class="font-display text-base font-semibold text-forest-900">{{ faq.question }}</span>
+          <span
+            class="flex shrink-0 text-accent-600 transition-transform"
+            [class.rotate-180]="faq.open"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+          </span>
+        </button>
+        @if (faq.open) {
+          <p class="mb-6 max-w-[680px] text-sm leading-relaxed text-ink-600">{{ faq.answer }}</p>
+        }
+      </div>
+    } @empty {
+      <p class="text-sm text-ink-600">Les questions fréquentes seront bientôt disponibles.</p>
+    }
+  </section>
+
+  <app-footer [settings]="settings()" />
+</div>
