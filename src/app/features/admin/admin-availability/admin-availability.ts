@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AvailabilityService } from '../../../core/services/availability';
 import { AvailabilityRuleDto, DayOfWeek, ScheduleExceptionDto } from '../../../core/models/availability.models';
 
@@ -35,6 +36,8 @@ export class AdminAvailability implements OnInit {
   readonly savingException = signal(false);
   readonly deletingRuleId = signal<string | null>(null);
   readonly deletingExceptionId = signal<string | null>(null);
+  readonly ruleError = signal<string | null>(null);
+  readonly exceptionError = signal<string | null>(null);
 
   readonly ruleForm = this.fb.group({
     dayOfWeek: ['MONDAY' as DayOfWeek, [Validators.required]],
@@ -78,6 +81,7 @@ export class AdminAvailability implements OnInit {
       return;
     }
     this.savingRule.set(true);
+    this.ruleError.set(null);
     const value = this.ruleForm.getRawValue();
     this.availabilityService
       .createRule({
@@ -91,7 +95,10 @@ export class AdminAvailability implements OnInit {
           this.savingRule.set(false);
           this.refresh();
         },
-        error: () => this.savingRule.set(false),
+        error: (err: HttpErrorResponse) => {
+          this.savingRule.set(false);
+          this.ruleError.set(err.error?.message || 'Une erreur est survenue.');
+        },
       });
   }
 
@@ -112,6 +119,7 @@ export class AdminAvailability implements OnInit {
       return;
     }
     this.savingException.set(true);
+    this.exceptionError.set(null);
     const value = this.exceptionForm.getRawValue();
     this.availabilityService
       .createException({
@@ -128,7 +136,10 @@ export class AdminAvailability implements OnInit {
           this.exceptionForm.reset({ closed: true, slotDurationMinutes: 30 });
           this.refresh();
         },
-        error: () => this.savingException.set(false),
+        error: (err: HttpErrorResponse) => {
+          this.savingException.set(false);
+          this.exceptionError.set(err.error?.message || 'Une erreur est survenue.');
+        },
       });
   }
 

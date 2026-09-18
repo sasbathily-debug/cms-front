@@ -51,6 +51,9 @@
             class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           />
         </div>
+        @if (ruleError()) {
+          <p class="text-sm font-medium text-red-600">{{ ruleError() }}</p>
+        }
         <button
           type="submit"
           [disabled]="savingRule()"
@@ -109,6 +112,9 @@
           />
         </div>
 
+        @if (exceptionError()) {
+          <p class="text-sm font-medium text-red-600">{{ exceptionError() }}</p>
+        }
         <button
           type="submit"
           [disabled]="savingException()"

@@ -36,11 +36,18 @@ export class Auth {
 
   private readonly accessToken = signal<string | null>(localStorage.getItem(ACCESS_TOKEN_KEY));
 
-  readonly isAuthenticated = computed(() => !!this.accessToken());
   readonly currentUser = computed(() => {
     const token = this.accessToken();
-    return token ? decodeJwt(token) : null;
+    if (!token) {
+      return null;
+    }
+    const claims = decodeJwt(token);
+    if (!claims || claims.exp * 1000 <= Date.now()) {
+      return null;
+    }
+    return claims;
   });
+  readonly isAuthenticated = computed(() => !!this.currentUser());
 
   getAccessToken(): string | null {
     return this.accessToken();
