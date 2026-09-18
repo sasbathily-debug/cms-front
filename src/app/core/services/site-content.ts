@@ -9,6 +9,7 @@ import {
   FaqItemRequest,
   HealthTipDto,
   HealthTipRequest,
+  HeroImageDto,
   SiteSettingsDto,
   UpdateSiteSettingsRequest,
 } from '../models/site-content.models';
@@ -71,5 +72,21 @@ export class SiteContentService {
 
   deleteHealthTip(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/site/health-tips/${id}`);
+  }
+
+  getHeroImages(): Observable<HeroImageDto[]> {
+    return this.http.get<HeroImageDto[]>(`${environment.apiUrl}/site/hero-images`);
+  }
+
+  createHeroImage(imageUrl: string): Observable<HeroImageDto> {
+    return this.http.post<HeroImageDto>(`${environment.apiUrl}/site/hero-images`, { imageUrl });
+  }
+
+  reorderHeroImages(orderedIds: string[]): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrl}/site/hero-images/reorder`, { orderedIds });
+  }
+
+  deleteHeroImage(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/site/hero-images/${id}`);
   }
 }

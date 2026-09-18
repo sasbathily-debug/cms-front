@@ -1,12 +1,25 @@
-<header class="sticky top-0 z-50 border-b border-border-warm bg-white/80 backdrop-blur-md">
+<header
+  [class]="
+    variant() === 'public'
+      ? 'fixed inset-x-0 top-0 z-50 transition-colors duration-300 ' +
+        (overlayActive() ? 'border-b border-transparent bg-transparent' : 'border-b border-border-warm bg-white/80 backdrop-blur-md')
+      : 'sticky top-0 z-50 border-b border-border-warm bg-white/80 backdrop-blur-md'
+  "
+>
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-10">
     <a routerLink="/" class="flex shrink-0 items-center gap-3" (click)="closeMobileMenu()">
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-forest-900">
         <span class="font-display text-sm font-bold text-cream-100">AF</span>
       </span>
       <span class="leading-tight">
-        <span class="block font-display text-sm font-bold text-forest-900 sm:text-base">Dr Aissatou Fall</span>
-        <span class="block text-[11px] text-ink-600 sm:text-xs">Endocrinologie &amp; Nutrition</span>
+        <span
+          class="block font-display text-sm font-bold sm:text-base"
+          [class]="overlayActive() ? 'text-white' : 'text-forest-900'"
+          >Dr Aissatou Fall</span
+        >
+        <span class="block text-[11px] sm:text-xs" [class]="overlayActive() ? 'text-white/85' : 'text-ink-600'"
+          >Endocrinologie &amp; Nutrition</span
+        >
       </span>
     </a>
 
@@ -51,10 +64,27 @@
 
       <div class="hidden shrink-0 items-center gap-4 md:flex">
         @if (isAuthenticated()) {
-          <a [routerLink]="spaceLink()" class="text-sm font-medium text-ink-900 hover:text-forest-900">Mon espace</a>
-          <button type="button" (click)="logout()" class="text-sm font-medium text-ink-600 hover:text-forest-900">Déconnexion</button>
+          <a
+            [routerLink]="spaceLink()"
+            class="text-sm font-medium"
+            [class]="overlayActive() ? 'text-white hover:text-white/80' : 'text-ink-900 hover:text-forest-900'"
+            >Mon espace</a
+          >
+          <button
+            type="button"
+            (click)="logout()"
+            class="text-sm font-medium"
+            [class]="overlayActive() ? 'text-white/85 hover:text-white' : 'text-ink-600 hover:text-forest-900'"
+          >
+            Déconnexion
+          </button>
         } @else {
-          <a routerLink="/login" class="text-sm font-medium text-ink-900 hover:text-forest-900">Connexion</a>
+          <a
+            routerLink="/login"
+            class="text-sm font-medium"
+            [class]="overlayActive() ? 'text-white hover:text-white/80' : 'text-ink-900 hover:text-forest-900'"
+            >Connexion</a
+          >
         }
         <a
           href="#rdv"
@@ -66,7 +96,8 @@
 
       <button
         type="button"
-        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border-warm text-forest-900 md:hidden"
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border md:hidden"
+        [class]="overlayActive() ? 'border-white/60 text-white' : 'border-border-warm text-forest-900'"
         (click)="toggleMobileMenu()"
         [attr.aria-expanded]="mobileMenuOpen()"
         aria-label="Ouvrir le menu"

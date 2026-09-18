@@ -48,7 +48,6 @@ export interface SiteSettingsDto {
   yearsExperience: string | null;
   patientsCount: string | null;
   satisfactionRating: string | null;
-  heroImageUrl: string | null;
   aboutImageUrl: string | null;
   address: string | null;
   phone: string | null;
@@ -58,3 +57,9 @@ export interface SiteSettingsDto {
 }
 
 export type UpdateSiteSettingsRequest = SiteSettingsDto;
+
+export interface HeroImageDto {
+  id: string;
+  imageUrl: string;
+  displayOrder: number;
+}

@@ -14,14 +14,20 @@ export class AppHeader implements AfterViewInit, OnDestroy {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
   private observer: IntersectionObserver | null = null;
+  private heroHeight = 0;
+  private readonly onScroll = (): void => {
+    this.scrolledPastHero.set(window.scrollY > Math.max(this.heroHeight - 80, 40));
+  };
 
   readonly variant = input<'app' | 'public'>('app');
 
   readonly mobileMenuOpen = signal(false);
   readonly activeSection = signal('home');
+  readonly scrolledPastHero = signal(false);
 
   readonly isAuthenticated = computed(() => this.auth.isAuthenticated());
   readonly spaceLink = computed(() => (this.auth.currentUser()?.role === 'ADMIN' ? '/admin' : '/client'));
+  readonly overlayActive = computed(() => this.variant() === 'public' && !this.scrolledPastHero());
 
   ngAfterViewInit(): void {
     if (this.variant() !== 'public' || typeof IntersectionObserver === 'undefined') {
@@ -45,10 +51,17 @@ export class AppHeader implements AfterViewInit, OnDestroy {
         this.observer.observe(el);
       }
     }
+
+    this.heroHeight = document.getElementById('home-hero')?.offsetHeight ?? 0;
+    if (this.heroHeight > 0) {
+      window.addEventListener('scroll', this.onScroll, { passive: true });
+      this.onScroll();
+    }
   }
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   toggleMobileMenu(): void {

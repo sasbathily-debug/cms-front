@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppHeader } from '../../../shared/app-header/app-header';
@@ -7,7 +7,7 @@ import { SlotPicker } from '../../../shared/slot-picker/slot-picker';
 import { SiteContentService } from '../../../core/services/site-content';
 import { AppointmentService } from '../../../core/services/appointment';
 import { AvailabilityService } from '../../../core/services/availability';
-import { CareServiceDto, FaqItemDto, SiteSettingsDto } from '../../../core/models/site-content.models';
+import { CareServiceDto, FaqItemDto, HeroImageDto, SiteSettingsDto } from '../../../core/models/site-content.models';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 import { Auth } from '../../../core/services/auth';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
@@ -31,7 +31,7 @@ function formatSlotLabel(date: string, time: string): string {
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
-export class Home implements OnInit {
+export class Home implements OnInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly siteContentService = inject(SiteContentService);
   private readonly appointmentService = inject(AppointmentService);
@@ -44,6 +44,10 @@ export class Home implements OnInit {
   readonly settings = signal<SiteSettingsDto | null>(null);
   readonly services = signal<CareServiceDto[]>([]);
   readonly faqs = signal<FaqView[]>([]);
+
+  readonly heroImages = signal<HeroImageDto[]>([]);
+  readonly activeHeroIndex = signal(0);
+  private heroInterval: ReturnType<typeof setInterval> | null = null;
 
   readonly availableSlots = signal<AvailableSlotDto[]>([]);
   readonly loadingSlots = signal(true);
@@ -69,7 +73,6 @@ export class Home implements OnInit {
       this.settings()?.heroSubtitle ||
       "Le Dr Aissatou Fall accompagne à Dakar les patients vivant avec le diabète, les troubles métaboliques et hormonaux — avec un suivi personnalisé, à l'écoute de chaque parcours.",
   );
-  readonly heroImageUrl = computed(() => this.settings()?.heroImageUrl || null);
   readonly aboutImageUrl = computed(() => this.settings()?.aboutImageUrl || null);
   readonly aboutText = computed(
     () =>
@@ -113,6 +116,16 @@ export class Home implements OnInit {
     this.siteContentService.getFaq().subscribe({
       next: (faqs) => this.faqs.set(faqs.map((faq, index) => ({ ...faq, open: index === 0 }))),
     });
+    this.siteContentService.getHeroImages().subscribe({
+      next: (images) => {
+        this.heroImages.set(images);
+        if (images.length > 1) {
+          this.heroInterval = setInterval(() => {
+            this.activeHeroIndex.update((i) => (i + 1) % images.length);
+          }, 5000);
+        }
+      },
+    });
 
     const from = new Date();
     const to = new Date();
@@ -128,6 +141,16 @@ export class Home implements OnInit {
     if (this.route.snapshot.queryParamMap.get('book') === '1' && this.isAuthenticated()) {
       setTimeout(() => this.scrollToBooking(), 0);
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.heroInterval !== null) {
+      clearInterval(this.heroInterval);
+    }
+  }
+
+  selectHeroImage(index: number): void {
+    this.activeHeroIndex.set(index);
   }
 
   toggleFaq(id: string): void {

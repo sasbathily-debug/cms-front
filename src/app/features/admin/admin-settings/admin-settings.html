@@ -96,54 +96,81 @@
       </div>
 
       <div class="rounded-2xl border border-border-warm bg-white p-6 sm:p-7">
-        <h2 class="mb-5 font-display text-base font-bold text-forest-900">Images du site</h2>
-        <div class="flex flex-wrap gap-5">
-          <div class="min-w-[220px] flex-1">
-            <label class="mb-2 block text-xs font-semibold text-forest-900">Image d'en-tête</label>
-            @if (form.value.heroImageUrl) {
-              <div class="relative mb-2">
-                <img [src]="form.value.heroImageUrl" alt="" class="h-32 w-full rounded-xl object-cover" />
-                <button
-                  type="button"
-                  (click)="removeHeroImage()"
-                  class="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-forest-900/80 text-white"
-                  title="Retirer l'image"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
-                </button>
+        <h2 class="mb-1.5 font-display text-base font-bold text-forest-900">Photos du bandeau d'accueil</h2>
+        <p class="mb-5 text-[13px] text-ink-600">
+          Plusieurs photos défilent automatiquement en plein écran en haut de la page d'accueil. Utilisez les flèches
+          pour changer l'ordre de passage.
+        </p>
+        <div class="mb-5 flex flex-wrap gap-4">
+          @for (image of heroImages(); track image.id; let i = $index) {
+            <div class="relative w-[180px]">
+              <img [src]="image.imageUrl" alt="" class="h-28 w-full rounded-xl object-cover" />
+              <button
+                type="button"
+                (click)="removeHeroImage(image.id)"
+                class="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-forest-900/80 text-white"
+                title="Supprimer cette photo"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </button>
+              <div class="mt-1.5 flex items-center justify-between">
+                <span class="text-[11px] text-ink-600">Photo {{ i + 1 }}</span>
+                <div class="flex gap-1">
+                  <button
+                    type="button"
+                    (click)="moveHeroImage(i, -1)"
+                    [disabled]="i === 0"
+                    class="flex h-6 w-6 items-center justify-center rounded-full border border-border-warm text-forest-900 disabled:opacity-30"
+                    title="Déplacer avant"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="moveHeroImage(i, 1)"
+                    [disabled]="i === heroImages().length - 1"
+                    class="flex h-6 w-6 items-center justify-center rounded-full border border-border-warm text-forest-900 disabled:opacity-30"
+                    title="Déplacer après"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+                  </button>
+                </div>
               </div>
-            }
-            <label
-              class="flex cursor-pointer flex-col items-center gap-2 rounded-2xl border-[1.5px] border-dashed border-[#DCD0B4] bg-cream-50 p-6 text-center"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" /></svg>
-              <span class="text-xs text-ink-600">{{ uploadingHero() ? 'Envoi...' : 'Cliquez pour choisir une image' }}</span>
-              <input type="file" accept="image/*" class="hidden" (change)="onHeroImageSelected($event)" />
-            </label>
-          </div>
-          <div class="min-w-[220px] flex-1">
-            <label class="mb-2 block text-xs font-semibold text-forest-900">Photo à propos</label>
-            @if (form.value.aboutImageUrl) {
-              <div class="relative mb-2">
-                <img [src]="form.value.aboutImageUrl" alt="" class="h-32 w-full rounded-xl object-cover" />
-                <button
-                  type="button"
-                  (click)="removeAboutImage()"
-                  class="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-forest-900/80 text-white"
-                  title="Retirer l'image"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
-                </button>
-              </div>
-            }
-            <label
-              class="flex cursor-pointer flex-col items-center gap-2 rounded-2xl border-[1.5px] border-dashed border-[#DCD0B4] bg-cream-50 p-6 text-center"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" /></svg>
-              <span class="text-xs text-ink-600">{{ uploadingAbout() ? 'Envoi...' : 'Cliquez pour choisir une image' }}</span>
-              <input type="file" accept="image/*" class="hidden" (change)="onAboutImageSelected($event)" />
-            </label>
-          </div>
+            </div>
+          }
+          <label
+            class="flex h-28 w-[180px] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-[1.5px] border-dashed border-[#DCD0B4] bg-cream-50 text-center"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" /></svg>
+            <span class="px-3 text-xs text-ink-600">{{ uploadingHeroImage() ? 'Envoi...' : 'Ajouter une photo' }}</span>
+            <input type="file" accept="image/*" class="hidden" (change)="onHeroImageFileSelected($event)" />
+          </label>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-border-warm bg-white p-6 sm:p-7">
+        <h2 class="mb-5 font-display text-base font-bold text-forest-900">Photo à propos</h2>
+        <div class="min-w-[220px] max-w-xs">
+          @if (form.value.aboutImageUrl) {
+            <div class="relative mb-2">
+              <img [src]="form.value.aboutImageUrl" alt="" class="h-32 w-full rounded-xl object-cover" />
+              <button
+                type="button"
+                (click)="removeAboutImage()"
+                class="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-forest-900/80 text-white"
+                title="Retirer l'image"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </button>
+            </div>
+          }
+          <label
+            class="flex cursor-pointer flex-col items-center gap-2 rounded-2xl border-[1.5px] border-dashed border-[#DCD0B4] bg-cream-50 p-6 text-center"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#A9611E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3" /></svg>
+            <span class="text-xs text-ink-600">{{ uploadingAbout() ? 'Envoi...' : 'Cliquez pour choisir une image' }}</span>
+            <input type="file" accept="image/*" class="hidden" (change)="onAboutImageSelected($event)" />
+          </label>
         </div>
       </div>
 

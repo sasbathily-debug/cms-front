@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SiteContentService } from '../../../core/services/site-content';
 import { FileUploadService } from '../../../core/services/file-upload';
+import { HeroImageDto } from '../../../core/models/site-content.models';
 
 @Component({
   selector: 'app-admin-settings',
@@ -19,8 +20,11 @@ export class AdminSettings implements OnInit {
   readonly saving = signal(false);
   readonly successMessage = signal<string | null>(null);
   readonly errorMessage = signal<string | null>(null);
-  readonly uploadingHero = signal(false);
   readonly uploadingAbout = signal(false);
+
+  readonly heroImages = signal<HeroImageDto[]>([]);
+  readonly uploadingHeroImage = signal(false);
+  readonly reorderingHeroImages = signal(false);
 
   readonly form = this.fb.group({
     heroTitle: ['', [Validators.required]],
@@ -29,7 +33,6 @@ export class AdminSettings implements OnInit {
     yearsExperience: [''],
     patientsCount: [''],
     satisfactionRating: [''],
-    heroImageUrl: [null as string | null],
     aboutImageUrl: [null as string | null],
     address: [''],
     phone: [''],
@@ -48,7 +51,6 @@ export class AdminSettings implements OnInit {
           yearsExperience: settings.yearsExperience ?? '',
           patientsCount: settings.patientsCount ?? '',
           satisfactionRating: settings.satisfactionRating ?? '',
-          heroImageUrl: settings.heroImageUrl,
           aboutImageUrl: settings.aboutImageUrl,
           address: settings.address ?? '',
           phone: settings.phone ?? '',
@@ -60,29 +62,67 @@ export class AdminSettings implements OnInit {
       },
       error: () => this.loading.set(false),
     });
+    this.loadHeroImages();
   }
 
-  onHeroImageSelected(event: Event): void {
-    this.uploadImage(event, this.uploadingHero, 'heroImageUrl');
+  private loadHeroImages(): void {
+    this.siteContentService.getHeroImages().subscribe({ next: (images) => this.heroImages.set(images) });
+  }
+
+  onHeroImageFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    this.uploadingHeroImage.set(true);
+    this.fileUploadService.upload(file).subscribe({
+      next: (res) => {
+        this.siteContentService.createHeroImage(res.url).subscribe({
+          next: () => {
+            this.uploadingHeroImage.set(false);
+            this.loadHeroImages();
+          },
+          error: () => this.uploadingHeroImage.set(false),
+        });
+      },
+      error: () => this.uploadingHeroImage.set(false),
+    });
+    input.value = '';
+  }
+
+  removeHeroImage(id: string): void {
+    this.siteContentService.deleteHeroImage(id).subscribe({
+      next: () => this.heroImages.update((images) => images.filter((image) => image.id !== id)),
+    });
+  }
+
+  moveHeroImage(index: number, direction: -1 | 1): void {
+    const images = [...this.heroImages()];
+    const target = index + direction;
+    if (target < 0 || target >= images.length) {
+      return;
+    }
+    [images[index], images[target]] = [images[target], images[index]];
+    this.heroImages.set(images);
+
+    this.reorderingHeroImages.set(true);
+    this.siteContentService.reorderHeroImages(images.map((image) => image.id)).subscribe({
+      next: () => this.reorderingHeroImages.set(false),
+      error: () => this.reorderingHeroImages.set(false),
+    });
   }
 
   onAboutImageSelected(event: Event): void {
     this.uploadImage(event, this.uploadingAbout, 'aboutImageUrl');
   }
 
-  removeHeroImage(): void {
-    this.form.patchValue({ heroImageUrl: null });
-  }
-
   removeAboutImage(): void {
     this.form.patchValue({ aboutImageUrl: null });
   }
 
-  private uploadImage(
-    event: Event,
-    uploadingSignal: typeof this.uploadingHero,
-    field: 'heroImageUrl' | 'aboutImageUrl',
-  ): void {
+  private uploadImage(event: Event, uploadingSignal: typeof this.uploadingAbout, field: 'aboutImageUrl'): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) {
@@ -118,7 +158,6 @@ export class AdminSettings implements OnInit {
         yearsExperience: value.yearsExperience || null,
         patientsCount: value.patientsCount || null,
         satisfactionRating: value.satisfactionRating || null,
-        heroImageUrl: value.heroImageUrl || null,
         aboutImageUrl: value.aboutImageUrl || null,
         address: value.address || null,
         phone: value.phone || null,
