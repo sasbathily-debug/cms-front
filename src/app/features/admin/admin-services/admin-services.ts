@@ -2,10 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SiteContentService } from '../../../core/services/site-content';
 import { CareServiceDto } from '../../../core/models/site-content.models';
+import { HEALTH_ICON_NAMES, HealthIcon } from '../../../shared/health-icon/health-icon';
 
 @Component({
   selector: 'app-admin-services',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HealthIcon],
   styleUrl: './admin-services.css',
   templateUrl: './admin-services.html',
 })
@@ -13,6 +14,7 @@ export class AdminServices implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly siteContentService = inject(SiteContentService);
 
+  readonly iconNames = HEALTH_ICON_NAMES;
   readonly services = signal<CareServiceDto[]>([]);
   readonly loading = signal(true);
   readonly saving = signal(false);

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppHeader } from '../../../shared/app-header/app-header';
 import { AppFooter } from '../../../shared/app-footer/app-footer';
 import { SlotPicker } from '../../../shared/slot-picker/slot-picker';
+import { HealthIcon } from '../../../shared/health-icon/health-icon';
 import { SiteContentService } from '../../../core/services/site-content';
 import { AppointmentService } from '../../../core/services/appointment';
 import { AvailabilityService } from '../../../core/services/availability';
@@ -27,7 +28,7 @@ function formatSlotLabel(date: string, time: string): string {
 
 @Component({
   selector: 'app-home',
-  imports: [ReactiveFormsModule, RouterLink, AppHeader, AppFooter, SlotPicker],
+  imports: [ReactiveFormsModule, RouterLink, AppHeader, AppFooter, SlotPicker, HealthIcon],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
