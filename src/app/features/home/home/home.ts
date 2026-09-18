@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AppHeader } from '../../../shared/app-header/app-header';
 import { AppFooter } from '../../../shared/app-footer/app-footer';
 import { SlotPicker } from '../../../shared/slot-picker/slot-picker';
@@ -41,6 +42,7 @@ export class Home implements OnInit, OnDestroy {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly sanitizer = inject(DomSanitizer);
 
   readonly settings = signal<SiteSettingsDto | null>(null);
   readonly services = signal<CareServiceDto[]>([]);
@@ -91,6 +93,11 @@ export class Home implements OnInit, OnDestroy {
     () => this.settings()?.openingHours || 'Lundi – Vendredi : 9h00 – 17h30\nSamedi : 9h00 – 13h00\nDimanche : Fermé',
   );
   readonly whatsappNumber = computed(() => this.settings()?.whatsappNumber || '');
+  readonly mapUrl = computed<SafeResourceUrl>(() => {
+    const address = this.settings()?.address || 'Sacré-Cœur, Dakar, Sénégal';
+    const url = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  });
 
   readonly form = this.fb.group({
     fullName: ['', [Validators.required]],
