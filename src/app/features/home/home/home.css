@@ -1,0 +1,23 @@
+@keyframes services-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.3333%);
+  }
+}
+
+.services-track {
+  animation: services-marquee 36s linear infinite;
+  will-change: transform;
+}
+
+.services-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-track {
+    animation: none;
+  }
+}

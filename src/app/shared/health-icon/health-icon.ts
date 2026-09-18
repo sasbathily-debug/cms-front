@@ -33,7 +33,7 @@ function normalize(name: string | null | undefined): HealthIconName | null {
 export class HealthIcon {
   readonly name = input<string | null>(null);
   readonly size = input(24);
-  readonly color = input('#A9611E');
+  readonly color = input<string | null>(null);
 
   readonly resolved = computed(() => normalize(this.name()));
 }

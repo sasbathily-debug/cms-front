@@ -44,6 +44,10 @@ export class Home implements OnInit, OnDestroy {
 
   readonly settings = signal<SiteSettingsDto | null>(null);
   readonly services = signal<CareServiceDto[]>([]);
+  readonly servicesLoop = computed(() => {
+    const list = this.services();
+    return list.length ? [...list, ...list, ...list] : [];
+  });
   readonly faqs = signal<FaqView[]>([]);
 
   readonly heroImages = signal<HeroImageDto[]>([]);
@@ -152,6 +156,16 @@ export class Home implements OnInit, OnDestroy {
 
   selectHeroImage(index: number): void {
     this.activeHeroIndex.set(index);
+  }
+
+  serviceCardClass(index: number): string {
+    const base =
+      'group relative w-[300px] shrink-0 overflow-hidden rounded-[20px] border border-[#EADFC6]/70 bg-white p-7 transition-all duration-300';
+    const isOffset = index % 3 === 1;
+    if (isOffset) {
+      return `${base} translate-y-4 rotate-1 shadow-[0_26px_56px_rgba(20,43,34,0.16)] hover:-translate-y-0.5 hover:rotate-0 hover:shadow-[0_32px_64px_rgba(20,43,34,0.2)]`;
+    }
+    return `${base} shadow-[0_10px_28px_rgba(20,43,34,0.06)] hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(20,43,34,0.14)]`;
   }
 
   toggleFaq(id: string): void {
