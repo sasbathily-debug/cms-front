@@ -20,6 +20,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401 && !isPublic) {
+        if (!auth.getRefreshToken()) {
+          auth.clearSession();
+          router.navigate(['/login'], { queryParams: { returnUrl: router.url } });
+          return throwError(() => error);
+        }
+
         return auth.refresh().pipe(
           switchMap(() => {
             const retryReq = req.clone({
@@ -28,7 +34,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             return next(retryReq);
           }),
           catchError((refreshError) => {
-            router.navigate(['/login']);
+            auth.clearSession();
+            router.navigate(['/login'], { queryParams: { returnUrl: router.url } });
             return throwError(() => refreshError);
           }),
         );

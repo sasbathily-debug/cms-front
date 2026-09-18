@@ -81,21 +81,21 @@ export class Auth {
   logout(): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}/auth/logout`, {}).pipe(
       tap({
-        next: () => this.clearTokens(),
-        error: () => this.clearTokens(),
+        next: () => this.clearSession(),
+        error: () => this.clearSession(),
       }),
     );
+  }
+
+  clearSession(): void {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    this.accessToken.set(null);
   }
 
   private storeTokens(res: AuthResponse): void {
     localStorage.setItem(ACCESS_TOKEN_KEY, res.accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, res.refreshToken);
     this.accessToken.set(res.accessToken);
-  }
-
-  private clearTokens(): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    this.accessToken.set(null);
   }
 }
