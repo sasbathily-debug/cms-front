@@ -35,6 +35,8 @@ export class AdminAppointments implements OnInit {
       PENDING: list.filter((a) => a.status === 'PENDING').length,
       CONFIRMED: list.filter((a) => a.status === 'CONFIRMED').length,
       CANCELLED: list.filter((a) => a.status === 'CANCELLED').length,
+      COMPLETED: list.filter((a) => a.status === 'COMPLETED').length,
+      NO_SHOW: list.filter((a) => a.status === 'NO_SHOW').length,
     };
   });
 
@@ -69,6 +71,14 @@ export class AdminAppointments implements OnInit {
 
   cancel(appointment: AppointmentDto): void {
     this.changeStatus(appointment, 'CANCELLED');
+  }
+
+  complete(appointment: AppointmentDto): void {
+    this.changeStatus(appointment, 'COMPLETED');
+  }
+
+  markNoShow(appointment: AppointmentDto): void {
+    this.changeStatus(appointment, 'NO_SHOW');
   }
 
   private changeStatus(appointment: AppointmentDto, status: AppointmentStatus): void {
