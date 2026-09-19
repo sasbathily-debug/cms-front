@@ -11,6 +11,7 @@ import { PatientDocumentDto, DocumentCategory } from '../../../core/models/patie
 import { HealthTipDto, SiteSettingsDto } from '../../../core/models/site-content.models';
 import { AppHeader } from '../../../shared/app-header/app-header';
 import { AppointmentHistory } from '../../../shared/appointment-history/appointment-history';
+import { HealthIcon } from '../../../shared/health-icon/health-icon';
 import { appointmentStatusClasses, appointmentStatusLabel } from '../../../shared/appointment-status.util';
 
 const CATEGORY_LABELS: Record<DocumentCategory, string> = {
@@ -21,7 +22,7 @@ const CATEGORY_LABELS: Record<DocumentCategory, string> = {
 };
 
 @Component({
-  imports: [RouterLink, SlicePipe, AppHeader, AppointmentHistory],
+  imports: [RouterLink, SlicePipe, AppHeader, AppointmentHistory, HealthIcon],
   selector: 'app-client-home',
   styleUrl: './client-home.css',
   templateUrl: './client-home.html',

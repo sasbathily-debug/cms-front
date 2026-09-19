@@ -2,10 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SiteContentService } from '../../../core/services/site-content';
 import { HealthTipDto } from '../../../core/models/site-content.models';
+import { HEALTH_ICON_NAMES, HealthIcon } from '../../../shared/health-icon/health-icon';
 
 @Component({
   selector: 'app-admin-health-tips',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HealthIcon],
   styleUrl: './admin-health-tips.css',
   templateUrl: './admin-health-tips.html',
 })
@@ -13,6 +14,7 @@ export class AdminHealthTips implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly siteContentService = inject(SiteContentService);
 
+  readonly iconNames = HEALTH_ICON_NAMES;
   readonly tips = signal<HealthTipDto[]>([]);
   readonly loading = signal(true);
   readonly saving = signal(false);
