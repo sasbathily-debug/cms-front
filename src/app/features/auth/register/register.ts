@@ -24,6 +24,7 @@ export class Register {
   readonly returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
 
   readonly errorMessage = signal<string | null>(null);
+  readonly unverifiedEmail = signal<string | null>(null);
   readonly loading = signal(false);
 
   readonly form = this.fb.group(
@@ -52,6 +53,7 @@ export class Register {
 
     this.loading.set(true);
     this.errorMessage.set(null);
+    this.unverifiedEmail.set(null);
 
     const value = this.form.getRawValue();
     this.auth
@@ -72,7 +74,12 @@ export class Register {
         },
         error: (err) => {
           this.loading.set(false);
-          this.errorMessage.set(err.error?.message ?? 'Une erreur est survenue. Réessayez.');
+          if (err.status === 409 && err.error?.accountVerified === false) {
+            this.errorMessage.set('Un compte existe déjà avec cet email mais n\'a pas encore été vérifié.');
+            this.unverifiedEmail.set(value.email!);
+          } else {
+            this.errorMessage.set(err.error?.message ?? 'Une erreur est survenue. Réessayez.');
+          }
         },
       });
   }

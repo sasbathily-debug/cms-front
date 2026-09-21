@@ -115,7 +115,17 @@
         </div>
 
         @if (errorMessage()) {
-          <p class="rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-600">{{ errorMessage() }}</p>
+          <div class="rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-600">
+            <p>{{ errorMessage() }}</p>
+            @if (unverifiedEmail()) {
+              <a
+                routerLink="/verify-otp"
+                [queryParams]="{ email: unverifiedEmail(), returnUrl }"
+                class="mt-1.5 inline-block font-semibold underline hover:text-red-700"
+                >Recevoir un nouveau code de vérification</a
+              >
+            }
+          </div>
         }
 
         <button
