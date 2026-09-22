@@ -14,7 +14,12 @@
           <div class="flex flex-col items-center gap-4 sm:flex-row">
             <div class="relative shrink-0">
               @if (profilePictureUrl()) {
-                <img [src]="profilePictureUrl()" alt="Photo de profil" class="h-20 w-20 rounded-full object-cover" />
+                <img
+                  [src]="profilePictureUrl()"
+                  alt="Photo de profil"
+                  class="h-20 w-20 cursor-zoom-in rounded-full object-cover transition hover:opacity-90"
+                  (click)="zoomOpen.set(true)"
+                />
               } @else {
                 <div class="flex h-20 w-20 items-center justify-center rounded-full bg-accent-100 font-display text-xl font-bold text-accent-600">
                   {{ form.value.firstName?.charAt(0) }}{{ form.value.lastName?.charAt(0) }}
@@ -179,4 +184,26 @@
       </div>
     }
   </main>
+
+  @if (zoomOpen() && profilePictureUrl()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6"
+      (click)="zoomOpen.set(false)"
+    >
+      <button
+        type="button"
+        (click)="zoomOpen.set(false)"
+        class="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+        aria-label="Fermer"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+      <img
+        [src]="profilePictureUrl()"
+        alt="Photo de profil en grand"
+        class="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl"
+        (click)="$event.stopPropagation()"
+      />
+    </div>
+  }
 </div>

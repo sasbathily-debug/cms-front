@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, HostListener, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user';
@@ -29,6 +29,7 @@ export class Profile {
   readonly errorMessage = signal<string | null>(null);
   readonly profilePictureUrl = signal<string | null>(null);
   readonly email = signal('');
+  readonly zoomOpen = signal(false);
 
   readonly passwordSaving = signal(false);
   readonly passwordSuccess = signal<string | null>(null);
@@ -66,6 +67,11 @@ export class Profile {
         this.loading.set(false);
       }
     });
+  }
+
+  @HostListener('document:keydown.escape')
+  closeZoom(): void {
+    this.zoomOpen.set(false);
   }
 
   onFileSelected(event: Event): void {
