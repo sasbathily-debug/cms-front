@@ -55,6 +55,7 @@ export class Home implements OnInit, OnDestroy {
   readonly heroImages = signal<HeroImageDto[]>([]);
   readonly activeHeroIndex = signal(0);
   private heroInterval: ReturnType<typeof setInterval> | null = null;
+  private heroSwipeStartX: number | null = null;
 
   readonly availableSlots = signal<AvailableSlotDto[]>([]);
   readonly loadingSlots = signal(true);
@@ -129,11 +130,7 @@ export class Home implements OnInit, OnDestroy {
     this.siteContentService.getHeroImages().subscribe({
       next: (images) => {
         this.heroImages.set(images);
-        if (images.length > 1) {
-          this.heroInterval = setInterval(() => {
-            this.activeHeroIndex.update((i) => (i + 1) % images.length);
-          }, 5000);
-        }
+        this.startHeroAutoplay();
       },
     });
 
@@ -166,6 +163,61 @@ export class Home implements OnInit, OnDestroy {
 
   selectHeroImage(index: number): void {
     this.activeHeroIndex.set(index);
+    this.restartHeroAutoplay();
+  }
+
+  nextHeroImage(): void {
+    const total = this.heroImages().length;
+    if (total < 2) {
+      return;
+    }
+    this.activeHeroIndex.update((i) => (i + 1) % total);
+    this.restartHeroAutoplay();
+  }
+
+  prevHeroImage(): void {
+    const total = this.heroImages().length;
+    if (total < 2) {
+      return;
+    }
+    this.activeHeroIndex.update((i) => (i - 1 + total) % total);
+    this.restartHeroAutoplay();
+  }
+
+  onHeroSwipeStart(event: PointerEvent): void {
+    this.heroSwipeStartX = event.clientX;
+  }
+
+  onHeroSwipeEnd(event: PointerEvent): void {
+    if (this.heroSwipeStartX === null) {
+      return;
+    }
+    const delta = event.clientX - this.heroSwipeStartX;
+    this.heroSwipeStartX = null;
+    const SWIPE_THRESHOLD = 40;
+    if (delta > SWIPE_THRESHOLD) {
+      this.prevHeroImage();
+    } else if (delta < -SWIPE_THRESHOLD) {
+      this.nextHeroImage();
+    }
+  }
+
+  private startHeroAutoplay(): void {
+    const total = this.heroImages().length;
+    if (total < 2) {
+      return;
+    }
+    this.heroInterval = setInterval(() => {
+      this.activeHeroIndex.update((i) => (i + 1) % total);
+    }, 5000);
+  }
+
+  private restartHeroAutoplay(): void {
+    if (this.heroInterval !== null) {
+      clearInterval(this.heroInterval);
+      this.heroInterval = null;
+    }
+    this.startHeroAutoplay();
   }
 
   serviceCardClass(index: number): string {
