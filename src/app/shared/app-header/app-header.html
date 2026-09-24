@@ -24,39 +24,39 @@
     </a>
 
     @if (variant() === 'public') {
-      <nav class="hidden items-center gap-1 rounded-full border border-border-warm bg-white p-1.5 md:flex">
+      <nav class="hidden shrink-0 items-center gap-1 rounded-full border border-border-warm bg-white p-1.5 md:flex">
         <a
           routerLink="/"
           (click)="onNavClick('home')"
-          class="rounded-full px-5 py-2.5 text-sm font-medium transition"
+          class="whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition"
           [class]="activeSection() === 'home' ? 'bg-forest-900 font-semibold text-cream-50' : 'text-ink-900 hover:bg-cream-100'"
           >Accueil</a
         >
         <a
           href="#about"
           (click)="onNavClick('about')"
-          class="rounded-full px-[18px] py-2.5 text-sm font-medium transition"
+          class="whitespace-nowrap rounded-full px-[18px] py-2.5 text-sm font-medium transition"
           [class]="activeSection() === 'about' ? 'bg-forest-900 font-semibold text-cream-50' : 'text-ink-900 hover:bg-cream-100'"
           >À propos</a
         >
         <a
           href="#services"
           (click)="onNavClick('services')"
-          class="rounded-full px-[18px] py-2.5 text-sm font-medium transition"
+          class="whitespace-nowrap rounded-full px-[18px] py-2.5 text-sm font-medium transition"
           [class]="activeSection() === 'services' ? 'bg-forest-900 font-semibold text-cream-50' : 'text-ink-900 hover:bg-cream-100'"
           >Services</a
         >
         <a
           href="#parcours"
           (click)="onNavClick('parcours')"
-          class="rounded-full px-[18px] py-2.5 text-sm font-medium transition"
+          class="whitespace-nowrap rounded-full px-[18px] py-2.5 text-sm font-medium transition"
           [class]="activeSection() === 'parcours' ? 'bg-forest-900 font-semibold text-cream-50' : 'text-ink-900 hover:bg-cream-100'"
           >Parcours</a
         >
         <a
           href="#faq"
           (click)="onNavClick('faq')"
-          class="rounded-full px-[18px] py-2.5 text-sm font-medium transition"
+          class="whitespace-nowrap rounded-full px-[18px] py-2.5 text-sm font-medium transition"
           [class]="activeSection() === 'faq' ? 'bg-forest-900 font-semibold text-cream-50' : 'text-ink-900 hover:bg-cream-100'"
           >FAQ</a
         >
