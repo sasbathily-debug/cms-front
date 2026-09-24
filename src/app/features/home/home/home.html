@@ -495,16 +495,16 @@
   </section>
 
   <section class="relative w-full overflow-hidden">
-    <div class="relative h-[440px] w-full sm:left-1/2 sm:h-[500px] sm:w-screen sm:-translate-x-1/2">
+    <div class="flex flex-col sm:relative sm:left-1/2 sm:h-[500px] sm:w-screen sm:-translate-x-1/2">
       <iframe
         [src]="mapUrl"
-        class="absolute inset-0 h-full w-full"
+        class="block h-[300px] w-full sm:absolute sm:inset-0 sm:h-full"
         style="border: 0"
         referrerpolicy="no-referrer-when-downgrade"
         title="Localisation du cabinet"
       ></iframe>
       <div
-        class="absolute inset-y-0 left-0 flex w-full max-w-[420px] flex-col justify-center bg-cream-50/95 p-8 backdrop-blur-sm sm:p-12"
+        class="flex w-full flex-col justify-center bg-cream-50 p-8 sm:absolute sm:inset-y-0 sm:left-0 sm:max-w-[420px] sm:bg-cream-50/95 sm:p-12 sm:backdrop-blur-sm"
       >
         <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Nous trouver</div>
         <h2 class="mb-6 font-display text-2xl font-bold text-forest-900 sm:text-[32px]">Visitez notre cabinet</h2>
