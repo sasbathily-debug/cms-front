@@ -201,7 +201,10 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     const targetRect = target.getBoundingClientRect();
-    const distanceToTarget = targetRect.top - window.innerHeight;
+    // The button should finish docking once the real button is actually visible
+    // (around 70% down the viewport), not before it even enters the screen.
+    const landingLine = window.innerHeight * 0.7;
+    const distanceToTarget = targetRect.top + targetRect.height / 2 - landingLine;
     const progress = Math.min(Math.max(1 - distanceToTarget / this.whatsappAnimRange, 0), 1);
 
     if (progress <= 0) {
