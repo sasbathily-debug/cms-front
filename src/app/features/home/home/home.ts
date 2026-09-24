@@ -73,6 +73,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   readonly whatsappFlyOpacity = signal(1);
   private whatsappBaseRect: DOMRect | null = null;
   private whatsappTicking = false;
+  private whatsappScrollActive = false;
+  private whatsappProximityObserver: IntersectionObserver | null = null;
   private readonly whatsappAnimRange = 500;
   private readonly onWhatsappScroll = (): void => {
     if (this.whatsappTicking) {
@@ -186,13 +188,36 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const floating = this.whatsappFloatingRef?.nativeElement;
-    if (!floating) {
+    const target = this.whatsappRealButtonRef?.nativeElement;
+    if (!floating || !target) {
       return;
     }
     this.whatsappBaseRect = floating.getBoundingClientRect();
-    window.addEventListener('scroll', this.onWhatsappScroll, { passive: true });
     window.addEventListener('resize', this.onWhatsappResize);
-    this.updateWhatsappFlyPosition();
+
+    // Only run the per-scroll-frame layout reads while the real button is
+    // somewhere near the viewport — avoids paying that cost on every scroll
+    // event across the whole page (source of scroll jank on mobile).
+    this.whatsappProximityObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!this.whatsappScrollActive) {
+            this.whatsappScrollActive = true;
+            window.addEventListener('scroll', this.onWhatsappScroll, { passive: true });
+          }
+          this.updateWhatsappFlyPosition();
+        } else {
+          if (this.whatsappScrollActive) {
+            this.whatsappScrollActive = false;
+            window.removeEventListener('scroll', this.onWhatsappScroll);
+          }
+          this.whatsappFlyTransform.set('translate(0px, 0px) scale(1)');
+          this.whatsappFlyOpacity.set(1);
+        }
+      },
+      { rootMargin: '1000px 0px 1000px 0px' },
+    );
+    this.whatsappProximityObserver.observe(target);
   }
 
   private updateWhatsappFlyPosition(): void {
@@ -226,6 +251,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     if (this.heroInterval !== null) {
       clearInterval(this.heroInterval);
     }
+    this.whatsappProximityObserver?.disconnect();
     window.removeEventListener('scroll', this.onWhatsappScroll);
     window.removeEventListener('resize', this.onWhatsappResize);
   }
