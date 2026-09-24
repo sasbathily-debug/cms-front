@@ -1,4 +1,15 @@
-import { Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -33,7 +44,7 @@ function formatSlotLabel(date: string, time: string): string {
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
-export class Home implements OnInit, OnDestroy {
+export class Home implements OnInit, AfterViewInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly siteContentService = inject(SiteContentService);
   private readonly appointmentService = inject(AppointmentService);
@@ -55,6 +66,10 @@ export class Home implements OnInit, OnDestroy {
   readonly heroImages = signal<HeroImageDto[]>([]);
   readonly activeHeroIndex = signal(0);
   private heroInterval: ReturnType<typeof setInterval> | null = null;
+
+  @ViewChild('whatsappTarget') private whatsappTargetRef?: ElementRef<HTMLElement>;
+  readonly floatingWhatsAppVisible = signal(true);
+  private whatsappObserver: IntersectionObserver | null = null;
 
   readonly availableSlots = signal<AvailableSlotDto[]>([]);
   readonly loadingSlots = signal(true);
@@ -144,10 +159,22 @@ export class Home implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit(): void {
+    const target = this.whatsappTargetRef?.nativeElement;
+    if (!target) {
+      return;
+    }
+    this.whatsappObserver = new IntersectionObserver(([entry]) => this.floatingWhatsAppVisible.set(!entry.isIntersecting), {
+      rootMargin: '0px 0px -10% 0px',
+    });
+    this.whatsappObserver.observe(target);
+  }
+
   ngOnDestroy(): void {
     if (this.heroInterval !== null) {
       clearInterval(this.heroInterval);
     }
+    this.whatsappObserver?.disconnect();
   }
 
   private refreshAvailableSlots(): void {
