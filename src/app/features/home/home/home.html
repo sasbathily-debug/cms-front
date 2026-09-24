@@ -30,9 +30,23 @@
       >
         Cabinet médical · Sacré-Cœur, Dakar
       </div>
-      <h1 class="max-w-[620px] font-display text-3xl font-bold leading-[1.15] text-white drop-shadow-sm sm:text-4xl lg:text-[48px]">
-        {{ heroTitle() }}
-      </h1>
+      @if (heroImages().length > 0) {
+        <div class="grid max-w-[620px]">
+          @for (image of heroImages(); track image.id; let i = $index) {
+            <h1
+              class="[grid-area:1/1] font-display text-3xl font-bold leading-[1.15] text-white drop-shadow-sm transition-opacity duration-1000 ease-in-out sm:text-4xl lg:text-[48px]"
+              [class.opacity-100]="i === activeHeroIndex()"
+              [class.opacity-0]="i !== activeHeroIndex()"
+            >
+              {{ image.title?.trim() || heroTitle() }}
+            </h1>
+          }
+        </div>
+      } @else {
+        <h1 class="max-w-[620px] font-display text-3xl font-bold leading-[1.15] text-white drop-shadow-sm sm:text-4xl lg:text-[48px]">
+          {{ heroTitle() }}
+        </h1>
+      }
     </div>
 
     @if (heroImages().length > 1) {

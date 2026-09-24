@@ -78,8 +78,12 @@ export class SiteContentService {
     return this.http.get<HeroImageDto[]>(`${environment.apiUrl}/site/hero-images`);
   }
 
-  createHeroImage(imageUrl: string): Observable<HeroImageDto> {
-    return this.http.post<HeroImageDto>(`${environment.apiUrl}/site/hero-images`, { imageUrl });
+  createHeroImage(imageUrl: string, title?: string): Observable<HeroImageDto> {
+    return this.http.post<HeroImageDto>(`${environment.apiUrl}/site/hero-images`, { imageUrl, title });
+  }
+
+  updateHeroImageTitle(id: string, title: string): Observable<HeroImageDto> {
+    return this.http.put<HeroImageDto>(`${environment.apiUrl}/site/hero-images/${id}`, { title });
   }
 
   reorderHeroImages(orderedIds: string[]): Observable<void> {

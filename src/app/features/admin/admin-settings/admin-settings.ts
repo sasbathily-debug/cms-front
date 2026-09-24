@@ -92,6 +92,17 @@ export class AdminSettings implements OnInit {
     input.value = '';
   }
 
+  onHeroImageTitleBlur(id: string, event: Event): void {
+    const value = (event.target as HTMLInputElement).value.trim();
+    const current = this.heroImages().find((image) => image.id === id);
+    if (!current || (current.title ?? '') === value) {
+      return;
+    }
+    this.siteContentService.updateHeroImageTitle(id, value).subscribe({
+      next: (updated) => this.heroImages.update((images) => images.map((image) => (image.id === id ? updated : image))),
+    });
+  }
+
   removeHeroImage(id: string): void {
     this.siteContentService.deleteHeroImage(id).subscribe({
       next: () => this.heroImages.update((images) => images.filter((image) => image.id !== id)),

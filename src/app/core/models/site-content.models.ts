@@ -62,4 +62,5 @@ export interface HeroImageDto {
   id: string;
   imageUrl: string;
   displayOrder: number;
+  title: string | null;
 }

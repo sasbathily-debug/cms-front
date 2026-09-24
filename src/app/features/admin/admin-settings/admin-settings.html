@@ -113,6 +113,13 @@
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
               </button>
+              <input
+                type="text"
+                [value]="image.title || ''"
+                (blur)="onHeroImageTitleBlur(image.id, $event)"
+                placeholder="Titre pour cette photo (optionnel)"
+                class="mt-1.5 w-full rounded-lg border border-border-warm px-2 py-1 text-[11px]"
+              />
               <div class="mt-1.5 flex items-center justify-between">
                 <span class="text-[11px] text-ink-600">Photo {{ i + 1 }}</span>
                 <div class="flex gap-1">
