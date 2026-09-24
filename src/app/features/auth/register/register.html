@@ -5,7 +5,7 @@
     <div class="w-full max-w-md">
       <div class="mb-8 flex flex-col items-center gap-3 text-center lg:items-start lg:text-left">
         <div class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-900 lg:hidden">
-          <span class="font-display text-sm font-bold text-cream-50">AF</span>
+          <img src="/logo/logo-icon-light.png" alt="Logo" class="h-2/3 w-2/3 object-contain" />
         </div>
         <div>
           <h1 class="font-display text-2xl font-bold text-forest-900">Créer votre compte</h1>
@@ -72,6 +72,26 @@
             />
             @if (form.controls.email.invalid && form.controls.email.touched) {
               <p class="mt-1.5 text-xs text-red-600">Adresse email invalide</p>
+            }
+          </div>
+
+          <div class="mb-4">
+            <label class="mb-2 block text-sm font-medium text-ink-900">Téléphone</label>
+            <input
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+              placeholder="77 000 00 00"
+              class="w-full rounded-xl border px-4 py-3 text-sm text-ink-900 transition focus:outline-none focus:ring-2"
+              [class]="
+                form.controls.phone.invalid && form.controls.phone.touched
+                  ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20'
+                  : 'border-border-warm focus:border-accent-500 focus:ring-accent-500/20'
+              "
+            />
+            <p class="mt-1.5 text-xs text-ink-600">Utilisé pour recevoir votre code de vérification.</p>
+            @if (form.controls.phone.invalid && form.controls.phone.touched) {
+              <p class="mt-1.5 text-xs text-red-600">Le téléphone est requis</p>
             }
           </div>
 

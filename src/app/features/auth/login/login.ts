@@ -21,7 +21,7 @@ export class Login {
   readonly returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
 
   readonly form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    identifier: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
 
@@ -33,7 +33,7 @@ export class Login {
     this.loading.set(true);
     this.errorMessage.set(null);
 
-    this.auth.login(this.form.getRawValue() as { email: string; password: string }).subscribe({
+    this.auth.login(this.form.getRawValue() as { identifier: string; password: string }).subscribe({
       next: () => {
         this.loading.set(false);
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');

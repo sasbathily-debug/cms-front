@@ -32,6 +32,7 @@ export class Register {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
     },
@@ -61,6 +62,7 @@ export class Register {
         firstName: value.firstName!,
         lastName: value.lastName!,
         email: value.email!,
+        phone: value.phone!,
         password: value.password!,
       })
       .subscribe({

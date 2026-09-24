@@ -78,7 +78,7 @@ export class Home implements OnInit, OnDestroy {
   readonly heroSubtitle = computed(
     () =>
       this.settings()?.heroSubtitle ||
-      "Le Dr Aissatou Fall accompagne à Dakar les patients vivant avec le diabète, les troubles métaboliques et hormonaux — avec un suivi personnalisé, à l'écoute de chaque parcours.",
+      "Le Dr Aissatou Mamadou Fall accompagne à Dakar les patients vivant avec le diabète, les troubles métaboliques et hormonaux — avec un suivi personnalisé, à l'écoute de chaque parcours.",
   );
   readonly aboutImageUrl = computed(() => this.settings()?.aboutImageUrl || null);
   readonly aboutText = computed(
@@ -93,11 +93,9 @@ export class Home implements OnInit, OnDestroy {
     () => this.settings()?.openingHours || 'Lundi – Vendredi : 9h00 – 17h30\nSamedi : 9h00 – 13h00\nDimanche : Fermé',
   );
   readonly whatsappNumber = computed(() => this.settings()?.whatsappNumber || '');
-  readonly mapUrl = computed<SafeResourceUrl>(() => {
-    const address = this.settings()?.address || 'Sacré-Cœur, Dakar, Sénégal';
-    const url = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  });
+  readonly mapUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
+  );
 
   readonly form = this.fb.group({
     fullName: ['', [Validators.required]],
@@ -139,16 +137,7 @@ export class Home implements OnInit, OnDestroy {
       },
     });
 
-    const from = new Date();
-    const to = new Date();
-    to.setDate(to.getDate() + 45);
-    this.availabilityService.getAvailableSlots(toIsoDate(from), toIsoDate(to)).subscribe({
-      next: (slots) => {
-        this.availableSlots.set(slots);
-        this.loadingSlots.set(false);
-      },
-      error: () => this.loadingSlots.set(false),
-    });
+    this.refreshAvailableSlots();
 
     if (this.route.snapshot.queryParamMap.get('book') === '1' && this.isAuthenticated()) {
       setTimeout(() => this.scrollToBooking(), 0);
@@ -159,6 +148,20 @@ export class Home implements OnInit, OnDestroy {
     if (this.heroInterval !== null) {
       clearInterval(this.heroInterval);
     }
+  }
+
+  private refreshAvailableSlots(): void {
+    this.loadingSlots.set(true);
+    const from = new Date();
+    const to = new Date();
+    to.setDate(to.getDate() + 45);
+    this.availabilityService.getAvailableSlots(toIsoDate(from), toIsoDate(to)).subscribe({
+      next: (slots) => {
+        this.availableSlots.set(slots);
+        this.loadingSlots.set(false);
+      },
+      error: () => this.loadingSlots.set(false),
+    });
   }
 
   selectHeroImage(index: number): void {
@@ -236,9 +239,13 @@ export class Home implements OnInit, OnDestroy {
           this.submitting.set(false);
           this.submitted.set(true);
         },
-        error: () => {
+        error: (err) => {
           this.submitting.set(false);
-          this.errorMessage.set('Une erreur est survenue, veuillez réessayer.');
+          this.errorMessage.set(err.error?.message || 'Une erreur est survenue, veuillez réessayer.');
+          if (err.status === 409) {
+            this.form.patchValue({ preferredDate: '', preferredTime: '' });
+            this.refreshAvailableSlots();
+          }
         },
       });
   }

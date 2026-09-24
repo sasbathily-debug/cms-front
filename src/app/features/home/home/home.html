@@ -13,7 +13,7 @@
         />
       }
     } @else {
-      <div class="absolute inset-0" style="background: linear-gradient(155deg, #1f3d2e 0%, #142b22 100%)"></div>
+      <div class="absolute inset-0" style="background: linear-gradient(155deg, #34203C 0%, #1F1226 100%)"></div>
     }
     <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/25"></div>
 
@@ -66,7 +66,7 @@
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14 lg:px-10">
-    <p class="mb-2 max-w-[620px] text-base leading-relaxed text-[#4A5449]">
+    <p class="mb-2 max-w-[620px] text-base leading-relaxed text-[#4F4351]">
       {{ heroSubtitle() }}
     </p>
 
@@ -106,7 +106,7 @@
       </div>
 
       <div class="min-w-[260px] flex-1 basis-[320px] rounded-3xl bg-forest-900 p-7 shadow-[0_18px_40px_rgba(20,43,34,0.18)]">
-        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-[#B9C7BC]">Prochain créneau disponible</div>
+        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-[#C9BFCB]">Prochain créneau disponible</div>
         @if (nextSlotLabel()) {
           <div class="mb-4 font-display text-lg font-semibold text-white">{{ nextSlotLabel() }}</div>
           <button
@@ -137,7 +137,7 @@
         @if (aboutImageUrl()) {
           <img
             [src]="aboutImageUrl()"
-            alt="Dr Aissatou Fall"
+            alt="Dr Aissatou Mamadou Fall"
             class="h-[200px] w-[200px] rounded-3xl object-cover sm:h-[240px] sm:w-[240px]"
           />
         } @else {
@@ -152,7 +152,7 @@
         <h2 class="mb-5 font-display text-2xl font-bold text-forest-900 sm:text-[32px]">
           Une endocrinologue au service de la santé métabolique
         </h2>
-        <p class="mb-6 text-[15.5px] leading-relaxed text-[#4A5449]">{{ aboutText() }}</p>
+        <p class="mb-6 text-[15.5px] leading-relaxed text-[#4F4351]">{{ aboutText() }}</p>
         <div class="flex flex-col gap-3">
           <div class="flex items-center gap-2.5">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
@@ -298,7 +298,7 @@
       <div class="mb-10 max-w-[560px]">
         <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-500">Rendez-vous</div>
         <h2 class="mb-3 font-display text-2xl font-bold text-white sm:text-[32px]">Prendre rendez-vous avec le cabinet</h2>
-        <p class="text-sm text-[#B9C7BC]">Remplissez le formulaire ci-dessous, notre équipe vous confirme un créneau sous 24h ouvrées.</p>
+        <p class="text-sm text-[#C9BFCB]">Choisissez un créneau disponible ci-dessous : votre rendez-vous est confirmé immédiatement.</p>
       </div>
 
       <div class="flex flex-wrap items-start gap-6">
@@ -403,7 +403,7 @@
                 [disabled]="submitting()"
                 class="w-full rounded-full bg-accent-500 py-3.5 font-display text-sm font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
               >
-                {{ submitting() ? 'Envoi...' : 'Envoyer la demande' }}
+                {{ submitting() ? 'Confirmation...' : 'Confirmer ce rendez-vous' }}
               </button>
             </form>
           } @else {
@@ -411,9 +411,9 @@
               <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#E3F1E6]">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
               </div>
-              <h3 class="mb-2.5 font-display text-xl font-bold text-forest-900">Demande envoyée !</h3>
+              <h3 class="mb-2.5 font-display text-xl font-bold text-forest-900">Rendez-vous confirmé !</h3>
               <p class="mb-6 max-w-[380px] text-sm leading-relaxed text-ink-600">
-                Merci. Notre équipe vous recontacte sous 24h ouvrées pour confirmer votre rendez-vous.
+                Votre créneau est réservé. Vous recevrez un rappel avant votre rendez-vous.
               </p>
               <button
                 type="button"
@@ -430,20 +430,20 @@
           <h3 class="mb-5 font-display text-base font-bold text-white">Coordonnées du cabinet</h3>
           <div class="mb-4 flex gap-3">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>
-            <span class="text-sm leading-relaxed text-[#DCE6DF]">{{ settings()?.address || 'Adresse du cabinet, Sacré-Cœur, Dakar' }}</span>
+            <span class="text-sm leading-relaxed text-[#DCD3DC]">{{ settings()?.address || 'Adresse du cabinet, Sacré-Cœur, Dakar' }}</span>
           </div>
           <div class="mb-4 flex gap-3">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 4h3.2l1.3 4.4L7 10.2a12 12 0 006.8 6.8l1.8-2.5 4.4 1.3V19a2 2 0 01-2.2 2A16 16 0 013 6.2 2 2 0 015 4z" /></svg>
-            <span class="text-sm text-[#DCE6DF]">{{ settings()?.phone || '[Téléphone du cabinet]' }}</span>
+            <span class="text-sm text-[#DCD3DC]">{{ settings()?.phone || '[Téléphone du cabinet]' }}</span>
           </div>
           <div class="mb-7 flex gap-3">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5L12 13l8.5-6.5" /></svg>
-            <span class="text-sm text-[#DCE6DF]">{{ settings()?.email || '[Email du cabinet]' }}</span>
+            <span class="text-sm text-[#DCD3DC]">{{ settings()?.email || '[Email du cabinet]' }}</span>
           </div>
           <div class="mb-5 h-px bg-white/10"></div>
           @for (line of openingHours().split('\n'); track line) {
             @if (line.includes(':')) {
-              <div class="mb-2 flex justify-between text-[13.5px] text-[#B9C7BC]">
+              <div class="mb-2 flex justify-between text-[13.5px] text-[#C9BFCB]">
                 <span>{{ line.split(':')[0] }}</span>
                 <span class="text-white">{{ line.split(':').slice(1).join(':').trim() }}</span>
               </div>
@@ -496,7 +496,7 @@
   <section class="relative w-full overflow-hidden">
     <div class="relative left-1/2 h-[440px] w-screen -translate-x-1/2 sm:h-[500px]">
       <iframe
-        [src]="mapUrl()"
+        [src]="mapUrl"
         class="absolute inset-0 h-full w-full"
         style="border: 0"
         loading="lazy"

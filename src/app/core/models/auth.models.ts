@@ -1,5 +1,5 @@
 export interface LoginRequest {
-  email: string;
+  identifier: string;
   password: string;
 }
 
@@ -8,6 +8,7 @@ export interface RegisterRequest {
   password: string;
   firstName: string;
   lastName: string;
+  phone: string;
 }
 
 export interface RegisterResponse {
