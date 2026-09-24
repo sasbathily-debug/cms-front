@@ -13,5 +13,5 @@ export class AppFooter {
 
   readonly address = computed(() => this.settings()?.address || 'Sacré-Cœur, Dakar');
   readonly phone = computed(() => this.settings()?.phone || '[Téléphone du cabinet]');
-  readonly email = computed(() => this.settings()?.email || '[Email du cabinet]');
+  readonly email = computed(() => this.settings()?.email || 'contact@draissatoumamadou.com');
 }
