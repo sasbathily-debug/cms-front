@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, computed, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -56,6 +56,11 @@ export class Home implements OnInit, OnDestroy {
   readonly activeHeroIndex = signal(0);
   private heroInterval: ReturnType<typeof setInterval> | null = null;
   private heroSwipeStartX: number | null = null;
+
+  @ViewChild('servicesTrack') private servicesTrackRef?: ElementRef<HTMLElement>;
+  private servicesDragStartX: number | null = null;
+  private servicesDragStartTime = 0;
+  private readonly servicesLoopMs = 36000;
 
   readonly availableSlots = signal<AvailableSlotDto[]>([]);
   readonly loadingSlots = signal(true);
@@ -228,6 +233,46 @@ export class Home implements OnInit, OnDestroy {
       return `${base} translate-y-4 rotate-1 shadow-[0_26px_56px_rgba(20,43,34,0.16)] hover:-translate-y-0.5 hover:rotate-0 hover:shadow-[0_32px_64px_rgba(20,43,34,0.2)]`;
     }
     return `${base} shadow-[0_10px_28px_rgba(20,43,34,0.06)] hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(20,43,34,0.14)]`;
+  }
+
+  onServicesPointerDown(event: PointerEvent): void {
+    const track = this.servicesTrackRef?.nativeElement;
+    const anim = track?.getAnimations()[0];
+    if (!track || !anim) {
+      return;
+    }
+    try {
+      (event.currentTarget as Element).setPointerCapture(event.pointerId);
+    } catch {
+      // Ignore — best-effort capture, e.g. for a pointerId not recognized by the browser.
+    }
+    anim.pause();
+    this.servicesDragStartX = event.clientX;
+    this.servicesDragStartTime = Number(anim.currentTime) || 0;
+  }
+
+  onServicesPointerMove(event: PointerEvent): void {
+    if (this.servicesDragStartX === null) {
+      return;
+    }
+    const track = this.servicesTrackRef?.nativeElement;
+    const anim = track?.getAnimations()[0];
+    if (!track || !anim) {
+      return;
+    }
+    const loopPx = track.scrollWidth / 3;
+    const msPerPx = this.servicesLoopMs / loopPx;
+    const deltaX = event.clientX - this.servicesDragStartX;
+    const rawTime = this.servicesDragStartTime - deltaX * msPerPx;
+    anim.currentTime = ((rawTime % this.servicesLoopMs) + this.servicesLoopMs) % this.servicesLoopMs;
+  }
+
+  onServicesPointerUp(): void {
+    if (this.servicesDragStartX === null) {
+      return;
+    }
+    this.servicesDragStartX = null;
+    this.servicesTrackRef?.nativeElement?.getAnimations()[0]?.play();
   }
 
   toggleFaq(id: string): void {

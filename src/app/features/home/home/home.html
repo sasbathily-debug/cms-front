@@ -208,8 +208,14 @@
     </div>
 
     @if (services().length > 0) {
-      <div class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
-        <div class="services-track flex w-max gap-6 py-4 pl-4 sm:pl-6">
+      <div
+        class="relative left-1/2 w-screen -translate-x-1/2 touch-pan-y overflow-hidden cursor-grab active:cursor-grabbing"
+        (pointerdown)="onServicesPointerDown($event)"
+        (pointermove)="onServicesPointerMove($event)"
+        (pointerup)="onServicesPointerUp()"
+        (pointercancel)="onServicesPointerUp()"
+      >
+        <div #servicesTrack class="services-track flex w-max gap-6 py-4 pl-4 sm:pl-6">
           @for (service of servicesLoop(); track $index; let i = $index) {
             <div [class]="serviceCardClass(i)">
               @switch (i % 3) {
