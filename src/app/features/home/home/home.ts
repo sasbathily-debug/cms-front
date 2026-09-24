@@ -198,6 +198,10 @@ export class Home implements OnInit, OnDestroy {
     this.scrollToBooking();
   }
 
+  scrollPastHero(): void {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+  }
+
   scrollToBooking(): void {
     if (!this.requireAuth()) {
       return;
