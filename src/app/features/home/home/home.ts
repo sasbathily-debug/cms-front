@@ -1,15 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -44,7 +33,7 @@ function formatSlotLabel(date: string, time: string): string {
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
-export class Home implements OnInit, AfterViewInit, OnDestroy {
+export class Home implements OnInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly siteContentService = inject(SiteContentService);
   private readonly appointmentService = inject(AppointmentService);
@@ -66,37 +55,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   readonly heroImages = signal<HeroImageDto[]>([]);
   readonly activeHeroIndex = signal(0);
   private heroInterval: ReturnType<typeof setInterval> | null = null;
-
-  @ViewChild('whatsappFloating') private whatsappFloatingRef?: ElementRef<HTMLElement>;
-  @ViewChild('whatsappRealButton') private whatsappRealButtonRef?: ElementRef<HTMLElement>;
-  readonly whatsappFlyTransform = signal('translate(0px, 0px) scale(1)');
-  readonly whatsappFlyOpacity = signal(1);
-  private whatsappBaseRect: DOMRect | null = null;
-  private whatsappTicking = false;
-  private whatsappScrollActive = false;
-  private whatsappProximityObserver: IntersectionObserver | null = null;
-  private readonly whatsappAnimRange = 500;
-  private readonly onWhatsappScroll = (): void => {
-    if (this.whatsappTicking) {
-      return;
-    }
-    this.whatsappTicking = true;
-    requestAnimationFrame(() => {
-      this.updateWhatsappFlyPosition();
-      this.whatsappTicking = false;
-    });
-  };
-  private readonly onWhatsappResize = (): void => {
-    const floating = this.whatsappFloatingRef?.nativeElement;
-    if (!floating) {
-      return;
-    }
-    this.whatsappFlyTransform.set('translate(0px, 0px) scale(1)');
-    requestAnimationFrame(() => {
-      this.whatsappBaseRect = floating.getBoundingClientRect();
-      this.updateWhatsappFlyPosition();
-    });
-  };
 
   readonly availableSlots = signal<AvailableSlotDto[]>([]);
   readonly loadingSlots = signal(true);
@@ -186,74 +144,10 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit(): void {
-    const floating = this.whatsappFloatingRef?.nativeElement;
-    const target = this.whatsappRealButtonRef?.nativeElement;
-    if (!floating || !target) {
-      return;
-    }
-    this.whatsappBaseRect = floating.getBoundingClientRect();
-    window.addEventListener('resize', this.onWhatsappResize);
-
-    // Only run the per-scroll-frame layout reads while the real button is
-    // somewhere near the viewport — avoids paying that cost on every scroll
-    // event across the whole page (source of scroll jank on mobile).
-    this.whatsappProximityObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (!this.whatsappScrollActive) {
-            this.whatsappScrollActive = true;
-            window.addEventListener('scroll', this.onWhatsappScroll, { passive: true });
-          }
-          this.updateWhatsappFlyPosition();
-        } else {
-          if (this.whatsappScrollActive) {
-            this.whatsappScrollActive = false;
-            window.removeEventListener('scroll', this.onWhatsappScroll);
-          }
-          this.whatsappFlyTransform.set('translate(0px, 0px) scale(1)');
-          this.whatsappFlyOpacity.set(1);
-        }
-      },
-      { rootMargin: '1000px 0px 1000px 0px' },
-    );
-    this.whatsappProximityObserver.observe(target);
-  }
-
-  private updateWhatsappFlyPosition(): void {
-    const target = this.whatsappRealButtonRef?.nativeElement;
-    if (!target || !this.whatsappBaseRect) {
-      return;
-    }
-    const targetRect = target.getBoundingClientRect();
-    // The button should finish docking once the real button is actually visible
-    // (around 70% down the viewport), not before it even enters the screen.
-    const landingLine = window.innerHeight * 0.7;
-    const distanceToTarget = targetRect.top + targetRect.height / 2 - landingLine;
-    const progress = Math.min(Math.max(1 - distanceToTarget / this.whatsappAnimRange, 0), 1);
-
-    if (progress <= 0) {
-      this.whatsappFlyTransform.set('translate(0px, 0px) scale(1)');
-      this.whatsappFlyOpacity.set(1);
-      return;
-    }
-
-    const base = this.whatsappBaseRect;
-    const dx = targetRect.left + targetRect.width / 2 - (base.left + base.width / 2);
-    const dy = targetRect.top + targetRect.height / 2 - (base.top + base.height / 2);
-    const scale = 1 - 0.8 * progress;
-
-    this.whatsappFlyTransform.set(`translate(${dx * progress}px, ${dy * progress}px) scale(${scale})`);
-    this.whatsappFlyOpacity.set(1 - progress);
-  }
-
   ngOnDestroy(): void {
     if (this.heroInterval !== null) {
       clearInterval(this.heroInterval);
     }
-    this.whatsappProximityObserver?.disconnect();
-    window.removeEventListener('scroll', this.onWhatsappScroll);
-    window.removeEventListener('resize', this.onWhatsappResize);
   }
 
   private refreshAvailableSlots(): void {
