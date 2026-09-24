@@ -68,8 +68,12 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   private heroInterval: ReturnType<typeof setInterval> | null = null;
 
   @ViewChild('whatsappTarget') private whatsappTargetRef?: ElementRef<HTMLElement>;
+  @ViewChild('whatsappFloating') private whatsappFloatingRef?: ElementRef<HTMLElement>;
+  @ViewChild('whatsappRealButton') private whatsappRealButtonRef?: ElementRef<HTMLElement>;
   readonly floatingWhatsAppVisible = signal(true);
+  readonly whatsappFlyTransform = signal('translate(0px, 0px) scale(1)');
   private whatsappObserver: IntersectionObserver | null = null;
+  private whatsappDockTimeout: ReturnType<typeof setTimeout> | null = null;
 
   readonly availableSlots = signal<AvailableSlotDto[]>([]);
   readonly loadingSlots = signal(true);
@@ -164,15 +168,45 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     if (!target) {
       return;
     }
-    this.whatsappObserver = new IntersectionObserver(([entry]) => this.floatingWhatsAppVisible.set(!entry.isIntersecting), {
-      rootMargin: '0px 0px -10% 0px',
-    });
+    this.whatsappObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (this.whatsappDockTimeout !== null) {
+          clearTimeout(this.whatsappDockTimeout);
+          this.whatsappDockTimeout = null;
+        }
+        if (entry.isIntersecting) {
+          this.flyWhatsAppButtonToTarget();
+        } else {
+          this.floatingWhatsAppVisible.set(true);
+          this.whatsappFlyTransform.set('translate(0px, 0px) scale(1)');
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    );
     this.whatsappObserver.observe(target);
+  }
+
+  private flyWhatsAppButtonToTarget(): void {
+    const floating = this.whatsappFloatingRef?.nativeElement;
+    const target = this.whatsappRealButtonRef?.nativeElement;
+    if (!floating || !target) {
+      this.floatingWhatsAppVisible.set(false);
+      return;
+    }
+    const floatingRect = floating.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const dx = targetRect.left + targetRect.width / 2 - (floatingRect.left + floatingRect.width / 2);
+    const dy = targetRect.top + targetRect.height / 2 - (floatingRect.top + floatingRect.height / 2);
+    this.whatsappFlyTransform.set(`translate(${dx}px, ${dy}px) scale(0.2)`);
+    this.whatsappDockTimeout = setTimeout(() => this.floatingWhatsAppVisible.set(false), 500);
   }
 
   ngOnDestroy(): void {
     if (this.heroInterval !== null) {
       clearInterval(this.heroInterval);
+    }
+    if (this.whatsappDockTimeout !== null) {
+      clearTimeout(this.whatsappDockTimeout);
     }
     this.whatsappObserver?.disconnect();
   }
