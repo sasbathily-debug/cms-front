@@ -32,7 +32,6 @@ export class AdminAppointments implements OnInit {
     const list = this.all();
     return {
       ALL: list.length,
-      PENDING: list.filter((a) => a.status === 'PENDING').length,
       CONFIRMED: list.filter((a) => a.status === 'CONFIRMED').length,
       CANCELLED: list.filter((a) => a.status === 'CANCELLED').length,
       COMPLETED: list.filter((a) => a.status === 'COMPLETED').length,
@@ -63,10 +62,6 @@ export class AdminAppointments implements OnInit {
       },
       error: () => this.loading.set(false),
     });
-  }
-
-  confirm(appointment: AppointmentDto): void {
-    this.changeStatus(appointment, 'CONFIRMED');
   }
 
   cancel(appointment: AppointmentDto): void {

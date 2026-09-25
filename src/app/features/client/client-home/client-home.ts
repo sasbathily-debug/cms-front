@@ -44,9 +44,7 @@ export class ClientHome implements OnInit {
   readonly settings = signal<SiteSettingsDto | null>(null);
 
   readonly firstName = computed(() => this.currentUserStore.user()?.firstName ?? '');
-  readonly upcomingCount = computed(
-    () => this.appointments().filter((a) => a.status === 'PENDING' || a.status === 'CONFIRMED').length,
-  );
+  readonly upcomingCount = computed(() => this.appointments().filter((a) => a.status === 'CONFIRMED').length);
 
   readonly statusLabel = appointmentStatusLabel;
   readonly statusClasses = appointmentStatusClasses;
