@@ -1,14 +1,8 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { AbstractControl, ReactiveFormsModule, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Auth } from '../../../core/services/auth';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
-
-function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
-  const password = control.get('password')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
-  return password && confirmPassword && password !== confirmPassword ? { passwordsMismatch: true } : null;
-}
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel],
@@ -27,24 +21,12 @@ export class Register {
   readonly unverifiedEmail = signal<string | null>(null);
   readonly loading = signal(false);
 
-  readonly form = this.fb.group(
-    {
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]],
-    },
-    { validators: passwordsMatchValidator },
-  );
-
-  readonly passwordValue = signal('');
-  readonly passwordLongEnough = computed(() => this.passwordValue().length >= 8);
-
-  constructor() {
-    this.form.controls.password.valueChanges.subscribe((value) => this.passwordValue.set(value ?? ''));
-  }
+  readonly form = this.fb.group({
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required]],
+  });
 
   submit(): void {
     if (this.form.invalid) {
@@ -63,7 +45,6 @@ export class Register {
         lastName: value.lastName!,
         email: value.email!,
         phone: value.phone!,
-        password: value.password!,
       })
       .subscribe({
         next: () => {

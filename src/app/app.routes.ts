@@ -20,6 +20,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/verify-otp/verify-otp').then((m) => m.VerifyOtp),
   },
   {
+    path: 'set-password',
+    loadComponent: () => import('./features/auth/set-password/set-password').then((m) => m.SetPassword),
+  },
+  {
     path: 'profile',
     loadComponent: () => import('./features/profile/profile/profile').then((m) => m.Profile),
     canActivate: [authGuard],

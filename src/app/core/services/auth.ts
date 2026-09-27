@@ -4,11 +4,13 @@ import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   AuthResponse,
+  CompleteRegistrationRequest,
   LoginRequest,
   RegisterRequest,
   RegisterResponse,
   ResendOtpRequest,
   VerifyOtpRequest,
+  VerifyOtpResponse,
 } from '../models/auth.models';
 
 interface JwtClaims {
@@ -67,9 +69,13 @@ export class Auth {
     return this.http.post<RegisterResponse>(`${environment.apiUrl}/auth/register`, request);
   }
 
-  verifyOtp(request: VerifyOtpRequest): Observable<AuthResponse> {
+  verifyOtp(request: VerifyOtpRequest): Observable<VerifyOtpResponse> {
+    return this.http.post<VerifyOtpResponse>(`${environment.apiUrl}/auth/verify-otp`, request);
+  }
+
+  completeRegistration(request: CompleteRegistrationRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/verify-otp`, request)
+      .post<AuthResponse>(`${environment.apiUrl}/auth/complete-registration`, request)
       .pipe(tap((res) => this.storeTokens(res)));
   }
 

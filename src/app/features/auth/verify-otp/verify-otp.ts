@@ -40,12 +40,11 @@ export class VerifyOtp implements OnInit {
       next: () => {
         this.loading.set(false);
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        const queryParams: Record<string, string> = { email: this.email() };
         if (returnUrl) {
-          this.router.navigateByUrl(returnUrl);
-          return;
+          queryParams['returnUrl'] = returnUrl;
         }
-        const role = this.auth.currentUser()?.role;
-        this.router.navigate([role === 'ADMIN' ? '/admin' : '/client']);
+        this.router.navigate(['/set-password'], { queryParams });
       },
       error: (err) => {
         this.loading.set(false);
