@@ -23,6 +23,7 @@ export class AdminSettings implements OnInit {
   readonly uploadingAbout = signal(false);
 
   readonly heroImages = signal<HeroImageDto[]>([]);
+  readonly loadingHeroImages = signal(true);
   readonly uploadingHeroImage = signal(false);
   readonly reorderingHeroImages = signal(false);
 
@@ -66,7 +67,13 @@ export class AdminSettings implements OnInit {
   }
 
   private loadHeroImages(): void {
-    this.siteContentService.getHeroImages().subscribe({ next: (images) => this.heroImages.set(images) });
+    this.siteContentService.getHeroImages().subscribe({
+      next: (images) => {
+        this.heroImages.set(images);
+        this.loadingHeroImages.set(false);
+      },
+      error: () => this.loadingHeroImages.set(false),
+    });
   }
 
   onHeroImageFileSelected(event: Event): void {

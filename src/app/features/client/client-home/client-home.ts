@@ -41,6 +41,7 @@ export class ClientHome implements OnInit {
   readonly documents = signal<PatientDocumentDto[]>([]);
   readonly loadingDocuments = signal(true);
   readonly healthTips = signal<HealthTipDto[]>([]);
+  readonly loadingHealthTips = signal(true);
   readonly settings = signal<SiteSettingsDto | null>(null);
 
   readonly firstName = computed(() => this.currentUserStore.user()?.firstName ?? '');
@@ -67,7 +68,13 @@ export class ClientHome implements OnInit {
       error: () => this.loadingDocuments.set(false),
     });
 
-    this.siteContentService.getHealthTips().subscribe({ next: (tips) => this.healthTips.set(tips) });
+    this.siteContentService.getHealthTips().subscribe({
+      next: (tips) => {
+        this.healthTips.set(tips);
+        this.loadingHealthTips.set(false);
+      },
+      error: () => this.loadingHealthTips.set(false),
+    });
     this.siteContentService.getSettings().subscribe({ next: (settings) => this.settings.set(settings) });
   }
 

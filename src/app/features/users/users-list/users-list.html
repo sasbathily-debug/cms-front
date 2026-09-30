@@ -5,7 +5,24 @@
   </div>
 
   @if (loading()) {
-    <p class="text-sm text-gray-500">Chargement...</p>
+    <table class="w-full overflow-hidden rounded-lg bg-white text-left text-sm shadow">
+      <thead class="bg-gray-100 text-gray-600">
+        <tr>
+          <th class="px-4 py-2">Email</th>
+          <th class="px-4 py-2">Nom</th>
+          <th class="px-4 py-2">Rôle</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (i of [0, 1, 2, 3]; track i) {
+          <tr class="border-t border-gray-100">
+            <td class="px-4 py-2"><div class="skeleton h-3.5 w-40 rounded"></div></td>
+            <td class="px-4 py-2"><div class="skeleton h-3.5 w-28 rounded"></div></td>
+            <td class="px-4 py-2"><div class="skeleton h-3.5 w-16 rounded"></div></td>
+          </tr>
+        }
+      </tbody>
+    </table>
   } @else {
     <table class="w-full overflow-hidden rounded-lg bg-white text-left text-sm shadow">
       <thead class="bg-gray-100 text-gray-600">

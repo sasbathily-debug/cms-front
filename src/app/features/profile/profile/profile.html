@@ -7,7 +7,26 @@
     <h1 class="mb-6 font-display text-2xl font-bold text-forest-900">Mon profil</h1>
 
     @if (loading()) {
-      <p class="text-sm text-ink-600">Chargement...</p>
+      <div class="flex flex-col gap-6">
+        <div class="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col items-center gap-4 sm:flex-row">
+            <div class="skeleton h-20 w-20 shrink-0 rounded-full"></div>
+            <div class="flex flex-col items-center gap-2 sm:items-start">
+              <div class="skeleton h-4 w-28 rounded"></div>
+              <div class="skeleton h-3.5 w-40 rounded"></div>
+            </div>
+          </div>
+        </div>
+        @for (i of [0, 1]; track i) {
+          <div class="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+            <div class="skeleton mb-5 h-4 w-48 rounded"></div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="skeleton h-11 rounded-lg"></div>
+              <div class="skeleton h-11 rounded-lg"></div>
+            </div>
+          </div>
+        }
+      </div>
     } @else {
       <div class="flex flex-col gap-6">
         <div class="rounded-2xl bg-white p-6 shadow-sm sm:p-8">

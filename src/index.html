@@ -8,6 +8,52 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
-    <app-root></app-root>
+    <app-root>
+      <style>
+        #app-boot-loader {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fbf5ee;
+        }
+        #app-boot-loader .badge {
+          display: flex;
+          height: 56px;
+          width: 56px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 9999px;
+          background: #1f1226;
+          animation: app-boot-pulse 1.4s ease-in-out infinite;
+        }
+        #app-boot-loader img {
+          height: 28px;
+          width: 28px;
+        }
+        @keyframes app-boot-pulse {
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.08);
+            opacity: 0.75;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          #app-boot-loader .badge {
+            animation: none;
+          }
+        }
+      </style>
+      <div id="app-boot-loader">
+        <div class="badge">
+          <img src="/logo/logo-icon-light.png" alt="" />
+        </div>
+      </div>
+    </app-root>
   </body>
 </html>

@@ -53,6 +53,9 @@ export class Home implements OnInit, OnDestroy {
   readonly faqs = signal<FaqView[]>([]);
 
   readonly heroImages = signal<HeroImageDto[]>([]);
+  readonly heroLoading = signal(true);
+  readonly servicesLoading = signal(true);
+  readonly faqLoading = signal(true);
   readonly activeHeroIndex = signal(0);
   private heroInterval: ReturnType<typeof setInterval> | null = null;
   private heroSwipeStartX: number | null = null;
@@ -128,15 +131,27 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.siteContentService.getSettings().subscribe({ next: (settings) => this.settings.set(settings) });
-    this.siteContentService.getServices().subscribe({ next: (services) => this.services.set(services) });
+    this.siteContentService.getServices().subscribe({
+      next: (services) => {
+        this.services.set(services);
+        this.servicesLoading.set(false);
+      },
+      error: () => this.servicesLoading.set(false),
+    });
     this.siteContentService.getFaq().subscribe({
-      next: (faqs) => this.faqs.set(faqs.map((faq, index) => ({ ...faq, open: index === 0 }))),
+      next: (faqs) => {
+        this.faqs.set(faqs.map((faq, index) => ({ ...faq, open: index === 0 })));
+        this.faqLoading.set(false);
+      },
+      error: () => this.faqLoading.set(false),
     });
     this.siteContentService.getHeroImages().subscribe({
       next: (images) => {
         this.heroImages.set(images);
+        this.heroLoading.set(false);
         this.startHeroAutoplay();
       },
+      error: () => this.heroLoading.set(false),
     });
 
     this.refreshAvailableSlots();
