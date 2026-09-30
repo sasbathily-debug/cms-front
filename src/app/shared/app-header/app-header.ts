@@ -89,6 +89,7 @@ export class AppHeader implements AfterViewInit, OnDestroy {
 
   logout(): void {
     this.closeMobileMenu();
-    this.auth.logout().subscribe(() => this.router.navigate(['/login']));
+    const goToLogin = () => this.router.navigate(['/login']);
+    this.auth.logout().subscribe({ next: goToLogin, error: goToLogin });
   }
 }

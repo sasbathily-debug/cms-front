@@ -8,7 +8,7 @@ import { UserDto } from '../models/user.models';
  * (name, avatar, preferences...). Components read `user()` instead of each
  * fetching /users/me on their own, so a profile edit anywhere (Settings)
  * is reflected everywhere (header, home greeting) the instant it saves --
- * no reconnection or page reload needed. An effect watches the decoded JWT
+ * no reconnection or page reload needed. An effect watches the auth session
  * (login/logout/refresh) and keeps this in sync automatically.
  */
 @Service()
@@ -30,7 +30,7 @@ export class CurrentUserStore {
 
   constructor() {
     effect(() => {
-      const currentId = this.auth.currentUser()?.sub ?? null;
+      const currentId = this.auth.currentUser()?.id ?? null;
       if (!currentId) {
         this.userSignal.set(null);
         this.loadedForUserId = null;

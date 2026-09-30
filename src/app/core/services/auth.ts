@@ -1,9 +1,9 @@
 import { Service, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpClient, HttpContext } from '@angular/common/http';
+import { Observable, catchError, of, tap } from 'rxjs';
+import { SKIP_AUTH_REDIRECT } from '../interceptors/auth-interceptor';
 import { environment } from '../../../environments/environment';
 import {
-  AuthResponse,
   CompleteRegistrationRequest,
   LoginRequest,
   RegisterRequest,
@@ -12,57 +12,42 @@ import {
   VerifyOtpRequest,
   VerifyOtpResponse,
 } from '../models/auth.models';
-
-interface JwtClaims {
-  sub: string;
-  email: string;
-  role: 'ADMIN' | 'USER';
-  exp: number;
-}
-
-const ACCESS_TOKEN_KEY = 'accessToken';
-const REFRESH_TOKEN_KEY = 'refreshToken';
-
-function decodeJwt(token: string): JwtClaims | null {
-  try {
-    const payload = token.split('.')[1];
-    return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
-  } catch {
-    return null;
-  }
-}
+import { UserDto } from '../models/user.models';
 
 @Service()
 export class Auth {
   private readonly http = inject(HttpClient);
 
-  private readonly accessToken = signal<string | null>(localStorage.getItem(ACCESS_TOKEN_KEY));
+  private readonly user = signal<UserDto | null>(null);
+  private readonly ready = signal(false);
 
-  readonly currentUser = computed(() => {
-    const token = this.accessToken();
-    if (!token) {
-      return null;
-    }
-    const claims = decodeJwt(token);
-    if (!claims || claims.exp * 1000 <= Date.now()) {
-      return null;
-    }
-    return claims;
-  });
-  readonly isAuthenticated = computed(() => !!this.currentUser());
+  readonly currentUser = computed(() => this.user());
+  readonly isAuthenticated = computed(() => !!this.user());
+  readonly isReady = computed(() => this.ready());
 
-  getAccessToken(): string | null {
-    return this.accessToken();
-  }
-
-  getRefreshToken(): string | null {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-  }
-
-  login(request: LoginRequest): Observable<AuthResponse> {
+  /** Checks for an existing session cookie. Awaited once at app bootstrap. */
+  init(): Observable<UserDto | null> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/login`, request)
-      .pipe(tap((res) => this.storeTokens(res)));
+      .get<UserDto>(`${environment.apiUrl}/users/me`, {
+        context: new HttpContext().set(SKIP_AUTH_REDIRECT, true),
+      })
+      .pipe(
+        tap((user) => {
+          this.user.set(user);
+          this.ready.set(true);
+        }),
+        catchError(() => {
+          this.user.set(null);
+          this.ready.set(true);
+          return of(null);
+        }),
+      );
+  }
+
+  login(request: LoginRequest): Observable<UserDto> {
+    return this.http
+      .post<UserDto>(`${environment.apiUrl}/auth/login`, request)
+      .pipe(tap((user) => this.user.set(user)));
   }
 
   register(request: RegisterRequest): Observable<RegisterResponse> {
@@ -73,22 +58,20 @@ export class Auth {
     return this.http.post<VerifyOtpResponse>(`${environment.apiUrl}/auth/verify-otp`, request);
   }
 
-  completeRegistration(request: CompleteRegistrationRequest): Observable<AuthResponse> {
+  completeRegistration(request: CompleteRegistrationRequest): Observable<UserDto> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/complete-registration`, request)
-      .pipe(tap((res) => this.storeTokens(res)));
+      .post<UserDto>(`${environment.apiUrl}/auth/complete-registration`, request)
+      .pipe(tap((user) => this.user.set(user)));
   }
 
   resendOtp(request: ResendOtpRequest): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}/auth/resend-otp`, request);
   }
 
-  refresh(): Observable<AuthResponse> {
+  refresh(): Observable<UserDto> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/refresh`, {
-        refreshToken: this.getRefreshToken(),
-      })
-      .pipe(tap((res) => this.storeTokens(res)));
+      .post<UserDto>(`${environment.apiUrl}/auth/refresh`, {})
+      .pipe(tap((user) => this.user.set(user)));
   }
 
   logout(): Observable<void> {
@@ -101,14 +84,6 @@ export class Auth {
   }
 
   clearSession(): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    this.accessToken.set(null);
-  }
-
-  private storeTokens(res: AuthResponse): void {
-    localStorage.setItem(ACCESS_TOKEN_KEY, res.accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, res.refreshToken);
-    this.accessToken.set(res.accessToken);
+    this.user.set(null);
   }
 }

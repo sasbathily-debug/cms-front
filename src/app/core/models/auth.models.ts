@@ -31,9 +31,3 @@ export interface CompleteRegistrationRequest {
 export interface ResendOtpRequest {
   email: string;
 }
-
-export interface AuthResponse {
-  accessToken: string;
-  refreshToken: string;
-  expiresAt: number;
-}
