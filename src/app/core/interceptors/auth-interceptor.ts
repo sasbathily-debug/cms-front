@@ -1,9 +1,10 @@
 import { HttpClient, HttpContext, HttpContextToken, HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, of, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, finalize, of, share, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Auth } from '../services/auth';
+import { UserDto } from '../models/user.models';
 
 /** Marks a request that should never trigger the silent-refresh/redirect-to-login flow (e.g. the app-bootstrap session check). */
 export const SKIP_AUTH_REDIRECT = new HttpContextToken<boolean>(() => false);
@@ -51,6 +52,29 @@ function ensureCsrfCookie(http: HttpClient): Observable<unknown> {
     .pipe(catchError(() => of(null)));
 }
 
+/**
+ * The backend keeps only one active refresh token per user (rotated on every /auth/refresh
+ * call). If several requests hit a 401 around the same time (e.g. a page firing a few GETs in
+ * parallel right as the short-lived access token expires), each one calling auth.refresh()
+ * independently races the rotation: the first to land wins, the rest get an already-rotated
+ * token, fail, and wrongly log the user out. Sharing a single in-flight refresh across all
+ * callers makes that race impossible on the frontend side regardless of how many requests fail
+ * at once.
+ */
+let refreshInProgress$: Observable<UserDto> | null = null;
+
+function refreshOnce(auth: Auth): Observable<UserDto> {
+  if (!refreshInProgress$) {
+    refreshInProgress$ = auth.refresh().pipe(
+      finalize(() => {
+        refreshInProgress$ = null;
+      }),
+      share(),
+    );
+  }
+  return refreshInProgress$;
+}
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(Auth);
   const router = inject(Router);
@@ -62,7 +86,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     next(withCredentialsAndCsrf(req)).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && !isPublic && !req.context.get(SKIP_AUTH_REDIRECT)) {
-          return auth.refresh().pipe(
+          return refreshOnce(auth).pipe(
             switchMap(() => next(withCredentialsAndCsrf(req))),
             catchError((refreshError) => {
               auth.clearSession();
