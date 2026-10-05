@@ -15,12 +15,12 @@ import {
   appointmentStatusLabel,
 } from '../../../shared/appointment-status.util';
 
-type FilterValue = 'ALL' | AppointmentStatus;
+type FilterValue = 'ALL' | AppointmentStatus | 'PAST_DUE';
 type DateMode = 'ALL' | 'TODAY' | 'TOMORROW' | 'WEEK' | 'CUSTOM';
 type SortOption = 'date-asc' | 'date-desc' | 'created-desc';
 
 const PAGE_SIZE = 20;
-const EMPTY_COUNTS: AppointmentCountsDto = { all: 0, confirmed: 0, cancelled: 0, completed: 0, noShow: 0 };
+const EMPTY_COUNTS: AppointmentCountsDto = { all: 0, confirmed: 0, cancelled: 0, completed: 0, noShow: 0, pastDue: 0 };
 
 function toIsoDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -104,8 +104,11 @@ export class AdminAppointments implements OnInit {
 
   readonly emptyMessage = computed(() => {
     const parts: string[] = [];
-    if (this.statusFilter() !== 'ALL') {
-      parts.push(this.statusLabel(this.statusFilter() as AppointmentStatus).toLowerCase());
+    const filter = this.statusFilter();
+    if (filter === 'PAST_DUE') {
+      parts.push('en retard');
+    } else if (filter !== 'ALL') {
+      parts.push(this.statusLabel(filter as AppointmentStatus).toLowerCase());
     }
     const mode = this.dateMode();
     if (mode === 'TODAY') {
@@ -187,14 +190,24 @@ export class AdminAppointments implements OnInit {
 
   private buildFilter(): AppointmentFilter {
     const { date, from, to } = this.dateRange();
+    const filter = this.statusFilter();
+    const isPastDue = filter === 'PAST_DUE';
     return {
-      status: this.statusFilter() !== 'ALL' ? (this.statusFilter() as AppointmentStatus) : null,
+      status: !isPastDue && filter !== 'ALL' ? (filter as AppointmentStatus) : null,
+      pastDue: isPastDue || null,
       date,
       from,
       to,
       search: this.searchTerm() || null,
       sort: this.sortParam(),
     };
+  }
+
+  isOverdue(appointment: AppointmentDto): boolean {
+    if (appointment.status !== 'CONFIRMED' || !appointment.preferredDate || !appointment.preferredTime) {
+      return false;
+    }
+    return new Date(`${appointment.preferredDate}T${appointment.preferredTime}`) < new Date();
   }
 
   private sortParam(): string {

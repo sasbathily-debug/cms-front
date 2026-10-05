@@ -47,6 +47,14 @@
     >
       Absents &middot; {{ counts().noShow }}
     </button>
+    <button
+      type="button"
+      (click)="setFilter('PAST_DUE')"
+      class="rounded-full px-[18px] py-2 text-sm font-medium"
+      [class]="statusFilter() === 'PAST_DUE' ? 'bg-[#B2453B] text-white font-semibold' : 'border border-[#B2453B]/40 bg-[#FBE7E6] text-[#B2453B]'"
+    >
+      En retard &middot; {{ counts().pastDue }}
+    </button>
   </div>
 
   <div class="mb-4 flex flex-wrap gap-2">
@@ -175,13 +183,21 @@
               <div class="font-display text-sm font-bold text-forest-900" [innerHTML]="highlight(appt.fullName)"></div>
               <div class="text-[13px] text-ink-600" [innerHTML]="highlight(appt.phone)"></div>
             </div>
-            <span
-              class="inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold"
-              [class]="statusClasses(appt.status)"
-            >
-              <span class="h-1.5 w-1.5 rounded-full" [class]="dotClasses(appt.status)"></span>
-              {{ statusLabel(appt.status) }}
-            </span>
+            <div class="flex flex-wrap items-center justify-end gap-2">
+              @if (isOverdue(appt)) {
+                <span class="inline-flex w-fit items-center gap-1.5 rounded-full bg-[#FBE7E6] px-3 py-1.5 text-xs font-semibold text-[#B2453B]">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[#B2453B]"></span>
+                  En retard
+                </span>
+              }
+              <span
+                class="inline-flex w-fit items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold"
+                [class]="statusClasses(appt.status)"
+              >
+                <span class="h-1.5 w-1.5 rounded-full" [class]="dotClasses(appt.status)"></span>
+                {{ statusLabel(appt.status) }}
+              </span>
+            </div>
           </div>
 
           <div class="mb-4 flex flex-wrap gap-x-6 gap-y-1.5 text-[13.5px] text-ink-600">

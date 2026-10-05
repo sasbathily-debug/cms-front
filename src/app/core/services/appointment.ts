@@ -22,6 +22,7 @@ export interface AppointmentFilter {
   to?: string | null;
   search?: string | null;
   sort?: string | null;
+  pastDue?: boolean | null;
 }
 
 export interface AppointmentCountsDto {
@@ -30,6 +31,7 @@ export interface AppointmentCountsDto {
   cancelled: number;
   completed: number;
   noShow: number;
+  pastDue: number;
 }
 
 export interface AppointmentStatsDto {
@@ -96,6 +98,9 @@ export class AppointmentService {
     }
     if (filter.sort) {
       params = params.set('sort', filter.sort);
+    }
+    if (filter.pastDue) {
+      params = params.set('pastDue', 'true');
     }
     return params;
   }
