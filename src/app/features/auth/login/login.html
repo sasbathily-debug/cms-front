@@ -15,8 +15,8 @@
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
         <div>
-          <label class="mb-2 block text-sm font-medium text-ink-900">Email ou téléphone</label>
-          <input
+          <label for="login-identifier" class="mb-2 block text-sm font-medium text-ink-900">Email ou téléphone</label>
+          <input id="login-identifier"
             type="text"
             formControlName="identifier"
             autocomplete="username"
@@ -26,8 +26,8 @@
         </div>
 
         <div>
-          <label class="mb-2 block text-sm font-medium text-ink-900">Mot de passe</label>
-          <input
+          <label for="login-password" class="mb-2 block text-sm font-medium text-ink-900">Mot de passe</label>
+          <input id="login-password"
             type="password"
             formControlName="password"
             autocomplete="current-password"

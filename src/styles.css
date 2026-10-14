@@ -11,6 +11,8 @@
   --color-accent-100: #FBE3C4;
   --color-accent-500: #E0873F;
   --color-accent-600: #C7702A;
+  --color-accent-700: #9A5518;
+  --color-accent-800: #7A430F;
   --color-ink-900: #241827;
   --color-ink-600: #6B5F68;
   --color-border-warm: #E8DACE;
@@ -21,6 +23,23 @@
 
 body {
   font-family: var(--font-body);
+}
+
+/*
+ * Contrastes (WCAG AA). Le blanc sur l'orange accent-500 donne ~2,7:1 : on garde l'orange
+ * de la marque et on passe le texte posé dessus en prune foncé (~6,3:1). Les textes orange
+ * sur fond clair utilisent accent-700 (~5,3:1 sur crème) au lieu d'accent-600 (~3,4:1).
+ */
+.bg-accent-500.text-white {
+  color: var(--color-forest-900);
+}
+
+.text-accent-600 {
+  color: var(--color-accent-700);
+}
+
+.hover\:text-accent-500:hover {
+  color: var(--color-accent-800);
 }
 
 @keyframes kenburns {

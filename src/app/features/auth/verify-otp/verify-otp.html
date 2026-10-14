@@ -12,8 +12,8 @@
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-ink-900">Code de vérification</label>
-        <input
+        <label for="verify-otp-otp" class="mb-1.5 block text-sm font-medium text-ink-900">Code de vérification</label>
+        <input id="verify-otp-otp"
           type="text"
           inputmode="numeric"
           maxlength="6"

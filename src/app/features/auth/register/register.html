@@ -18,8 +18,8 @@
           <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-accent-600">Vos informations</div>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label class="mb-2 block text-sm font-medium text-ink-900">Prénom</label>
-              <input
+              <label for="register-firstName" class="mb-2 block text-sm font-medium text-ink-900">Prénom</label>
+              <input id="register-firstName"
                 type="text"
                 formControlName="firstName"
                 autocomplete="given-name"
@@ -35,8 +35,8 @@
               }
             </div>
             <div>
-              <label class="mb-2 block text-sm font-medium text-ink-900">Nom</label>
-              <input
+              <label for="register-lastName" class="mb-2 block text-sm font-medium text-ink-900">Nom</label>
+              <input id="register-lastName"
                 type="text"
                 formControlName="lastName"
                 autocomplete="family-name"
@@ -58,8 +58,8 @@
           <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-accent-600">Connexion</div>
 
           <div class="mb-4">
-            <label class="mb-2 block text-sm font-medium text-ink-900">Email</label>
-            <input
+            <label for="register-email" class="mb-2 block text-sm font-medium text-ink-900">Email</label>
+            <input id="register-email"
               type="email"
               formControlName="email"
               autocomplete="email"
@@ -76,8 +76,8 @@
           </div>
 
           <div class="mb-4">
-            <label class="mb-2 block text-sm font-medium text-ink-900">Téléphone</label>
-            <input
+            <label for="register-phone" class="mb-2 block text-sm font-medium text-ink-900">Téléphone</label>
+            <input id="register-phone"
               type="tel"
               formControlName="phone"
               autocomplete="tel"

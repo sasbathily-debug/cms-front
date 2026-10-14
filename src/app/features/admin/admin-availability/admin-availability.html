@@ -9,8 +9,8 @@
       <h2 class="mb-4 font-display text-base font-bold text-forest-900">Ajouter un créneau récurrent</h2>
       <form (ngSubmit)="submitRule()" [formGroup]="ruleForm" class="space-y-4">
         <div>
-          <label class="mb-1.5 block text-xs font-semibold text-forest-900">Jour</label>
-          <select
+          <label for="admin-availability-dayOfWeek" class="mb-1.5 block text-xs font-semibold text-forest-900">Jour</label>
+          <select id="admin-availability-dayOfWeek"
             formControlName="dayOfWeek"
             class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           >
@@ -25,16 +25,16 @@
         </div>
         <div class="flex gap-4">
           <div class="flex-1">
-            <label class="mb-1.5 block text-xs font-semibold text-forest-900">Début</label>
-            <input
+            <label for="admin-availability-startTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Début</label>
+            <input id="admin-availability-startTime"
               type="time"
               formControlName="startTime"
               class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
             />
           </div>
           <div class="flex-1">
-            <label class="mb-1.5 block text-xs font-semibold text-forest-900">Fin</label>
-            <input
+            <label for="admin-availability-endTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Fin</label>
+            <input id="admin-availability-endTime"
               type="time"
               formControlName="endTime"
               class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -42,8 +42,8 @@
           </div>
         </div>
         <div class="w-40">
-          <label class="mb-1.5 block text-xs font-semibold text-forest-900">Durée du créneau (min)</label>
-          <input
+          <label for="admin-availability-slotDurationMinutes" class="mb-1.5 block text-xs font-semibold text-forest-900">Durée du créneau (min)</label>
+          <input id="admin-availability-slotDurationMinutes"
             type="number"
             formControlName="slotDurationMinutes"
             min="5"
@@ -69,8 +69,8 @@
       <p class="mb-4 text-[13px] text-ink-600">Jour férié, congé, ou horaires spéciaux pour une date précise.</p>
       <form (ngSubmit)="submitException()" [formGroup]="exceptionForm" class="space-y-4">
         <div>
-          <label class="mb-1.5 block text-xs font-semibold text-forest-900">Date</label>
-          <input
+          <label for="admin-availability-date" class="mb-1.5 block text-xs font-semibold text-forest-900">Date</label>
+          <input id="admin-availability-date"
             type="date"
             formControlName="date"
             class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -84,16 +84,16 @@
         @if (!exceptionForm.value.closed) {
           <div class="flex gap-4">
             <div class="flex-1">
-              <label class="mb-1.5 block text-xs font-semibold text-forest-900">Début</label>
-              <input
+              <label for="admin-availability-customStartTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Début</label>
+              <input id="admin-availability-customStartTime"
                 type="time"
                 formControlName="customStartTime"
                 class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
               />
             </div>
             <div class="flex-1">
-              <label class="mb-1.5 block text-xs font-semibold text-forest-900">Fin</label>
-              <input
+              <label for="admin-availability-customEndTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Fin</label>
+              <input id="admin-availability-customEndTime"
                 type="time"
                 formControlName="customEndTime"
                 class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -103,8 +103,8 @@
         }
 
         <div>
-          <label class="mb-1.5 block text-xs font-semibold text-forest-900">Note (optionnel)</label>
-          <input
+          <label for="admin-availability-note" class="mb-1.5 block text-xs font-semibold text-forest-900">Note (optionnel)</label>
+          <input id="admin-availability-note"
             type="text"
             formControlName="note"
             placeholder="Ex. : Jour férié — Tabaski"

@@ -65,16 +65,16 @@
 
             <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label class="mb-1.5 block text-sm font-medium text-ink-900">Prénom</label>
-                <input
+                <label for="profile-firstName" class="mb-1.5 block text-sm font-medium text-ink-900">Prénom</label>
+                <input id="profile-firstName"
                   type="text"
                   formControlName="firstName"
                   class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
                 />
               </div>
               <div>
-                <label class="mb-1.5 block text-sm font-medium text-ink-900">Nom</label>
-                <input
+                <label for="profile-lastName" class="mb-1.5 block text-sm font-medium text-ink-900">Nom</label>
+                <input id="profile-lastName"
                   type="text"
                   formControlName="lastName"
                   class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -84,8 +84,8 @@
 
             <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label class="mb-1.5 block text-sm font-medium text-ink-900">Téléphone / WhatsApp</label>
-                <input
+                <label for="profile-phone" class="mb-1.5 block text-sm font-medium text-ink-900">Téléphone / WhatsApp</label>
+                <input id="profile-phone"
                   type="tel"
                   formControlName="phone"
                   placeholder="+221 77 000 00 00"
@@ -94,8 +94,8 @@
                 <p class="mt-1 text-xs text-ink-600">Utilisé pour les rappels de rendez-vous</p>
               </div>
               <div>
-                <label class="mb-1.5 block text-sm font-medium text-ink-900">Date de naissance</label>
-                <input
+                <label for="profile-dateOfBirth" class="mb-1.5 block text-sm font-medium text-ink-900">Date de naissance</label>
+                <input id="profile-dateOfBirth"
                   type="date"
                   formControlName="dateOfBirth"
                   class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -104,8 +104,8 @@
             </div>
 
             <div class="mb-2">
-              <label class="mb-1.5 block text-sm font-medium text-ink-900">Email</label>
-              <input
+              <label for="profile-email" class="mb-1.5 block text-sm font-medium text-ink-900">Email</label>
+              <input id="profile-email"
                 type="email"
                 [value]="email()"
                 disabled
@@ -157,8 +157,8 @@
           <p class="mb-5 text-[13px] text-ink-600">Modifiez votre mot de passe.</p>
 
           <div class="mb-4">
-            <label class="mb-1.5 block text-sm font-medium text-ink-900">Mot de passe actuel</label>
-            <input
+            <label for="profile-currentPassword" class="mb-1.5 block text-sm font-medium text-ink-900">Mot de passe actuel</label>
+            <input id="profile-currentPassword"
               type="password"
               formControlName="currentPassword"
               class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -167,8 +167,8 @@
 
           <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label class="mb-1.5 block text-sm font-medium text-ink-900">Nouveau mot de passe</label>
-              <input
+              <label for="profile-newPassword" class="mb-1.5 block text-sm font-medium text-ink-900">Nouveau mot de passe</label>
+              <input id="profile-newPassword"
                 type="password"
                 formControlName="newPassword"
                 class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
@@ -176,8 +176,8 @@
               <p class="mt-1 text-xs text-ink-600">8 caractères minimum</p>
             </div>
             <div>
-              <label class="mb-1.5 block text-sm font-medium text-ink-900">Confirmer</label>
-              <input
+              <label for="profile-confirmPassword" class="mb-1.5 block text-sm font-medium text-ink-900">Confirmer</label>
+              <input id="profile-confirmPassword"
                 type="password"
                 formControlName="confirmPassword"
                 class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm text-ink-900 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"

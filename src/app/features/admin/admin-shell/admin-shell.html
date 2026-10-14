@@ -83,23 +83,23 @@
 
     <ng-container [ngTemplateOutlet]="navLinks" />
 
-    <a
-      routerLink="/profile"
-      class="mt-auto flex items-center gap-2.5 border-t border-white/10 pt-[18px]"
-    >
-      <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-100">
-        <img src="/logo/logo-icon-dark.png" alt="Logo" class="h-2/3 w-2/3 object-contain" />
-      </span>
-      <span class="min-w-0 flex-1 truncate text-sm font-semibold text-white">Mon profil</span>
+    <div class="mt-auto flex items-center gap-2.5 border-t border-white/10 pt-[18px]">
+      <a routerLink="/profile" class="flex min-w-0 flex-1 items-center gap-2.5">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-100">
+          <img src="/logo/logo-icon-dark.png" alt="Logo" class="h-2/3 w-2/3 object-contain" />
+        </span>
+        <span class="min-w-0 flex-1 truncate text-sm font-semibold text-white">Mon profil</span>
+      </a>
       <button
         type="button"
-        (click)="$event.stopPropagation(); $event.preventDefault(); logout()"
+        (click)="logout()"
         title="Déconnexion"
+        aria-label="Se déconnecter"
         class="shrink-0 text-[#9993A0]"
       >
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" /></svg>
       </button>
-    </a>
+    </div>
   </aside>
 
   <div class="flex min-w-0 flex-1 flex-col">

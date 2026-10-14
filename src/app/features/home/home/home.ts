@@ -95,11 +95,14 @@ export class Home implements OnInit, OnDestroy {
       this.settings()?.aboutText ||
       "Après une formation en endocrinologie et nutrition clinique, le Dr Fall a choisi de consacrer son cabinet aux patients vivant avec le diabète, les troubles métaboliques ou hormonaux — des maladies chroniques qui demandent un suivi rigoureux et une relation de confiance durable.",
   );
-  readonly yearsExperience = computed(() => this.settings()?.yearsExperience || '15+');
-  readonly patientsCount = computed(() => this.settings()?.patientsCount || '2 400+');
-  readonly satisfactionRating = computed(() => this.settings()?.satisfactionRating || '4.9/5');
+  readonly yearsExperience = computed(() => this.settings()?.yearsExperience || '');
+  readonly patientsCount = computed(() => this.settings()?.patientsCount || '');
+  readonly satisfactionRating = computed(() => this.settings()?.satisfactionRating || '');
   readonly openingHours = computed(
     () => this.settings()?.openingHours || 'Lundi – Vendredi : 9h00 – 17h30\nSamedi : 9h00 – 13h00\nDimanche : Fermé',
+  );
+  readonly hasHeroStats = computed(
+    () => !!(this.yearsExperience() || this.patientsCount() || this.satisfactionRating()),
   );
   readonly whatsappNumber = computed(() => this.settings()?.whatsappNumber || '');
   readonly mapUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
