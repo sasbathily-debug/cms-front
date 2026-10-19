@@ -25,21 +25,21 @@ export class Auth {
   readonly isAuthenticated = computed(() => !!this.user());
   readonly isReady = computed(() => this.ready());
 
-  /** Checks for an existing session cookie. Awaited once at app bootstrap. */
+  /**
+   * Checks for an existing session. Awaited once at app bootstrap. The access token only lives a few
+   * minutes, so a 401 here usually means "expired", not "logged out": try the refresh token before
+   * concluding the visitor is anonymous.
+   */
   init(): Observable<UserDto | null> {
     return this.http
       .get<UserDto>(`${environment.apiUrl}/users/me`, {
         context: new HttpContext().set(SKIP_AUTH_REDIRECT, true),
       })
       .pipe(
+        catchError(() => this.refresh().pipe(catchError(() => of(null)))),
         tap((user) => {
           this.user.set(user);
           this.ready.set(true);
-        }),
-        catchError(() => {
-          this.user.set(null);
-          this.ready.set(true);
-          return of(null);
         }),
       );
   }
