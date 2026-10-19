@@ -122,7 +122,7 @@
           }
           @for (image of heroImages(); track image.id; let i = $index) {
             <div class="relative w-[180px]">
-              <img [src]="image.imageUrl" alt="" class="h-28 w-full rounded-xl object-cover" />
+              <img [src]="image.imageUrl | optimizedImage: 400" alt="" class="h-28 w-full rounded-xl object-cover" />
               <button
                 type="button"
                 (click)="removeHeroImage(image.id)"
@@ -178,7 +178,7 @@
         <div class="min-w-[220px] max-w-xs">
           @if (form.value.aboutImageUrl) {
             <div class="relative mb-2">
-              <img [src]="form.value.aboutImageUrl" alt="" class="h-32 w-full rounded-xl object-cover" />
+              <img [src]="form.value.aboutImageUrl | optimizedImage: 400" alt="" class="h-32 w-full rounded-xl object-cover" />
               <button
                 type="button"
                 (click)="removeAboutImage()"

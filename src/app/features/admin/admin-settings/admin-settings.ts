@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 import { SiteContentService } from '../../../core/services/site-content';
 import { FileUploadService } from '../../../core/services/file-upload';
 import { HeroImageDto } from '../../../core/models/site-content.models';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 
 @Component({
   selector: 'app-admin-settings',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, OptimizedImagePipe],
   styleUrl: './admin-settings.css',
   templateUrl: './admin-settings.html',
 })

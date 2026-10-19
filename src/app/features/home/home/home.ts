@@ -13,6 +13,7 @@ import { CareServiceDto, FaqItemDto, HeroImageDto, SiteSettingsDto } from '../..
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 import { Auth } from '../../../core/services/auth';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 
 interface FaqView extends FaqItemDto {
   open: boolean;
@@ -29,7 +30,7 @@ function formatSlotLabel(date: string, time: string): string {
 
 @Component({
   selector: 'app-home',
-  imports: [ReactiveFormsModule, RouterLink, AppHeader, AppFooter, SlotPicker, HealthIcon],
+  imports: [ReactiveFormsModule, RouterLink, AppHeader, AppFooter, SlotPicker, HealthIcon, OptimizedImagePipe],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })

@@ -13,7 +13,7 @@
     } @else if (heroImages().length > 0) {
       @for (image of heroImages(); track image.id; let i = $index) {
         <img
-          [src]="image.imageUrl"
+          [src]="image.imageUrl | optimizedImage: 1920"
           alt=""
           class="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out"
           [class.opacity-100]="i === activeHeroIndex()"
@@ -178,7 +178,7 @@
       <div class="mx-auto flex-none sm:mx-0">
         @if (aboutImageUrl()) {
           <img
-            [src]="aboutImageUrl()"
+            [src]="aboutImageUrl() | optimizedImage: 600"
             alt="Dr Aissatou Mamadou Fall"
             class="h-[200px] w-[200px] rounded-3xl object-cover sm:h-[240px] sm:w-[240px]"
           />
