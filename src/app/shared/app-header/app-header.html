@@ -11,7 +11,7 @@
       >
         <img src="/logo/logo-icon-light.png" alt="" class="h-2/3 w-2/3 object-contain" />
       </span>
-      <span class="leading-tight">
+      <span class="leading-tight" [class]="variant() === 'app' ? 'hidden sm:block' : ''">
         <span class="block whitespace-nowrap font-display text-[15px] font-bold text-forest-900"
           >Dr Aissatou Mamadou Fall</span
         >

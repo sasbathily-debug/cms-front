@@ -1,3 +1,4 @@
+import { AuthSteps } from '../../../shared/auth-steps/auth-steps';
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -5,7 +6,7 @@ import { Auth } from '../../../core/services/auth';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel],
+  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
   selector: 'app-register',
   styleUrl: './register.css',
   templateUrl: './register.html',
@@ -58,7 +59,9 @@ export class Register {
         error: (err) => {
           this.loading.set(false);
           if (err.status === 409 && err.error?.accountVerified === false) {
-            this.errorMessage.set('Un compte existe déjà avec cet email mais n\'a pas encore été vérifié.');
+            this.errorMessage.set(
+              "Un compte existe déjà avec cet email mais n'a pas encore été vérifié.",
+            );
             this.unverifiedEmail.set(value.email!);
           } else {
             this.errorMessage.set(err.error?.message ?? 'Une erreur est survenue. Réessayez.');

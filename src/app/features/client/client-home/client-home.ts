@@ -10,9 +10,14 @@ import { AppointmentDto } from '../../../core/models/appointment.models';
 import { PatientDocumentDto, DocumentCategory } from '../../../core/models/patient-document.models';
 import { HealthTipDto, SiteSettingsDto } from '../../../core/models/site-content.models';
 import { AppHeader } from '../../../shared/app-header/app-header';
+import { AppFooter } from '../../../shared/app-footer/app-footer';
+import { FloatingActions } from '../../../shared/floating-actions/floating-actions';
 import { AppointmentHistory } from '../../../shared/appointment-history/appointment-history';
 import { HealthIcon } from '../../../shared/health-icon/health-icon';
-import { appointmentStatusClasses, appointmentStatusLabel } from '../../../shared/appointment-status.util';
+import {
+  appointmentStatusClasses,
+  appointmentStatusLabel,
+} from '../../../shared/appointment-status.util';
 
 const CATEGORY_LABELS: Record<DocumentCategory, string> = {
   ORDONNANCE: 'Ordonnance',
@@ -22,7 +27,15 @@ const CATEGORY_LABELS: Record<DocumentCategory, string> = {
 };
 
 @Component({
-  imports: [RouterLink, SlicePipe, AppHeader, AppointmentHistory, HealthIcon],
+  imports: [
+    RouterLink,
+    SlicePipe,
+    AppHeader,
+    AppFooter,
+    FloatingActions,
+    AppointmentHistory,
+    HealthIcon,
+  ],
   selector: 'app-client-home',
   styleUrl: './client-home.css',
   templateUrl: './client-home.html',
@@ -45,7 +58,46 @@ export class ClientHome implements OnInit {
   readonly settings = signal<SiteSettingsDto | null>(null);
 
   readonly firstName = computed(() => this.currentUserStore.user()?.firstName ?? '');
-  readonly upcomingCount = computed(() => this.appointments().filter((a) => a.status === 'CONFIRMED').length);
+  readonly upcomingCount = computed(
+    () => this.appointments().filter((a) => a.status === 'CONFIRMED').length,
+  );
+
+  /** Le prochain rendez-vous confirmé dont la date n'est pas passée. */
+  readonly nextAppointment = computed(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    return (
+      this.appointments()
+        .filter((a) => a.status === 'CONFIRMED' && a.preferredDate && a.preferredDate >= today)
+        .sort((a, b) =>
+          (a.preferredDate! + (a.preferredTime ?? '')).localeCompare(
+            b.preferredDate! + (b.preferredTime ?? ''),
+          ),
+        )[0] ?? null
+    );
+  });
+
+  readonly nextLabel = computed(() => {
+    const next = this.nextAppointment();
+    if (!next?.preferredDate) {
+      return '';
+    }
+    const d = new Date(`${next.preferredDate}T${next.preferredTime ?? '00:00'}`);
+    const weekday = new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(d);
+    const month = new Intl.DateTimeFormat('fr-FR', { month: 'long' }).format(d);
+    const time = next.preferredTime ? ` · ${next.preferredTime.slice(0, 5)}` : '';
+    return `${weekday.charAt(0).toUpperCase() + weekday.slice(1)} ${d.getDate()} ${month}${time}`;
+  });
+
+  /** « 3 novembre 2026 · 10:00 » à partir de la date et de l'heure enregistrées. */
+  readonly whenLabel = (date: string, time: string | null): string => {
+    const d = new Date(`${date}T${time ?? '00:00'}`);
+    const day = new Intl.DateTimeFormat('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(d);
+    return time ? `${day} · ${time.slice(0, 5)}` : day;
+  };
 
   readonly statusLabel = appointmentStatusLabel;
   readonly statusClasses = appointmentStatusClasses;
@@ -75,7 +127,9 @@ export class ClientHome implements OnInit {
       },
       error: () => this.loadingHealthTips.set(false),
     });
-    this.siteContentService.getSettings().subscribe({ next: (settings) => this.settings.set(settings) });
+    this.siteContentService
+      .getSettings()
+      .subscribe({ next: (settings) => this.settings.set(settings) });
   }
 
   bookAppointment(): void {
