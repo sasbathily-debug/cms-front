@@ -1,0 +1,50 @@
+@keyframes dd-draw{0%{stroke-dashoffset:1}55%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
+@keyframes dd-move{0%{offset-distance:0%}55%{offset-distance:100%}100%{offset-distance:100%}}
+.dd-line{stroke-dasharray:1;stroke-dashoffset:1;animation:dd-draw 8s ease-in-out infinite}
+.dd-dot{offset-path:path('M10,150 C50,150 70,148 100,140 C130,132 140,70 175,66 C210,62 220,110 250,130 C270,142 285,150 300,150 C330,150 340,100 370,80 C395,64 410,100 430,125 C450,145 470,155 490,150 C510,146 525,140 550,138');animation:dd-move 8s ease-in-out infinite}
+@keyframes k1-key{0%,8%{transform:translateX(0)}35%,72%{transform:translateX(46px)}100%{transform:translateX(0)}}
+@keyframes k1-door{0%,40%{transform:scaleX(1)}55%,72%{transform:scaleX(0.16)}90%,100%{transform:scaleX(1)}}
+@keyframes k1-dots{0%,50%{transform:translateX(0);opacity:1}72%{transform:translateX(112px);opacity:.35}86%,100%{transform:translateX(0);opacity:1}}
+@keyframes k2-ghost{0%,100%{opacity:.25}50%{opacity:.7}}
+@keyframes k2-jit{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes k3-key{0%,8%{transform:translateX(0) rotate(0)}30%{transform:translateX(30px) rotate(0)}40%{transform:translateX(30px) rotate(-7deg)}50%{transform:translateX(30px) rotate(7deg)}60%{transform:translateX(30px) rotate(-5deg)}70%,86%{transform:translateX(30px) rotate(0)}100%{transform:translateX(0) rotate(0)}}
+@keyframes k3-door{0%,55%{transform:scaleX(1)}68%,80%{transform:scaleX(0.78)}92%,100%{transform:scaleX(1)}}
+.k-key1{animation:k1-key 7s ease-in-out infinite}
+.k-door1{transform-box:fill-box;transform-origin:left center;animation:k1-door 7s ease-in-out infinite}
+.k-dots1{animation:k1-dots 7s ease-in-out infinite}
+.k-ghost{animation:k2-ghost 3.5s ease-in-out infinite}
+.k-jit{animation:k2-jit 2.4s ease-in-out infinite}
+.k-key3{transform-box:fill-box;animation:k3-key 7s ease-in-out infinite}
+.k-door3{transform-box:fill-box;transform-origin:left center;animation:k3-door 7s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.dd-line{animation:none;stroke-dashoffset:0}.dd-dot{animation:none;offset-distance:100%}.k-key1,.k-door1,.k-dots1,.k-ghost,.k-jit,.k-key3,.k-door3{animation:none}.k-key1{transform:translateX(46px)}.k-door1{transform:scaleX(0.16)}}
+@keyframes gest-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.18)}}
+.gest-baby{transform-box:fill-box;transform-origin:center;animation:gest-pulse 3s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.gest-baby{animation:none!important}}
+@keyframes th-needle{0%,10%{transform:rotate(-62deg)}28%,48%{transform:rotate(0deg)}66%,86%{transform:rotate(62deg)}100%{transform:rotate(-62deg)}}
+.th-needle{transform:rotate(-62deg);animation:th-needle 15s ease-in-out infinite}
+@keyframes tl-1{0%,22%{opacity:1}28%,92%{opacity:0}98%,100%{opacity:1}}
+@keyframes tl-2{0%,22%{opacity:0}30%,50%{opacity:1}56%,100%{opacity:0}}
+@keyframes tl-3{0%,58%{opacity:0}66%,88%{opacity:1}94%,100%{opacity:0}}
+.tl{opacity:0}.tl1{animation:tl-1 15s ease-in-out infinite}.tl2{animation:tl-2 15s ease-in-out infinite}.tl3{animation:tl-3 15s ease-in-out infinite}
+@keyframes k-wob{0%,100%{transform:rotate(var(--a))}50%{transform:rotate(calc(var(--a) + 5deg))}}
+.k-n1{--a:-62deg;transform:rotate(-62deg);animation:k-wob 3.2s ease-in-out infinite}
+.k-n2{--a:-4deg;transform:rotate(-4deg);animation:k-wob 3.6s ease-in-out infinite}
+.k-n3{--a:56deg;transform:rotate(56deg);animation:k-wob 3s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.th-needle,.k-n1,.k-n2,.k-n3{animation:none!important}.th-needle{transform:rotate(0)}.tl{animation:none!important}.tl2{opacity:1}}
+@keyframes nod-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.25)}}
+.nod{transform-box:fill-box;transform-origin:center;animation:nod-pulse 3s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.nod{animation:none!important}}
+@keyframes lv-hl{0%{opacity:0}3%{opacity:1}15%{opacity:1}18%,100%{opacity:0}}
+.lv-hl{opacity:0;animation:lv-hl 18s ease-in-out infinite}
+.d1{animation-delay:0s}.d2{animation-delay:3s}.d3{animation-delay:6s}.d4{animation-delay:9s}.d5{animation-delay:12s}.d6{animation-delay:15s}
+@keyframes ob-tilt{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.ob-beam{transform:rotate(-7deg);animation:ob-tilt 6s ease-in-out infinite}
+@keyframes ob-tw{0%,100%{opacity:.25}50%{opacity:1}}
+.ob-s1{animation:ob-tw 3s ease-in-out infinite}.ob-s2{animation:ob-tw 3s ease-in-out 1s infinite}.ob-s3{animation:ob-tw 3s ease-in-out 2s infinite}
+@keyframes ob-flow{to{stroke-dashoffset:-24}}
+.ob-zig{stroke-dasharray:6 6;animation:ob-flow 2.4s linear infinite}
+@keyframes ob-ring{0%{transform:scale(.4);opacity:.7}100%{transform:scale(1.7);opacity:0}}
+.ob-ring{transform-box:fill-box;transform-origin:center;animation:ob-ring 3.2s ease-out infinite}.ob-ring2{animation-delay:1.6s}
+@keyframes ob-step{0%,10%{transform:translate(0,0)}22%,35%{transform:translate(38px,-22px)}47%,60%{transform:translate(76px,-44px)}72%,90%{transform:translate(114px,-66px)}100%{transform:translate(0,0)}}
+.ob-dot{animation:ob-step 8s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.lv-hl,.ob-beam,.ob-s1,.ob-s2,.ob-s3,.ob-zig,.ob-ring,.ob-dot{animation:none!important}.ob-s1,.ob-s2,.ob-s3{opacity:.8}.ob-ring{opacity:.3}.ob-beam{transform:rotate(0)}.ob-dot{transform:translate(114px,-66px)}}

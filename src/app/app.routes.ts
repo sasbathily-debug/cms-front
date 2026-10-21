@@ -40,6 +40,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pages/le-cabinet/le-cabinet').then((m) => m.LeCabinet),
   },
   {
+    path: 'specialites/:slug',
+    loadComponent: () => import('./features/pages/maladie/maladie').then((m) => m.Maladie),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
   },
