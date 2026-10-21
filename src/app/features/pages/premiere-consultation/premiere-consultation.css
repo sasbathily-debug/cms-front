@@ -1,19 +1,48 @@
 /* La liste « À apporter » se coche toute seule, une ligne après l'autre. */
 @keyframes ap-box {
-  0% { background: transparent; }
-  6%, 76% { background: #E0873F; }
-  83%, 100% { background: transparent; }
+  0% {
+    background: transparent;
+  }
+  6%,
+  76% {
+    background: #e0873f;
+  }
+  83%,
+  100% {
+    background: transparent;
+  }
 }
 @keyframes ap-tick {
-  0% { stroke-dashoffset: 1; }
-  6%, 76% { stroke-dashoffset: 0; }
-  83%, 100% { stroke-dashoffset: 1; }
+  0% {
+    stroke-dashoffset: 1;
+  }
+  6%,
+  76% {
+    stroke-dashoffset: 0;
+  }
+  83%,
+  100% {
+    stroke-dashoffset: 1;
+  }
 }
-.ap-box { animation: ap-box 12s ease-in-out infinite; }
-.ap-tick { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ap-tick 12s ease-in-out infinite; }
+.ap-box {
+  animation: ap-box 12s ease-in-out infinite;
+}
+.ap-tick {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ap-tick 12s ease-in-out infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .ap-box, .ap-tick { animation: none; }
-  .ap-tick { stroke-dashoffset: 0; }
-  .ap-box { background: #E0873F; }
+  .ap-box,
+  .ap-tick {
+    animation: none;
+  }
+  .ap-tick {
+    stroke-dashoffset: 0;
+  }
+  .ap-box {
+    background: #e0873f;
+  }
 }

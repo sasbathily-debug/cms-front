@@ -23,19 +23,42 @@ const DEFAULT_SUBTITLE =
 
 /** Texte d'exemple : les passages entre crochets sont à compléter avec la doctoresse. */
 const STATIC_FAQ: Omit<FaqView, 'open'>[] = [
-  { question: 'Comment réserver un rendez-vous ?', answer: "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp. Vous recevez une confirmation et un rappel avant le rendez-vous." },
-  { question: 'Que dois-je apporter ?', answer: 'Vos analyses récentes, vos ordonnances, la liste de vos médicaments et votre carnet de glycémie si vous en avez un.' },
-  { question: 'Faut-il une ordonnance pour consulter ?', answer: '[À confirmer par la doctoresse.]' },
-  { question: 'Quels moyens de paiement acceptez-vous ?', answer: '[Espèces, Wave, Orange Money, assurances : à confirmer.]' },
-  { question: 'Comment annuler ou déplacer un rendez-vous ?', answer: "Par téléphone, au moins [24 heures] à l'avance. [À confirmer]" },
-  { question: "Que faire en cas d'urgence ?", answer: 'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches. [Numéro à indiquer.]' },
+  {
+    question: 'Comment réserver un rendez-vous ?',
+    answer:
+      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp. Vous recevez une confirmation et un rappel avant le rendez-vous.",
+  },
+  {
+    question: 'Que dois-je apporter ?',
+    answer:
+      'Vos analyses récentes, vos ordonnances, la liste de vos médicaments et votre carnet de glycémie si vous en avez un.',
+  },
+  {
+    question: 'Faut-il une ordonnance pour consulter ?',
+    answer: '[À confirmer par la doctoresse.]',
+  },
+  {
+    question: 'Quels moyens de paiement acceptez-vous ?',
+    answer: '[Espèces, Wave, Orange Money, assurances : à confirmer.]',
+  },
+  {
+    question: 'Comment annuler ou déplacer un rendez-vous ?',
+    answer: "Par téléphone, au moins [24 heures] à l'avance. [À confirmer]",
+  },
+  {
+    question: "Que faire en cas d'urgence ?",
+    answer:
+      'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches. [Numéro à indiquer.]',
+  },
 ];
 
 function formatNextSlot(slot: AvailableSlotDto): string {
   const d = new Date(`${slot.date}T${slot.time}`);
   const today = new Date();
   const sameDay = d.toDateString() === today.toDateString();
-  const weekday = sameDay ? "aujourd'hui" : new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(d);
+  const weekday = sameDay
+    ? "aujourd'hui"
+    : new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(d);
   return `${weekday} ${slot.time.slice(0, 5).replace(':', 'h')}`;
 }
 
@@ -69,26 +92,59 @@ export class Home implements OnInit, OnDestroy {
     const split = Math.max(words.length - 3, 0);
     return words.map((word, index) => ({ word, delay: index * 0.22, underlined: index >= split }));
   });
-  readonly heroSubtitle = computed(() => this.site.settings()?.heroSubtitle?.trim() || DEFAULT_SUBTITLE);
+  readonly heroSubtitle = computed(
+    () => this.site.settings()?.heroSubtitle?.trim() || DEFAULT_SUBTITLE,
+  );
   readonly aboutImage = computed(() => this.site.settings()?.aboutImageUrl || null);
   readonly hoursLines = computed(() => this.site.openingHours().split('\n'));
 
   readonly etapes = [
-    { n: '01', titre: 'Vous réservez en ligne', texte: 'Créez votre compte en une minute, puis choisissez un créneau libre. Confirmation immédiate, rappel avant le rendez-vous.' },
-    { n: '02', titre: 'Vous êtes écouté', texte: 'Une vraie conversation, un examen complet, et des explications avec des mots simples.' },
-    { n: '03', titre: 'Vous repartez avec un plan', texte: 'Ordonnance, examens à faire et prochain rendez-vous, noirs sur blanc.' },
+    {
+      n: '01',
+      titre: 'Vous réservez en ligne',
+      texte:
+        'Créez votre compte en une minute, puis choisissez un créneau libre. Confirmation immédiate, rappel avant le rendez-vous.',
+    },
+    {
+      n: '02',
+      titre: 'Vous êtes écouté',
+      texte:
+        'Une vraie conversation, un examen complet, et des explications avec des mots simples.',
+    },
+    {
+      n: '03',
+      titre: 'Vous repartez avec un plan',
+      texte: 'Ordonnance, examens à faire et prochain rendez-vous, noirs sur blanc.',
+    },
   ];
 
   readonly articles = [
     { categorie: 'DIABÈTE', titre: 'Comprendre son HbA1c', tone: 'from-[#3A2418] to-[#1F1226]' },
-    { categorie: 'NUTRITION', titre: 'Manger équilibré avec la cuisine sénégalaise', tone: 'from-[#34203C] to-[#3A2418]' },
-    { categorie: 'THYROÏDE', titre: "Hypothyroïdie : les signes qu'on ne remarque pas", tone: 'from-[#4A2E1A] to-[#2A1930]' },
+    {
+      categorie: 'NUTRITION',
+      titre: 'Manger équilibré avec la cuisine sénégalaise',
+      tone: 'from-[#34203C] to-[#3A2418]',
+    },
+    {
+      categorie: 'THYROÏDE',
+      titre: "Hypothyroïdie : les signes qu'on ne remarque pas",
+      tone: 'from-[#4A2E1A] to-[#2A1930]',
+    },
   ];
 
   readonly avis = [
-    { texte: "« [Un avis de patient, avec son accord : ce qui l'a marqué dans la consultation.] »", auteur: '[Prénom], [ville ou quartier]' },
-    { texte: '« [Un autre avis : la clarté des explications, le suivi.] »', auteur: '[Prénom], [ville ou quartier]' },
-    { texte: '« [Un troisième avis, idéalement sur la première consultation.] »', auteur: '[Prénom], [ville ou quartier]' },
+    {
+      texte: "« [Un avis de patient, avec son accord : ce qui l'a marqué dans la consultation.] »",
+      auteur: '[Prénom], [ville ou quartier]',
+    },
+    {
+      texte: '« [Un autre avis : la clarté des explications, le suivi.] »',
+      auteur: '[Prénom], [ville ou quartier]',
+    },
+    {
+      texte: '« [Un troisième avis, idéalement sur la première consultation.] »',
+      auteur: '[Prénom], [ville ou quartier]',
+    },
   ];
 
   ngOnInit(): void {
@@ -96,7 +152,10 @@ export class Home implements OnInit, OnDestroy {
       next: (images) => {
         this.heroImages.set(images);
         if (images.length > 1) {
-          this.heroTimer = setInterval(() => this.activeHero.update((i) => (i + 1) % images.length), 6000);
+          this.heroTimer = setInterval(
+            () => this.activeHero.update((i) => (i + 1) % images.length),
+            6000,
+          );
         }
       },
       error: () => undefined,
@@ -105,16 +164,24 @@ export class Home implements OnInit, OnDestroy {
     const from = new Date();
     const to = new Date();
     to.setDate(to.getDate() + 45);
-    this.availability.getAvailableSlots(from.toISOString().slice(0, 10), to.toISOString().slice(0, 10)).subscribe({
-      next: (slots) => this.nextSlot.set(slots[0] ? formatNextSlot(slots[0]) : null),
-      error: () => undefined,
-    });
+    this.availability
+      .getAvailableSlots(from.toISOString().slice(0, 10), to.toISOString().slice(0, 10))
+      .subscribe({
+        next: (slots) => this.nextSlot.set(slots[0] ? formatNextSlot(slots[0]) : null),
+        error: () => undefined,
+      });
 
     // Les questions gérées par la doctoresse (espace admin) remplacent les exemples dès qu'il y en a.
     this.content.getFaq().subscribe({
       next: (items: FaqItemDto[]) => {
         if (items.length) {
-          this.faq.set(items.map((item, i) => ({ question: item.question, answer: item.answer, open: i === 0 })));
+          this.faq.set(
+            items.map((item, i) => ({
+              question: item.question,
+              answer: item.answer,
+              open: i === 0,
+            })),
+          );
         }
       },
       error: () => undefined,
@@ -128,6 +195,8 @@ export class Home implements OnInit, OnDestroy {
   }
 
   toggleFaq(index: number): void {
-    this.faq.update((list) => list.map((item, i) => (i === index ? { ...item, open: !item.open } : item)));
+    this.faq.update((list) =>
+      list.map((item, i) => (i === index ? { ...item, open: !item.open } : item)),
+    );
   }
 }

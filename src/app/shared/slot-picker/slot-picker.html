@@ -11,7 +11,9 @@
       }
     </div>
   } @else if (!hasSlots()) {
-    <p class="text-sm text-ink-600">Aucun créneau disponible pour le moment. Contactez le cabinet directement.</p>
+    <p class="text-sm text-ink-600">
+      Aucun créneau disponible pour le moment. Contactez le cabinet directement.
+    </p>
   } @else {
     <div class="mb-4 flex gap-2.5 overflow-x-auto pb-2">
       @for (chip of dayChips(); track chip.date) {
@@ -25,7 +27,9 @@
               : 'border-border-warm bg-white text-[#4A3F49] hover:border-forest-900'
           "
         >
-          <span class="text-[10px] font-medium uppercase tracking-wide opacity-80">{{ chip.weekday }}</span>
+          <span class="text-[10px] font-medium uppercase tracking-wide opacity-80">{{
+            chip.weekday
+          }}</span>
           <span class="font-display text-base font-bold">{{ chip.day }}</span>
           <span class="text-[10px] opacity-80">{{ chip.month }}</span>
         </button>

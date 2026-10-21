@@ -24,6 +24,8 @@ export class SiteSettings {
   });
 
   constructor() {
-    this.content.getSettings().subscribe({ next: (value) => this.settings.set(value), error: () => undefined });
+    this.content
+      .getSettings()
+      .subscribe({ next: (value) => this.settings.set(value), error: () => undefined });
   }
 }

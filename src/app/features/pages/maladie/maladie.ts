@@ -18,9 +18,12 @@ export class Maladie {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  private readonly slug = toSignal(this.route.paramMap.pipe(map((params) => params.get('slug') ?? '')), {
-    initialValue: '',
-  });
+  private readonly slug = toSignal(
+    this.route.paramMap.pipe(map((params) => params.get('slug') ?? '')),
+    {
+      initialValue: '',
+    },
+  );
 
   readonly content = computed<MaladieContent | null>(() => MALADIES[this.slug()] ?? null);
 

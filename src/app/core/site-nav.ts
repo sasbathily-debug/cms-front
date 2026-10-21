@@ -35,9 +35,24 @@ export const NAV_GROUPS: NavGroup[] = [
     label: 'Le cabinet',
     route: '/le-cabinet',
     links: [
-      { sym: 'Ap', label: 'À propos', route: '/a-propos', hint: 'Parcours et valeurs de la doctoresse' },
-      { sym: 'Éq', label: "L'équipe", route: '/le-cabinet', hint: 'Les personnes qui vous accueillent' },
-      { sym: 'In', label: 'Infos pratiques et accès', route: '/infos-pratiques', hint: 'Adresse, horaires, plan' },
+      {
+        sym: 'Ap',
+        label: 'À propos',
+        route: '/a-propos',
+        hint: 'Parcours et valeurs de la doctoresse',
+      },
+      {
+        sym: 'Éq',
+        label: "L'équipe",
+        route: '/le-cabinet',
+        hint: 'Les personnes qui vous accueillent',
+      },
+      {
+        sym: 'In',
+        label: 'Infos pratiques et accès',
+        route: '/infos-pratiques',
+        hint: 'Adresse, horaires, plan',
+      },
     ],
   },
   {
@@ -45,8 +60,18 @@ export const NAV_GROUPS: NavGroup[] = [
     label: 'Patients',
     route: '/premiere-consultation',
     links: [
-      { sym: 'Pv', label: 'Première visite', route: '/premiere-consultation', hint: 'Déroulé et documents à apporter' },
-      { sym: 'Ta', label: 'Tarifs et assurances', route: '/infos-pratiques', hint: 'Prix et modes de paiement' },
+      {
+        sym: 'Pv',
+        label: 'Première visite',
+        route: '/premiere-consultation',
+        hint: 'Déroulé et documents à apporter',
+      },
+      {
+        sym: 'Ta',
+        label: 'Tarifs et assurances',
+        route: '/infos-pratiques',
+        hint: 'Prix et modes de paiement',
+      },
       { sym: 'Fq', label: 'Questions fréquentes', route: '/faq', hint: 'Les réponses courtes' },
       { sym: 'Me', label: 'Mon espace', route: '/client', hint: 'Rendez-vous et documents' },
     ],

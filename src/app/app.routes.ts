@@ -21,19 +21,25 @@ export const routes: Routes = [
   },
   {
     path: 'specialites',
-    loadComponent: () => import('./features/pages/specialites/specialites').then((m) => m.Specialites),
+    loadComponent: () =>
+      import('./features/pages/specialites/specialites').then((m) => m.Specialites),
   },
   {
     path: 'premiere-consultation',
-    loadComponent: () => import('./features/pages/premiere-consultation/premiere-consultation').then((m) => m.PremiereConsultation),
+    loadComponent: () =>
+      import('./features/pages/premiere-consultation/premiere-consultation').then(
+        (m) => m.PremiereConsultation,
+      ),
   },
   {
     path: 'conseils-sante',
-    loadComponent: () => import('./features/pages/conseils-sante/conseils-sante').then((m) => m.ConseilsSante),
+    loadComponent: () =>
+      import('./features/pages/conseils-sante/conseils-sante').then((m) => m.ConseilsSante),
   },
   {
     path: 'infos-pratiques',
-    loadComponent: () => import('./features/pages/infos-pratiques/infos-pratiques').then((m) => m.InfosPratiques),
+    loadComponent: () =>
+      import('./features/pages/infos-pratiques/infos-pratiques').then((m) => m.InfosPratiques),
   },
   {
     path: 'le-cabinet',
@@ -45,7 +51,8 @@ export const routes: Routes = [
   },
   {
     path: 'rendez-vous',
-    loadComponent: () => import('./features/pages/rendez-vous/rendez-vous').then((m) => m.RendezVous),
+    loadComponent: () =>
+      import('./features/pages/rendez-vous/rendez-vous').then((m) => m.RendezVous),
   },
   {
     path: 'login',
@@ -61,7 +68,8 @@ export const routes: Routes = [
   },
   {
     path: 'set-password',
-    loadComponent: () => import('./features/auth/set-password/set-password').then((m) => m.SetPassword),
+    loadComponent: () =>
+      import('./features/auth/set-password/set-password').then((m) => m.SetPassword),
   },
   {
     path: 'profile',
@@ -70,23 +78,28 @@ export const routes: Routes = [
   },
   {
     path: 'client',
-    loadComponent: () => import('./features/client/client-home/client-home').then((m) => m.ClientHome),
+    loadComponent: () =>
+      import('./features/client/client-home/client-home').then((m) => m.ClientHome),
     canActivate: [authGuard, roleGuard('USER')],
   },
   {
     path: 'admin',
-    loadComponent: () => import('./features/admin/admin-shell/admin-shell').then((m) => m.AdminShell),
+    loadComponent: () =>
+      import('./features/admin/admin-shell/admin-shell').then((m) => m.AdminShell),
     canActivate: [authGuard, roleGuard('ADMIN')],
     children: [
       { path: '', redirectTo: 'appointments', pathMatch: 'full' },
       {
         path: 'appointments',
         loadComponent: () =>
-          import('./features/admin/admin-appointments/admin-appointments').then((m) => m.AdminAppointments),
+          import('./features/admin/admin-appointments/admin-appointments').then(
+            (m) => m.AdminAppointments,
+          ),
       },
       {
         path: 'services',
-        loadComponent: () => import('./features/admin/admin-services/admin-services').then((m) => m.AdminServices),
+        loadComponent: () =>
+          import('./features/admin/admin-services/admin-services').then((m) => m.AdminServices),
       },
       {
         path: 'faq',
@@ -94,21 +107,27 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        loadComponent: () => import('./features/admin/admin-settings/admin-settings').then((m) => m.AdminSettings),
+        loadComponent: () =>
+          import('./features/admin/admin-settings/admin-settings').then((m) => m.AdminSettings),
       },
       {
         path: 'health-tips',
         loadComponent: () =>
-          import('./features/admin/admin-health-tips/admin-health-tips').then((m) => m.AdminHealthTips),
+          import('./features/admin/admin-health-tips/admin-health-tips').then(
+            (m) => m.AdminHealthTips,
+          ),
       },
       {
         path: 'documents',
-        loadComponent: () => import('./features/admin/admin-documents/admin-documents').then((m) => m.AdminDocuments),
+        loadComponent: () =>
+          import('./features/admin/admin-documents/admin-documents').then((m) => m.AdminDocuments),
       },
       {
         path: 'availability',
         loadComponent: () =>
-          import('./features/admin/admin-availability/admin-availability').then((m) => m.AdminAvailability),
+          import('./features/admin/admin-availability/admin-availability').then(
+            (m) => m.AdminAvailability,
+          ),
       },
     ],
   },

@@ -48,9 +48,17 @@ export class RendezVous implements OnInit {
   readonly errorMessage = signal<string | null>(null);
 
   readonly etapes = [
-    { n: '1', titre: 'Choisissez', texte: 'un motif, un jour et une heure parmi les créneaux libres.' },
+    {
+      n: '1',
+      titre: 'Choisissez',
+      texte: 'un motif, un jour et une heure parmi les créneaux libres.',
+    },
     { n: '2', titre: 'Vérifiez', texte: 'vos coordonnées, déjà remplies depuis votre compte.' },
-    { n: '3', titre: 'Confirmez', texte: 'et recevez votre confirmation. Un rappel vous est envoyé avant le rendez-vous.' },
+    {
+      n: '3',
+      titre: 'Confirmez',
+      texte: 'et recevez votre confirmation. Un rappel vous est envoyé avant le rendez-vous.',
+    },
   ];
 
   readonly form = this.fb.group({
@@ -131,7 +139,9 @@ export class RendezVous implements OnInit {
         },
         error: (err) => {
           this.submitting.set(false);
-          this.errorMessage.set(err.error?.message || 'Une erreur est survenue, veuillez réessayer.');
+          this.errorMessage.set(
+            err.error?.message || 'Une erreur est survenue, veuillez réessayer.',
+          );
           if (err.status === 409) {
             this.form.patchValue({ preferredDate: '', preferredTime: '' });
             this.refreshSlots();

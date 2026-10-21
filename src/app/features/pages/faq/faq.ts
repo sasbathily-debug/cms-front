@@ -6,11 +6,7 @@ import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { SiteContentService } from '../../../core/services/site-content';
 import { FAQ_GROUPS, FaqGroup } from './faq.data';
 
-const normalize = (text: string): string =>
-  text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '');
+const normalize = (text: string): string => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 @Component({
   selector: 'app-faq',
@@ -28,7 +24,10 @@ export class Faq {
   private readonly cabinetGroup = signal<FaqGroup | null>(null);
 
   readonly bubbles = [
-    { q: 'Dois-je créer un compte pour réserver ?', a: 'Oui, en une minute, depuis la page de rendez-vous.' },
+    {
+      q: 'Dois-je créer un compte pour réserver ?',
+      a: 'Oui, en une minute, depuis la page de rendez-vous.',
+    },
     { q: 'Que dois-je apporter ?', a: 'Vos analyses récentes et la liste de vos médicaments.' },
     { q: "Et si j'ai une urgence ?", a: 'Appelez le SAMU au 1515. Ne passez pas par le site.' },
   ];
@@ -46,7 +45,9 @@ export class Faq {
     return this.allGroups()
       .map((group) => ({
         ...group,
-        items: group.items.filter((item) => normalize(item.question + ' ' + item.answer).includes(q)),
+        items: group.items.filter((item) =>
+          normalize(item.question + ' ' + item.answer).includes(q),
+        ),
       }))
       .filter((group) => group.items.length > 0);
   });
@@ -72,6 +73,9 @@ export class Faq {
 
   scrollTo(id: string): void {
     this.query.set('');
-    setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+    setTimeout(
+      () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      0,
+    );
   }
 }

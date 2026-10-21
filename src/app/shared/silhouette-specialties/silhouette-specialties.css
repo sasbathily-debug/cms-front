@@ -1,38 +1,286 @@
-.sil-wrap .gl{position:absolute;opacity:.18;transition:opacity .25s}
-.gl .dot{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;background:#E0873F;box-shadow:0 0 0 6px rgba(224,135,63,.28)}
-.gl .line{position:absolute;top:0;width:64px;height:1.5px;background:rgba(251,245,238,.7)}
-.gl .lab{position:absolute;top:-11px;white-space:nowrap;font:500 14px 'Inter',sans-serif;color:#FBF5EE}
-.gl.r .line{left:12px}.gl.r .lab{left:84px}.gl.l .line{right:12px}.gl.l .lab{right:84px}
-@keyframes gl-pulse{0%,100%{box-shadow:0 0 0 6px rgba(224,135,63,.28)}50%{box-shadow:0 0 0 14px rgba(224,135,63,.08)}}
-@keyframes gl-hy{0%,0.0%{opacity:.18}2.0%,14.2%{opacity:1}16.2%,100%{opacity:.18}}
-.sil-wrap .g-hy{animation:gl-hy 18s ease-in-out infinite}
-@keyframes gl-th{0%,16.6%{opacity:.18}18.6%,30.8%{opacity:1}32.8%,100%{opacity:.18}}
-.sil-wrap .g-th{animation:gl-th 18s ease-in-out infinite}
-@keyframes gl-fo{0%,33.2%{opacity:.18}35.2%,47.4%{opacity:1}49.4%,100%{opacity:.18}}
-.sil-wrap .g-fo{animation:gl-fo 18s ease-in-out infinite}
-@keyframes gl-pa{0%,49.8%{opacity:.18}51.8%,64.0%{opacity:1}66.0%,100%{opacity:.18}}
-.sil-wrap .g-pa{animation:gl-pa 18s ease-in-out infinite}
-@keyframes gl-su{0%,66.4%{opacity:.18}68.4%,80.6%{opacity:1}82.6%,100%{opacity:.18}}
-.sil-wrap .g-su{animation:gl-su 18s ease-in-out infinite}
-@keyframes gl-ov{0%,83.0%{opacity:.18}85.0%,97.2%{opacity:1}99.2%,100%{opacity:.18}}
-.sil-wrap .g-ov{animation:gl-ov 18s ease-in-out infinite}
-.sil-wrap .gl.on .dot,.sil-wrap .gl .dot{animation:gl-pulse 2.4s ease-in-out infinite}
-.sil-grid:has(.row:hover) .gl,.sil-grid:has(.row:focus-visible) .gl{animation:none;opacity:.18}
-.sil-grid:has(.row-di:hover) .g-pa{animation:none;opacity:1}
-.sil-grid:has(.row-di:focus-visible) .g-pa{animation:none;opacity:1}
-.sil-grid:has(.row-th:hover) .g-th{animation:none;opacity:1}
-.sil-grid:has(.row-th:focus-visible) .g-th{animation:none;opacity:1}
-.sil-grid:has(.row-ob:hover) .g-hy,.sil-grid:has(.row-ob:hover) .g-su{animation:none;opacity:1}
-.sil-grid:has(.row-ob:focus-visible) .g-hy,.sil-grid:has(.row-ob:focus-visible) .g-su{animation:none;opacity:1}
-.sil-grid:has(.row-nu:hover) .g-hy,.sil-grid:has(.row-nu:hover) .g-th,.sil-grid:has(.row-nu:hover) .g-fo,.sil-grid:has(.row-nu:hover) .g-pa,.sil-grid:has(.row-nu:hover) .g-su,.sil-grid:has(.row-nu:hover) .g-ov{animation:none;opacity:1}
-.sil-grid:has(.row-nu:focus-visible) .g-hy,.sil-grid:has(.row-nu:focus-visible) .g-th,.sil-grid:has(.row-nu:focus-visible) .g-fo,.sil-grid:has(.row-nu:focus-visible) .g-pa,.sil-grid:has(.row-nu:focus-visible) .g-su,.sil-grid:has(.row-nu:focus-visible) .g-ov{animation:none;opacity:1}
-.sil-grid:has(.row-ho:hover) .g-ov,.sil-grid:has(.row-ho:hover) .g-su,.sil-grid:has(.row-ho:hover) .g-hy{animation:none;opacity:1}
-.sil-grid:has(.row-ho:focus-visible) .g-ov,.sil-grid:has(.row-ho:focus-visible) .g-su,.sil-grid:has(.row-ho:focus-visible) .g-hy{animation:none;opacity:1}
-.sil-grid:has(.row-ch:hover) .g-fo,.sil-grid:has(.row-ch:hover) .g-su{animation:none;opacity:1}
-.sil-grid:has(.row-ch:focus-visible) .g-fo,.sil-grid:has(.row-ch:focus-visible) .g-su{animation:none;opacity:1}
-.row{transition:background .2s,border-color .2s,transform .2s}.row:hover,.row:focus-visible{background:#FFFFFF;border-color:#E0873F;transform:translateX(6px)}
-@media (prefers-reduced-motion: reduce){.sil-wrap .gl{animation:none!important;opacity:.85}.gl .dot{animation:none!important}.row{transition:none}}
-@keyframes sil-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-.sil-wrap>div{animation:sil-breathe 9s ease-in-out infinite;transform-origin:center 60%}
-@media (prefers-reduced-motion: reduce){.sil-wrap>div{animation:none!important}}
-@media (max-width:640px){.gl .line{width:34px}.gl.r .lab{left:54px}.gl.l .lab{right:54px}.gl .lab{font-size:12.5px;top:-10px}}
+.sil-wrap .gl {
+  position: absolute;
+  opacity: 0.18;
+  transition: opacity 0.25s;
+}
+.gl .dot {
+  position: absolute;
+  left: -9px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e0873f;
+  box-shadow: 0 0 0 6px rgba(224, 135, 63, 0.28);
+}
+.gl .line {
+  position: absolute;
+  top: 0;
+  width: 64px;
+  height: 1.5px;
+  background: rgba(251, 245, 238, 0.7);
+}
+.gl .lab {
+  position: absolute;
+  top: -11px;
+  white-space: nowrap;
+  font:
+    500 14px 'Inter',
+    sans-serif;
+  color: #fbf5ee;
+}
+.gl.r .line {
+  left: 12px;
+}
+.gl.r .lab {
+  left: 84px;
+}
+.gl.l .line {
+  right: 12px;
+}
+.gl.l .lab {
+  right: 84px;
+}
+@keyframes gl-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 6px rgba(224, 135, 63, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(224, 135, 63, 0.08);
+  }
+}
+@keyframes gl-hy {
+  0%,
+  0.0% {
+    opacity: 0.18;
+  }
+  2.0%,
+  14.2% {
+    opacity: 1;
+  }
+  16.2%,
+  100% {
+    opacity: 0.18;
+  }
+}
+.sil-wrap .g-hy {
+  animation: gl-hy 18s ease-in-out infinite;
+}
+@keyframes gl-th {
+  0%,
+  16.6% {
+    opacity: 0.18;
+  }
+  18.6%,
+  30.8% {
+    opacity: 1;
+  }
+  32.8%,
+  100% {
+    opacity: 0.18;
+  }
+}
+.sil-wrap .g-th {
+  animation: gl-th 18s ease-in-out infinite;
+}
+@keyframes gl-fo {
+  0%,
+  33.2% {
+    opacity: 0.18;
+  }
+  35.2%,
+  47.4% {
+    opacity: 1;
+  }
+  49.4%,
+  100% {
+    opacity: 0.18;
+  }
+}
+.sil-wrap .g-fo {
+  animation: gl-fo 18s ease-in-out infinite;
+}
+@keyframes gl-pa {
+  0%,
+  49.8% {
+    opacity: 0.18;
+  }
+  51.8%,
+  64.0% {
+    opacity: 1;
+  }
+  66.0%,
+  100% {
+    opacity: 0.18;
+  }
+}
+.sil-wrap .g-pa {
+  animation: gl-pa 18s ease-in-out infinite;
+}
+@keyframes gl-su {
+  0%,
+  66.4% {
+    opacity: 0.18;
+  }
+  68.4%,
+  80.6% {
+    opacity: 1;
+  }
+  82.6%,
+  100% {
+    opacity: 0.18;
+  }
+}
+.sil-wrap .g-su {
+  animation: gl-su 18s ease-in-out infinite;
+}
+@keyframes gl-ov {
+  0%,
+  83.0% {
+    opacity: 0.18;
+  }
+  85.0%,
+  97.2% {
+    opacity: 1;
+  }
+  99.2%,
+  100% {
+    opacity: 0.18;
+  }
+}
+.sil-wrap .g-ov {
+  animation: gl-ov 18s ease-in-out infinite;
+}
+.sil-wrap .gl.on .dot,
+.sil-wrap .gl .dot {
+  animation: gl-pulse 2.4s ease-in-out infinite;
+}
+.sil-grid:has(.row:hover) .gl,
+.sil-grid:has(.row:focus-visible) .gl {
+  animation: none;
+  opacity: 0.18;
+}
+.sil-grid:has(.row-di:hover) .g-pa {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-di:focus-visible) .g-pa {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-th:hover) .g-th {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-th:focus-visible) .g-th {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-ob:hover) .g-hy,
+.sil-grid:has(.row-ob:hover) .g-su {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-ob:focus-visible) .g-hy,
+.sil-grid:has(.row-ob:focus-visible) .g-su {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-nu:hover) .g-hy,
+.sil-grid:has(.row-nu:hover) .g-th,
+.sil-grid:has(.row-nu:hover) .g-fo,
+.sil-grid:has(.row-nu:hover) .g-pa,
+.sil-grid:has(.row-nu:hover) .g-su,
+.sil-grid:has(.row-nu:hover) .g-ov {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-nu:focus-visible) .g-hy,
+.sil-grid:has(.row-nu:focus-visible) .g-th,
+.sil-grid:has(.row-nu:focus-visible) .g-fo,
+.sil-grid:has(.row-nu:focus-visible) .g-pa,
+.sil-grid:has(.row-nu:focus-visible) .g-su,
+.sil-grid:has(.row-nu:focus-visible) .g-ov {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-ho:hover) .g-ov,
+.sil-grid:has(.row-ho:hover) .g-su,
+.sil-grid:has(.row-ho:hover) .g-hy {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-ho:focus-visible) .g-ov,
+.sil-grid:has(.row-ho:focus-visible) .g-su,
+.sil-grid:has(.row-ho:focus-visible) .g-hy {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-ch:hover) .g-fo,
+.sil-grid:has(.row-ch:hover) .g-su {
+  animation: none;
+  opacity: 1;
+}
+.sil-grid:has(.row-ch:focus-visible) .g-fo,
+.sil-grid:has(.row-ch:focus-visible) .g-su {
+  animation: none;
+  opacity: 1;
+}
+.row {
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
+}
+.row:hover,
+.row:focus-visible {
+  background: #ffffff;
+  border-color: #e0873f;
+  transform: translateX(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sil-wrap .gl {
+    animation: none !important;
+    opacity: 0.85;
+  }
+  .gl .dot {
+    animation: none !important;
+  }
+  .row {
+    transition: none;
+  }
+}
+@keyframes sil-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+.sil-wrap > div {
+  animation: sil-breathe 9s ease-in-out infinite;
+  transform-origin: center 60%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sil-wrap > div {
+    animation: none !important;
+  }
+}
+@media (max-width: 640px) {
+  .gl .line {
+    width: 34px;
+  }
+  .gl.r .lab {
+    left: 54px;
+  }
+  .gl.l .lab {
+    right: 54px;
+  }
+  .gl .lab {
+    font-size: 12.5px;
+    top: -10px;
+  }
+}

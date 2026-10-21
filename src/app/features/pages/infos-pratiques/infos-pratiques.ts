@@ -37,8 +37,18 @@ export class InfosPratiques {
   ];
 
   readonly blocs = [
-    { titre: 'Accès', texte: '[Repères pour trouver le cabinet : lieu connu, étage, entrée. Taxis ou bus à proximité.]' },
-    { titre: 'Stationnement et accessibilité', texte: '[Parking ? Accès pour personnes à mobilité réduite ? Ascenseur ?]' },
-    { titre: 'Assurances et mutuelles', texte: '[Liste des assurances et mutuelles acceptées, démarches de remboursement.]' },
+    {
+      titre: 'Accès',
+      texte:
+        '[Repères pour trouver le cabinet : lieu connu, étage, entrée. Taxis ou bus à proximité.]',
+    },
+    {
+      titre: 'Stationnement et accessibilité',
+      texte: '[Parking ? Accès pour personnes à mobilité réduite ? Ascenseur ?]',
+    },
+    {
+      titre: 'Assurances et mutuelles',
+      texte: '[Liste des assurances et mutuelles acceptées, démarches de remboursement.]',
+    },
   ];
 }

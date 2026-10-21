@@ -15,7 +15,9 @@ import { SPECIALTIES } from '../../core/specialties';
 export class SilhouetteSpecialties {
   readonly eyebrow = input('OÙ AGISSENT LES HORMONES ?');
   readonly title = input('Chaque spécialité a son organe');
-  readonly intro = input('Passez la souris sur une ligne pour voir où se situe le problème dans le corps.');
+  readonly intro = input(
+    'Passez la souris sur une ligne pour voir où se situe le problème dans le corps.',
+  );
 
   /** Affiche aussi la phrase de présentation et une flèche sur chaque ligne (version de l'accueil). */
   readonly detailed = input(false);

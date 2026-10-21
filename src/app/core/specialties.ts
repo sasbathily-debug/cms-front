@@ -19,7 +19,8 @@ export const SPECIALTIES: Specialty[] = [
     organ: "Le pancréas, qui fabrique l'insuline",
     route: '/specialites/diabete',
     text: 'Diabète de type 1, de type 2 ou gestationnel : un suivi pour garder une glycémie stable et prévenir les complications.',
-    signs: "soif intense, urines fréquentes, grande fatigue, ou une glycémie élevée découverte lors d'un bilan.",
+    signs:
+      "soif intense, urines fréquentes, grande fatigue, ou une glycémie élevée découverte lors d'un bilan.",
   },
   {
     key: 'th',

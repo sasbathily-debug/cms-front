@@ -10,7 +10,9 @@ import { RouterLink } from '@angular/router';
       <div
         class="mx-auto flex max-w-[1232px] flex-wrap items-center justify-between gap-8 rounded-[32px] bg-accent-500 px-6 py-12 sm:rounded-[48px] sm:px-12 sm:py-[72px] lg:px-16"
       >
-        <h2 class="m-0 max-w-[700px] text-balance font-display text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-forest-900 sm:text-5xl lg:text-[52px]">
+        <h2
+          class="m-0 max-w-[700px] text-balance font-display text-[2rem] font-bold leading-[1.05] tracking-[-0.03em] text-forest-900 sm:text-5xl lg:text-[52px]"
+        >
           {{ title() }}
         </h2>
         <a

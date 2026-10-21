@@ -11,10 +11,34 @@ import { CtaBand } from '../../../shared/cta-band/cta-band';
 })
 export class PremiereConsultation {
   readonly etapes = [
-    { n: '01', moment: 'AVANT', titre: 'Vous réservez en ligne', texte: 'Choisissez un jour et une heure depuis votre compte. Vous recevez la confirmation et un rappel avant le rendez-vous.' },
-    { n: '02', moment: "À L'ARRIVÉE", titre: 'Un accueil sans attente inutile', texte: "Présentez-vous quelques minutes avant l'heure. Nous ouvrons votre dossier et vous demandons vos antécédents." },
-    { n: '03', moment: 'PENDANT', titre: 'Une vraie conversation', texte: "La doctoresse vous écoute, vous examine, mesure poids, tension et glycémie si besoin, puis vous explique ce qu'elle constate." },
-    { n: '04', moment: 'APRÈS', titre: 'Un plan clair, par écrit', texte: "Vous repartez avec une ordonnance, la liste des examens à faire et la date du prochain rendez-vous." },
+    {
+      n: '01',
+      moment: 'AVANT',
+      titre: 'Vous réservez en ligne',
+      texte:
+        'Choisissez un jour et une heure depuis votre compte. Vous recevez la confirmation et un rappel avant le rendez-vous.',
+    },
+    {
+      n: '02',
+      moment: "À L'ARRIVÉE",
+      titre: 'Un accueil sans attente inutile',
+      texte:
+        "Présentez-vous quelques minutes avant l'heure. Nous ouvrons votre dossier et vous demandons vos antécédents.",
+    },
+    {
+      n: '03',
+      moment: 'PENDANT',
+      titre: 'Une vraie conversation',
+      texte:
+        "La doctoresse vous écoute, vous examine, mesure poids, tension et glycémie si besoin, puis vous explique ce qu'elle constate.",
+    },
+    {
+      n: '04',
+      moment: 'APRÈS',
+      titre: 'Un plan clair, par écrit',
+      texte:
+        'Vous repartez avec une ordonnance, la liste des examens à faire et la date du prochain rendez-vous.',
+    },
   ];
 
   readonly apporter = [
@@ -23,6 +47,6 @@ export class PremiereConsultation {
     'Vos ordonnances en cours ou la liste de vos médicaments',
     'Votre carnet de glycémie, si vous en avez un',
     'Vos radiographies ou échographies, si vous en avez',
-    'Vos questions, notées à l\'avance',
+    "Vos questions, notées à l'avance",
   ];
 }
