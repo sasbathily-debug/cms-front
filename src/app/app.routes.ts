@@ -28,6 +28,18 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pages/premiere-consultation/premiere-consultation').then((m) => m.PremiereConsultation),
   },
   {
+    path: 'conseils-sante',
+    loadComponent: () => import('./features/pages/conseils-sante/conseils-sante').then((m) => m.ConseilsSante),
+  },
+  {
+    path: 'infos-pratiques',
+    loadComponent: () => import('./features/pages/infos-pratiques/infos-pratiques').then((m) => m.InfosPratiques),
+  },
+  {
+    path: 'le-cabinet',
+    loadComponent: () => import('./features/pages/le-cabinet/le-cabinet').then((m) => m.LeCabinet),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
   },

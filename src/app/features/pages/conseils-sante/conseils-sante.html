@@ -1,0 +1,80 @@
+<app-public-page>
+  <section class="px-4 pb-8 pt-12 sm:px-6 sm:pt-16 lg:px-10 lg:pt-[72px]">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-[26px]">
+      <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">CONSEILS SANTÉ</span>
+      <h1 class="m-0 max-w-[900px] text-balance font-display text-[2.6rem] font-bold leading-[0.98] tracking-[-0.035em] text-forest-900 sm:text-6xl lg:text-[76px]">Comprendre sa santé, un article à la fois</h1>
+      <p class="m-0 max-w-[680px] text-lg leading-[1.6] text-[#4A3F49] sm:text-xl">Des textes courts, écrits par la doctoresse, pour mieux vivre avec le diabète, la thyroïde ou votre poids.</p>
+    </div>
+  </section>
+
+  @if (tips().length) {
+    <section class="px-4 py-8 sm:px-6 lg:px-10">
+      <div class="mx-auto flex max-w-[1160px] flex-col gap-6">
+        <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[34px]">Les bons réflexes au quotidien</h2>
+        <div class="grid gap-5 md:grid-cols-3">
+          @for (tip of tips(); track tip.id) {
+            <div class="flex flex-col gap-4 rounded-[26px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] p-[30px] text-white">
+              <span class="flex h-12 w-12 items-center justify-center rounded-full bg-accent-500 text-forest-900">
+                <app-health-icon [name]="tip.icon" />
+              </span>
+              <h3 class="m-0 font-display text-[22px] font-bold leading-tight">{{ tip.title }}</h3>
+              <p class="m-0 text-[15px] leading-[1.65] text-[#D8C9BB]">{{ tip.body }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <section class="px-4 pb-8 pt-12 sm:px-6 lg:px-10">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-6">
+      <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[34px]">Les articles</h2>
+      <div class="flex flex-wrap gap-2.5" role="group" aria-label="Filtrer par thème">
+        @for (category of categories; track category) {
+          <button
+            type="button"
+            (click)="selected.set(category)"
+            [attr.aria-pressed]="selected() === category"
+            class="rounded-full border px-5 py-2.5 text-sm font-medium transition"
+            [class]="selected() === category ? 'border-forest-900 bg-forest-900 text-white' : 'border-border-warm bg-white text-[#4A3F49] hover:border-forest-900'"
+          >
+            {{ category }}
+          </button>
+        }
+      </div>
+      <div class="rounded-[14px] bg-accent-100 px-[18px] py-3.5 text-sm leading-relaxed text-[#5A3410]">
+        Exemples d'articles : les textes sont à écrire ou à valider avec la doctoresse avant la mise en ligne.
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 pb-24 pt-6 sm:px-6 lg:px-10 lg:pb-28">
+    <div class="mx-auto grid max-w-[1160px] gap-6 md:grid-cols-2 lg:grid-cols-3">
+      @for (a of articles(); track a.title) {
+        <article class="flex flex-col overflow-hidden rounded-[28px] border border-border-warm bg-white">
+          <div class="flex h-[180px] items-end bg-gradient-to-br p-5" [class]="a.tone">
+            <span class="rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-[#F1C99B]">{{ a.category.toUpperCase() }}</span>
+          </div>
+          <div class="flex flex-col gap-2.5 p-7">
+            <span class="text-xs font-semibold tracking-[0.08em] text-accent-800">{{ a.category.toUpperCase() }} · {{ a.duration }}</span>
+            <h3 class="m-0 font-display text-[22px] font-bold leading-tight text-forest-900">{{ a.title }}</h3>
+            <p class="m-0 text-[14.5px] leading-[1.65] text-[#5B4F59]">{{ a.text }}</p>
+            <span class="mt-1 text-[13.5px] font-semibold text-ink-600">Article bientôt disponible</span>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="bg-forest-900 px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
+    <div class="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-8">
+      <div class="flex max-w-[640px] flex-col gap-3">
+        <h2 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-white sm:text-[40px]">Suivez le cabinet sur Instagram</h2>
+        <p class="m-0 text-[17px] leading-[1.65] text-[#E8DACE]">Des conseils courts et des réponses aux questions des patients. @dr_aissatou.m</p>
+      </div>
+      <a href="https://www.instagram.com/dr_aissatou.m/" target="_blank" rel="noopener noreferrer" class="rounded-full bg-accent-500 px-[34px] py-[18px] font-display text-base font-semibold text-forest-900 transition hover:bg-accent-600">Ouvrir Instagram</a>
+    </div>
+  </section>
+
+  <app-cta-band title="Une question qui n'est pas traitée ici ?" route="/contact" label="Nous contacter" />
+</app-public-page>
