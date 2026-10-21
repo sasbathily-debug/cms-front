@@ -4,15 +4,7 @@
     class="relative flex min-h-[680px] items-end overflow-hidden bg-[#140B19] sm:min-h-[780px] lg:min-h-[900px]"
   >
     <div class="hero-zoom absolute inset-0 z-0" aria-hidden="true">
-      @for (image of heroImages(); track image.id; let i = $index) {
-        <img
-          [src]="image.imageUrl | optimizedImage: 1920"
-          alt=""
-          class="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out"
-          [class.opacity-100]="i === activeHero()"
-          [class.opacity-0]="i !== activeHero()"
-        />
-      }
+      <img src="/img/photo-1.jpg" alt="" class="absolute inset-0 h-full w-full object-cover" />
     </div>
     <div
       class="absolute inset-0 z-0"
@@ -36,7 +28,7 @@
       <h1
         class="m-0 max-w-[900px] font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-6xl lg:text-[72px]"
       >
-        @for (w of heroWords(); track $index) {
+        @for (w of heroWords; track $index) {
           @if (w.underlined) {
             <span class="ul"
               ><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span>
@@ -48,7 +40,7 @@
         }
       </h1>
       <p class="m-0 max-w-[600px] text-lg leading-[1.6] text-[#E8DACE] sm:text-xl">
-        {{ heroSubtitle() }}
+        {{ heroSubtitle }}
       </p>
       <div class="mt-2 flex flex-wrap gap-3.5">
         <a
@@ -143,21 +135,10 @@
       >
         <div
           class="flex h-[420px] items-end rounded-[32px] bg-forest-800 bg-cover bg-center p-5 sm:h-[540px] lg:h-[600px]"
-          [style.background-image]="
-            aboutImage()
-              ? 'url(' + (aboutImage() | optimizedImage: 1000) + ')'
-              : 'linear-gradient(160deg, #3A2418 0%, #2A1930 100%)'
-          "
+          style="background-image: url(/img/photo-2.jpg)"
           role="img"
           aria-label="La doctoresse"
-        >
-          @if (!aboutImage()) {
-            <span
-              class="rounded-lg bg-[rgba(20,11,25,0.65)] px-3 py-2 text-xs tracking-[0.06em] text-[#F3EAE0]"
-              >PHOTO : la doctoresse [à fournir]</span
-            >
-          }
-        </div>
+        ></div>
         <div class="flex flex-col gap-[22px]">
           <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">LA DOCTORESSE</span>
           <h2
@@ -277,7 +258,12 @@
               routerLink="/conseils-sante"
               class="group flex flex-col overflow-hidden rounded-[26px] border border-border-warm bg-white transition hover:-translate-y-1"
             >
-              <div class="h-[180px] bg-gradient-to-br" [class]="a.tone"></div>
+              <div
+                class="h-[180px] bg-cover bg-center"
+                [style.background-image]="'url(' + a.photo + ')'"
+                role="img"
+                [attr.aria-label]="a.titre"
+              ></div>
               <div class="flex flex-col gap-2 p-6">
                 <span class="text-xs font-semibold tracking-[0.08em] text-accent-800">{{
                   a.categorie

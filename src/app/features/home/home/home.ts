@@ -1,15 +1,14 @@
-import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
-import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SiteContentService } from '../../../core/services/site-content';
 import { AvailabilityService } from '../../../core/services/availability';
 import { SiteSettings } from '../../../core/services/site-settings';
-import { FaqItemDto, HeroImageDto } from '../../../core/models/site-content.models';
+import { FaqItemDto } from '../../../core/models/site-content.models';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 
 interface FaqView {
@@ -18,8 +17,8 @@ interface FaqView {
   open: boolean;
 }
 
-const DEFAULT_TITLE = 'Comprendre votre corps, retrouver votre équilibre.';
-const DEFAULT_SUBTITLE =
+const HERO_TITLE = 'Suivre votre santé hormonale, simplement et dans la durée.';
+const HERO_SUBTITLE =
   "Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer, et un suivi que vous pouvez gérer en ligne.";
 
 /** Texte d'exemple : les passages entre crochets sont à compléter avec la doctoresse. */
@@ -65,20 +64,16 @@ function formatNextSlot(slot: AvailableSlotDto): string {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, PublicPage, SilhouetteSpecialties, CtaBand, OrangeThread, OptimizedImagePipe],
+  imports: [RouterLink, PublicPage, SilhouetteSpecialties, CtaBand, OrangeThread],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
-export class Home implements OnInit, OnDestroy {
+export class Home implements OnInit {
   private readonly content = inject(SiteContentService);
   private readonly availability = inject(AvailabilityService);
   private readonly sanitizer = inject(DomSanitizer);
   protected readonly site = inject(SiteSettings);
 
-  private heroTimer: ReturnType<typeof setInterval> | null = null;
-
-  readonly heroImages = signal<HeroImageDto[]>([]);
-  readonly activeHero = signal(0);
   readonly nextSlot = signal<string | null>(null);
   readonly faq = signal<FaqView[]>(STATIC_FAQ.map((item, i) => ({ ...item, open: i === 0 })));
 
@@ -86,17 +81,13 @@ export class Home implements OnInit, OnDestroy {
     'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
   );
 
-  readonly heroWords = computed(() => {
-    const title = this.site.settings()?.heroTitle?.trim() || DEFAULT_TITLE;
-    const words = title.split(/\s+/);
-    // Les trois derniers mots sont soulignés d'un trait orange qui se dessine.
-    const split = Math.max(words.length - 3, 0);
-    return words.map((word, index) => ({ word, delay: index * 0.22, underlined: index >= split }));
-  });
-  readonly heroSubtitle = computed(
-    () => this.site.settings()?.heroSubtitle?.trim() || DEFAULT_SUBTITLE,
-  );
-  readonly aboutImage = computed(() => this.site.settings()?.aboutImageUrl || null);
+  /** Titre de la maquette : les mots arrivent un par un, les trois derniers sont soulignés. */
+  readonly heroWords = HERO_TITLE.split(' ').map((word, index, words) => ({
+    word,
+    delay: index * 0.22,
+    underlined: index >= words.length - 3,
+  }));
+  readonly heroSubtitle = HERO_SUBTITLE;
   readonly hoursLines = computed(() => this.site.openingHours().split('\n'));
 
   readonly etapes = [
@@ -120,16 +111,16 @@ export class Home implements OnInit, OnDestroy {
   ];
 
   readonly articles = [
-    { categorie: 'DIABÈTE', titre: 'Comprendre son HbA1c', tone: 'from-[#3A2418] to-[#1F1226]' },
+    {
+      categorie: 'RAMADAN',
+      titre: 'Ramadan et diabète : bien se préparer',
+      photo: '/img/photo-3.jpg',
+    },
+    { categorie: 'DIABÈTE', titre: 'Comprendre son HbA1c', photo: '/img/photo-1.jpg' },
     {
       categorie: 'NUTRITION',
       titre: 'Manger équilibré avec la cuisine sénégalaise',
-      tone: 'from-[#34203C] to-[#3A2418]',
-    },
-    {
-      categorie: 'THYROÏDE',
-      titre: "Hypothyroïdie : les signes qu'on ne remarque pas",
-      tone: 'from-[#4A2E1A] to-[#2A1930]',
+      photo: '/img/photo-2.jpg',
     },
   ];
 
@@ -149,19 +140,6 @@ export class Home implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.content.getHeroImages().subscribe({
-      next: (images) => {
-        this.heroImages.set(images);
-        if (images.length > 1) {
-          this.heroTimer = setInterval(
-            () => this.activeHero.update((i) => (i + 1) % images.length),
-            6000,
-          );
-        }
-      },
-      error: () => undefined,
-    });
-
     const from = new Date();
     const to = new Date();
     to.setDate(to.getDate() + 45);
@@ -187,12 +165,6 @@ export class Home implements OnInit, OnDestroy {
       },
       error: () => undefined,
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.heroTimer !== null) {
-      clearInterval(this.heroTimer);
-    }
   }
 
   toggleFaq(index: number): void {
