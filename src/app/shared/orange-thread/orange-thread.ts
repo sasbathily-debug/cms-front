@@ -129,7 +129,7 @@ export class OrangeThread implements AfterViewInit, OnDestroy {
     const w = parent.clientWidth;
     const h = parent.clientHeight;
     const sections = Array.from(parent.children).filter(
-      (el): el is HTMLElement => el instanceof HTMLElement && el.tagName === 'SECTION',
+      (el): el is HTMLElement => el instanceof HTMLElement && el !== this.host.nativeElement,
     );
     if (sections.length < 2 || w === 0) {
       this.path.set('');

@@ -20,11 +20,22 @@ import { RouterLink } from '@angular/router';
             <p class="m-0 text-lg leading-relaxed text-[#3A2418]">{{ subtitle() }}</p>
           }
         </div>
-        <a
-          [routerLink]="route()"
-          class="rounded-full bg-forest-900 px-8 py-4 font-display text-[17px] font-semibold text-white transition hover:bg-forest-800 sm:px-10 sm:py-5"
-          >{{ label() }}</a
-        >
+        <div class="flex flex-col gap-3">
+          <a
+            [routerLink]="route()"
+            class="rounded-full bg-forest-900 px-8 py-4 text-center font-display text-[17px] font-semibold text-white transition hover:bg-forest-800 sm:px-10 sm:py-5"
+            >{{ label() }}</a
+          >
+          @if (secondaryLabel() && secondaryHref()) {
+            <a
+              [href]="secondaryHref()"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full border-[1.5px] border-forest-900 px-8 py-[14px] text-center font-display text-[17px] font-semibold text-forest-900 sm:px-10 sm:py-[18px]"
+              >{{ secondaryLabel() }}</a
+            >
+          }
+        </div>
       </div>
     </section>
   `,
@@ -34,4 +45,7 @@ export class CtaBand {
   readonly subtitle = input('');
   readonly label = input('Prendre rendez-vous');
   readonly route = input('/rendez-vous');
+  /** Second bouton facultatif (lien externe), par exemple WhatsApp. */
+  readonly secondaryLabel = input('');
+  readonly secondaryHref = input('');
 }

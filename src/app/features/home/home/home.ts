@@ -3,8 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
-import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
+import { HomeMobile } from '../home-mobile/home-mobile';
 import { AvailabilityService } from '../../../core/services/availability';
 import { ADDRESS_STREET, HOME_HOURS, SiteSettings } from '../../../core/services/site-settings';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
@@ -62,7 +62,7 @@ function formatNextSlot(slot: AvailableSlotDto): string {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, PublicPage, SilhouetteSpecialties, CtaBand, OrangeThread],
+  imports: [RouterLink, PublicPage, SilhouetteSpecialties, OrangeThread, HomeMobile],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
@@ -86,6 +86,17 @@ export class Home implements OnInit {
   }));
   readonly heroSubtitle = HERO_SUBTITLE;
   readonly hoursLines = HOME_HOURS;
+  readonly points = [
+    'Des explications avec des mots simples, autant de fois que nécessaire',
+    'Un plan écrit, adapté à votre alimentation et à votre quotidien',
+    'Un suivi régulier, avec rappel de rendez-vous la veille',
+  ];
+  readonly stats = [
+    { big: '[XX] ans', small: "d'expérience" },
+    { big: '[XXXX]', small: 'patients suivis' },
+    { big: '[Diplôme]', small: '[Université, pays]' },
+    { big: '[Société]', small: '[Affiliation professionnelle]' },
+  ];
   readonly addressStreet = ADDRESS_STREET;
 
   readonly etapes = [

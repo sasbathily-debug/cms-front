@@ -3,6 +3,8 @@
 >
   <div
     class="sil-wrap relative flex min-h-[460px] items-center justify-center rounded-[32px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] py-8 sm:min-h-[600px]"
+    [class.border]="variant() === 'dark'"
+    [class.border-white/15]="variant() === 'dark'"
   >
     <div class="relative w-[260px] sm:w-[300px]">
       <img
@@ -35,36 +37,66 @@
     >
   </div>
   <div class="flex flex-col gap-[22px]">
-    <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{ eyebrow() }}</span>
+    <span
+      class="text-xs font-semibold tracking-[0.12em]"
+      [class]="variant() === 'dark' ? 'text-[#F1C99B]' : 'text-accent-700'"
+      >{{ eyebrow() }}</span
+    >
     <h2
-      class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] text-forest-900 sm:text-[44px]"
+      class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] sm:text-[44px]"
+      [class]="variant() === 'dark' ? 'text-white' : 'text-forest-900'"
     >
       {{ title() }}
     </h2>
-    <p class="m-0 text-[17px] leading-[1.65] text-[#4A3F49]">{{ intro() }}</p>
+    <p
+      class="m-0 text-[17px] leading-[1.65]"
+      [class]="variant() === 'dark' ? 'text-[#E8DACE]' : 'text-[#4A3F49]'"
+    >
+      {{ intro() }}
+    </p>
     <div class="mt-1 flex flex-col gap-2.5">
       @for (row of rows; track row.key) {
         <a
           [routerLink]="row.route"
-          [class]="'row row-' + row.key"
-          class="flex items-center gap-4 rounded-[18px] border border-border-warm bg-cream-50 px-[18px] py-3.5 text-forest-900"
+          [class]="
+            'row row-' +
+            row.key +
+            (variant() === 'dark'
+              ? ' border-white/15 bg-white/[0.06] px-5 py-4 text-white'
+              : ' border-border-warm bg-cream-50 px-[18px] py-3.5 text-forest-900')
+          "
+          class="flex items-center gap-4 rounded-[18px] border"
         >
           <span
-            class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] bg-forest-900 font-display text-[17px] font-bold text-[#F1C99B]"
+            class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] font-display text-[17px] font-bold text-[#F1C99B]"
+            [class]="variant() === 'dark' ? 'bg-[rgba(241,201,155,0.16)]' : 'bg-forest-900'"
             >{{ row.sym }}</span
           >
-          <span class="flex min-w-0 flex-1 flex-col gap-0.5">
-            <span class="font-display text-lg font-bold">{{ row.title }}</span>
-            @if (detailed()) {
-              <span class="text-sm leading-snug text-[#4A3F49]">{{ row.homeText }}</span>
+          <span class="flex min-w-0 flex-1 flex-col gap-1">
+            <span
+              class="font-display font-bold"
+              [class]="variant() === 'dark' ? 'text-[19px]' : 'text-lg'"
+              >{{ row.title }}</span
+            >
+            @if (variant() === 'dark') {
+              <span class="text-[14.5px] leading-[1.55] text-[#E8DACE]">{{ row.homeText }}</span>
+              <span class="text-[12.5px] tracking-[0.02em] text-[#F1C99B]">{{ row.organ }}</span>
+            } @else {
+              <span class="text-sm text-ink-600">{{ row.organ }}</span>
             }
-            <span class="text-sm text-ink-600">{{ row.organ }}</span>
           </span>
-          @if (detailed()) {
-            <span aria-hidden="true" class="shrink-0 text-xl text-accent-700">→</span>
+          @if (variant() === 'dark') {
+            <span aria-hidden="true" class="shrink-0 text-[22px] text-[#F1C99B]">→</span>
           }
         </a>
       }
     </div>
+    @if (variant() === 'dark') {
+      <a
+        routerLink="/specialites"
+        class="mt-1.5 self-start text-[15px] font-semibold text-[#F1C99B] hover:underline"
+        >Toutes les spécialités →</a
+      >
+    }
   </div>
 </div>

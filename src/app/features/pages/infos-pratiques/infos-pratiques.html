@@ -129,5 +129,9 @@
     </div>
   </section>
 
-  <app-cta-band title="Une question avant de venir ?" route="/contact" label="Nous contacter" />
+  <app-cta-band
+    title="Une question avant de venir ?"
+    secondaryLabel="Écrire sur WhatsApp"
+    [secondaryHref]="site.whatsappHref()"
+  />
 </app-public-page>

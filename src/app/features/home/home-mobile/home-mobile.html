@@ -1,0 +1,430 @@
+<div class="bg-[#160B1B] text-[#241827]">
+  <!-- Photo plein écran -->
+  <section
+    class="relative flex h-[100svh] max-h-[900px] min-h-[640px] flex-col justify-end overflow-hidden bg-[#140B19]"
+  >
+    <div
+      class="hero-zoom absolute inset-0 z-0"
+      aria-hidden="true"
+      style="background: url(/img/photo-1.jpg) 68% center / cover"
+    ></div>
+    <div
+      class="absolute inset-0 z-0"
+      aria-hidden="true"
+      style="
+        background: linear-gradient(
+          180deg,
+          rgba(20, 11, 25, 0.45) 0%,
+          rgba(20, 11, 25, 0.35) 30%,
+          rgba(20, 11, 25, 0.9) 80%
+        );
+      "
+    ></div>
+    <div class="relative z-[1] flex flex-col gap-[18px] px-4 pb-32 pt-24">
+      <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]"
+        >ENDOCRINOLOGUE · SACRÉ-CŒUR, DAKAR</span
+      >
+      <h1
+        class="m-0 font-display text-[40px] font-bold leading-[1.02] tracking-[-0.03em] text-white"
+      >
+        @for (w of heroWords; track $index) {
+          @if (w.underlined) {
+            <span class="ul"
+              ><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span>
+            </span>
+          } @else {
+            <span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span
+            >{{ ' ' }}
+          }
+        }
+      </h1>
+      <p class="m-0 text-base leading-[1.55] text-[#E8DACE]">
+        Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer.
+      </p>
+      <div class="mt-1 flex flex-col gap-2.5">
+        <a
+          routerLink="/rendez-vous"
+          class="rounded-full bg-accent-500 p-[17px] text-center font-display text-base font-bold text-forest-900"
+          >Prendre rendez-vous</a
+        >
+        <a
+          routerLink="/premiere-consultation"
+          class="rounded-full border-[1.5px] border-white/65 p-[15px] text-center font-display text-base font-semibold text-white"
+          >Ma première visite</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- Carte : créneau, horaires, contact -->
+  <section class="relative z-[4] -mt-14 px-4 pb-10">
+    <div class="overflow-hidden rounded-[22px] shadow-[0_28px_56px_rgba(0,0,0,0.5)]">
+      <div class="flex items-center justify-center gap-2 bg-accent-500 px-6 py-3">
+        <span aria-hidden="true" class="h-2 w-2 shrink-0 rounded-full bg-forest-900"></span>
+        <span
+          class="text-center font-display text-[12.5px] font-bold leading-tight text-forest-900"
+        >
+          @if (slotLabel(); as slot) {
+            Créneau libre : {{ slot }}
+          } @else {
+            Réservez en ligne
+          }
+        </span>
+      </div>
+      <div class="flex flex-col gap-[18px] bg-cream-50 px-5 py-6">
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] font-semibold tracking-[0.1em] text-accent-700">HORAIRES</span>
+          <span class="text-[15.5px] leading-normal text-forest-900"
+            >Lun – Ven · 9h00 – 17h30<br />Samedi · 9h00 – 13h00</span
+          >
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] font-semibold tracking-[0.1em] text-accent-700"
+            >TÉLÉPHONE ET WHATSAPP</span
+          >
+          <a [href]="site.telHref()" class="font-display text-xl font-bold text-forest-900">{{
+            site.phone()
+          }}</a>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span>
+          <span class="text-[15.5px] leading-normal text-forest-900"
+            >[Rue et numéro], {{ site.address() }}</span
+          >
+        </div>
+        <a
+          routerLink="/rendez-vous"
+          class="rounded-full bg-forest-900 p-4 text-center font-display text-base font-semibold text-cream-50"
+          >Prendre rendez-vous</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <div class="relative">
+    <app-orange-thread />
+
+    <!-- Déclaration -->
+    <section class="flex flex-col gap-6 bg-cream-50 px-4 py-16">
+      <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
+        >NOTRE FAÇON DE SOIGNER</span
+      >
+      <p
+        class="m-0 font-display text-[29px] font-medium leading-[1.25] tracking-[-0.02em] text-forest-900"
+      >
+        Un cabinet où l'on prend le temps de comprendre, pour que chaque patient devienne acteur de
+        sa santé.
+      </p>
+      <a
+        routerLink="/a-propos"
+        class="rounded-full bg-forest-900 px-6 py-[15px] text-center font-display text-[15px] font-semibold text-white"
+        >Faire connaissance avec la doctoresse</a
+      >
+      <a
+        routerLink="/premiere-consultation"
+        class="rounded-full border-[1.5px] border-forest-900 px-6 py-3.5 text-center font-display text-[15px] font-semibold text-forest-900"
+        >La première consultation</a
+      >
+    </section>
+
+    <!-- Spécialités : silhouette + liste (on touche une ligne pour allumer l'organe) -->
+    <section class="bg-cream-50 px-4 pb-[72px]">
+      <div class="sil-grid flex flex-col gap-[22px]">
+        <div class="flex flex-col gap-2">
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">SPÉCIALITÉS</span>
+          <h2
+            class="m-0 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-forest-900"
+          >
+            Ce que je prends en charge
+          </h2>
+          <p class="m-0 text-[15.5px] leading-[1.6] text-[#4A3F49]">
+            Touchez une spécialité : l'organe concerné s'allume sur la silhouette.
+          </p>
+        </div>
+        <div
+          class="sil-wrap relative flex h-[380px] items-center justify-center rounded-[28px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)]"
+        >
+          <div class="relative w-[230px]">
+            <img
+              src="/img/silhouette.png"
+              alt="Silhouette assise du logo du cabinet, avec les glandes endocrines repérées"
+              class="block h-auto w-full opacity-90"
+            />
+            <div class="gl g-hy r" style="left: 50%; top: 18%">
+              <span class="dot"></span><span class="line"></span><span class="lab">Hypophyse</span>
+            </div>
+            <div class="gl g-th l" style="left: 50%; top: 34%">
+              <span class="dot"></span><span class="line"></span><span class="lab">Thyroïde</span>
+            </div>
+            <div class="gl g-fo r" style="left: 59%; top: 45%">
+              <span class="dot"></span><span class="line"></span><span class="lab">Foie</span>
+            </div>
+            <div class="gl g-pa l" style="left: 50%; top: 52%">
+              <span class="dot"></span><span class="line"></span><span class="lab">Pancréas</span>
+            </div>
+            <div class="gl g-su r" style="left: 50%; top: 60%">
+              <span class="dot"></span><span class="line"></span><span class="lab">Surrénales</span>
+            </div>
+            <div class="gl g-ov l" style="left: 50%; top: 68%">
+              <span class="dot"></span><span class="line"></span
+              ><span class="lab">Ovaires, testicules</span>
+            </div>
+          </div>
+          <span class="absolute bottom-3.5 left-[18px] text-[11.5px] text-[#B5A9B8]"
+            >Schéma simplifié, pas une carte anatomique.</span
+          >
+        </div>
+        <div class="flex flex-col gap-2.5">
+          @for (r of rows; track r.key) {
+            <div
+              class="rowm flex flex-col gap-3 rounded-[18px] border border-white/15 bg-forest-900 px-4 py-3.5 text-white"
+              [class]="'row-' + r.key"
+              tabindex="0"
+            >
+              <div class="flex items-center gap-3.5">
+                <span
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] bg-[rgba(241,201,155,0.16)] font-display text-base font-bold text-[#F1C99B]"
+                  >{{ r.sym }}</span
+                >
+                <span class="flex-1 font-display text-lg font-bold">{{ r.title }}</span>
+                <span
+                  class="plus shrink-0 text-[26px] leading-none text-[#F1C99B]"
+                  aria-hidden="true"
+                  >+</span
+                >
+              </div>
+              <div class="more flex-col gap-2 pl-[58px]">
+                <span class="text-[14.5px] leading-[1.55] text-[#E8DACE]">{{ r.homeText }}</span>
+                <span class="text-[12.5px] text-[#F1C99B]">{{ r.organ }}</span>
+                <a
+                  [routerLink]="r.route"
+                  class="mt-0.5 self-start rounded-full bg-accent-500 px-[18px] py-2.5 font-display text-sm font-bold text-forest-900"
+                  >Lire la page</a
+                >
+              </div>
+            </div>
+          }
+          <a
+            routerLink="/specialites"
+            class="pt-2 text-center text-[15px] font-semibold text-accent-800"
+            >Toutes les spécialités</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Parcours -->
+    <section class="mx-2 flex flex-col gap-8 rounded-[32px] bg-forest-900 px-5 py-14">
+      <div class="flex flex-col gap-2.5">
+        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">VOTRE PARCOURS</span>
+        <h2
+          class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
+        >
+          De la réservation au plan de soins, en trois temps
+        </h2>
+      </div>
+      @for (e of etapes; track e.n; let i = $index) {
+        <div
+          class="pcm flex gap-[18px] border-t border-white/15 pt-6"
+          [style.animation-delay]="0.48 + i * 3.12 + 's'"
+        >
+          <span class="shrink-0 font-display text-[44px] font-bold leading-[0.95] text-[#F1C99B]">{{
+            e.n
+          }}</span>
+          <div class="flex flex-col gap-2">
+            <h3 class="m-0 font-display text-xl font-bold text-white">{{ e.titre }}</h3>
+            <p class="m-0 text-[15px] leading-[1.65] text-[#E8DACE]">{{ e.texte }}</p>
+          </div>
+        </div>
+      }
+    </section>
+
+    <!-- La doctoresse -->
+    <section class="-mt-8 flex flex-col gap-[22px] bg-cream-50 px-4 pb-16 pt-24">
+      <div
+        class="h-[400px] rounded-[190px_190px_28px_28px] bg-cover bg-[position:35%_center]"
+        style="
+          background-image:
+            linear-gradient(180deg, rgba(31, 18, 38, 0) 55%, rgba(31, 18, 38, 0.5) 100%),
+            url(/img/photo-2.jpg);
+        "
+        role="img"
+        aria-label="La doctoresse"
+      ></div>
+      <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">LA DOCTORESSE</span>
+      <h2
+        class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+      >
+        Dr Aissatou Mamadou Fall
+      </h2>
+      <p class="m-0 text-[16.5px] leading-[1.7] text-[#4A3F49]">
+        Médecin endocrinologue et nutritionniste. [Une phrase sur son parcours : formation, années
+        d'exercice.]
+      </p>
+      <div class="grid grid-cols-2 gap-3">
+        @for (stat of stats; track stat.big) {
+          <div
+            class="flex flex-col gap-0.5 rounded-[18px] border border-border-warm bg-white p-[18px]"
+          >
+            <span class="font-display text-2xl font-bold text-forest-900">{{ stat.big }}</span>
+            <span class="text-[13px] text-ink-600">{{ stat.small }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Avis -->
+    <section class="flex flex-col gap-[22px] bg-cream-100 px-4 py-16">
+      <h2
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+      >
+        Ce que disent les patients
+      </h2>
+      @for (a of avis; track $index) {
+        <figure class="m-0 flex flex-col gap-[18px] rounded-[22px] bg-cream-50 p-[26px]">
+          <blockquote class="m-0 font-display text-lg font-medium leading-[1.45] text-forest-900">
+            {{ a.texte }}
+          </blockquote>
+          <figcaption class="text-[13.5px] text-ink-600">{{ a.auteur }}</figcaption>
+        </figure>
+      }
+      <p class="m-0 text-[12.5px] leading-relaxed text-[#5B4F59]">
+        À remplir avec de vrais avis, recueillis avec l'accord des patients.
+      </p>
+    </section>
+
+    <!-- Nous trouver -->
+    <section class="flex flex-col gap-4 bg-cream-50 px-4 py-16">
+      <h2
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+      >
+        Nous trouver à Sacré-Cœur
+      </h2>
+      <iframe
+        title="Plan d'accès au cabinet"
+        class="h-[220px] w-full rounded-3xl border-0"
+        loading="lazy"
+        [src]="mapUrl"
+      ></iframe>
+      <div class="flex flex-col gap-4 rounded-3xl border border-border-warm bg-white p-[26px]">
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">ADRESSE</span
+          ><span class="text-base leading-normal">[Rue et numéro], {{ site.address() }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">REPÈRE</span
+          ><span class="text-[15px] leading-normal text-[#4A3F49]"
+            >[À côté de quel lieu connu]</span
+          >
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">OUVERT</span
+          ><span class="text-[15px] leading-normal text-[#4A3F49]"
+            >Lun – Ven 9h00 – 17h30<br />Samedi 9h00 – 13h00</span
+          >
+        </div>
+        <a
+          routerLink="/infos-pratiques"
+          class="rounded-full bg-forest-900 p-[15px] text-center font-display text-[15px] font-semibold text-white"
+          >Itinéraire</a
+        >
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="flex flex-col gap-5 bg-cream-100 px-4 py-16">
+      <h2
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+      >
+        Avant de venir, vous vous demandez…
+      </h2>
+      <div class="flex flex-col rounded-[22px] bg-cream-50 px-[22px] py-1">
+        @for (item of faq(); track item.question; let i = $index) {
+          <div class="flex flex-col gap-2.5 border-b border-border-warm py-5 last:border-b-0">
+            <button
+              type="button"
+              (click)="toggleFaq(i)"
+              [attr.aria-expanded]="item.open"
+              class="flex w-full items-center justify-between gap-3 text-left"
+            >
+              <h3 class="m-0 font-display text-[16.5px] font-semibold leading-snug text-forest-900">
+                {{ item.question }}
+              </h3>
+              <span
+                aria-hidden="true"
+                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-forest-900 text-lg leading-none text-white"
+                >{{ item.open ? '–' : '+' }}</span
+              >
+            </button>
+            @if (item.open) {
+              <p class="m-0 text-[15px] leading-[1.65] text-[#5B4F59]">{{ item.answer }}</p>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Articles -->
+    <section class="flex flex-col gap-[22px] bg-cream-50 px-4 py-16">
+      <h2
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+      >
+        Comprendre pour mieux se soigner
+      </h2>
+      @for (a of articles; track a.titre) {
+        <a
+          routerLink="/conseils-sante"
+          class="flex items-center gap-4 rounded-[20px] border border-border-warm bg-white p-3 text-[#241827]"
+        >
+          <span
+            class="h-[92px] w-[92px] shrink-0 rounded-[14px] bg-cover bg-center"
+            [style.background-image]="'url(' + a.photo + ')'"
+            role="img"
+            [attr.aria-label]="a.titre"
+          ></span>
+          <span class="flex flex-col gap-1.5">
+            <span class="text-[11px] font-semibold tracking-[0.09em] text-accent-800">{{
+              a.categorie
+            }}</span>
+            <span class="font-display text-[17px] font-bold leading-snug text-forest-900">{{
+              a.titre
+            }}</span>
+          </span>
+        </a>
+      }
+      <a
+        routerLink="/conseils-sante"
+        class="pt-1 text-center text-[15px] font-semibold text-accent-800"
+        >Tous les articles</a
+      >
+    </section>
+  </div>
+
+  <!-- Appel final -->
+  <section class="bg-cream-50 px-2 pb-2">
+    <div class="flex flex-col gap-[18px] rounded-[32px] bg-accent-500 px-6 py-11">
+      <h2
+        class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-forest-900"
+      >
+        Prenez rendez-vous cette semaine.
+      </h2>
+      <p class="m-0 text-base leading-[1.6] text-forest-800">
+        En ligne en trois minutes, ou au {{ site.phone() }}.
+      </p>
+      <a
+        routerLink="/rendez-vous"
+        class="rounded-full bg-forest-900 p-[17px] text-center font-display text-base font-semibold text-white"
+        >Prendre rendez-vous</a
+      >
+      @if (site.whatsappHref()) {
+        <a
+          [href]="site.whatsappHref()"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-full border-[1.5px] border-forest-900 p-[15px] text-center font-display text-base font-semibold text-forest-900"
+          >Écrire sur WhatsApp</a
+        >
+      }
+    </div>
+  </section>
+</div>

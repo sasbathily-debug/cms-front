@@ -9,7 +9,10 @@ import { FloatingActions } from '../floating-actions/floating-actions';
   selector: 'app-public-page',
   imports: [AppHeader, HomeHeader, AppFooter, FloatingActions],
   template: `
-    <div class="min-h-screen bg-cream-50 font-body text-ink-900">
+    <div
+      class="min-h-screen font-body"
+      [class]="tileHeader() ? 'bg-[#140B19] text-[#F3EAE0]' : 'bg-cream-50 text-ink-900'"
+    >
       @if (!tileHeader()) {
         <app-header variant="public" />
       }

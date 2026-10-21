@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Auth } from '../../../core/services/auth';
+import { AuthMobileBar } from '../../../shared/auth-mobile-bar/auth-mobile-bar';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -20,7 +21,7 @@ function passwordsMatchValidator(control: AbstractControl): ValidationErrors | n
 }
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
+  imports: [ReactiveFormsModule, RouterLink, AuthMobileBar, AuthVisualPanel, AuthSteps],
   selector: 'app-set-password',
   styleUrl: './set-password.css',
   templateUrl: './set-password.html',

@@ -19,8 +19,8 @@ export class SilhouetteSpecialties {
     'Passez la souris sur une ligne pour voir où se situe le problème dans le corps.',
   );
 
-  /** Affiche aussi la phrase de présentation et une flèche sur chaque ligne (version de l'accueil). */
-  readonly detailed = input(false);
+  /** « dark » : version de l'accueil (fond prune, phrase de présentation et flèche sur chaque ligne). */
+  readonly variant = input<'light' | 'dark'>('light');
 
   readonly rows = SPECIALTIES;
 }
