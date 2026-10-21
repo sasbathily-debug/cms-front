@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
+import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SiteContentService } from '../../../core/services/site-content';
 import { AvailabilityService } from '../../../core/services/availability';
@@ -64,7 +65,7 @@ function formatNextSlot(slot: AvailableSlotDto): string {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, PublicPage, SilhouetteSpecialties, CtaBand, OptimizedImagePipe],
+  imports: [RouterLink, PublicPage, SilhouetteSpecialties, CtaBand, OrangeThread, OptimizedImagePipe],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
