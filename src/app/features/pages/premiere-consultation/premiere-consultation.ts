@@ -16,7 +16,7 @@ export class PremiereConsultation {
       moment: 'AVANT',
       titre: 'Vous réservez en ligne',
       texte:
-        'Choisissez un jour et une heure depuis votre compte. Vous recevez la confirmation et un rappel avant le rendez-vous.',
+        'Choisissez un jour et une heure, laissez vos coordonnées. Confirmation par e-mail et rappel la veille.',
     },
     {
       n: '02',

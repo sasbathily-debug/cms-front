@@ -33,13 +33,13 @@ export class Maladie {
     { label: this.content()?.crumb ?? '' },
   ]);
 
-  readonly sommaire = [
-    { id: 'definition', label: 'À quoi cela correspond' },
+  readonly sommaire = computed(() => [
+    { id: 'definition', label: this.content()?.definition.title ?? '' },
     { id: 'signes', label: 'Les signes qui doivent alerter' },
     { id: 'prise-en-charge', label: 'La prise en charge' },
     { id: 'quotidien', label: 'Le suivi au quotidien' },
     { id: 'questions', label: 'Questions fréquentes' },
-  ];
+  ]);
 
   constructor() {
     // Une adresse inconnue (ex. /specialites/xyz) renvoie vers la liste des spécialités.

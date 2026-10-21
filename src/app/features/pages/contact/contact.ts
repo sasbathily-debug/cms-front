@@ -29,7 +29,11 @@ export class Contact {
     consent: [false, Validators.requiredTrue],
   });
 
-  readonly hoursLines = computed(() => this.site.openingHours().split('\n'));
+  readonly hours = [
+    { jour: 'Lundi au vendredi', heures: '9h00 – 17h30' },
+    { jour: 'Samedi', heures: '9h00 – 13h00' },
+    { jour: 'Dimanche', heures: 'Fermé' },
+  ];
 
   /** Le formulaire ouvre l'application de messagerie avec le message prérempli. */
   get mailtoHref(): string {

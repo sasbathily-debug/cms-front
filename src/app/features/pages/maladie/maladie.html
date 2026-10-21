@@ -212,7 +212,7 @@
             class="flex flex-col gap-3 rounded-[22px] border border-border-warm bg-white p-[26px]"
           >
             <h2 class="m-0 font-display text-lg font-bold text-forest-900">Sur cette page</h2>
-            @for (item of sommaire; track item.id) {
+            @for (item of sommaire(); track item.id) {
               <button
                 type="button"
                 (click)="scrollTo(item.id)"

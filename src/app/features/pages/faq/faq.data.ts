@@ -18,7 +18,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         question: 'Comment prendre rendez-vous ?',
         answer:
-          "En ligne : créez votre compte, confirmez le code de vérification que vous recevez, puis choisissez votre créneau. Vous pouvez aussi appeler le cabinet pendant les horaires d'ouverture.",
+          "En ligne : créez votre compte avec votre numéro de téléphone, confirmez le code reçu par SMS, puis choisissez votre créneau. Vous pouvez aussi appeler le cabinet pendant les horaires d'ouverture.",
       },
       {
         question: 'Dois-je créer un compte pour réserver ?',
@@ -33,7 +33,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         question: "J'ai oublié mon mot de passe, que faire ?",
         answer:
-          "[Fonction « mot de passe oublié » à créer sur le site.] En attendant, appelez le cabinet : nous vous aidons à retrouver l'accès à votre compte.",
+          'Sur la page de connexion, choisissez « Mot de passe oublié » : un code est envoyé sur votre téléphone. [Fonction à créer sur le vrai site] En attendant, appelez le cabinet.',
       },
     ],
   },

@@ -5,10 +5,8 @@ import { PublicPage } from '../../../shared/public-page/public-page';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
-import { SiteContentService } from '../../../core/services/site-content';
 import { AvailabilityService } from '../../../core/services/availability';
-import { SiteSettings } from '../../../core/services/site-settings';
-import { FaqItemDto } from '../../../core/models/site-content.models';
+import { ADDRESS_STREET, HOME_HOURS, SiteSettings } from '../../../core/services/site-settings';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 
 interface FaqView {
@@ -26,7 +24,7 @@ const STATIC_FAQ: Omit<FaqView, 'open'>[] = [
   {
     question: 'Comment réserver un rendez-vous ?',
     answer:
-      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp. Vous recevez une confirmation et un rappel avant le rendez-vous.",
+      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp au +221 77 226 39 06. Vous recevez une confirmation par e-mail et un rappel la veille.",
   },
   {
     question: 'Que dois-je apporter ?',
@@ -43,7 +41,7 @@ const STATIC_FAQ: Omit<FaqView, 'open'>[] = [
   },
   {
     question: 'Comment annuler ou déplacer un rendez-vous ?',
-    answer: "Par téléphone, au moins [24 heures] à l'avance. [À confirmer]",
+    answer: "Depuis votre espace patient ou par téléphone, au moins [24 heures] à l'avance.",
   },
   {
     question: "Que faire en cas d'urgence ?",
@@ -69,7 +67,6 @@ function formatNextSlot(slot: AvailableSlotDto): string {
   templateUrl: './home.html',
 })
 export class Home implements OnInit {
-  private readonly content = inject(SiteContentService);
   private readonly availability = inject(AvailabilityService);
   private readonly sanitizer = inject(DomSanitizer);
   protected readonly site = inject(SiteSettings);
@@ -88,14 +85,15 @@ export class Home implements OnInit {
     underlined: index >= words.length - 3,
   }));
   readonly heroSubtitle = HERO_SUBTITLE;
-  readonly hoursLines = computed(() => this.site.openingHours().split('\n'));
+  readonly hoursLines = HOME_HOURS;
+  readonly addressStreet = ADDRESS_STREET;
 
   readonly etapes = [
     {
       n: '01',
       titre: 'Vous réservez en ligne',
       texte:
-        'Créez votre compte en une minute, puis choisissez un créneau libre. Confirmation immédiate, rappel avant le rendez-vous.',
+        'Créez votre compte en une minute, puis choisissez un créneau libre. Confirmation immédiate, rappel la veille.',
     },
     {
       n: '02',
@@ -149,22 +147,6 @@ export class Home implements OnInit {
         next: (slots) => this.nextSlot.set(slots[0] ? formatNextSlot(slots[0]) : null),
         error: () => undefined,
       });
-
-    // Les questions gérées par la doctoresse (espace admin) remplacent les exemples dès qu'il y en a.
-    this.content.getFaq().subscribe({
-      next: (items: FaqItemDto[]) => {
-        if (items.length) {
-          this.faq.set(
-            items.map((item, i) => ({
-              question: item.question,
-              answer: item.answer,
-              open: i === 0,
-            })),
-          );
-        }
-      },
-      error: () => undefined,
-    });
   }
 
   toggleFaq(index: number): void {

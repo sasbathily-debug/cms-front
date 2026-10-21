@@ -3,7 +3,25 @@ import { SiteContentService } from './site-content';
 import { SiteSettingsDto } from '../models/site-content.models';
 
 export const FALLBACK_PHONE = '+221 77 226 39 06';
-const FALLBACK_HOURS = 'Lundi – Vendredi : 9h00 – 17h30\nSamedi : 9h00 – 13h00\nDimanche : Fermé';
+
+/** Adresse et horaires de la maquette (la doctoresse doit les confirmer). */
+export const ADDRESS_STREET = '[Rue et numéro]';
+export const ADDRESS_CITY = 'Sacré-Cœur 3, Dakar';
+export const FOOTER_HOURS = [
+  'Lun – Ven : 9h00 – 17h30',
+  'Samedi : 9h00 – 13h00',
+  'Dimanche : fermé',
+];
+export const HOME_HOURS = ['Lun – Ven · 9h00 – 17h30', 'Samedi · 9h00 – 13h00'];
+export const WEEK_HOURS = [
+  { jour: 'Lundi', heures: '9h00 – 17h30' },
+  { jour: 'Mardi', heures: '9h00 – 17h30' },
+  { jour: 'Mercredi', heures: '9h00 – 17h30' },
+  { jour: 'Jeudi', heures: '9h00 – 17h30' },
+  { jour: 'Vendredi', heures: '9h00 – 17h30' },
+  { jour: 'Samedi', heures: '9h00 – 13h00' },
+  { jour: 'Dimanche', heures: 'Fermé' },
+];
 
 /** Charge les réglages du site une seule fois et les partage entre les pages. */
 @Service()
@@ -14,8 +32,7 @@ export class SiteSettings {
 
   readonly phone = computed(() => this.settings()?.phone || FALLBACK_PHONE);
   readonly email = computed(() => this.settings()?.email || 'contact@draissatoumamadou.com');
-  readonly address = computed(() => this.settings()?.address || 'Sacré-Cœur 3, Dakar, Sénégal');
-  readonly openingHours = computed(() => this.settings()?.openingHours || FALLBACK_HOURS);
+  readonly address = computed(() => ADDRESS_CITY);
   readonly telHref = computed(() => 'tel:' + this.phone().replace(/[^+\d]/g, ''));
   readonly whatsappHref = computed(() => {
     const raw = this.settings()?.whatsappNumber || this.phone();

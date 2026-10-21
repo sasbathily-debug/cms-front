@@ -79,7 +79,7 @@
         <div class="flex flex-col gap-1.5">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">HORAIRES</span>
           <span class="text-[15px] leading-relaxed text-ink-900">
-            @for (line of hoursLines(); track $index) {
+            @for (line of hoursLines; track $index) {
               {{ line }}<br />
             }
           </span>
@@ -96,7 +96,7 @@
         <div class="flex flex-col gap-1.5">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span>
           <span class="text-[15px] leading-relaxed text-ink-900"
-            >[Rue et numéro]<br />{{ site.address() }}</span
+            >{{ addressStreet }}<br />{{ site.address() }}</span
           >
         </div>
         <a
@@ -323,7 +323,7 @@
           <div class="flex flex-col gap-1">
             <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span
             ><span class="text-base leading-relaxed text-ink-900"
-              >[Rue et numéro]<br />{{ site.address() }}</span
+              >{{ addressStreet }}<br />{{ site.address() }}</span
             >
           </div>
           <div class="flex flex-col gap-1">
@@ -373,11 +373,6 @@
           <p class="m-0 text-base leading-relaxed text-ink-600">
             Une autre question ? Appelez le cabinet ou écrivez-nous sur WhatsApp.
           </p>
-          <a
-            routerLink="/faq"
-            class="mt-1 font-display text-[15px] font-semibold text-accent-800 hover:underline"
-            >Toutes les questions →</a
-          >
         </div>
         <div class="flex flex-col">
           @for (item of faq(); track item.question; let i = $index) {
@@ -409,5 +404,8 @@
     </section>
   </div>
 
-  <app-cta-band title="Prenez soin de votre santé dès cette semaine." />
+  <app-cta-band
+    title="Prenez soin de votre santé dès cette semaine."
+    subtitle="Réservez en ligne en trois minutes. Vous recevez la confirmation immédiatement."
+  />
 </app-public-page>
