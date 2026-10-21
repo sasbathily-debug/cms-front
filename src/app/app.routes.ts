@@ -24,6 +24,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pages/specialites/specialites').then((m) => m.Specialites),
   },
   {
+    path: 'premiere-consultation',
+    loadComponent: () => import('./features/pages/premiere-consultation/premiere-consultation').then((m) => m.PremiereConsultation),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
   },
