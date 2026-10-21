@@ -18,6 +18,7 @@ export class Login {
 
   readonly errorMessage = signal<string | null>(null);
   readonly loading = signal(false);
+  readonly showPassword = signal(false);
   readonly returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
 
   readonly form = this.fb.group({

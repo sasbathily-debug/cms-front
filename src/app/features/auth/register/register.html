@@ -1,30 +1,35 @@
 <div class="grid min-h-screen bg-cream-50 lg:grid-cols-2">
   <app-auth-visual-panel />
 
-  <div class="flex items-center justify-center px-4 py-12 sm:px-6">
-    <div class="w-full max-w-md">
-      <div class="mb-8 flex flex-col items-center gap-3 text-center lg:items-start lg:text-left">
-        <div
-          class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-900 lg:hidden"
-        >
-          <img src="/logo/logo-icon-light.png" alt="Logo" class="h-2/3 w-2/3 object-contain" />
-        </div>
-        <div>
-          <h1 class="font-display text-2xl font-bold text-forest-900">Créer votre compte</h1>
-          <p class="mt-1 text-sm text-ink-600">Quelques informations pour commencer votre suivi</p>
-        </div>
-      </div>
+  <div class="relative flex items-center justify-center px-4 py-14 sm:px-10">
+    <a
+      routerLink="/"
+      class="absolute right-5 top-6 text-[14.5px] font-semibold text-[#4A3F49] hover:text-forest-900 sm:right-10 sm:top-8"
+      >← Retour à l'accueil</a
+    >
 
+    <div class="flex w-full max-w-[440px] flex-col gap-[26px]">
       <app-auth-steps [step]="1" />
 
-      <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-6">
-        <div class="rounded-2xl border border-border-warm bg-white p-5 shadow-sm sm:p-6">
-          <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-accent-600">
-            Vos informations
-          </div>
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label for="register-firstName" class="mb-2 block text-sm font-medium text-ink-900"
+      <div class="flex flex-col gap-2">
+        <h1
+          class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+        >
+          Créer votre compte
+        </h1>
+        <p class="m-0 text-base leading-[1.55] text-[#4A3F49]">
+          Quelques informations pour commencer votre suivi.
+        </p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
+        <div class="flex flex-col gap-4 rounded-[22px] border border-border-warm bg-white p-[22px]">
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
+            >VOS INFORMATIONS</span
+          >
+          <div class="grid gap-3.5 sm:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <label for="register-firstName" class="text-[14.5px] font-semibold text-forest-900"
                 >Prénom</label
               >
               <input
@@ -32,19 +37,13 @@
                 type="text"
                 formControlName="firstName"
                 autocomplete="given-name"
-                class="w-full rounded-[14px] border-[1.5px] px-4 py-3.5 text-base text-ink-900 transition focus:outline-none focus:ring-4"
-                [class]="
-                  form.controls.firstName.invalid && form.controls.firstName.touched
-                    ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20'
-                    : 'border-border-warm focus:border-accent-500 focus:ring-accent-500/20'
-                "
+                placeholder="Awa"
+                class="rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                [class]="fieldClass('firstName')"
               />
-              @if (form.controls.firstName.invalid && form.controls.firstName.touched) {
-                <p class="mt-1.5 text-xs text-red-600">Le prénom est requis</p>
-              }
             </div>
-            <div>
-              <label for="register-lastName" class="mb-2 block text-sm font-medium text-ink-900"
+            <div class="flex flex-col gap-2">
+              <label for="register-lastName" class="text-[14.5px] font-semibold text-forest-900"
                 >Nom</label
               >
               <input
@@ -52,81 +51,84 @@
                 type="text"
                 formControlName="lastName"
                 autocomplete="family-name"
-                class="w-full rounded-[14px] border-[1.5px] px-4 py-3.5 text-base text-ink-900 transition focus:outline-none focus:ring-4"
-                [class]="
-                  form.controls.lastName.invalid && form.controls.lastName.touched
-                    ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20'
-                    : 'border-border-warm focus:border-accent-500 focus:ring-accent-500/20'
-                "
+                placeholder="Diop"
+                class="rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                [class]="fieldClass('lastName')"
               />
-              @if (form.controls.lastName.invalid && form.controls.lastName.touched) {
-                <p class="mt-1.5 text-xs text-red-600">Le nom est requis</p>
-              }
             </div>
           </div>
         </div>
 
-        <div class="rounded-2xl border border-border-warm bg-white p-5 shadow-sm sm:p-6">
-          <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-accent-600">
-            Connexion
-          </div>
-
-          <div class="mb-4">
-            <label for="register-email" class="mb-2 block text-sm font-medium text-ink-900"
-              >Email</label
+        <div class="flex flex-col gap-4 rounded-[22px] border border-border-warm bg-white p-[22px]">
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">VOTRE NUMÉRO</span>
+          <div class="flex flex-col gap-2">
+            <label for="register-phone" class="text-[14.5px] font-semibold text-forest-900"
+              >Téléphone</label
             >
+            <div class="flex gap-2.5">
+              <span
+                class="flex shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-3.5 py-[15px] text-base font-semibold text-forest-900"
+              >
+                +221
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6B5F68"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
+              <input
+                id="register-phone"
+                type="tel"
+                formControlName="phone"
+                autocomplete="tel-national"
+                placeholder="77 000 00 00"
+                class="min-w-0 flex-1 rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                [class]="fieldClass('phone')"
+              />
+            </div>
+            <span class="text-[13px] text-ink-600"
+              >Nous vous envoyons un code de vérification à ce numéro.</span
+            >
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-baseline justify-between">
+              <label for="register-email" class="text-[14.5px] font-semibold text-forest-900"
+                >E-mail</label
+              >
+              <span class="text-[13.5px] font-semibold text-accent-800">Facultatif</span>
+            </div>
             <input
               id="register-email"
               type="email"
               formControlName="email"
               autocomplete="email"
-              class="w-full rounded-[14px] border-[1.5px] px-4 py-3.5 text-base text-ink-900 transition focus:outline-none focus:ring-4"
-              [class]="
-                form.controls.email.invalid && form.controls.email.touched
-                  ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20'
-                  : 'border-border-warm focus:border-accent-500 focus:ring-accent-500/20'
-              "
+              placeholder="vous@exemple.com"
+              class="rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+              [class]="fieldClass('email')"
             />
-            @if (form.controls.email.invalid && form.controls.email.touched) {
-              <p class="mt-1.5 text-xs text-red-600">Adresse email invalide</p>
-            }
-          </div>
-
-          <div class="mb-4">
-            <label for="register-phone" class="mb-2 block text-sm font-medium text-ink-900"
-              >Téléphone</label
+            <span class="text-[13px] text-ink-600"
+              >Pour recevoir aussi vos confirmations de rendez-vous par e-mail.</span
             >
-            <input
-              id="register-phone"
-              type="tel"
-              formControlName="phone"
-              autocomplete="tel"
-              placeholder="77 000 00 00"
-              class="w-full rounded-[14px] border-[1.5px] px-4 py-3.5 text-base text-ink-900 transition focus:outline-none focus:ring-4"
-              [class]="
-                form.controls.phone.invalid && form.controls.phone.touched
-                  ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20'
-                  : 'border-border-warm focus:border-accent-500 focus:ring-accent-500/20'
-              "
-            />
-            <p class="mt-1.5 text-xs text-ink-600">
-              Utilisé pour recevoir votre code de vérification.
-            </p>
-            @if (form.controls.phone.invalid && form.controls.phone.touched) {
-              <p class="mt-1.5 text-xs text-red-600">Le téléphone est requis</p>
-            }
           </div>
         </div>
 
         @if (errorMessage()) {
-          <div class="rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-600">
-            <p>{{ errorMessage() }}</p>
+          <div class="rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-600" role="alert">
+            {{ errorMessage() }}
             @if (unverifiedEmail()) {
               <a
-                routerLink="/verify-otp"
-                [queryParams]="{ email: unverifiedEmail(), returnUrl }"
-                class="mt-1.5 inline-block font-semibold underline hover:text-red-700"
-                >Recevoir un nouveau code de vérification</a
+                [routerLink]="['/verify-otp']"
+                [queryParams]="{ email: unverifiedEmail() }"
+                class="ml-1 font-semibold underline"
+                >Saisir le code de vérification</a
               >
             }
           </div>
@@ -135,17 +137,17 @@
         <button
           type="submit"
           [disabled]="loading()"
-          class="w-full rounded-full bg-accent-500 px-4 py-4 font-display text-base font-bold text-forest-900 transition hover:bg-accent-600 disabled:opacity-50"
+          class="rounded-full bg-accent-500 p-[17px] text-center font-display text-[17px] font-bold text-forest-900 transition hover:bg-accent-600 disabled:opacity-50"
         >
-          {{ loading() ? 'Envoi...' : 'Continuer' }}
+          {{ loading() ? 'Envoi…' : 'Continuer' }}
         </button>
 
-        <p class="text-center text-sm text-ink-600">
+        <p class="m-0 text-center text-[15px] text-[#4A3F49]">
           Déjà un compte ?
           <a
             routerLink="/login"
             [queryParams]="returnUrl ? { returnUrl } : {}"
-            class="font-semibold text-accent-800 hover:underline"
+            class="font-semibold text-accent-800 underline underline-offset-[3px]"
             >Se connecter</a
           >
         </p>

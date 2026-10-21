@@ -25,13 +25,29 @@ export class Register {
   readonly form = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.email]],
     phone: ['', [Validators.required]],
   });
+
+  /** Bordure grise, ou rouge quand le champ a été touché et reste invalide. */
+  fieldClass(name: 'firstName' | 'lastName' | 'email' | 'phone'): string {
+    const control = this.form.controls[name];
+    return control.invalid && control.touched
+      ? 'border-red-400 focus:border-red-400'
+      : 'border-[#D9C8B8] focus:border-accent-500';
+  }
 
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+    // Maquette : l'e-mail est facultatif. Tant que le code n'est pas envoyé par SMS, le serveur
+    // en a besoin pour envoyer le code de vérification.
+    if (!this.form.getRawValue().email) {
+      this.errorMessage.set(
+        "L'envoi du code par SMS n'est pas encore branché : indiquez votre e-mail pour recevoir le code.",
+      );
       return;
     }
 
@@ -50,7 +66,7 @@ export class Register {
       .subscribe({
         next: () => {
           this.loading.set(false);
-          const queryParams: Record<string, string> = { email: value.email! };
+          const queryParams: Record<string, string> = { email: value.email!, phone: value.phone! };
           if (this.returnUrl) {
             queryParams['returnUrl'] = this.returnUrl;
           }

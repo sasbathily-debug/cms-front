@@ -13,7 +13,7 @@ export class AuthVisualPanel {
 
   readonly points = [
     'Réservez un créneau en quelques clics',
-    'Recevez un rappel avant chaque rendez-vous',
-    'Retrouvez vos ordonnances et comptes rendus',
+    'Recevez un rappel la veille de chaque rendez-vous',
+    "Retrouvez l'historique de vos consultations",
   ];
 }

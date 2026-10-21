@@ -7,8 +7,9 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Auth } from '../../../core/services/auth';
+import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 function passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password')?.value;
@@ -19,7 +20,7 @@ function passwordsMatchValidator(control: AbstractControl): ValidationErrors | n
 }
 
 @Component({
-  imports: [ReactiveFormsModule, AuthSteps],
+  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
   selector: 'app-set-password',
   styleUrl: './set-password.css',
   templateUrl: './set-password.html',
@@ -31,6 +32,8 @@ export class SetPassword {
   private readonly route = inject(ActivatedRoute);
 
   readonly email = signal('');
+  readonly phone = signal('');
+  readonly showPassword = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly loading = signal(false);
 
@@ -47,9 +50,15 @@ export class SetPassword {
 
   constructor() {
     this.email.set(this.route.snapshot.queryParamMap.get('email') ?? '');
+    this.phone.set(this.route.snapshot.queryParamMap.get('phone') ?? '');
     this.form.controls.password.valueChanges.subscribe((value) =>
       this.passwordValue.set(value ?? ''),
     );
+  }
+
+  /** Ce qui s'affiche sous le titre : le numéro saisi, ou l'e-mail à défaut. */
+  recipient(): string {
+    return this.phone() ? `+221 ${this.phone()}` : this.email();
   }
 
   submit(): void {
