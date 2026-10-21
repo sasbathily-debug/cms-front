@@ -1,0 +1,49 @@
+<app-public-page>
+  <section class="px-4 pb-12 pt-12 sm:px-6 sm:pt-16 lg:px-10 lg:pb-14 lg:pt-[72px]">
+    <div class="mx-auto flex max-w-[1160px] flex-wrap items-end justify-between gap-10">
+      <div class="flex flex-[1_1_560px] flex-col gap-[26px]">
+        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">SPÉCIALITÉS</span>
+        <h1 class="m-0 text-balance font-display text-[2.6rem] font-bold leading-[0.98] tracking-[-0.035em] text-forest-900 sm:text-6xl lg:text-[76px]">Les maladies que je prends en charge</h1>
+        <p class="m-0 max-w-[620px] text-lg leading-[1.6] text-[#4A3F49] sm:text-xl">
+          L'endocrinologie s'intéresse aux hormones et au métabolisme. Chaque page explique la maladie, le déroulement du suivi et quand venir sans attendre.
+        </p>
+      </div>
+      <div class="flex w-full flex-col gap-3.5 rounded-[28px] bg-forest-900 p-[30px] sm:w-auto sm:flex-[0_1_340px]">
+        <span class="font-display text-[22px] font-bold leading-tight text-white">Vous hésitez sur votre situation ?</span>
+        <span class="text-[15px] leading-relaxed text-[#E8DACE]">Écrivez-nous ou appelez : nous vous disons si une consultation est adaptée.</span>
+        <a routerLink="/rendez-vous" class="rounded-full bg-accent-500 px-[22px] py-3.5 text-center font-display text-[15px] font-semibold text-forest-900">Prendre rendez-vous</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 pb-20 pt-4 sm:px-6 lg:px-10 lg:pb-[88px]">
+    <app-silhouette-specialties />
+  </section>
+
+  <section class="px-4 pb-24 sm:px-6 lg:px-10 lg:pb-28">
+    <div class="mx-auto grid max-w-[1160px] gap-5 md:grid-cols-2 lg:grid-cols-3">
+      @for (m of specialties; track m.key) {
+        <a
+          [routerLink]="m.route"
+          class="group flex min-h-[380px] flex-col justify-between gap-8 rounded-[26px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] p-[30px] text-white transition hover:-translate-y-1 lg:min-h-[420px]"
+        >
+          <span class="flex items-start justify-between">
+            <span class="font-display text-[72px] font-bold leading-none text-[#F1C99B] sm:text-[80px]">{{ m.sym }}</span>
+            <span class="text-[13px] text-[#D8C9BB]">{{ m.n }}</span>
+          </span>
+          <span class="flex flex-col gap-3">
+            <span class="font-display text-[26px] font-bold">{{ m.title }}</span>
+            <span class="text-[15px] leading-[1.65] text-[#D8C9BB]">{{ m.text }}</span>
+            <span class="mt-1 flex flex-col gap-1.5 border-t border-white/15 pt-3.5">
+              <span class="text-[11.5px] font-semibold tracking-[0.09em] text-[#F1C99B]">VOUS POUVEZ CONSULTER SI</span>
+              <span class="text-sm leading-relaxed text-[#E8DACE]">{{ m.signs }}</span>
+            </span>
+            <span class="pt-1 text-sm font-semibold text-[#F1C99B]">Lire la page</span>
+          </span>
+        </a>
+      }
+    </div>
+  </section>
+
+  <app-cta-band title="Vous ne trouvez pas votre situation ?" />
+</app-public-page>

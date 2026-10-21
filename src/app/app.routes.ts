@@ -16,6 +16,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pages/faq/faq').then((m) => m.Faq),
   },
   {
+    path: 'a-propos',
+    loadComponent: () => import('./features/pages/a-propos/a-propos').then((m) => m.APropos),
+  },
+  {
+    path: 'specialites',
+    loadComponent: () => import('./features/pages/specialites/specialites').then((m) => m.Specialites),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
   },
