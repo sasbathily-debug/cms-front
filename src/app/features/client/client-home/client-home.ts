@@ -79,7 +79,7 @@ export class ClientHome implements OnInit {
   }
 
   bookAppointment(): void {
-    this.router.navigate(['/'], { queryParams: { book: 1 } });
+    this.router.navigate(['/rendez-vous']);
   }
 
   logout(): void {

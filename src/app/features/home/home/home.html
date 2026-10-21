@@ -1,611 +1,226 @@
-<div class="min-h-screen bg-cream-50">
-  <app-header variant="public" />
-
-  <div class="flex min-h-dvh flex-col">
-  <section
-    id="home-hero"
-    class="relative min-h-[420px] w-full flex-1 overflow-hidden touch-pan-y"
-    (pointerdown)="onHeroSwipeStart($event)"
-    (pointerup)="onHeroSwipeEnd($event)"
-  >
-    @if (heroLoading()) {
-      <div class="skeleton-dark absolute inset-0"></div>
-    } @else if (heroImages().length > 0) {
+<app-public-page [tileHeader]="true">
+  <!-- Photo du haut -->
+  <section class="relative flex min-h-[680px] items-end overflow-hidden bg-[#140B19] sm:min-h-[780px] lg:min-h-[900px]">
+    <div class="hero-zoom absolute inset-0 z-0" aria-hidden="true">
       @for (image of heroImages(); track image.id; let i = $index) {
         <img
           [src]="image.imageUrl | optimizedImage: 1920"
           alt=""
           class="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out"
-          [class.opacity-100]="i === activeHeroIndex()"
-          [class.opacity-0]="i !== activeHeroIndex()"
-          [class.animate-kenburns]="i === activeHeroIndex()"
+          [class.opacity-100]="i === activeHero()"
+          [class.opacity-0]="i !== activeHero()"
         />
       }
-    } @else {
-      <div class="absolute inset-0" style="background: linear-gradient(155deg, #34203C 0%, #1F1226 100%)"></div>
-    }
-    <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/10 to-black/25"></div>
-
-    <div class="absolute inset-x-0 bottom-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-      <div
-        class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-[#9A5518] backdrop-blur"
-      >
-        Cabinet médical · Sacré-Cœur, Dakar
-      </div>
-      @if (heroLoading()) {
-        <div class="skeleton-dark h-9 w-[85%] max-w-[560px] rounded-lg sm:h-11 lg:h-[52px]"></div>
-      } @else if (heroImages().length > 0) {
-        <div class="grid max-w-[620px]">
-          @for (image of heroImages(); track image.id; let i = $index) {
-            <h1
-              class="[grid-area:1/1] font-display text-3xl font-bold leading-[1.15] text-white drop-shadow-sm transition-opacity duration-1000 ease-in-out sm:text-4xl lg:text-[48px]"
-              [class.opacity-100]="i === activeHeroIndex()"
-              [class.opacity-0]="i !== activeHeroIndex()"
-            >
-              {{ image.title?.trim() || heroTitle() }}
-            </h1>
-          }
-        </div>
-      } @else {
-        <h1 class="max-w-[620px] font-display text-3xl font-bold leading-[1.15] text-white drop-shadow-sm sm:text-4xl lg:text-[48px]">
-          {{ heroTitle() }}
-        </h1>
-      }
     </div>
+    <div class="absolute inset-0 z-0" aria-hidden="true" style="background: linear-gradient(180deg, rgba(20,11,25,0.35) 0%, rgba(20,11,25,0.6) 55%, #140B19 100%)"></div>
 
-    @if (heroImages().length > 1) {
-      <div class="absolute bottom-5 right-4 flex gap-2 sm:right-10">
-        @for (image of heroImages(); track image.id; let i = $index) {
-          <button
-            type="button"
-            (click)="selectHeroImage(i)"
-            class="h-2 rounded-full transition-all"
-            [class]="i === activeHeroIndex() ? 'w-6 bg-white' : 'w-2 bg-white/50'"
-            [attr.aria-label]="'Voir la photo ' + (i + 1)"
-          ></button>
-        }
-      </div>
-    }
-  </section>
-
-  <section class="border-b border-border-warm bg-cream-100">
-    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-3 px-4 py-5 sm:justify-start sm:px-6 lg:px-10">
-      <button
-        type="button"
-        (click)="scrollToBooking()"
-        class="rounded-full bg-accent-500 px-7 py-3.5 font-display text-sm font-semibold text-white transition hover:bg-accent-600"
-      >
-        Prendre rendez-vous
-      </button>
-      <a
-        href="#services"
-        class="rounded-full border-[1.5px] border-forest-900 px-7 py-3.5 font-display text-sm font-semibold text-forest-900"
-        >Découvrir les services</a
-      >
-      <a
-        href="#rdv"
-        class="rounded-full border-[1.5px] border-forest-900 px-7 py-3.5 font-display text-sm font-semibold text-forest-900"
-        >Nous contacter</a
-      >
-    </div>
-    <div class="flex justify-center pb-3">
-      <button
-        type="button"
-        (click)="scrollPastHero()"
-        aria-label="Défiler vers le bas"
-        class="flex h-8 w-8 animate-bounce items-center justify-center rounded-full text-forest-900/50 transition hover:text-forest-900"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
-      </button>
-    </div>
-  </section>
-  </div>
-
-  <section class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14 lg:px-10">
-    <p class="mb-2 max-w-[620px] text-base leading-relaxed text-[#4F4351]">
-      {{ heroSubtitle() }}
-    </p>
-
-    <div class="relative z-10 mt-10 flex flex-wrap gap-6">
-      @if (hasHeroStats()) {
-      <div
-        class="min-w-[300px] flex-1 basis-[620px] flex-wrap items-center gap-y-4 rounded-3xl bg-white p-6 shadow-[0_18px_40px_rgba(20,43,34,0.12)] sm:flex sm:p-8"
-      >
-        @if (yearsExperience()) {
-        <div class="flex items-center gap-3.5 [&:not(:first-child)]:mt-4 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-border-warm [&:not(:first-child)]:pt-4 sm:[&:not(:first-child)]:mt-0 sm:[&:not(:first-child)]:ml-5 sm:[&:not(:first-child)]:border-t-0 sm:[&:not(:first-child)]:border-l sm:[&:not(:first-child)]:pl-5 sm:[&:not(:first-child)]:pt-0">
-          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-100">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9A5518" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></svg>
-          </div>
-          <div>
-            <div class="font-display text-lg font-bold text-forest-900">{{ yearsExperience() }} ans</div>
-            <div class="text-xs text-ink-600">d'expérience</div>
-          </div>
-        </div>
-        }
-        @if (patientsCount()) {
-        <div class="flex items-center gap-3.5 [&:not(:first-child)]:mt-4 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-border-warm [&:not(:first-child)]:pt-4 sm:[&:not(:first-child)]:mt-0 sm:[&:not(:first-child)]:ml-5 sm:[&:not(:first-child)]:border-t-0 sm:[&:not(:first-child)]:border-l sm:[&:not(:first-child)]:pl-5 sm:[&:not(:first-child)]:pt-0">
-          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-100">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9A5518" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2" /><path d="M2.5 19c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5" /><circle cx="17" cy="8.5" r="2.6" /><path d="M15.7 13.7c2.7.4 4.8 2.3 4.8 5.3" /></svg>
-          </div>
-          <div>
-            <div class="font-display text-lg font-bold text-forest-900">{{ patientsCount() }}</div>
-            <div class="text-xs text-ink-600">patients suivis</div>
-          </div>
-        </div>
-        }
-        @if (satisfactionRating()) {
-        <div class="flex items-center gap-3.5 [&:not(:first-child)]:mt-4 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-border-warm [&:not(:first-child)]:pt-4 sm:[&:not(:first-child)]:mt-0 sm:[&:not(:first-child)]:ml-5 sm:[&:not(:first-child)]:border-t-0 sm:[&:not(:first-child)]:border-l sm:[&:not(:first-child)]:pl-5 sm:[&:not(:first-child)]:pt-0">
-          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent-100">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#9A5518" stroke="none"><path d="M12 2.5l2.9 6.1 6.6.7-4.9 4.6 1.3 6.6-5.9-3.3-5.9 3.3 1.3-6.6L2.5 9.3l6.6-.7z" /></svg>
-          </div>
-          <div>
-            <div class="font-display text-lg font-bold text-forest-900">{{ satisfactionRating() }}</div>
-            <div class="text-xs text-ink-600">satisfaction patients</div>
-          </div>
-        </div>
-        }
-      </div>
-      }
-
-      <div class="min-w-[260px] flex-1 basis-[320px] rounded-3xl bg-forest-900 p-7 shadow-[0_18px_40px_rgba(20,43,34,0.18)]">
-        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-[#C9BFCB]">Prochain créneau disponible</div>
-        @if (nextSlotLabel()) {
-          <div class="mb-4 font-display text-lg font-semibold text-white">{{ nextSlotLabel() }}</div>
-          <button
-            type="button"
-            (click)="bookNextSlot()"
-            class="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 px-5 py-3 font-display text-sm font-semibold text-white"
-          >
-            Réserver ce créneau
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-          </button>
-        } @else {
-          <div class="mb-4 font-display text-base font-semibold text-white">Contactez le cabinet pour connaître les disponibilités</div>
-          <button
-            type="button"
-            (click)="scrollToBooking()"
-            class="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 px-5 py-3 font-display text-sm font-semibold text-white"
-          >
-            Prendre rendez-vous
-          </button>
-        }
-      </div>
-    </div>
-  </section>
-
-  <section id="about" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-10">
-    <div class="flex flex-wrap items-start gap-12 lg:gap-16">
-      <div class="mx-auto flex-none sm:mx-0">
-        @if (aboutImageUrl()) {
-          <img
-            [src]="aboutImageUrl() | optimizedImage: 600"
-            alt="Dr Aissatou Mamadou Fall"
-            class="h-[200px] w-[200px] rounded-3xl object-cover sm:h-[240px] sm:w-[240px]"
-          />
-        } @else {
-          <div class="flex h-[200px] w-[200px] items-center justify-center rounded-3xl bg-[#EFE4CE] sm:h-[240px] sm:w-[240px]">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#9A5518" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>
-          </div>
-        }
-      </div>
-
-      <div class="min-w-[300px] flex-1 basis-[420px]">
-        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">À propos</div>
-        <h2 class="mb-5 font-display text-2xl font-bold text-forest-900 sm:text-[32px]">
-          Une endocrinologue au service de la santé métabolique
-        </h2>
-        <p class="mb-6 text-[15.5px] leading-relaxed text-[#4F4351]">{{ aboutText() }}</p>
-        <div class="flex flex-col gap-3">
-          <div class="flex items-center gap-2.5">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
-            <span class="text-sm text-ink-900">Diplômée en endocrinologie, diabétologie et nutrition</span>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
-            <span class="text-sm text-ink-900">Membre de l'Ordre des Médecins du Sénégal</span>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
-            <span class="text-sm text-ink-900">Consultations en français et en wolof</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-full flex-none rounded-[20px] border border-border-warm bg-white p-6 sm:w-auto sm:min-w-[240px] sm:basis-[260px]">
-        <div class="mb-2.5 font-display text-base font-bold text-forest-900">Notre approche</div>
-        <p class="text-sm leading-relaxed text-ink-600">
-          Le Dr Fall combine suivi médical, éducation thérapeutique et accompagnement nutritionnel — avec un dossier
-          centralisé et des rappels de rendez-vous simples pour ne rien laisser de côté.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" class="overflow-hidden bg-cream-100 py-20 sm:py-28">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-      <div class="mb-12 max-w-[560px]">
-        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Services</div>
-        <h2 class="font-display text-2xl font-bold text-forest-900 sm:text-[32px]">
-          Des soins spécialisés, adaptés à chaque patient
-        </h2>
-      </div>
-    </div>
-
-    @if (servicesLoading()) {
-      <div class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
-        <div class="flex w-max gap-6 py-4 pl-4 sm:pl-6">
-          @for (i of [0, 1, 2, 3]; track i) {
-            <div class="w-[300px] shrink-0 rounded-[20px] border border-[#EADFC6]/70 bg-white p-7">
-              <div class="skeleton mb-5 h-16 w-16 rounded-2xl"></div>
-              <div class="skeleton mb-3 h-5 w-3/4 rounded"></div>
-              <div class="skeleton mb-2 h-3.5 w-full rounded"></div>
-              <div class="skeleton h-3.5 w-5/6 rounded"></div>
-            </div>
-          }
-        </div>
-      </div>
-    } @else if (services().length > 0) {
-      <div
-        class="relative left-1/2 w-screen -translate-x-1/2 touch-pan-y overflow-hidden cursor-grab active:cursor-grabbing"
-        (pointerdown)="onServicesPointerDown($event)"
-        (pointermove)="onServicesPointerMove($event)"
-        (pointerup)="onServicesPointerUp()"
-        (pointercancel)="onServicesPointerUp()"
-      >
-        <div #servicesTrack class="services-track flex w-max gap-6 py-4 pl-4 sm:pl-6">
-          @for (service of servicesLoop(); track $index; let i = $index) {
-            <div [class]="serviceCardClass(i)">
-              @switch (i % 3) {
-                @case (0) {
-                  <svg
-                    class="pointer-events-none absolute -right-8 -top-8 h-44 w-44 text-[#9A5518] opacity-[0.14]"
-                    viewBox="0 0 140 140"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.3"
-                  >
-                    <polygon points="70,22 98,38 98,70 70,86 42,70 42,38" />
-                    <path d="M70 22V6M98 38l14-8M98 70l14 8M70 86v16M42 70l-14 8M42 38l-14-8" />
-                    <path d="M70 86v22a14 14 0 0014 14" />
-                    <circle cx="70" cy="6" r="2.4" fill="currentColor" stroke="none" />
-                    <circle cx="112" cy="30" r="2.4" fill="currentColor" stroke="none" />
-                    <circle cx="112" cy="78" r="2.4" fill="currentColor" stroke="none" />
-                    <circle cx="84" cy="122" r="2.4" fill="currentColor" stroke="none" />
-                  </svg>
-                }
-                @case (1) {
-                  <svg
-                    class="pointer-events-none absolute -right-10 -top-6 h-44 w-44 text-[#9A5518] opacity-[0.14]"
-                    viewBox="0 0 140 140"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.3"
-                  >
-                    <polygon points="46,30 74,46 74,78 46,94 18,78 18,46" />
-                    <polygon points="94,46 122,62 122,94 94,110 66,94 66,62" />
-                    <path d="M74 62h-8" />
-                    <path d="M46 30V14M18 46L4 38M18 78L4 86M46 94v16M94 46V30M122 78l14 8" />
-                    <circle cx="46" cy="14" r="2.4" fill="currentColor" stroke="none" />
-                    <circle cx="94" cy="30" r="2.4" fill="currentColor" stroke="none" />
-                    <circle cx="136" cy="86" r="2.4" fill="currentColor" stroke="none" />
-                  </svg>
-                }
-                @case (2) {
-                  <svg
-                    class="pointer-events-none absolute -right-6 -top-10 h-44 w-44 text-[#9A5518] opacity-[0.14]"
-                    viewBox="0 0 140 140"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.3"
-                  >
-                    <circle cx="96" cy="34" r="6" /><circle cx="60" cy="62" r="6" /><circle cx="112" cy="80" r="6" />
-                    <circle cx="70" cy="112" r="6" /><circle cx="40" cy="98" r="4" />
-                    <path d="M96 34L60 62M60 62L112 80M60 62L70 112M112 80L70 112M70 112L40 98" />
-                    <path d="M96 34V14" stroke-dasharray="4 5" />
-                  </svg>
-                }
-              }
-              <div
-                class="relative z-10 mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-100 text-[#9A5518] transition-colors duration-300 group-hover:bg-accent-500 group-hover:text-white"
-              >
-                <app-health-icon [name]="service.icon" [size]="30" />
-              </div>
-              <h3 class="relative z-10 mb-2.5 font-display text-lg font-bold text-forest-900">{{ service.title }}</h3>
-              <p class="relative z-10 text-sm leading-relaxed text-ink-600">{{ service.description }}</p>
-            </div>
-          }
-        </div>
-      </div>
-    } @else {
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-        <p class="text-sm text-ink-600">Les services seront bientôt disponibles.</p>
-      </div>
-    }
-  </section>
-
-  <section id="parcours" class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-10">
-    <div class="mb-12 max-w-[560px]">
-      <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Parcours de soins</div>
-      <h2 class="font-display text-2xl font-bold text-forest-900 sm:text-[32px]">Comment se déroule votre suivi</h2>
-    </div>
-    <div class="flex flex-wrap gap-10">
-      <div class="min-w-[240px] flex-1 basis-[260px]">
-        <div class="mb-3.5 font-display text-4xl font-bold text-[#C7702A]">01</div>
-        <h3 class="mb-2 font-display text-base font-bold text-forest-900">Consultation initiale</h3>
-        <p class="text-sm leading-relaxed text-ink-600">
-          Un échange approfondi sur vos antécédents, vos symptômes et vos habitudes de vie, complété par les examens
-          nécessaires.
-        </p>
-      </div>
-      <div class="min-w-[240px] flex-1 basis-[260px]">
-        <div class="mb-3.5 font-display text-4xl font-bold text-[#C7702A]">02</div>
-        <h3 class="mb-2 font-display text-base font-bold text-forest-900">Bilan &amp; plan personnalisé</h3>
-        <p class="text-sm leading-relaxed text-ink-600">
-          Analyse des résultats et construction, avec vous, d'un plan de traitement et de suivi nutritionnel réaliste.
-        </p>
-      </div>
-      <div class="min-w-[240px] flex-1 basis-[260px]">
-        <div class="mb-3.5 font-display text-4xl font-bold text-[#C7702A]">03</div>
-        <h3 class="mb-2 font-display text-base font-bold text-forest-900">Suivi régulier</h3>
-        <p class="text-sm leading-relaxed text-ink-600">
-          Des rendez-vous réguliers pour ajuster le traitement, avec rappels automatiques et dossier centralisé.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="rdv" class="bg-forest-900 py-20 sm:py-28">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-      <div class="mb-10 max-w-[560px]">
-        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-500">Rendez-vous</div>
-        <h2 class="mb-3 font-display text-2xl font-bold text-white sm:text-[32px]">Prendre rendez-vous avec le cabinet</h2>
-        <p class="text-sm text-[#C9BFCB]">Choisissez un créneau disponible ci-dessous : votre rendez-vous est confirmé immédiatement.</p>
-      </div>
-
-      <div class="flex flex-wrap items-start gap-6">
-        <div class="min-w-[280px] flex-1 basis-[560px] rounded-3xl bg-cream-50 p-6 sm:min-h-[420px] sm:p-10">
-          @if (!isAuthenticated()) {
-            <div class="flex min-h-[300px] flex-col items-start justify-center">
-              <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-accent-100">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9A5518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>
-              </div>
-              <h3 class="mb-2.5 font-display text-xl font-bold text-forest-900">Connectez-vous pour prendre rendez-vous</h3>
-              <p class="mb-6 max-w-[380px] text-sm leading-relaxed text-ink-600">
-                Un compte nous permet de suivre votre demande, de vous prévenir par email à chaque étape et de retrouver
-                l'historique de vos rendez-vous.
-              </p>
-              <div class="flex flex-wrap gap-3">
-                <a
-                  routerLink="/login"
-                  [queryParams]="{ returnUrl: '/?book=1' }"
-                  class="rounded-full bg-accent-500 px-6 py-3 font-display text-sm font-semibold text-white transition hover:bg-accent-600"
-                  >Connexion</a
-                >
-                <a
-                  routerLink="/register"
-                  [queryParams]="{ returnUrl: '/?book=1' }"
-                  class="rounded-full border-[1.5px] border-forest-900 px-6 py-3 font-display text-sm font-semibold text-forest-900"
-                  >Créer un compte</a
-                >
-              </div>
-            </div>
-          } @else if (!submitted()) {
-            <form (ngSubmit)="submit()" [formGroup]="form">
-              <div class="mb-4 flex flex-wrap gap-4">
-                <div class="min-w-[200px] flex-1">
-                  <label for="home-fullName" class="mb-1.5 block text-xs font-semibold text-forest-900">Nom complet</label>
-                  <input id="home-fullName"
-                    type="text"
-                    formControlName="fullName"
-                    placeholder="Aminata Diop"
-                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
-                  />
-                </div>
-                <div class="min-w-[200px] flex-1">
-                  <label for="home-phone" class="mb-1.5 block text-xs font-semibold text-forest-900">Téléphone</label>
-                  <input id="home-phone"
-                    type="tel"
-                    formControlName="phone"
-                    placeholder="+221 77 000 00 00"
-                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
-                  />
-                </div>
-              </div>
-              <div class="mb-4 flex flex-wrap gap-4">
-                <div class="min-w-[200px] flex-1">
-                  <label for="home-email" class="mb-1.5 block text-xs font-semibold text-forest-900">Email</label>
-                  <input id="home-email"
-                    type="email"
-                    formControlName="email"
-                    placeholder="vous@exemple.com"
-                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
-                  />
-                </div>
-                <div class="min-w-[200px] flex-1">
-                  <label for="home-reason" class="mb-1.5 block text-xs font-semibold text-forest-900">Motif de consultation</label>
-                  <select id="home-reason"
-                    formControlName="reason"
-                    class="w-full rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm text-ink-600 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
-                  >
-                    <option value="" disabled>Sélectionnez un motif</option>
-                    @for (service of services(); track service.id) {
-                      <option [value]="service.title">{{ service.title }}</option>
-                    }
-                    <option value="Autre">Autre</option>
-                  </select>
-                </div>
-              </div>
-              <div class="mb-6">
-                <label class="mb-2.5 block text-xs font-semibold text-forest-900">Choisissez un créneau</label>
-                <app-slot-picker
-                  [slots]="availableSlots()"
-                  [loading]="loadingSlots()"
-                  [initialDate]="preselectDate()"
-                  [initialTime]="preselectTime()"
-                  (slotSelected)="onSlotSelected($event)"
-                />
-              </div>
-              <div class="mb-6">
-                <label for="home-message" class="mb-1.5 block text-xs font-semibold text-forest-900">Message (optionnel)</label>
-                <textarea id="home-message"
-                  formControlName="message"
-                  rows="3"
-                  placeholder="Ex. : je suis suivie depuis 2 ans pour un diabète de type 2, je souhaite faire le point sur mon traitement."
-                  class="w-full resize-none rounded-lg border border-[#DCD0B4] bg-white px-3.5 py-3 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
-                ></textarea>
-              </div>
-
-              @if (errorMessage()) {
-                <p class="mb-4 text-sm text-red-600">{{ errorMessage() }}</p>
-              }
-
-              <button
-                type="submit"
-                [disabled]="submitting()"
-                class="w-full rounded-full bg-accent-500 py-3.5 font-display text-sm font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
-              >
-                {{ submitting() ? 'Confirmation...' : 'Confirmer ce rendez-vous' }}
-              </button>
-            </form>
+    <div class="relative z-[1] mx-auto flex w-full max-w-[1160px] flex-col gap-7 px-4 pb-[200px] pt-32 sm:px-6 lg:px-10 lg:pb-[236px] lg:pt-40">
+      <span class="text-[13px] font-semibold tracking-[0.12em] text-[#F1C99B]">CABINET D'ENDOCRINOLOGIE · SACRÉ-CŒUR, DAKAR</span>
+      <h1 class="m-0 max-w-[900px] font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-6xl lg:text-[72px]">
+        @for (w of heroWords(); track $index) {
+          @if (w.underlined) {
+            <span class="ul"><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span> </span>
           } @else {
-            <div class="flex min-h-[300px] flex-col items-start justify-center">
-              <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#E3F1E6]">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E7D46" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
-              </div>
-              <h3 class="mb-2.5 font-display text-xl font-bold text-forest-900">Rendez-vous confirmé !</h3>
-              <p class="mb-6 max-w-[380px] text-sm leading-relaxed text-ink-600">
-                Votre créneau est réservé. Vous recevrez un rappel avant votre rendez-vous.
-              </p>
-              <button
-                type="button"
-                (click)="resetForm()"
-                class="rounded-full border-[1.5px] border-forest-900 px-6 py-3 font-display text-sm font-semibold text-forest-900"
-              >
-                Faire une nouvelle demande
-              </button>
-            </div>
+            <span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span>{{ ' ' }}
           }
-        </div>
+        }
+      </h1>
+      <p class="m-0 max-w-[600px] text-lg leading-[1.6] text-[#E8DACE] sm:text-xl">{{ heroSubtitle() }}</p>
+      <div class="mt-2 flex flex-wrap gap-3.5">
+        <a routerLink="/rendez-vous" class="rounded-full bg-accent-500 px-8 py-[18px] font-display text-base font-semibold text-[#140B19] transition hover:bg-accent-600 sm:px-[34px]">Prendre rendez-vous</a>
+        <a routerLink="/premiere-consultation" class="rounded-full border-[1.5px] border-white/60 px-8 py-[17px] font-display text-base font-semibold text-white transition hover:border-white sm:px-8">Ma première consultation</a>
+      </div>
+    </div>
+  </section>
 
-        <div class="min-w-[260px] flex-1 basis-[320px] rounded-3xl bg-forest-800 p-8">
-          <h3 class="mb-5 font-display text-base font-bold text-white">Coordonnées du cabinet</h3>
-          <div class="mb-4 flex gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>
-            <span class="text-sm leading-relaxed text-[#DCD3DC]">{{ settings()?.address || 'Adresse du cabinet, Sacré-Cœur, Dakar' }}</span>
-          </div>
-          <div class="mb-4 flex gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 4h3.2l1.3 4.4L7 10.2a12 12 0 006.8 6.8l1.8-2.5 4.4 1.3V19a2 2 0 01-2.2 2A16 16 0 013 6.2 2 2 0 015 4z" /></svg>
-            <span class="text-sm text-[#DCD3DC]">{{ settings()?.phone || '[Téléphone du cabinet]' }}</span>
-          </div>
-          <div class="mb-7 flex gap-3">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E0873F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5L12 13l8.5-6.5" /></svg>
-            <span class="text-sm text-[#DCD3DC]">{{ settings()?.email || 'contact@draissatoumamadou.com' }}</span>
-          </div>
-          <div class="mb-5 h-px bg-white/10"></div>
-          @for (line of openingHours().split('\n'); track line) {
-            @if (line.includes(':')) {
-              <div class="mb-2 flex justify-between text-[13.5px] text-[#C9BFCB]">
-                <span>{{ line.split(':')[0] }}</span>
-                <span class="text-white">{{ line.split(':').slice(1).join(':').trim() }}</span>
-              </div>
+  <!-- Carte qui chevauche la photo : créneau, horaires, contact -->
+  <section class="relative z-[3] -mt-[150px] px-4 sm:px-6 lg:-mt-[180px] lg:px-10">
+    <div class="mx-auto max-w-[1040px] overflow-hidden rounded-3xl border border-border-warm bg-white shadow-[0_36px_70px_rgba(31,18,38,0.35)]">
+      <div class="flex flex-wrap items-center justify-between gap-2 bg-[#1F1226] px-6 py-4 sm:px-9">
+        <span class="flex items-center gap-3 text-[15px] font-semibold text-white">
+          <span class="dot-live h-2.5 w-2.5 rounded-full bg-[#3FB37F]" aria-hidden="true"></span>
+          @if (nextSlot(); as slot) {
+            Prochain créneau libre : {{ slot }}
+          } @else {
+            Réservez votre créneau en ligne
+          }
+        </span>
+        <span class="text-[13.5px] text-[#D8C9BB]">Réservation en ligne, confirmation immédiate</span>
+      </div>
+      <div class="grid gap-7 px-6 py-7 sm:px-9 md:grid-cols-[1fr_1.2fr_1fr_auto] md:items-center">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">HORAIRES</span>
+          <span class="text-[15px] leading-relaxed text-ink-900">
+            @for (line of hoursLines(); track $index) {
+              {{ line }}<br />
             }
-          }
-          <a
-            [href]="whatsappNumber() ? 'https://wa.me/' + whatsappNumber() : '#rdv'"
-            target="_blank"
-            rel="noopener"
-            class="mt-4 flex items-center justify-center gap-2.5 rounded-full bg-accent-500 py-3.5 font-display text-sm font-semibold text-white"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.546 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.74 1.463h.005c6.581 0 11.941-5.335 11.944-11.893a11.821 11.821 0 00-3.474-8.467" /></svg>
-            Écrire sur WhatsApp
-          </a>
+          </span>
         </div>
+        <div class="flex min-w-0 flex-col gap-1.5">
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">TÉLÉPHONE ET WHATSAPP</span>
+          <a [href]="site.telHref()" class="font-display text-lg font-bold text-forest-900">{{ site.phone() }}</a>
+          <span class="break-all text-sm text-ink-600">{{ site.email() }}</span>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span>
+          <span class="text-[15px] leading-relaxed text-ink-900">[Rue et numéro]<br />{{ site.address() }}</span>
+        </div>
+        <a routerLink="/rendez-vous" class="whitespace-nowrap rounded-full bg-accent-500 px-7 py-4 text-center font-display text-[15px] font-semibold text-forest-900 transition hover:bg-accent-600">Prendre rendez-vous</a>
       </div>
     </div>
   </section>
 
-  <section id="faq" class="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
-    <div class="mb-10">
-      <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Ressources</div>
-      <h2 class="font-display text-2xl font-bold text-forest-900 sm:text-[32px]">Questions fréquentes</h2>
+  <!-- La silhouette et les spécialités -->
+  <section class="px-4 pb-20 pt-20 sm:px-6 lg:px-10 lg:pb-[104px] lg:pt-24">
+    <app-silhouette-specialties
+      [detailed]="true"
+      eyebrow="SPÉCIALITÉS"
+      title="Ce que je prends en charge"
+      intro="Passez la souris sur une spécialité : l'organe concerné s'allume sur la silhouette. Cliquez pour lire la page."
+    />
+    <div class="mx-auto mt-8 max-w-[1160px] lg:text-right">
+      <a routerLink="/specialites" class="font-display text-[15px] font-semibold text-accent-800 hover:underline">Toutes les spécialités →</a>
     </div>
-
-    @if (faqLoading()) {
-      @for (i of [0, 1, 2, 3]; track i) {
-        <div class="flex items-center justify-between gap-5 border-b border-border-warm py-6">
-          <div class="skeleton h-4 rounded" [style.width.%]="70 - i * 8"></div>
-          <div class="skeleton h-4 w-4 shrink-0 rounded-full"></div>
-        </div>
-      }
-    } @else {
-      @for (faq of faqs(); track faq.id) {
-        <div class="border-b border-border-warm">
-          <button
-            type="button"
-            (click)="toggleFaq(faq.id)"
-            class="flex w-full items-center justify-between gap-5 bg-transparent py-6 text-left"
-          >
-            <span class="font-display text-base font-semibold text-forest-900">{{ faq.question }}</span>
-            <span
-              class="flex shrink-0 text-accent-600 transition-transform"
-              [class.rotate-180]="faq.open"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
-            </span>
-          </button>
-          @if (faq.open) {
-            <p class="mb-6 max-w-[680px] text-sm leading-relaxed text-ink-600">{{ faq.answer }}</p>
-          }
-        </div>
-      } @empty {
-        <p class="text-sm text-ink-600">Les questions fréquentes seront bientôt disponibles.</p>
-      }
-    }
   </section>
 
-  <section class="relative w-full overflow-hidden">
-    <div class="flex flex-col sm:relative sm:left-1/2 sm:h-[500px] sm:w-screen sm:-translate-x-1/2">
-      <iframe
-        [src]="mapUrl"
-        class="block h-[300px] w-full sm:absolute sm:inset-0 sm:h-full"
-        style="border: 0"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Localisation du cabinet"
-      ></iframe>
+  <!-- La doctoresse -->
+  <section class="px-4 pb-24 sm:px-6 lg:px-10 lg:pb-28">
+    <div class="mx-auto grid max-w-[1160px] items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
       <div
-        class="flex w-full flex-col justify-center bg-cream-50 p-8 sm:absolute sm:inset-y-0 sm:left-0 sm:max-w-[420px] sm:bg-cream-50/95 sm:p-12 sm:backdrop-blur-sm"
+        class="flex h-[420px] items-end rounded-[32px] bg-forest-800 bg-cover bg-center p-5 sm:h-[540px] lg:h-[600px]"
+        [style.background-image]="aboutImage() ? 'url(' + (aboutImage() | optimizedImage: 1000) + ')' : 'linear-gradient(160deg, #3A2418 0%, #2A1930 100%)'"
+        role="img"
+        aria-label="La doctoresse"
       >
-        <div class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-accent-600">Nous trouver</div>
-        <h2 class="mb-6 font-display text-2xl font-bold text-forest-900 sm:text-[32px]">Visitez notre cabinet</h2>
-
-        <div class="mb-5 flex gap-3">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9A5518" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>
-          <div>
-            <div class="text-xs font-semibold uppercase tracking-wide text-forest-900">Adresse</div>
-            <div class="text-sm leading-relaxed text-ink-600">{{ settings()?.address || 'Sacré-Cœur, Dakar' }}</div>
-          </div>
+        @if (!aboutImage()) {
+          <span class="rounded-lg bg-[rgba(20,11,25,0.65)] px-3 py-2 text-xs tracking-[0.06em] text-[#F3EAE0]">PHOTO : la doctoresse [à fournir]</span>
+        }
+      </div>
+      <div class="flex flex-col gap-[22px]">
+        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">LA DOCTORESSE</span>
+        <h2 class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] text-forest-900 sm:text-[44px]">Une consultation qui prend le temps d'expliquer</h2>
+        <p class="m-0 text-[17px] leading-[1.7] text-[#4A3F49]">
+          Le Dr Aissatou Mamadou Fall est médecin endocrinologue et nutritionniste à Dakar. Elle accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal. [Parcours et années d'expérience à confirmer.]
+        </p>
+        <ul class="m-0 flex list-none flex-col gap-3 p-0">
+          @for (point of ['Des explications avec des mots simples, autant de fois que nécessaire', 'Un plan écrit, adapté à votre alimentation et à votre quotidien', 'Un suivi régulier, avec rappel avant chaque rendez-vous']; track point) {
+            <li class="flex items-start gap-3 text-base leading-normal text-[#4A3F49]">
+              <span aria-hidden="true" class="mt-2 h-2 w-2 shrink-0 rounded-full bg-accent-500"></span>{{ point }}
+            </li>
+          }
+        </ul>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-0.5 rounded-[18px] bg-cream-100 px-5 py-4"><span class="font-display text-xl font-bold text-forest-900">[XX] ans</span><span class="text-[13px] text-ink-600">d'expérience</span></div>
+          <div class="flex flex-col gap-0.5 rounded-[18px] bg-cream-100 px-5 py-4"><span class="font-display text-xl font-bold text-forest-900">[XXXX]</span><span class="text-[13px] text-ink-600">patients suivis</span></div>
+          <div class="flex flex-col gap-0.5 rounded-[18px] bg-cream-100 px-5 py-4"><span class="font-display text-xl font-bold text-forest-900">[Diplôme]</span><span class="text-[13px] text-ink-600">[Université, pays]</span></div>
+          <div class="flex flex-col gap-0.5 rounded-[18px] bg-cream-100 px-5 py-4"><span class="font-display text-xl font-bold text-forest-900">[Société]</span><span class="text-[13px] text-ink-600">[Affiliation professionnelle]</span></div>
         </div>
+        <p class="m-0 text-[13px] text-ink-600">Les chiffres entre crochets seront fournis par la doctoresse, rien n'est inventé.</p>
+        <a routerLink="/a-propos" class="self-start rounded-full border-[1.5px] border-forest-900 px-7 py-3.5 font-display text-[15px] font-semibold text-forest-900">Découvrir son parcours</a>
+      </div>
+    </div>
+  </section>
 
-        <div class="flex gap-3">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9A5518" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M5 4h3.2l1.3 4.4L7 10.2a12 12 0 006.8 6.8l1.8-2.5 4.4 1.3V19a2 2 0 01-2.2 2A16 16 0 013 6.2 2 2 0 015 4z" /></svg>
-          <div>
-            <div class="text-xs font-semibold uppercase tracking-wide text-forest-900">Téléphone</div>
-            <div class="text-sm leading-relaxed text-ink-600">{{ settings()?.phone || 'Nous contacter' }}</div>
+  <!-- Parcours en trois temps -->
+  <section class="rounded-t-[32px] bg-forest-900 px-4 py-20 sm:px-6 lg:rounded-t-[48px] lg:px-10 lg:py-28">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-14">
+      <div class="flex max-w-[700px] flex-col gap-3.5">
+        <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">VOTRE PARCOURS</span>
+        <h2 class="m-0 font-display text-[2.1rem] font-bold leading-[1.08] tracking-[-0.025em] text-white sm:text-5xl">De la réservation au plan de soins, en trois temps</h2>
+      </div>
+      <div class="grid gap-10 md:grid-cols-3">
+        @for (e of etapes; track e.n; let i = $index) {
+          <div class="flex flex-col gap-4">
+            <span class="pc-bar block h-[3px] rounded bg-accent-500" [style.animation-delay]="(0.48 + i * 3.12) + 's'"></span>
+            <span class="pc-num font-display text-[72px] font-bold leading-[0.9] text-[#F1C99B]" [style.animation-delay]="(0.48 + i * 3.12) + 's'">{{ e.n }}</span>
+            <div class="pc-txt flex flex-col gap-2.5" [style.animation-delay]="(0.48 + i * 3.12) + 's'">
+              <h3 class="m-0 font-display text-2xl font-bold text-white">{{ e.titre }}</h3>
+              <p class="m-0 text-base leading-[1.7] text-[#E8DACE]">{{ e.texte }}</p>
+            </div>
           </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Conseils -->
+  <section class="bg-cream-50 px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-9">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <h2 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]">Des conseils pour mieux comprendre</h2>
+        <a routerLink="/conseils-sante" class="font-display text-[15px] font-semibold text-accent-800 hover:underline">Tous les articles</a>
+      </div>
+      <div class="grid gap-5 md:grid-cols-3">
+        @for (a of articles; track a.titre) {
+          <a routerLink="/conseils-sante" class="group flex flex-col overflow-hidden rounded-[26px] border border-border-warm bg-white transition hover:-translate-y-1">
+            <div class="h-[180px] bg-gradient-to-br" [class]="a.tone"></div>
+            <div class="flex flex-col gap-2 p-6">
+              <span class="text-xs font-semibold tracking-[0.08em] text-accent-800">{{ a.categorie }}</span>
+              <span class="font-display text-xl font-bold leading-snug text-forest-900">{{ a.titre }}</span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Avis (emplacements à remplir avec de vrais témoignages) -->
+  <section class="bg-cream-100 px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-9">
+      <h2 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]">Ce que disent les patients</h2>
+      <div class="grid gap-5 md:grid-cols-3">
+        @for (a of avis; track $index) {
+          <figure class="m-0 flex flex-col gap-4 rounded-[26px] bg-white p-7">
+            <blockquote class="m-0 font-display text-lg leading-snug text-forest-900">{{ a.texte }}</blockquote>
+            <figcaption class="text-sm text-ink-600">{{ a.auteur }}</figcaption>
+          </figure>
+        }
+      </div>
+      <p class="m-0 text-[13px] text-ink-600">Emplacement des avis : à remplir avec de vrais témoignages, recueillis avec l'accord écrit des patients.</p>
+    </div>
+  </section>
+
+  <!-- Nous trouver -->
+  <section class="bg-cream-50 px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
+    <div class="mx-auto grid max-w-[1160px] gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+      <iframe title="Plan d'accès au cabinet" class="h-[340px] w-full rounded-[28px] border-0 lg:h-full lg:min-h-[420px] lg:rounded-[32px]" loading="lazy" [src]="mapUrl"></iframe>
+      <div class="flex flex-col gap-5 rounded-[28px] border border-border-warm bg-white p-7 sm:p-10 lg:rounded-[32px]">
+        <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[32px]">Nous trouver à Sacré-Cœur</h2>
+        <div class="flex flex-col gap-1"><span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span><span class="text-base leading-relaxed text-ink-900">[Rue et numéro]<br />{{ site.address() }}</span></div>
+        <div class="flex flex-col gap-1"><span class="text-xs font-semibold tracking-[0.1em] text-accent-700">REPÈRE</span><span class="text-base leading-relaxed text-ink-900">[À côté de quel lieu connu, étage, entrée]</span></div>
+        <div class="flex flex-col gap-1"><span class="text-xs font-semibold tracking-[0.1em] text-accent-700">OUVERT</span><span class="text-base leading-relaxed text-ink-900">Lun – Ven 9h00 – 17h30 · Samedi 9h00 – 13h00</span></div>
+        <div class="mt-1 flex flex-wrap gap-3">
+          <a href="https://www.google.com/maps?q=14.71259593963623,-17.46856689453125" target="_blank" rel="noopener noreferrer" class="rounded-full border-[1.5px] border-forest-900 px-6 py-3 font-display text-[15px] font-semibold text-forest-900">Itinéraire</a>
+          <a [href]="site.telHref()" class="rounded-full bg-accent-500 px-6 py-3.5 font-display text-[15px] font-semibold text-forest-900">Appeler</a>
         </div>
       </div>
     </div>
   </section>
 
-  <app-footer />
+  <!-- Questions fréquentes -->
+  <section class="bg-cream-50 px-4 pb-24 sm:px-6 lg:px-10 lg:pb-28">
+    <div class="mx-auto grid max-w-[1160px] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:gap-16">
+      <div class="flex flex-col gap-3.5">
+        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">QUESTIONS FRÉQUENTES</span>
+        <h2 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]">Avant de venir, vous vous demandez peut-être…</h2>
+        <p class="m-0 text-base leading-relaxed text-ink-600">Une autre question ? Appelez le cabinet ou écrivez-nous sur WhatsApp.</p>
+        <a routerLink="/faq" class="mt-1 font-display text-[15px] font-semibold text-accent-800 hover:underline">Toutes les questions →</a>
+      </div>
+      <div class="flex flex-col">
+        @for (item of faq(); track item.question; let i = $index) {
+          <div class="border-b border-border-warm">
+            <button type="button" (click)="toggleFaq(i)" [attr.aria-expanded]="item.open" class="flex w-full items-center justify-between gap-4 py-5 text-left">
+              <h3 class="m-0 font-display text-lg font-semibold text-forest-900">{{ item.question }}</h3>
+              <span aria-hidden="true" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream-100 text-xl text-accent-800">{{ item.open ? '−' : '+' }}</span>
+            </button>
+            @if (item.open) {
+              <p class="m-0 max-w-[640px] pb-5 text-[15.5px] leading-[1.7] text-[#5B4F59]">{{ item.answer }}</p>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
 
-  <a
-    [href]="whatsappNumber() ? 'https://wa.me/' + whatsappNumber() : '#rdv'"
-    target="_blank"
-    rel="noopener"
-    aria-label="Écrire sur WhatsApp"
-    class="fixed right-5 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-[0_10px_25px_rgba(0,0,0,0.25)] sm:right-8"
-  >
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.546 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.74 1.463h.005c6.581 0 11.941-5.335 11.944-11.893a11.821 11.821 0 00-3.474-8.467" /></svg>
-  </a>
-</div>
+  <app-cta-band title="Prenez soin de votre santé dès cette semaine." />
+</app-public-page>
