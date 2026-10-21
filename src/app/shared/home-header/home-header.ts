@@ -2,6 +2,7 @@ import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
+import { MobileMenu } from '../mobile-menu/mobile-menu';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup } from '../../core/site-nav';
 
 interface Tile {
@@ -13,10 +14,12 @@ interface Tile {
   group?: NavGroup;
 }
 
+const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', patients: 'Pa' };
+
 /** En-tête de l'accueil : des tuiles (comme un tableau périodique) posées sur la photo. */
 @Component({
   selector: 'app-home-header',
-  imports: [RouterLink],
+  imports: [RouterLink, MobileMenu],
   templateUrl: './home-header.html',
 })
 export class HomeHeader implements OnDestroy {
@@ -38,7 +41,7 @@ export class HomeHeader implements OnDestroy {
   readonly tiles = computed<Tile[]>(() => [
     ...NAV_GROUPS.map((group) => ({
       key: group.key,
-      sym: group.label.slice(0, 2),
+      sym: SYMBOLS[group.key] ?? group.label.slice(0, 2),
       count: String(group.links.length),
       label: group.label + ' ▾',
       route: group.route,
@@ -50,6 +53,20 @@ export class HomeHeader implements OnDestroy {
   ]);
 
   readonly simpleLinks = NAV_SIMPLE;
+
+  /** Le menu mobile affiche les tuiles deux par deux ; un panneau s'ouvre sous la rangée de la tuile touchée. */
+  readonly tilePairs = computed(() => {
+    const list = this.tiles();
+    const pairs: Tile[][] = [];
+    for (let i = 0; i < list.length; i += 2) {
+      pairs.push(list.slice(i, i + 2));
+    }
+    return pairs;
+  });
+
+  openMobileTile(pair: Tile[]): Tile | null {
+    return pair.find((tile) => tile.group && this.mobileGroup() === tile.key) ?? null;
+  }
 
   constructor() {
     this.navSub = this.router.events

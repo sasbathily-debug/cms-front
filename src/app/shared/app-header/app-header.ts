@@ -2,11 +2,12 @@ import { Component, OnDestroy, computed, inject, input, signal } from '@angular/
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
+import { MobileMenu } from '../mobile-menu/mobile-menu';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup } from '../../core/site-nav';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, MobileMenu],
   styleUrl: './app-header.css',
   templateUrl: './app-header.html',
 })
