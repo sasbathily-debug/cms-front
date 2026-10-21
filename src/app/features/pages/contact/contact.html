@@ -1,0 +1,154 @@
+<app-public-page>
+  <app-page-hero
+    [crumbs]="crumbs"
+    title="Une question ? Appelez ou écrivez-nous."
+    lead="Nous répondons pendant les horaires d'ouverture. Pour un rendez-vous, la réservation en ligne est le moyen le plus rapide."
+  >
+    <a actions routerLink="/rendez-vous" class="mt-1 self-start rounded-full bg-accent-500 px-7 py-4 font-display text-base font-semibold text-forest-900 transition hover:bg-accent-600"
+      >Prendre rendez-vous en ligne</a
+    >
+    <div aside class="flex flex-col gap-5 rounded-[28px] border border-white/15 bg-white/[0.06] p-7 sm:gap-[22px] sm:p-9">
+      <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">APPELER LE CABINET</span>
+      <div class="flex items-center gap-5">
+        <span class="relative flex h-[76px] w-[76px] shrink-0 items-center justify-center">
+          <span class="absolute inset-0 animate-ping rounded-full border-2 border-accent-500 [animation-duration:2.6s]"></span>
+          <span class="relative flex h-[76px] w-[76px] items-center justify-center rounded-full bg-accent-500">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1F1226" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>
+          </span>
+        </span>
+        <a [href]="site.telHref()" class="font-display text-[1.7rem] font-bold leading-[1.05] tracking-[-0.03em] text-white sm:text-[38px]">{{ site.phone() }}</a>
+      </div>
+      <p class="m-0 text-[15px] leading-relaxed text-[#E8DACE]">Lundi au vendredi, 9h00 – 17h30. Samedi, 9h00 – 13h00. Hors de ces horaires, laissez un message : nous vous rappelons.</p>
+      @if (site.whatsappHref()) {
+        <a [href]="site.whatsappHref()" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2.5 rounded-full bg-[#1F9D55] px-6 py-[15px] font-display text-base font-semibold text-white">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" /></svg>
+          Écrire sur WhatsApp
+        </a>
+      }
+    </div>
+  </app-page-hero>
+
+  <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
+    <div class="mx-auto grid max-w-[1160px] gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="send()"
+        class="flex flex-col gap-5 rounded-[28px] border border-border-warm bg-white p-6 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:p-10"
+      >
+        <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[30px]">Envoyer un message</h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+            Nom et prénom
+            <input formControlName="name" autocomplete="name" placeholder="Votre nom" class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500" />
+          </label>
+          <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+            Téléphone
+            <input formControlName="phone" type="tel" autocomplete="tel" placeholder="+221 " class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500" />
+          </label>
+        </div>
+        <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+          E-mail (facultatif)
+          <input formControlName="email" type="email" autocomplete="email" placeholder="vous@exemple.com" class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500" />
+        </label>
+        <fieldset class="m-0 flex flex-col gap-2.5 border-0 p-0">
+          <legend class="mb-2.5 p-0 text-[13.5px] font-semibold text-forest-900">Motif</legend>
+          <div class="flex flex-wrap gap-2.5">
+            @for (motif of motifs; track motif) {
+              <button
+                type="button"
+                (click)="setMotif(motif)"
+                [attr.aria-pressed]="form.value.motif === motif"
+                class="rounded-full border-[1.5px] px-[18px] py-2.5 text-sm font-medium transition"
+                [class]="form.value.motif === motif ? 'border-forest-900 bg-forest-900 text-white' : 'border-[#D9C8B8] bg-white text-[#4A3F49] hover:border-forest-900'"
+              >
+                {{ motif }}
+              </button>
+            }
+          </div>
+        </fieldset>
+        <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+          Votre message
+          <textarea formControlName="message" rows="5" placeholder="Écrivez votre question ici…" class="resize-y rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"></textarea>
+        </label>
+        <label class="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#5B4F59]">
+          <input formControlName="consent" type="checkbox" class="mt-0.5 h-5 w-5 shrink-0 accent-forest-900" />
+          <span>J'accepte que ces informations servent uniquement à répondre à ma demande.</span>
+        </label>
+        @if (form.touched && form.invalid) {
+          <p class="m-0 text-sm text-[#B3261E]" role="alert">Merci de remplir votre nom, votre téléphone, votre message et d'accepter la case ci-dessus.</p>
+        }
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="rounded-full bg-forest-900 px-8 py-4 font-display text-base font-semibold text-white transition hover:bg-forest-800">Envoyer le message</button>
+          <span class="text-[13.5px] text-ink-600">Votre application de messagerie s'ouvrira avec le message prêt à envoyer.</span>
+        </div>
+        <div class="rounded-[14px] bg-accent-100 px-[18px] py-3.5 text-sm leading-relaxed text-[#5A3410]">
+          <strong class="text-forest-900">Urgence :</strong> ne passez pas par ce formulaire. Appelez le SAMU au 1515 <span class="text-ink-600">[numéro à confirmer]</span> ou rendez-vous aux urgences les plus proches.
+        </div>
+      </form>
+
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-5 rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-7 py-6 text-white shadow-[0_24px_50px_rgba(31,18,38,0.22)]">
+          <span class="w-[66px] shrink-0 font-display text-[44px] font-bold leading-none text-[#F1C99B]">Té</span>
+          <span class="flex flex-col gap-1">
+            <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">TÉLÉPHONE ET WHATSAPP</span>
+            <span class="font-display text-[19px] font-bold leading-snug">{{ site.phone() }}</span>
+            <span class="text-sm leading-normal text-[#D8C9BB]">Réponse pendant les horaires d'ouverture.</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-5 rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-7 py-6 text-white shadow-[0_24px_50px_rgba(31,18,38,0.22)]">
+          <span class="w-[66px] shrink-0 font-display text-[44px] font-bold leading-none text-[#F1C99B]">Ma</span>
+          <span class="flex min-w-0 flex-col gap-1">
+            <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">E-MAIL</span>
+            <span class="break-all font-display text-[19px] font-bold leading-snug">{{ site.email() }}</span>
+            <span class="text-sm leading-normal text-[#D8C9BB]">Pour une question hors urgence.</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-5 rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-7 py-6 text-white shadow-[0_24px_50px_rgba(31,18,38,0.22)]">
+          <span class="w-[66px] shrink-0 font-display text-[44px] font-bold leading-none text-[#F1C99B]">Ad</span>
+          <span class="flex flex-col gap-1">
+            <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">ADRESSE</span>
+            <span class="font-display text-[19px] font-bold leading-snug">{{ site.address() }}</span>
+            <span class="text-sm leading-normal text-[#D8C9BB]">[Repère connu à côté du cabinet]</span>
+          </span>
+        </div>
+        <div class="flex flex-col gap-1 rounded-3xl bg-cream-100 px-7 py-6">
+          <h2 class="m-0 mb-2 font-display text-lg font-bold text-forest-900">Horaires d'ouverture</h2>
+          @for (line of hoursLines(); track $index) {
+            <div class="border-t border-[#D9C8B8] py-2.5 text-[15px] text-[#4A3F49]">{{ line }}</div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 py-16 sm:px-6 sm:py-24 lg:px-10">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-7">
+      <h2 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]">Avant de nous écrire</h2>
+      <div class="grid gap-5 md:grid-cols-3">
+        <a routerLink="/rendez-vous" class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition hover:-translate-y-1">
+          <h3 class="m-0 font-display text-xl font-bold text-forest-900">Prendre rendez-vous</h3>
+          <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">Créez votre compte en une minute et choisissez votre créneau. La confirmation est immédiate.</p>
+          <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800">Réserver en ligne</span>
+        </a>
+        <a routerLink="/infos-pratiques" class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition hover:-translate-y-1">
+          <h3 class="m-0 font-display text-xl font-bold text-forest-900">Tarifs et paiement</h3>
+          <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">Le prix d'une consultation, les moyens de paiement et les assurances acceptées. [À confirmer par la doctoresse]</p>
+          <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800">Voir les infos pratiques</span>
+        </a>
+        <a routerLink="/premiere-consultation" class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition hover:-translate-y-1">
+          <h3 class="m-0 font-display text-xl font-bold text-forest-900">Première consultation</h3>
+          <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">Ce qu'il faut apporter et comment elle se déroule, pour venir l'esprit tranquille.</p>
+          <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800">Préparer ma visite</span>
+        </a>
+      </div>
+      <iframe
+        title="Plan d'accès au cabinet"
+        class="h-[320px] w-full rounded-[32px] border-0"
+        loading="lazy"
+        src="https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed"
+      ></iframe>
+    </div>
+  </section>
+
+  <app-cta-band title="Prenez soin de vous, nous nous occupons du reste." />
+</app-public-page>

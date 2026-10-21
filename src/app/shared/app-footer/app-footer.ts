@@ -1,20 +1,27 @@
-import { Component, computed, input } from '@angular/core';
-import { SiteSettingsDto } from '../../core/models/site-content.models';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { SiteSettings } from '../../core/services/site-settings';
+import { SPECIALTY_LINKS } from '../../core/site-nav';
 
 @Component({
   selector: 'app-footer',
+  imports: [RouterLink],
   styleUrl: './app-footer.css',
   templateUrl: './app-footer.html',
 })
 export class AppFooter {
-  readonly settings = input<SiteSettingsDto | null>(null);
+  protected readonly site = inject(SiteSettings);
 
   readonly year = new Date().getFullYear();
-
   readonly instagramUrl = 'https://www.instagram.com/dr_aissatou.m/';
-  readonly instagramHandle = '@dr_aissatou.m';
+  readonly specialties = SPECIALTY_LINKS.slice(0, 5);
+  readonly mapsUrl = 'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125';
 
-  readonly address = computed(() => this.settings()?.address || 'Sacré-Cœur, Dakar');
-  readonly phone = computed(() => this.settings()?.phone || '[Téléphone du cabinet]');
-  readonly email = computed(() => this.settings()?.email || 'contact@draissatoumamadou.com');
+  get addressLines(): string[] {
+    return this.site.address().split(/\n|,\s*(?=Dakar)/);
+  }
+
+  get hoursLines(): string[] {
+    return this.site.openingHours().split('\n');
+  }
 }
