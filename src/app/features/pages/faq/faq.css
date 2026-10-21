@@ -1,0 +1,27 @@
+@keyframes qa-show {
+  0% { opacity: 0; transform: translateY(14px); }
+  4% { opacity: 1; transform: translateY(0); }
+  29% { opacity: 1; transform: translateY(0); }
+  33%, 100% { opacity: 0; transform: translateY(-6px); }
+}
+
+.qa {
+  opacity: 0;
+  animation: qa-show 12s ease-in-out infinite;
+}
+.qa-p0 { animation-delay: 0s; }
+.qa-p1 { animation-delay: 4s; }
+.qa-p2 { animation-delay: 8s; }
+.qa-a.qa-p0 { animation-delay: 0.9s; }
+.qa-a.qa-p1 { animation-delay: 4.9s; }
+.qa-a.qa-p2 { animation-delay: 8.9s; }
+
+summary::-webkit-details-marker { display: none; }
+summary { list-style: none; }
+.plus { transition: transform 0.2s, background-color 0.2s; }
+details[open] .plus { transform: rotate(45deg); background-color: #E0873F; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qa { animation: none; }
+  .qa-p0 { opacity: 1; }
+}
