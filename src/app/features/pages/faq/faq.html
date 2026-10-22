@@ -10,7 +10,7 @@
       aria-hidden="true"
     >
       <div class="relative h-full">
-        @for (pair of bubbles; track pair.q; let i = $index) {
+        @for (pair of bubbles(); track pair.q; let i = $index) {
           <div
             class="qa qa-q absolute left-0 top-0 max-w-[82%] rounded-[20px_20px_20px_5px] bg-cream-50 px-5 py-4 text-base font-medium leading-snug text-ink-900"
             [class]="'qa-p' + i"

@@ -16,7 +16,10 @@ export class SiteSettings {
 
   readonly phone = computed(() => this.settings()?.phone || FALLBACK_PHONE);
   readonly email = computed(() => this.settings()?.email || 'contact@draissatoumamadou.com');
-  readonly address = computed(() => ADDRESS_CITY);
+  /** Ville et quartier, saisis dans l'admin ; la maquette sert de repli. */
+  readonly address = computed(() => this.settings()?.address?.trim() || ADDRESS_CITY);
+  /** Rue et numéro, saisis dans l'admin ; un texte à compléter sert de repli. */
+  readonly street = computed(() => this.settings()?.addressStreet?.trim() || ADDRESS_STREET);
   /** Repère pour trouver le cabinet, saisi dans l'admin ; vide s'il n'est pas renseigné. */
   readonly landmark = computed(() => this.settings()?.landmark?.trim() || '');
   /** Numéro d'urgence saisi dans l'admin ; vide s'il n'est pas renseigné. */

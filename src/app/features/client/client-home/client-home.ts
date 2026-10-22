@@ -4,7 +4,7 @@ import { AppointmentService } from '../../../core/services/appointment';
 import { PatientDocumentService } from '../../../core/services/patient-document';
 import { SiteContentService } from '../../../core/services/site-content';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
-import { ADDRESS_STREET, SiteSettings } from '../../../core/services/site-settings';
+import { SiteSettings } from '../../../core/services/site-settings';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { AppointmentDto } from '../../../core/models/appointment.models';
 import { DocumentCategory, PatientDocumentDto } from '../../../core/models/patient-document.models';
@@ -77,7 +77,6 @@ export class ClientHome implements OnInit {
   readonly documentFilter = signal<DocumentCategory | 'ALL'>('ALL');
 
   protected readonly openingHours = inject(OpeningHours);
-  readonly addressStreet = ADDRESS_STREET;
 
   readonly firstName = computed(() => this.store.user()?.firstName ?? '');
   readonly upcoming = computed(() =>
@@ -220,7 +219,7 @@ export class ClientHome implements OnInit {
       `DTSTART:${fmt(start)}`,
       `DTEND:${fmt(end)}`,
       `SUMMARY:Rendez-vous au cabinet du Dr Fall (${appt.reason})`,
-      `LOCATION:${ADDRESS_STREET} Sacré-Cœur 3 Dakar`,
+      `LOCATION:${this.site.street()} ${this.site.address()}`,
       'END:VEVENT',
       'END:VCALENDAR',
     ].join('\r\n');

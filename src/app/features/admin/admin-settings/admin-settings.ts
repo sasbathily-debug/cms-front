@@ -65,6 +65,7 @@ export class AdminSettings implements OnInit {
     email: [''],
     whatsappNumber: [''],
     openingHours: [''],
+    addressStreet: [''],
     landmark: [''],
     emergencyNumber: [''],
   });
@@ -85,6 +86,7 @@ export class AdminSettings implements OnInit {
           email: settings.email ?? '',
           whatsappNumber: settings.whatsappNumber ?? '',
           openingHours: settings.openingHours ?? '',
+          addressStreet: settings.addressStreet ?? '',
           landmark: settings.landmark ?? '',
           emergencyNumber: settings.emergencyNumber ?? '',
         });
@@ -289,6 +291,7 @@ export class AdminSettings implements OnInit {
         email: value.email || null,
         whatsappNumber: value.whatsappNumber || null,
         openingHours: value.openingHours || null,
+        addressStreet: value.addressStreet || null,
         landmark: value.landmark || null,
         emergencyNumber: value.emergencyNumber || null,
       })

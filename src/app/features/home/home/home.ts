@@ -9,7 +9,7 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { AvailabilityService } from '../../../core/services/availability';
-import { ADDRESS_STREET, SiteSettings } from '../../../core/services/site-settings';
+import { SiteSettings } from '../../../core/services/site-settings';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
 import { OpeningHours } from '../../../core/services/opening-hours';
@@ -94,7 +94,6 @@ export class Home implements OnInit {
     { big: '[Diplôme]', small: '[Université, pays]' },
     { big: '[Société]', small: '[Affiliation professionnelle]' },
   ];
-  readonly addressStreet = ADDRESS_STREET;
 
   readonly etapes = [
     {

@@ -332,9 +332,23 @@
         </h2>
         <div class="mb-4">
           <label
+            for="admin-settings-addressStreet"
+            class="mb-1.5 block text-xs font-semibold text-forest-900"
+            >Rue et numéro</label
+          >
+          <input
+            id="admin-settings-addressStreet"
+            type="text"
+            formControlName="addressStreet"
+            placeholder="12 rue Exemple"
+            class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+          />
+        </div>
+        <div class="mb-4">
+          <label
             for="admin-settings-address"
             class="mb-1.5 block text-xs font-semibold text-forest-900"
-            >Adresse</label
+            >Quartier et ville</label
           >
           <input
             id="admin-settings-address"

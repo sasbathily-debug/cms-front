@@ -18,14 +18,17 @@ export class Faq {
   readonly crumbs = [{ label: 'Accueil', route: '/' }, { label: 'Questions fréquentes' }];
   readonly query = signal('');
 
-  readonly bubbles = [
+  readonly bubbles = computed(() => [
     {
       q: 'Dois-je créer un compte pour réserver ?',
       a: 'Oui, en une minute avec votre numéro de téléphone.',
     },
     { q: 'Que dois-je apporter ?', a: 'Vos analyses récentes et la liste de vos médicaments.' },
-    { q: "Et si j'ai une urgence ?", a: 'Appelez le SAMU au 1515. Ne passez pas par le site.' },
-  ];
+    {
+      q: "Et si j'ai une urgence ?",
+      a: `Appelez le ${this.site.emergencyNumber() || 'SAMU au 1515'}. Ne passez pas par le site.`,
+    },
+  ]);
 
   protected readonly site = inject(SiteSettings);
   private readonly siteFaq = inject(SiteFaq);

@@ -313,7 +313,7 @@
           <span class="flex flex-col gap-1">
             <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">ADRESSE</span>
             <span class="font-display text-[19px] font-bold leading-snug"
-              >[Rue et numéro], {{ site.address() }}</span
+              >{{ site.street() }}, {{ site.address() }}</span
             >
             <span class="text-sm leading-normal text-[#D8C9BB]">{{
               site.landmark() || '[Repère connu à côté du cabinet]'

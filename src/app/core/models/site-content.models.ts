@@ -76,6 +76,8 @@ export interface SiteSettingsDto {
   email: string | null;
   whatsappNumber: string | null;
   openingHours: string | null;
+  /** Rue et numéro du cabinet. */
+  addressStreet: string | null;
   /** Repère connu à côté du cabinet (étage, entrée…). */
   landmark: string | null;
   /** Numéro à appeler en cas d'urgence, affiché sur le site. */
