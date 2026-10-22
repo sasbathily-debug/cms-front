@@ -53,7 +53,7 @@ export class AdminSettings implements OnInit {
   readonly reorderingHeroImages = signal(false);
 
   readonly form = this.fb.group({
-    heroTitle: ['', [Validators.required]],
+    heroTitle: [''],
     heroSubtitle: [''],
     aboutText: [''],
     yearsExperience: [''],
@@ -94,7 +94,6 @@ export class AdminSettings implements OnInit {
       },
       error: () => this.loading.set(false),
     });
-    this.loadHeroImages();
     this.siteContentService.getOpeningHours().subscribe({
       next: (days) => this.hours.set(this.toRows(days)),
     });
