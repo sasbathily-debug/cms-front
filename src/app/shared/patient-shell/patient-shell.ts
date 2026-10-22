@@ -4,7 +4,7 @@ import { Auth } from '../../core/services/auth';
 import { CurrentUserStore } from '../../core/services/current-user-store';
 import { SiteSettings } from '../../core/services/site-settings';
 import { NavIcon, NavIconName } from '../nav-icon/nav-icon';
-import { AppHeader } from '../app-header/app-header';
+import { HomeHeader } from '../home-header/home-header';
 import { AppFooter } from '../app-footer/app-footer';
 import { FloatingActions } from '../floating-actions/floating-actions';
 
@@ -19,12 +19,12 @@ interface NavItem {
 }
 
 /**
- * Cadre de l'espace patient : en-tête, barre latérale (ordinateur), onglets en bas (téléphone),
+ * Cadre de l'espace patient : en-tête à tuiles, barre latérale (ordinateur), onglets en bas (téléphone),
  * pied de page et boutons d'appel. Le contenu de la page est projeté au centre.
  */
 @Component({
   selector: 'app-patient-shell',
-  imports: [RouterLink, NavIcon, AppHeader, AppFooter, FloatingActions],
+  imports: [RouterLink, NavIcon, HomeHeader, AppFooter, FloatingActions],
   templateUrl: './patient-shell.html',
 })
 export class PatientShell {

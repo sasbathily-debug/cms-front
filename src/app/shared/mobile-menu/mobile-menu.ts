@@ -1,5 +1,5 @@
 import { Component, computed, inject, output, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../core/services/auth';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup } from '../../core/site-nav';
 
@@ -21,7 +21,8 @@ const SIMPLE_SYMBOLS: Record<string, string> = { conseils: 'Cs', contact: 'Co' }
   templateUrl: './mobile-menu.html',
 })
 export class MobileMenu {
-  private readonly auth = inject(Auth);
+  protected readonly auth = inject(Auth);
+  private readonly router = inject(Router);
 
   readonly closed = output<void>();
   readonly mobileGroup = signal<string | null>(null);
@@ -66,5 +67,12 @@ export class MobileMenu {
 
   toggleGroup(key: string): void {
     this.mobileGroup.update((current) => (current === key ? null : key));
+  }
+
+  /** Déconnecte le patient, ferme le menu et ramène à la page de connexion. */
+  logout(): void {
+    this.closed.emit();
+    const goToLogin = () => this.router.navigate(['/login']);
+    this.auth.logout().subscribe({ next: goToLogin, error: goToLogin });
   }
 }

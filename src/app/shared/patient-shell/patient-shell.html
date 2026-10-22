@@ -1,32 +1,5 @@
 <div class="min-h-screen bg-cream-50 text-[#241827]">
-  <app-header>
-    <a
-      routerLink="/"
-      class="hidden text-sm font-medium text-[#4A3F49] hover:text-forest-900 sm:inline"
-      >Retour au site</a
-    >
-    <a
-      routerLink="/profile"
-      class="flex items-center gap-2.5 text-sm font-semibold text-forest-900"
-    >
-      @if (store.user()?.profilePictureUrl) {
-        <img
-          [src]="store.user()?.profilePictureUrl"
-          alt=""
-          class="h-[34px] w-[34px] rounded-full object-cover"
-        />
-      } @else {
-        <span
-          class="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-accent-100 text-xs font-bold text-accent-700"
-          >{{ store.initials() }}</span
-        >
-      }
-      <span class="hidden sm:inline">Mon profil</span>
-    </a>
-    <button (click)="logout()" class="text-sm font-medium text-[#4A3F49] hover:text-forest-900">
-      Déconnexion
-    </button>
-  </app-header>
+  <app-home-header variant="bar" />
 
   <div
     class="mx-auto grid max-w-[1232px] grid-cols-1 gap-8 px-4 pb-32 pt-6 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:px-10 lg:pb-24 lg:pt-9"
@@ -72,6 +45,26 @@
             </a>
           }
         </nav>
+        <button
+          type="button"
+          (click)="logout()"
+          class="-mt-2 flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-left text-[15px] font-medium text-[#4A3F49] transition hover:bg-cream-100"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9" />
+          </svg>
+          Déconnexion
+        </button>
         <div class="flex flex-col gap-2.5 rounded-[18px] bg-cream-100 p-[18px]">
           <span class="font-display text-base font-bold text-forest-900">Une question ?</span>
           <span class="text-[13.5px] leading-relaxed text-[#4A3F49]"

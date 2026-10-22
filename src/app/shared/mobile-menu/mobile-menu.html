@@ -106,5 +106,14 @@
       class="mt-2 rounded-full bg-accent-500 p-[18px] text-center font-display text-[17px] font-bold text-[#140B19]"
       >Prendre rendez-vous</a
     >
+    @if (auth.isAuthenticated()) {
+      <button
+        type="button"
+        (click)="logout()"
+        class="rounded-full border-[1.5px] border-white/40 p-4 text-center font-display text-[16px] font-semibold text-white"
+      >
+        Déconnexion
+      </button>
+    }
   </nav>
 </div>
