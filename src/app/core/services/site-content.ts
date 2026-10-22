@@ -11,6 +11,8 @@ import {
   HealthTipRequest,
   HeroImageDto,
   OpeningHourDto,
+  SitePageDto,
+  SitePageSummaryDto,
   SiteSettingsDto,
   UpdateSiteSettingsRequest,
 } from '../models/site-content.models';
@@ -73,6 +75,25 @@ export class SiteContentService {
   /** Tous les articles, brouillons compris (admin). */
   getHealthTipsAdmin(): Observable<HealthTipDto[]> {
     return this.http.get<HealthTipDto[]>(`${environment.apiUrl}/site/health-tips/all`);
+  }
+
+  /** Contenu saisi pour une page (404 tant que l'admin n'y a rien saisi). */
+  getPage(slug: string): Observable<SitePageDto> {
+    return this.http.get<SitePageDto>(`${environment.apiUrl}/site/pages/${slug}`);
+  }
+
+  /** Les pages modifiées depuis l'admin (admin). */
+  listPages(): Observable<SitePageSummaryDto[]> {
+    return this.http.get<SitePageSummaryDto[]>(`${environment.apiUrl}/site/pages`);
+  }
+
+  savePage(slug: string, content: Record<string, unknown>): Observable<SitePageDto> {
+    return this.http.put<SitePageDto>(`${environment.apiUrl}/site/pages/${slug}`, { content });
+  }
+
+  /** Supprime le contenu saisi : la page retrouve ses textes d'origine. */
+  resetPage(slug: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/site/pages/${slug}`);
   }
 
   getOpeningHours(): Observable<OpeningHourDto[]> {

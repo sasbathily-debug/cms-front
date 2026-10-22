@@ -42,6 +42,7 @@ export class AdminShell {
     {
       title: 'Contenu du site',
       links: [
+        { sym: 'Pg', label: 'Pages du site', route: '/admin/pages' },
         { sym: 'Se', label: 'Services', route: '/admin/services' },
         { sym: 'Cs', label: 'Conseils santé', route: '/admin/health-tips' },
         { sym: 'Fq', label: 'FAQ', route: '/admin/faq' },

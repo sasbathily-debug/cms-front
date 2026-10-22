@@ -55,6 +55,18 @@ export interface HealthTipRequest {
   published: boolean;
 }
 
+/** Contenu d'une page du site saisi dans l'admin (document libre, décrit par la définition de la page). */
+export interface SitePageDto {
+  slug: string;
+  content: Record<string, unknown>;
+  updatedAt: string;
+}
+
+export interface SitePageSummaryDto {
+  slug: string;
+  updatedAt: string;
+}
+
 /** Horaires d'un jour : `dayOfWeek` de 1 (lundi) à 7 (dimanche), heures au format « HH:mm ». */
 export interface OpeningHourDto {
   dayOfWeek: number;

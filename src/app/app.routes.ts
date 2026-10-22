@@ -128,6 +128,18 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'pages',
+        loadComponent: () =>
+          import('./features/admin/admin-pages/admin-pages').then((m) => m.AdminPages),
+      },
+      {
+        path: 'pages/:slug',
+        loadComponent: () =>
+          import('./features/admin/admin-page-editor/admin-page-editor').then(
+            (m) => m.AdminPageEditor,
+          ),
+      },
+      {
         path: 'services',
         loadComponent: () =>
           import('./features/admin/admin-services/admin-services').then((m) => m.AdminServices),

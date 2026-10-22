@@ -20,41 +20,40 @@
           <div
             class="flex flex-wrap items-center justify-between gap-2 bg-accent-500 px-6 py-3.5 sm:px-9"
           >
-            <span class="font-display text-sm font-bold tracking-[0.09em] text-forest-900"
-              >À PROPOS</span
-            >
-            <span class="text-[13.5px] font-medium text-[#3A2418]"
-              >Endocrinologie · Diabétologie · Nutrition</span
-            >
+            <span class="font-display text-sm font-bold tracking-[0.09em] text-forest-900">{{
+              c().hero.kicker
+            }}</span>
+            <span class="text-[13.5px] font-medium text-[#3A2418]">{{ c().hero.tagline }}</span>
           </div>
           <div class="flex flex-col gap-[22px] px-6 py-9 sm:px-9 sm:py-10">
             <h1
               class="m-0 font-display text-[2.4rem] font-bold leading-none tracking-[-0.035em] text-forest-900 sm:text-5xl lg:text-[56px]"
             >
-              Dr Aissatou Mamadou Fall
+              {{ c().hero.nom }}
             </h1>
             <p class="m-0 text-[17px] leading-[1.6] text-[#4A3F49] sm:text-[19px]">
-              Médecin endocrinologue et nutritionniste à Dakar. J'accompagne les personnes qui
-              vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal.
+              {{ c().hero.intro }}
             </p>
             <blockquote
               class="m-0 mt-1 border-l-[3px] border-accent-500 pl-5 font-display text-[19px] leading-[1.45] text-forest-900"
             >
-              « Mieux comprendre sa maladie, c'est déjà commencer à la maîtriser. »
-              <span class="mt-2 block font-body text-[13px] text-ink-600"
-                >[Citation à confirmer par la doctoresse]</span
-              >
+              {{ c().hero.citation }}
+              @if (c().hero.citationNote) {
+                <span class="mt-2 block font-body text-[13px] text-ink-600">{{
+                  c().hero.citationNote
+                }}</span>
+              }
             </blockquote>
             <div class="mt-1 flex flex-wrap gap-3">
               <a
                 routerLink="/rendez-vous"
                 class="rounded-full bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-forest-900 transition hover:bg-accent-600"
-                >Prendre rendez-vous</a
+                >{{ c().hero.boutonPrincipal }}</a
               >
               <a
                 routerLink="/specialites"
                 class="rounded-full border-[1.5px] border-forest-900 px-[26px] py-[15px] font-display text-[15px] font-semibold text-forest-900"
-                >Mes spécialités</a
+                >{{ c().hero.boutonSecondaire }}</a
               >
             </div>
           </div>
@@ -85,26 +84,23 @@
       class="mx-auto grid max-w-[1160px] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16"
     >
       <div class="flex flex-col gap-3">
-        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">MON HISTOIRE</span>
+        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
+          c().histoire.kicker
+        }}</span>
         <h2
           class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]"
         >
-          Pourquoi l'endocrinologie
+          {{ c().histoire.titre }}
         </h2>
       </div>
       <div class="flex flex-col gap-5">
         <p
           class="m-0 font-display text-[22px] font-medium leading-[1.35] tracking-[-0.01em] text-forest-900 sm:text-[28px]"
         >
-          Les maladies chroniques demandent du temps, de la pédagogie et une relation de confiance
-          durable.
+          {{ c().histoire.accroche }}
         </p>
         <p class="m-0 text-[17px] leading-[1.75] text-[#4A3F49]">
-          [Texte à écrire avec la doctoresse : ce qui l'a menée à cette spécialité, une rencontre ou
-          un patient qui l'a marquée.] Au cabinet, je prends le temps d'expliquer chaque diagnostic
-          avec des mots simples, de construire avec vous un plan réaliste et de l'ajuster au fil des
-          consultations, en tenant compte de votre quotidien, de votre alimentation et de votre
-          famille.
+          {{ c().histoire.texte }}
         </p>
       </div>
     </div>
@@ -115,15 +111,17 @@
   >
     <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
       <div class="flex flex-col gap-3.5">
-        <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">PARCOURS</span>
+        <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+          c().parcours.kicker
+        }}</span>
         <h2
           class="m-0 font-display text-[2.2rem] font-bold leading-[1.08] tracking-[-0.025em] text-white sm:text-5xl"
         >
-          Formation et expérience
+          {{ c().parcours.titre }}
         </h2>
       </div>
       <div class="flex flex-col">
-        @for (p of parcours; track $index) {
+        @for (p of c().parcours.items; track $index) {
           <div
             class="grid gap-2 border-t border-white/15 py-7 sm:grid-cols-[200px_minmax(0,1fr)] sm:gap-8"
           >
@@ -145,17 +143,17 @@
   <section class="bg-cream-50 px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:px-10">
     <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
       <div class="flex max-w-[700px] flex-col gap-3.5">
-        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700"
-          >MA FAÇON DE TRAVAILLER</span
-        >
+        <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
+          c().valeurs.kicker
+        }}</span>
         <h2
           class="m-0 font-display text-[2.2rem] font-bold leading-[1.08] tracking-[-0.025em] text-forest-900 sm:text-5xl"
         >
-          Trois engagements envers mes patients
+          {{ c().valeurs.titre }}
         </h2>
       </div>
       <div class="grid gap-5 md:grid-cols-3">
-        @for (v of valeurs; track v.sym) {
+        @for (v of c().valeurs.items; track $index) {
           <div
             class="flex min-h-[260px] flex-col justify-between gap-10 rounded-[26px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] p-[30px] text-white md:min-h-[300px]"
           >
@@ -176,11 +174,10 @@
     <div class="mx-auto grid max-w-[1160px] items-start gap-5 md:grid-cols-2">
       <div class="flex flex-col gap-3 rounded-[26px] border border-border-warm bg-white p-8">
         <h3 class="m-0 font-display text-[22px] font-bold text-forest-900">
-          Sociétés savantes et affiliations
+          {{ c().affiliations.titre }}
         </h3>
         <p class="m-0 text-[15px] leading-[1.7] text-[#5B4F59]">
-          [Ordre des médecins du Sénégal, n° d'inscription] · [Société d'endocrinologie ou de
-          diabétologie] · [Autres associations]
+          {{ c().affiliations.texte }}
         </p>
       </div>
       <div class="flex flex-col overflow-hidden rounded-[26px] border border-border-warm bg-white">
@@ -196,16 +193,15 @@
         />
         <div class="flex flex-col gap-3 p-8">
           <h3 class="m-0 font-display text-[22px] font-bold text-forest-900">
-            Enseignement et publications
+            {{ c().interventions.titre }}
           </h3>
           <p class="m-0 text-[15px] leading-[1.7] text-[#5B4F59]">
-            Lors d'une intervention [événement et date à préciser]. [Autres interventions, congrès,
-            articles : à renseigner si la doctoresse en a.]
+            {{ c().interventions.texte }}
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <app-cta-band title="Envie d'en parler ? Prenons rendez-vous." />
+  <app-cta-band [title]="c().appel.titre" />
 </app-public-page>
