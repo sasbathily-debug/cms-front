@@ -93,7 +93,8 @@ export class ChatWidget {
       filter((event) => event instanceof NavigationEnd),
       map(() => this.router.url),
     ),
-    { initialValue: this.router.url },
+    // Avant la première navigation le routeur répond « / » : on lit l'adresse du navigateur pour ne pas faire clignoter la bulle sur l'admin ou la connexion.
+    { initialValue: typeof location === 'undefined' ? this.router.url : location.pathname },
   );
 
   protected readonly visible = computed(() => {
