@@ -29,6 +29,8 @@ export class Login {
 
   submit(): void {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.errorMessage.set('Saisissez votre identifiant et votre mot de passe.');
       return;
     }
 

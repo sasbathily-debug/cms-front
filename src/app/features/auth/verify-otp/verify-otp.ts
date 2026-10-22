@@ -82,6 +82,7 @@ export class VerifyOtp implements OnInit {
 
   submit(): void {
     if (this.form.invalid) {
+      this.errorMessage.set('Saisissez les 6 chiffres du code reçu.');
       return;
     }
 

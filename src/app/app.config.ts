@@ -5,6 +5,7 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import {
+  TitleStrategy,
   provideRouter,
   withInMemoryScrolling,
   withNavigationErrorHandler,
@@ -13,6 +14,7 @@ import {
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { routes } from './app.routes';
+import { SiteTitleStrategy } from './core/site-title';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { Auth } from './core/services/auth';
 
@@ -41,7 +43,16 @@ export const appConfig: ApplicationConfig = {
       withRouterConfig({ onSameUrlNavigation: 'reload' }),
       withNavigationErrorHandler(reloadOnStaleChunk),
     ),
+    { provide: TitleStrategy, useClass: SiteTitleStrategy },
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideAppInitializer(() => firstValueFrom(inject(Auth).init())),
+    provideAppInitializer(() => {
+      const auth = inject(Auth);
+      // On n'attend la session que 3 secondes : si le serveur est en veille (offre gratuite), le site
+      // s'affiche quand même et la session arrive ensuite ; les pages protégées attendent `whenReady()`.
+      return Promise.race([
+        firstValueFrom(auth.init()),
+        new Promise<void>((resolve) => setTimeout(resolve, 3000)),
+      ]);
+    }),
   ],
 };

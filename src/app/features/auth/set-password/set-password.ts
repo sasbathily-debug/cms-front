@@ -65,6 +65,14 @@ export class SetPassword {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      const { password, confirmPassword } = this.form.controls;
+      this.errorMessage.set(
+        password.hasError('minlength')
+          ? 'Le mot de passe doit contenir au moins 8 caractères.'
+          : confirmPassword.value && this.form.hasError('passwordsMismatch')
+            ? 'Les deux mots de passe ne sont pas identiques.'
+            : 'Saisissez votre mot de passe et confirmez-le.',
+      );
       return;
     }
 

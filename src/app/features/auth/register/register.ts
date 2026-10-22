@@ -41,6 +41,11 @@ export class Register {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.errorMessage.set(
+        this.form.controls.email.invalid
+          ? 'Vérifiez votre adresse e-mail.'
+          : 'Renseignez votre prénom, votre nom et votre numéro de téléphone.',
+      );
       return;
     }
     // Maquette : l'e-mail est facultatif. Tant que le code n'est pas envoyé par SMS, le serveur

@@ -35,8 +35,14 @@ export class Reveal {
       (entries) => {
         let index = 0;
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
           const el = entry.target as HTMLElement;
+          // Bloc déjà dépassé (défilement rapide, fin de page) : on l'affiche sans animation, jamais invisible.
+          if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+            observer.unobserve(el);
+            el.classList.remove('reveal-pending');
+            continue;
+          }
+          if (!entry.isIntersecting) continue;
           observer.unobserve(el);
           el.style.animationDelay = `${Math.min(MAX_DELAY, index * STAGGER)}ms`;
           index++;

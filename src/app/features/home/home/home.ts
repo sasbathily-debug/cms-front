@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
@@ -68,6 +68,21 @@ function formatNextSlot(slot: AvailableSlotDto): string {
   templateUrl: './home.html',
 })
 export class Home implements OnInit {
+  /**
+   * Une seule version de l'accueil est construite (bureau ou téléphone) : un seul titre principal dans la page
+   * et aucune image téléchargée pour la version qu'on ne voit pas.
+   */
+  readonly desktop = signal(true);
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    const query = window.matchMedia('(min-width: 1024px)');
+    this.desktop.set(query.matches);
+    const onChange = (event: MediaQueryListEvent): void => this.desktop.set(event.matches);
+    query.addEventListener('change', onChange);
+    this.destroyRef.onDestroy(() => query.removeEventListener('change', onChange));
+  }
+
   private readonly availability = inject(AvailabilityService);
   private readonly sanitizer = inject(DomSanitizer);
   protected readonly site = inject(SiteSettings);
