@@ -1,15 +1,6 @@
 <div
   class="relative hidden min-h-screen flex-col justify-between p-14 text-white lg:flex"
-  style="
-    background:
-      linear-gradient(
-        180deg,
-        rgba(31, 18, 38, 0.78) 0%,
-        rgba(31, 18, 38, 0.55) 45%,
-        rgba(31, 18, 38, 0.94) 100%
-      ),
-      url('/img/auth-photo.jpg') 62% center / cover;
-  "
+  style="background: linear-gradient(160deg, #2a1930 0%, #1f1226 70%)"
 >
   <a routerLink="/">
     <img
@@ -20,6 +11,17 @@
   </a>
 
   <div class="flex max-w-[480px] flex-col gap-[26px]">
+    <div
+      class="relative h-[230px] w-[190px] overflow-hidden rounded-[95px_95px_22px_22px] border border-white/15 bg-[#13253a] [@media(max-height:820px)]:h-[160px] [@media(max-height:820px)]:w-[132px] [@media(max-height:820px)]:rounded-[66px_66px_18px_18px]"
+    >
+      <img
+        src="/img/dr-fall-sourire.webp"
+        alt="Le Dr Aissatou Mamadou Fall, sourire aux lèvres"
+        width="1024"
+        height="793"
+        class="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
+      />
+    </div>
     <h2 class="m-0 font-display text-[46px] font-bold leading-[1.05] tracking-[-0.03em]">
       Suivez votre santé, à votre rythme.
     </h2>
