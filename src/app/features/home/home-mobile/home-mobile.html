@@ -17,6 +17,9 @@
         height="1080"
         fetchpriority="high"
         class="hero-portrait absolute inset-x-0 bottom-0 top-14 h-[calc(100%-3.5rem)] w-full object-cover object-top"
+        [appParallax]="0.28"
+        parallaxMode="top"
+        [parallaxMax]="160"
       />
     </div>
 
@@ -298,16 +301,29 @@
 
     <!-- La doctoresse -->
     <section class="-mt-8 flex flex-col gap-[22px] bg-cream-50 px-4 pb-16 pt-24">
-      <div
-        class="h-[400px] rounded-[190px_190px_28px_28px] bg-cover bg-[position:35%_center]"
-        style="
-          background-image:
-            linear-gradient(180deg, rgba(31, 18, 38, 0) 55%, rgba(31, 18, 38, 0.5) 100%),
-            url(/img/photo-2.jpg);
-        "
-        role="img"
-        aria-label="La doctoresse"
-      ></div>
+      <div class="relative h-[400px] overflow-hidden rounded-[190px_190px_28px_28px] bg-forest-800">
+        <img
+          src="/img/dr-fall.webp"
+          alt="Portrait du Dr Aissatou Mamadou Fall, en blouse blanche, les bras croisés"
+          width="1080"
+          height="1080"
+          loading="lazy"
+          class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover object-[50%_20%]"
+          [appParallax]="0.1"
+          [parallaxMax]="30"
+        />
+        <div
+          aria-hidden="true"
+          class="absolute inset-0"
+          style="
+            background: linear-gradient(
+              180deg,
+              rgba(31, 18, 38, 0) 60%,
+              rgba(31, 18, 38, 0.45) 100%
+            );
+          "
+        ></div>
+      </div>
       <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">LA DOCTORESSE</span>
       <h2
         class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"

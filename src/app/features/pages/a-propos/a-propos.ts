@@ -1,3 +1,4 @@
+import { Parallax } from '../../../shared/parallax';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
@@ -51,7 +52,7 @@ const VALEURS = [
 
 @Component({
   selector: 'app-a-propos',
-  imports: [RouterLink, PublicPage, CtaBand],
+  imports: [RouterLink, PublicPage, CtaBand, Parallax],
   templateUrl: './a-propos.html',
 })
 export class APropos {

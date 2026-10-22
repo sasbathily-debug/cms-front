@@ -12,6 +12,7 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
+import { Parallax } from '../../../shared/parallax';
 import { AvailabilityService } from '../../../core/services/availability';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SPECIALTIES } from '../../../core/specialties';
@@ -38,7 +39,7 @@ const FAQ = [
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
   selector: 'app-home-mobile',
-  imports: [RouterLink, OrangeThread],
+  imports: [RouterLink, OrangeThread, Parallax],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
 })

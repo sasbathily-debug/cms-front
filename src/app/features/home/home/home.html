@@ -6,25 +6,34 @@
     <section
       class="relative flex min-h-[680px] items-end overflow-hidden bg-[#140B19] sm:min-h-[780px] lg:min-h-[900px]"
     >
-      <div class="hero-zoom absolute inset-0 z-0" aria-hidden="true">
+      <div class="absolute inset-y-0 right-0 z-0 w-[58%]">
         <img
-          src="/img/photo-1.jpg"
-          alt=""
-          class="parallax-hero absolute inset-0 h-full w-full object-cover"
+          src="/img/dr-fall.webp"
+          alt="Le Dr Aissatou Mamadou Fall, endocrinologue et nutritionniste, en blouse blanche, les bras croisés"
+          width="1080"
+          height="1080"
+          fetchpriority="high"
+          class="absolute inset-0 h-full w-full object-cover object-[50%_18%]"
+          [appParallax]="0.1"
+          parallaxMode="top"
+          [parallaxMax]="90"
         />
+        <div
+          class="absolute inset-0"
+          aria-hidden="true"
+          style="
+            background:
+              linear-gradient(90deg, #140b19 0%, rgba(20, 11, 25, 0) 40%),
+              linear-gradient(
+                180deg,
+                rgba(20, 11, 25, 0.3) 0%,
+                rgba(20, 11, 25, 0) 22%,
+                rgba(20, 11, 25, 0) 62%,
+                #140b19 100%
+              );
+          "
+        ></div>
       </div>
-      <div
-        class="absolute inset-0 z-0"
-        aria-hidden="true"
-        style="
-          background: linear-gradient(
-            180deg,
-            rgba(20, 11, 25, 0.35) 0%,
-            rgba(20, 11, 25, 0.6) 55%,
-            #140b19 100%
-          );
-        "
-      ></div>
 
       <div
         class="relative z-[1] mx-auto flex w-full max-w-[1160px] flex-col gap-7 px-4 pb-[200px] pt-32 sm:px-6 lg:px-10 lg:pb-[236px] lg:pt-40"
@@ -33,7 +42,7 @@
           >CABINET D'ENDOCRINOLOGIE · SACRÉ-CŒUR, DAKAR</span
         >
         <h1
-          class="m-0 max-w-[900px] font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-6xl lg:text-[72px]"
+          class="m-0 max-w-[900px] font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-6xl lg:max-w-[640px] lg:text-[68px]"
         >
           @for (w of heroWords; track $index) {
             @if (w.underlined) {
@@ -142,11 +151,19 @@
       >
         <div class="mx-auto flex max-w-[1160px] flex-wrap items-center gap-10 lg:gap-16">
           <div
-            class="flex h-[420px] min-w-0 flex-[1_1_420px] items-end rounded-[28px] bg-cover bg-[position:35%_center] p-5 sm:h-[560px] lg:rounded-[36px]"
-            style="background-image: url(/img/photo-2.jpg)"
-            role="img"
-            aria-label="La doctoresse"
-          ></div>
+            class="relative h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-[28px] bg-forest-800 sm:h-[560px] lg:rounded-[36px]"
+          >
+            <img
+              src="/img/dr-fall.webp"
+              alt="Portrait du Dr Aissatou Mamadou Fall, en blouse blanche, les bras croisés"
+              width="1080"
+              height="1080"
+              loading="lazy"
+              class="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-[50%_20%]"
+              [appParallax]="0.08"
+              [parallaxMax]="40"
+            />
+          </div>
           <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-[22px]">
             <span class="text-xs font-semibold tracking-[0.12em] text-accent-700"
               >LA DOCTORESSE</span

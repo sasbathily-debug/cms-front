@@ -78,7 +78,8 @@ export class LeCabinet {
 
   readonly equipe = [
     {
-      photo: 'PHOTO : la doctoresse [à fournir]',
+      photo: '',
+      photoUrl: '/img/dr-fall.webp',
       nom: 'Dr Aïssatou Mamadou Fall',
       role: 'Médecin endocrinologue et nutritionniste',
       texte:
@@ -86,12 +87,14 @@ export class LeCabinet {
     },
     {
       photo: 'PHOTO : [à fournir]',
+      photoUrl: '',
       nom: '[Nom]',
       role: '[Secrétaire médicale]',
       texte: "[Rôle et mots d'accueil à compléter]",
     },
     {
       photo: 'PHOTO : [à fournir]',
+      photoUrl: '',
       nom: '[Nom]',
       role: '[Diététicienne, infirmière… si applicable]',
       texte: '[À compléter, ou supprimer cette carte]',

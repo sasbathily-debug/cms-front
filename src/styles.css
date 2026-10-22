@@ -272,23 +272,6 @@ router-outlet + * {
   }
 }
 
-/* Photo d'en-tête de l'accueil : défile un peu moins vite que la page (Chrome et Safari récents) */
-@supports (animation-timeline: scroll()) {
-  .parallax-hero {
-    animation: parallax-hero linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 90vh;
-  }
-}
-@keyframes parallax-hero {
-  from {
-    transform: translateY(0) scale(1.06);
-  }
-  to {
-    transform: translateY(9%) scale(1.06);
-  }
-}
-
 /* Survols : même geste partout (soulèvement léger, appui qui enfonce) */
 @media (hover: hover) {
   a[class*='rounded-'][class*='border']:not([class*='rounded-full']):not(.fixed),
@@ -343,8 +326,7 @@ button[class*='rounded-full']:not(:disabled):active {
   .anim-check-path,
   .slot-selected,
   .inview .anim-line,
-  .inview .anim-dot,
-  .parallax-hero {
+  .inview .anim-dot {
     animation: none;
   }
   .anim-check-path {

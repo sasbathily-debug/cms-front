@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
+import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { AvailabilityService } from '../../../core/services/availability';
 import { ADDRESS_STREET, HOME_HOURS, SiteSettings } from '../../../core/services/site-settings';
@@ -62,7 +63,7 @@ function formatNextSlot(slot: AvailableSlotDto): string {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, PublicPage, SilhouetteSpecialties, OrangeThread, HomeMobile],
+  imports: [RouterLink, PublicPage, SilhouetteSpecialties, OrangeThread, HomeMobile, Parallax],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })

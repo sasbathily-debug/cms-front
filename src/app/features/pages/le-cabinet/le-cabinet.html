@@ -140,14 +140,27 @@
       <div class="grid gap-5 md:grid-cols-3">
         @for (m of equipe; track $index) {
           <div class="flex flex-col gap-4 rounded-[26px] border border-border-warm bg-white p-6">
-            <div
-              class="flex h-[200px] items-end rounded-[18px] bg-[linear-gradient(160deg,#EADBCB,#D9C3AC)] p-3"
-            >
-              <span
-                class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-[11.5px] tracking-[0.05em] text-white"
-                >{{ m.photo }}</span
+            @if (m.photoUrl) {
+              <div class="relative h-[200px] overflow-hidden rounded-[18px] bg-forest-800">
+                <img
+                  [src]="m.photoUrl"
+                  [alt]="'Portrait de ' + m.nom"
+                  width="1080"
+                  height="1080"
+                  loading="lazy"
+                  class="absolute inset-0 h-full w-full object-cover object-[50%_18%]"
+                />
+              </div>
+            } @else {
+              <div
+                class="flex h-[200px] items-end rounded-[18px] bg-[linear-gradient(160deg,#EADBCB,#D9C3AC)] p-3"
               >
-            </div>
+                <span
+                  class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-[11.5px] tracking-[0.05em] text-white"
+                  >{{ m.photo }}</span
+                >
+              </div>
+            }
             <div class="flex flex-col gap-1">
               <h3 class="m-0 font-display text-xl font-bold text-forest-900">{{ m.nom }}</h3>
               <span class="text-sm font-semibold text-accent-700">{{ m.role }}</span>

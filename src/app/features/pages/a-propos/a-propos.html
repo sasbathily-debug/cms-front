@@ -60,11 +60,19 @@
           </div>
         </div>
         <div
-          class="flex h-[420px] items-end rounded-[26px] bg-forest-800 bg-cover bg-[position:35%_center] p-[18px] shadow-[0_30px_60px_rgba(31,18,38,0.22)] lg:h-[560px]"
-          style="background-image: url(/img/photo-2.jpg)"
-          role="img"
-          aria-label="Portrait de la doctoresse"
-        ></div>
+          class="relative h-[420px] overflow-hidden rounded-[26px] bg-forest-800 shadow-[0_30px_60px_rgba(31,18,38,0.22)] lg:h-[560px]"
+        >
+          <img
+            src="/img/dr-fall.webp"
+            alt="Portrait du Dr Aissatou Mamadou Fall, en blouse blanche, les bras croisés"
+            width="1080"
+            height="1080"
+            fetchpriority="high"
+            class="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-[50%_20%]"
+            [appParallax]="0.08"
+            [parallaxMax]="40"
+          />
+        </div>
       </div>
     </section>
   </div>
