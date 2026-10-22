@@ -32,6 +32,8 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'top' }),
       withViewTransitions({
+        // Au premier chargement il n'y a pas de page précédente : rien à animer.
+        skipInitialTransition: true,
         onViewTransitionCreated: ({ transition, from, to }) => {
           if (leafPath(from) === leafPath(to)) transition.skipTransition();
         },

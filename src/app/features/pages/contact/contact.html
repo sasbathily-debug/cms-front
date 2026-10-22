@@ -78,112 +78,176 @@
 
   <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
     <div class="mx-auto grid max-w-[1160px] gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-      <form
-        [formGroup]="form"
-        (ngSubmit)="send()"
-        class="flex flex-col gap-5 rounded-[28px] border border-border-warm bg-white p-6 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:p-10"
-      >
-        <h2
-          class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[30px]"
-        >
-          Envoyer un message
-        </h2>
-        <div class="grid gap-4 sm:grid-cols-2">
-          <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
-            Nom et prénom
-            <input
-              formControlName="name"
-              autocomplete="name"
-              placeholder="Votre nom"
-              class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
-            />
-          </label>
-          <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
-            Téléphone
-            <input
-              formControlName="phone"
-              type="tel"
-              autocomplete="tel"
-              placeholder="+221 "
-              class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
-            />
-          </label>
-        </div>
-        <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
-          E-mail (facultatif)
-          <input
-            formControlName="email"
-            type="email"
-            autocomplete="email"
-            placeholder="vous@exemple.com"
-            class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
-          />
-        </label>
-        <fieldset class="m-0 flex flex-col gap-2.5 border-0 p-0">
-          <legend class="mb-2.5 p-0 text-[13.5px] font-semibold text-forest-900">Motif</legend>
-          <div class="flex flex-wrap gap-2.5">
-            @for (motif of motifs; track motif) {
-              <button
-                type="button"
-                (click)="setMotif(motif)"
-                [attr.aria-pressed]="form.value.motif === motif"
-                class="rounded-full border-[1.5px] px-[18px] py-2.5 text-sm font-medium transition"
-                [class]="
-                  form.value.motif === motif
-                    ? 'border-forest-900 bg-forest-900 text-white'
-                    : 'border-[#D9C8B8] bg-white text-[#4A3F49] hover:border-forest-900'
-                "
-              >
-                {{ motif }}
-              </button>
-            }
-          </div>
-        </fieldset>
-        <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
-          Votre message
-          <textarea
-            formControlName="message"
-            rows="5"
-            placeholder="Écrivez votre question ici…"
-            class="resize-y rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
-          ></textarea>
-        </label>
-        <label class="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#5B4F59]">
-          <input
-            formControlName="consent"
-            type="checkbox"
-            class="mt-0.5 h-5 w-5 shrink-0 accent-forest-900"
-          />
-          <span
-            >J'accepte que ces informations servent uniquement à répondre à ma demande.
-            <a routerLink="/contact" class="text-accent-800">Politique de confidentialité</a></span
-          >
-        </label>
-        @if (form.touched && form.invalid) {
-          <p class="m-0 text-sm text-[#B3261E]" role="alert">
-            Merci de remplir votre nom, votre téléphone, votre message et d'accepter la case
-            ci-dessus.
-          </p>
-        }
-        <div class="flex flex-wrap items-center gap-4">
-          <button
-            type="submit"
-            class="rounded-full bg-forest-900 px-8 py-4 font-display text-base font-semibold text-white transition hover:bg-forest-800"
-          >
-            Envoyer le message
-          </button>
-          <span class="text-[13.5px] text-ink-600"
-            >Réponse sous [délai à préciser par la doctoresse].</span
-          >
-        </div>
+      @if (status() === 'sent') {
         <div
-          class="rounded-[14px] bg-accent-100 px-[18px] py-3.5 text-sm leading-relaxed text-[#5A3410]"
+          class="flex flex-col items-start justify-center gap-5 rounded-[28px] border border-[#BFE5D0] bg-[#EAF7F0] p-6 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:p-10"
+          role="status"
         >
-          <strong class="text-forest-900">Urgence :</strong> ne passez pas par ce formulaire.
-          Appelez le SAMU au 1515 <span class="text-ink-600">[numéro à confirmer]</span> ou
-          rendez-vous aux urgences les plus proches.
+          <svg width="56" height="56" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+            <circle class="anim-check-circle" cx="22" cy="22" r="20" fill="#2E7D46" />
+            <path
+              class="anim-check-path"
+              pathLength="1"
+              d="M13 22.5l6 6 12-13"
+              stroke="#fff"
+              stroke-width="3.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-[#14532D]">
+            Message envoyé
+          </h2>
+          <p class="m-0 max-w-[460px] text-[15.5px] leading-relaxed text-[#1F4D36]">
+            Le cabinet a bien reçu votre message et vous répondra par téléphone ou par e-mail. Pour
+            une urgence, appelez directement.
+          </p>
+          <button
+            type="button"
+            (click)="reset()"
+            class="rounded-full border-[1.5px] border-forest-900 px-7 py-3.5 font-display text-[15px] font-semibold text-forest-900"
+          >
+            Envoyer un autre message
+          </button>
         </div>
-      </form>
+      } @else {
+        <form
+          [formGroup]="form"
+          (ngSubmit)="send()"
+          class="relative flex flex-col gap-5 rounded-[28px] border border-border-warm bg-white p-6 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:p-10"
+        >
+          <h2
+            class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[30px]"
+          >
+            Envoyer un message
+          </h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+              Nom et prénom
+              <input
+                formControlName="name"
+                autocomplete="name"
+                placeholder="Votre nom"
+                class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
+              />
+            </label>
+            <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+              Téléphone
+              <input
+                formControlName="phone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+221 "
+                class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
+              />
+            </label>
+          </div>
+          <div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+            <label>
+              Ne pas remplir ce champ
+              <input formControlName="website" type="text" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+          <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+            E-mail (facultatif)
+            <input
+              formControlName="email"
+              type="email"
+              autocomplete="email"
+              placeholder="vous@exemple.com"
+              class="rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
+            />
+          </label>
+          <fieldset class="m-0 flex flex-col gap-2.5 border-0 p-0">
+            <legend class="mb-2.5 p-0 text-[13.5px] font-semibold text-forest-900">Motif</legend>
+            <div class="flex flex-wrap gap-2.5">
+              @for (motif of motifs; track motif) {
+                <button
+                  type="button"
+                  (click)="setMotif(motif)"
+                  [attr.aria-pressed]="form.value.motif === motif"
+                  class="rounded-full border-[1.5px] px-[18px] py-2.5 text-sm font-medium transition"
+                  [class]="
+                    form.value.motif === motif
+                      ? 'border-forest-900 bg-forest-900 text-white'
+                      : 'border-[#D9C8B8] bg-white text-[#4A3F49] hover:border-forest-900'
+                  "
+                >
+                  {{ motif }}
+                </button>
+              }
+            </div>
+          </fieldset>
+          <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
+            Votre message
+            <textarea
+              formControlName="message"
+              rows="5"
+              placeholder="Écrivez votre question ici…"
+              class="resize-y rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-[18px] py-[15px] text-[15.5px] font-normal text-ink-900 outline-none placeholder:text-[#8A7E88] focus:border-accent-500"
+            ></textarea>
+          </label>
+          <label class="flex items-start gap-3 text-[13.5px] leading-relaxed text-[#5B4F59]">
+            <input
+              formControlName="consent"
+              type="checkbox"
+              class="mt-0.5 h-5 w-5 shrink-0 accent-forest-900"
+            />
+            <span
+              >J'accepte que ces informations servent uniquement à répondre à ma demande.
+              <a routerLink="/contact" class="text-accent-800"
+                >Politique de confidentialité</a
+              ></span
+            >
+          </label>
+          @if (form.touched && form.invalid) {
+            <p class="m-0 text-sm text-[#B3261E]" role="alert">
+              Merci de remplir votre nom, votre téléphone, votre message et d'accepter la case
+              ci-dessus.
+            </p>
+          }
+          @if (status() === 'error') {
+            <div
+              class="flex flex-col gap-3 rounded-[14px] border border-[#F0C4C0] bg-[#FDF0EF] px-[18px] py-4 text-sm leading-relaxed text-[#7A1F18]"
+              role="alert"
+            >
+              <span>{{ errorText() }}</span>
+              <span class="flex flex-wrap gap-x-5 gap-y-2 font-semibold">
+                <a [href]="site.telHref()" class="underline">Appeler le cabinet</a>
+                @if (site.whatsappHref()) {
+                  <a
+                    [href]="site.whatsappHref()"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="underline"
+                    >Écrire sur WhatsApp</a
+                  >
+                }
+                <a [href]="mailtoHref" class="underline">Ou par e-mail</a>
+              </span>
+            </div>
+          }
+          <div class="flex flex-wrap items-center gap-4">
+            <button
+              type="submit"
+              [disabled]="status() === 'sending'"
+              class="rounded-full bg-forest-900 px-8 py-4 font-display text-base font-semibold text-white transition hover:bg-forest-800 disabled:opacity-60"
+            >
+              {{ status() === 'sending' ? 'Envoi en cours…' : 'Envoyer le message' }}
+            </button>
+            <span class="text-[13.5px] text-ink-600"
+              >Réponse sous [délai à préciser par la doctoresse].</span
+            >
+          </div>
+          <div
+            class="rounded-[14px] bg-accent-100 px-[18px] py-3.5 text-sm leading-relaxed text-[#5A3410]"
+          >
+            <strong class="text-forest-900">Urgence :</strong> ne passez pas par ce formulaire.
+            Appelez le SAMU au 1515 <span class="text-ink-600">[numéro à confirmer]</span> ou
+            rendez-vous aux urgences les plus proches.
+          </div>
+        </form>
+      }
 
       <div class="flex flex-col gap-4">
         <div
