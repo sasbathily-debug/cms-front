@@ -368,3 +368,30 @@ button[class*='rounded-full']:not(:disabled):active {
     animation: none;
   }
 }
+
+/* Pouls : le logo du cabinet bat discrètement, double battement puis repos (un cycle par seconde et demie). */
+.pulse-logo {
+  animation: pulse-logo 1.5s ease-out infinite;
+}
+@keyframes pulse-logo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(224, 135, 63, 0.5);
+  }
+  12% {
+    box-shadow: 0 0 0 7px rgba(224, 135, 63, 0);
+  }
+  24% {
+    box-shadow: 0 0 0 0 rgba(224, 135, 63, 0.4);
+  }
+  36% {
+    box-shadow: 0 0 0 6px rgba(224, 135, 63, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(224, 135, 63, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-logo {
+    animation: none;
+  }
+}
