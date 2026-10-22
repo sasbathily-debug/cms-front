@@ -1,4 +1,13 @@
-import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -28,6 +37,17 @@ interface ChatReply {
 const HIDDEN_PREFIXES = ['/admin', '/login', '/register', '/verify-otp', '/set-password'];
 
 const MAX_LENGTH = 500;
+const NUDGE_AFTER_MS = 20_000;
+const NUDGE_KEY = 'chat-nudged';
+
+/** Le stockage peut être indisponible (navigation privée) : on ne s'en sert que pour ne pas répéter le signal. */
+function storage(): Storage | null {
+  try {
+    return window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Bulle d'aide en bas à droite. Elle interroge le chatbot du cabinet (réponses tirées de la FAQ validée,
@@ -64,6 +84,8 @@ export class ChatWidget {
 
   protected readonly maxLength = MAX_LENGTH;
   protected readonly opened = signal(false);
+  /** Petit signal discret, une seule fois par visite, pour rappeler que l'assistant existe. */
+  protected readonly nudge = signal(false);
   protected readonly loading = signal(false);
   protected readonly draft = signal('');
   protected readonly messages = signal<ChatMessage[]>([]);
@@ -89,11 +111,30 @@ export class ChatWidget {
     return !HIDDEN_PREFIXES.some((prefix) => path === prefix || path.startsWith(prefix + '/'));
   });
 
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      if (storage()?.getItem(NUDGE_KEY)) return;
+      let hide: ReturnType<typeof setTimeout> | undefined;
+      const show = setTimeout(() => {
+        if (this.opened() || !this.visible()) return;
+        storage()?.setItem(NUDGE_KEY, '1');
+        this.nudge.set(true);
+        hide = setTimeout(() => this.nudge.set(false), 7000);
+      }, NUDGE_AFTER_MS);
+      destroyRef.onDestroy(() => {
+        clearTimeout(show);
+        clearTimeout(hide);
+      });
+    });
+  }
+
   protected toggle(): void {
     this.opened() ? this.close() : this.open();
   }
 
   protected open(): void {
+    this.nudge.set(false);
     this.opened.set(true);
     setTimeout(() => this.field()?.nativeElement.focus());
   }

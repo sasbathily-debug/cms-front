@@ -168,8 +168,16 @@
       type="button"
       (click)="toggle()"
       aria-label="Poser une question à l'assistant du cabinet"
+      [class.chat-attn]="nudge()"
       class="chat-launcher fixed bottom-[92px] right-4 z-40 flex h-12 w-12 items-center justify-center gap-2.5 rounded-full border border-white/20 bg-forest-900 text-white sm:h-14 sm:w-auto sm:px-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] sm:bottom-[130px] sm:right-7"
     >
+      @if (nudge()) {
+        <span
+          aria-hidden="true"
+          class="chat-tip absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-[13px] font-semibold text-forest-900 shadow-[0_8px_20px_rgba(31,18,38,0.25)] sm:hidden"
+          >Une question ?</span
+        >
+      }
       <span class="chat-3d" aria-hidden="true">
         <span class="chat-3d-body">
           @for (layer of layers; track layer.z) {
