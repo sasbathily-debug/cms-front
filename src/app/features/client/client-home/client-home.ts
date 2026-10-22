@@ -10,6 +10,7 @@ import { DocumentCategory, PatientDocumentDto } from '../../../core/models/patie
 import { HealthTipDto } from '../../../core/models/site-content.models';
 import { AppointmentHistory } from '../../../shared/appointment-history/appointment-history';
 import { NavIcon } from '../../../shared/nav-icon/nav-icon';
+import { InView } from '../../../shared/in-view';
 import { PatientShell } from '../../../shared/patient-shell/patient-shell';
 import {
   appointmentStatusClasses,
@@ -56,7 +57,7 @@ const MONTHS = [
 
 /** Tableau de bord du patient : prochain rendez-vous, préparation, suivi, documents, rappels, conseils. */
 @Component({
-  imports: [RouterLink, AppointmentHistory, NavIcon, PatientShell],
+  imports: [RouterLink, AppointmentHistory, NavIcon, PatientShell, InView],
   selector: 'app-client-home',
   templateUrl: './client-home.html',
 })
