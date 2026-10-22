@@ -149,7 +149,7 @@ export class SilhouetteTour {
     this.loading3d = true;
     try {
       const { createBody3D } = await import('./silhouette-tour-3d');
-      const engine = createBody3D(canvas);
+      const engine = await createBody3D(canvas);
       if (!engine) return;
       this.engine = engine;
       engine.setAngle(this.angle());

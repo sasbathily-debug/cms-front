@@ -1,6 +1,8 @@
 import {
   AmbientLight,
   BufferGeometry,
+  Bone,
+  Box3,
   CatmullRomCurve3,
   CircleGeometry,
   DirectionalLight,
@@ -10,49 +12,25 @@ import {
   Mesh,
   MeshBasicMaterial,
   MeshStandardMaterial,
+  Object3D,
   PerspectiveCamera,
   Points,
   PointsMaterial,
+  Quaternion,
   Scene,
+  SkinnedMesh,
+  SRGBColorSpace,
   TubeGeometry,
   Vector3,
   WebGLRenderer,
 } from 'three';
-import { Sample, TABLES, WAIST, WAIST_Y } from './silhouette-tour.data';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-/** Hauteur (repère du dessin) du sol : le dessin va de y = 14 (tête) à y = 447 (pieds). */
-const FLOOR_Y = 447;
-const SEGMENTS = 36;
-
-/** Repère du dessin (y vers le bas) vers le repère 3D (Y vers le haut), corps centré sur x = 0. */
-const worldY = (y: number): number => FLOOR_Y - y;
-
-/** Modèle 3D du corps : chaque coupe elliptique est reliée à la suivante pour former un maillage lisse. */
-function loft(samples: Sample[], side: number): BufferGeometry {
-  const positions: number[] = [];
-  for (const s of samples) {
-    for (let k = 0; k < SEGMENTS; k++) {
-      const phi = (k / SEGMENTS) * Math.PI * 2;
-      positions.push(side * s.c + s.a * Math.cos(phi), worldY(s.y), s.z + s.b * Math.sin(phi));
-    }
-  }
-  const indices: number[] = [];
-  for (let i = 0; i < samples.length - 1; i++) {
-    for (let k = 0; k < SEGMENTS; k++) {
-      const k2 = (k + 1) % SEGMENTS;
-      const a = i * SEGMENTS + k;
-      const b = i * SEGMENTS + k2;
-      const c = (i + 1) * SEGMENTS + k;
-      const d = (i + 1) * SEGMENTS + k2;
-      indices.push(a, c, b, b, c, d);
-    }
-  }
-  const geometry = new BufferGeometry();
-  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-  geometry.setIndex(indices);
-  geometry.computeVertexNormals();
-  return geometry;
-}
+const MODEL_URL = '/models/mannequin.glb';
+/** Hauteur du corps dans la scène (le cadrage de la caméra et le plateau en dépendent). */
+const BODY_HEIGHT = 433;
+/** De combien on baisse les bras par rapport à la pose en T d'origine (degrés). */
+const ARM_DROP = 68;
 
 export interface Body3D {
   /** Tourne le corps (degrés : 0 = de face, 90 = de profil, 180 = de dos). */
@@ -62,7 +40,20 @@ export interface Body3D {
   dispose(): void;
 }
 
-export function createBody3D(canvas: HTMLCanvasElement): Body3D | null {
+/** Baisse un bras : rotation autour de l'axe avant (Z du monde), au niveau de l'épaule. */
+function dropArm(bone: Bone | undefined, degrees: number): void {
+  if (!bone?.parent) return;
+  bone.updateWorldMatrix(true, false);
+  const world = new Quaternion();
+  bone.getWorldQuaternion(world);
+  const parentWorld = new Quaternion();
+  bone.parent.getWorldQuaternion(parentWorld);
+  const delta = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (degrees * Math.PI) / 180);
+  bone.quaternion.copy(parentWorld.invert().multiply(delta.multiply(world)));
+  bone.updateWorldMatrix(true, true);
+}
+
+export async function createBody3D(canvas: HTMLCanvasElement): Promise<Body3D | null> {
   let renderer: WebGLRenderer;
   try {
     renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -70,6 +61,15 @@ export function createBody3D(canvas: HTMLCanvasElement): Body3D | null {
     return null;
   }
   renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = SRGBColorSpace;
+
+  let gltf;
+  try {
+    gltf = await new GLTFLoader().loadAsync(MODEL_URL);
+  } catch {
+    renderer.dispose();
+    return null;
+  }
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(22, 330 / 470, 100, 4000);
@@ -77,45 +77,86 @@ export function createBody3D(canvas: HTMLCanvasElement): Body3D | null {
   camera.position.set(0, 330, 1250);
   camera.lookAt(target);
 
-  scene.add(new AmbientLight(0xffffff, 0.35));
-  scene.add(new HemisphereLight(0xfff3e4, 0x3a2040, 1.1));
-  const key = new DirectionalLight(0xfff0dc, 2.6);
+  scene.add(new AmbientLight(0xffffff, 0.45));
+  scene.add(new HemisphereLight(0xfff3e4, 0x3a2040, 1.3));
+  const key = new DirectionalLight(0xfff0dc, 2.4);
   key.position.set(260, 520, 700);
   scene.add(key);
-  const rim = new DirectionalLight(0xe0873f, 1.6);
+  const rim = new DirectionalLight(0xe0873f, 1.8);
   rim.position.set(-380, 260, -420);
   scene.add(rim);
 
-  // Corps
-  const bodyMaterial = new MeshStandardMaterial({ color: 0xf0dcc3, roughness: 0.55, metalness: 0 });
-  const body = new Group();
-  const geometries: BufferGeometry[] = [];
-  for (const table of TABLES) {
-    // Le nez n'a de sens qu'en silhouette plate : en 3D, de face, il laisse une marque sombre sur le front.
-    if (table.samples.every((s) => s.a < 2)) continue;
-    const geometry = loft(table.samples, table.side);
-    geometries.push(geometry);
-    body.add(new Mesh(geometry, bodyMaterial));
+  // Modèle : on mesure le corps au repos (bras en T) avant de baisser les bras.
+  const model = gltf.scene;
+  model.updateMatrixWorld(true);
+  const box = new Box3().setFromObject(model);
+  const scale = BODY_HEIGHT / (box.max.y - box.min.y);
+
+  const bones: Record<string, Bone> = {};
+  let skin: SkinnedMesh | undefined;
+  model.traverse((o: Object3D) => {
+    if ((o as Bone).isBone) bones[o.name] = o as Bone;
+    if ((o as SkinnedMesh).isSkinnedMesh && o.name === 'Superhero_Female') skin = o as SkinnedMesh;
+  });
+
+  const origin = new Vector3();
+  (bones['pelvis'] ?? model).getWorldPosition(origin);
+  const pelvisY = origin.y;
+  const spine = new Vector3();
+  (bones['spine_02'] ?? model).getWorldPosition(spine);
+
+  // Le tour de taille : à mi-chemin entre le bassin et le milieu du dos.
+  const waistWorldY = pelvisY + (spine.y - pelvisY) * 0.85;
+  const slice = { minX: Infinity, maxX: -Infinity, minZ: Infinity, maxZ: -Infinity };
+  if (skin) {
+    const mesh: SkinnedMesh = skin;
+    const pos = mesh.geometry.attributes['position'];
+    const v = new Vector3();
+    const tol = (box.max.y - box.min.y) * 0.012;
+    for (let i = 0; i < pos.count; i++) {
+      v.fromBufferAttribute(pos, i).applyMatrix4(mesh.matrixWorld);
+      if (Math.abs(v.y - waistWorldY) > tol) continue;
+      slice.minX = Math.min(slice.minX, v.x);
+      slice.maxX = Math.max(slice.maxX, v.x);
+      slice.minZ = Math.min(slice.minZ, v.z);
+      slice.maxZ = Math.max(slice.maxZ, v.z);
+    }
   }
+  const hasSlice = Number.isFinite(slice.minX);
+  const ringCx = hasSlice ? (slice.minX + slice.maxX) / 2 : origin.x;
+  const ringCz = hasSlice ? (slice.minZ + slice.maxZ) / 2 : origin.z;
+  const ringA = hasSlice ? (slice.maxX - slice.minX) / 2 : 0.15;
+  const ringB = hasSlice ? (slice.maxZ - slice.minZ) / 2 : 0.1;
+
+  // Bras le long du corps (la pose d'origine a les bras en croix).
+  dropArm(bones['upperarm_l'], -ARM_DROP);
+  dropArm(bones['upperarm_r'], ARM_DROP);
+
+  // Pieds au sol, bassin sur l'axe de rotation, échelle commune.
+  const holder = new Group();
+  holder.scale.setScalar(scale);
+  model.position.set(-origin.x, -box.min.y, -origin.z);
+  holder.add(model);
+
+  const body = new Group();
+  body.add(holder);
 
   // Anneau du tour de taille, un peu plus large que le corps
+  const toScene = (x: number, y: number, z: number): Vector3 =>
+    new Vector3((x - origin.x) * scale, (y - box.min.y) * scale, (z - origin.z) * scale);
   const ringPoints: Vector3[] = [];
   for (let k = 0; k < 64; k++) {
     const t = (k / 64) * Math.PI * 2;
     ringPoints.push(
-      new Vector3(
-        (WAIST.a + 3) * Math.cos(t),
-        worldY(WAIST_Y),
-        WAIST.z + (WAIST.b + 3) * Math.sin(t),
-      ),
+      toScene(ringCx + ringA * 1.06 * Math.cos(t), waistWorldY, ringCz + ringB * 1.1 * Math.sin(t)),
     );
   }
-  const ringGeometry = new TubeGeometry(new CatmullRomCurve3(ringPoints, true), 128, 1.7, 8, true);
+  const ringGeometry = new TubeGeometry(new CatmullRomCurve3(ringPoints, true), 128, 1.5, 8, true);
   const ringMaterial = new MeshStandardMaterial({
     color: 0xe0873f,
     roughness: 0.4,
     emissive: 0xe0873f,
-    emissiveIntensity: 0.35,
+    emissiveIntensity: 0.4,
   });
   body.add(new Mesh(ringGeometry, ringMaterial));
   scene.add(body);
@@ -169,7 +210,7 @@ export function createBody3D(canvas: HTMLCanvasElement): Body3D | null {
   observer.observe(canvas);
 
   camera.updateMatrixWorld();
-  const waistScreen = new Vector3(0, worldY(WAIST_Y), WAIST.z).project(camera);
+  const waistScreen = toScene(ringCx, waistWorldY, ringCz).project(camera);
   const waistScreenY = ((1 - waistScreen.y) / 2) * 470;
 
   requestDraw();
@@ -185,8 +226,21 @@ export function createBody3D(canvas: HTMLCanvasElement): Body3D | null {
     dispose(): void {
       cancelAnimationFrame(frame);
       observer.disconnect();
-      for (const g of [...geometries, ringGeometry, glowGeometry, dotGeometry]) g.dispose();
-      for (const m of [bodyMaterial, ringMaterial, glowMaterial, dotMaterial]) m.dispose();
+      model.traverse((o: Object3D) => {
+        const mesh = o as Mesh;
+        if (!mesh.isMesh) return;
+        mesh.geometry.dispose();
+        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        for (const m of materials) {
+          for (const value of Object.values(m)) {
+            (value as { isTexture?: boolean; dispose?: () => void } | null)?.isTexture &&
+              (value as { dispose: () => void }).dispose();
+          }
+          m.dispose();
+        }
+      });
+      for (const g of [ringGeometry, glowGeometry, dotGeometry]) g.dispose();
+      for (const m of [ringMaterial, glowMaterial, dotMaterial]) m.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
     },
