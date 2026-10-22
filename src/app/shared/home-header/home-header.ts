@@ -87,8 +87,23 @@ export class HomeHeader implements OnDestroy {
     this.openGroup.set(null);
   }
 
-  toggleGroup(key: string): void {
-    this.openGroup.update((current) => (current === key ? null : key));
+  private lastPointerType = 'mouse';
+  private tileWasOpen = false;
+
+  tilePointerDown(event: PointerEvent, key: string): void {
+    this.lastPointerType = event.pointerType;
+    this.tileWasOpen = this.openGroup() === key;
+  }
+
+  /** Souris : le clic ouvre la page de la tuile. Tactile : un premier toucher ouvre le panneau, un second la page. */
+  tileClick(event: Event, tile: Tile): void {
+    const touch = this.lastPointerType === 'touch' || this.lastPointerType === 'pen';
+    if (tile.group && touch && !this.tileWasOpen) {
+      event.preventDefault();
+      this.openGroup.set(tile.key);
+      return;
+    }
+    this.openGroup.set(null);
   }
 
   toggleMobile(): void {

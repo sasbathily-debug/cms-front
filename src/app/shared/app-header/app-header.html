@@ -26,12 +26,16 @@
         aria-label="Navigation principale"
         class="hidden shrink-0 items-center gap-1 rounded-full border border-border-warm bg-cream-50 p-1 xl:flex"
         (mouseleave)="leaveGroups()"
+        (focusout)="groupFocusOut($event, navEl)"
+        #navEl
       >
         @for (group of groups; track group.key) {
           <div (mouseenter)="hoverGroup(group.key)">
-            <button
-              type="button"
-              (click)="toggleGroup(group.key)"
+            <a
+              [routerLink]="group.route"
+              (pointerdown)="groupPointerDown($event, group.key)"
+              (click)="groupClick($event, group.key)"
+              (focus)="hoverGroup(group.key)"
               [attr.aria-expanded]="openGroup() === group.key"
               aria-haspopup="true"
               class="whitespace-nowrap rounded-full px-3.5 py-2.5 text-[13.5px] font-medium transition"
@@ -42,7 +46,7 @@
               "
             >
               {{ group.label }} ▾
-            </button>
+            </a>
             @if (openGroup() === group.key) {
               <div
                 class="absolute left-1/2 top-full z-50 -mt-5 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 pt-5"

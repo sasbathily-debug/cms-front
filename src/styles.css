@@ -162,11 +162,17 @@ body {
  * Tout est coupé pour les visiteurs qui demandent moins de mouvement.
  * ------------------------------------------------------------------------- */
 
-/* Changement de page : fondu court */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.26s;
-  animation-timing-function: ease;
+/* Changement de page : la nouvelle page apparaît en fondu (opacité seule, rien ne bloque la navigation) */
+router-outlet + * {
+  animation: page-in 0.28s ease both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Apparition des blocs au défilement (voir core/reveal.ts) */
@@ -324,10 +330,8 @@ button[class*='rounded-full']:not(:disabled):active {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
+  router-outlet + * {
+    animation: none;
   }
   .reveal-pending,
   .reveal-in {

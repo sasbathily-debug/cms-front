@@ -20,7 +20,8 @@
           <div (mouseenter)="tile.group ? hover(tile.key) : leave()">
             <a
               [routerLink]="tile.route"
-              (click)="tile.group && toggleGroup(tile.key)"
+              (pointerdown)="tilePointerDown($event, tile.key)"
+              (click)="tileClick($event, tile)"
               class="flex h-[74px] w-24 flex-col justify-between rounded-xl border border-white/35 bg-[rgba(20,11,25,0.55)] px-3 py-2.5 text-white backdrop-blur-sm transition hover:border-accent-500 hover:bg-[rgba(20,11,25,0.8)]"
             >
               <span class="flex items-start justify-between">

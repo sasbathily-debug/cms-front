@@ -65,8 +65,34 @@ export class AppHeader implements OnDestroy {
     return this.currentUrl().split(/[?#]/)[0] === route;
   }
 
-  toggleGroup(key: string): void {
-    this.openGroup.update((current) => (current === key ? null : key));
+  private lastPointerType = 'mouse';
+  private groupWasOpen = false;
+
+  groupPointerDown(event: PointerEvent, key: string): void {
+    this.lastPointerType = event.pointerType;
+    this.groupWasOpen = this.openGroup() === key;
+  }
+
+  /**
+   * Souris : le survol ouvre le panneau, le clic ouvre la page du groupe.
+   * Tactile : un premier toucher ouvre le panneau, un second ouvre la page.
+   */
+  groupClick(event: Event, key: string): void {
+    const touch = this.lastPointerType === 'touch' || this.lastPointerType === 'pen';
+    if (touch && !this.groupWasOpen) {
+      event.preventDefault();
+      this.openGroup.set(key);
+      return;
+    }
+    this.openGroup.set(null);
+  }
+
+  /** Au clavier, le panneau s'ouvre quand le focus arrive sur le groupe et se ferme quand il en sort. */
+  groupFocusOut(event: FocusEvent, nav: HTMLElement): void {
+    const next = event.relatedTarget as Node | null;
+    if (!next || !nav.contains(next)) {
+      this.openGroup.set(null);
+    }
   }
 
   hoverGroup(key: string): void {
