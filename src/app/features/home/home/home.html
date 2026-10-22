@@ -37,13 +37,13 @@
         <div
           class="relative z-[1] mx-auto flex w-full max-w-[1160px] flex-col gap-7 px-4 pb-[200px] pt-32 sm:px-6 lg:px-10 lg:pb-[236px] lg:pt-40"
         >
-          <span class="text-[13px] font-semibold tracking-[0.12em] text-[#F1C99B]"
-            >CABINET D'ENDOCRINOLOGIE · SACRÉ-CŒUR, DAKAR</span
-          >
+          <span class="text-[13px] font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+            c().hero.kicker
+          }}</span>
           <h1
             class="m-0 max-w-[900px] font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.02em] text-white sm:text-6xl lg:max-w-[640px] lg:text-[68px]"
           >
-            @for (w of heroWords; track $index) {
+            @for (w of heroWords(); track $index) {
               @if (w.underlined) {
                 <span class="ul"
                   ><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span
@@ -56,18 +56,18 @@
             }
           </h1>
           <p class="m-0 max-w-[600px] text-lg leading-[1.6] text-[#E8DACE] sm:text-xl">
-            {{ heroSubtitle }}
+            {{ c().hero.sousTitre }}
           </p>
           <div class="mt-2 flex flex-wrap gap-3.5">
             <a
               routerLink="/rendez-vous"
               class="rounded-full bg-accent-500 px-8 py-[18px] font-display text-base font-semibold text-[#140B19] transition hover:bg-accent-600 sm:px-[34px]"
-              >Prendre rendez-vous</a
+              >{{ c().hero.boutonPrincipal }}</a
             >
             <a
               routerLink="/premiere-consultation"
               class="rounded-full border-[1.5px] border-white/60 px-8 py-[17px] font-display text-base font-semibold text-white transition hover:border-white sm:px-8"
-              >Ma première consultation</a
+              >{{ c().hero.boutonSecondaire }}</a
             >
           </div>
         </div>
@@ -88,12 +88,10 @@
               @if (nextSlot(); as slot) {
                 Prochain créneau libre : {{ slot }}
               } @else {
-                Réservez votre créneau en ligne
+                {{ c().carte.sansCreneau }}
               }
             </span>
-            <span class="text-[13.5px] font-medium text-[#3A2418]"
-              >Réservation en ligne, confirmation immédiate</span
-            >
+            <span class="text-[13.5px] font-medium text-[#3A2418]">{{ c().carte.note }}</span>
           </div>
           <div
             class="grid items-center gap-8 bg-cream-50 px-6 py-8 sm:px-9 md:grid-cols-[1.1fr_1.2fr_1.2fr_auto]"
@@ -126,7 +124,7 @@
             <a
               routerLink="/rendez-vous"
               class="whitespace-nowrap rounded-full bg-forest-900 px-[26px] py-[17px] text-center font-display text-[15px] font-semibold text-cream-50"
-              >Prendre rendez-vous</a
+              >{{ c().carte.bouton }}</a
             >
           </div>
         </div>
@@ -140,9 +138,9 @@
         <section class="px-4 pb-20 pt-24 sm:px-6 lg:px-10 lg:pb-28 lg:pt-32">
           <app-silhouette-specialties
             variant="dark"
-            eyebrow="SPÉCIALITÉS"
-            title="Ce que je prends en charge"
-            intro="Passez la souris sur une spécialité : l'organe concerné s'allume sur la silhouette. Cliquez pour lire la page."
+            [eyebrow]="c().specialites.kicker"
+            [title]="c().specialites.titre"
+            [intro]="c().specialites.intro"
           />
         </section>
 
@@ -169,21 +167,19 @@
               />
             </div>
             <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-[22px]">
-              <span class="text-xs font-semibold tracking-[0.12em] text-accent-700"
-                >LA DOCTORESSE</span
-              >
+              <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
+                c().doctoresse.kicker
+              }}</span>
               <h2
                 class="m-0 font-display text-[2rem] font-bold leading-[1.12] text-forest-900 sm:text-[42px]"
               >
-                Une consultation qui prend le temps d'expliquer
+                {{ c().doctoresse.titre }}
               </h2>
               <p class="m-0 text-[17px] leading-[1.75] text-[#4A3F49]">
-                Le Dr Aissatou Mamadou Fall est médecin endocrinologue et nutritionniste à Dakar.
-                Elle accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde
-                ou un trouble hormonal. [Parcours et années d'expérience à confirmer.]
+                {{ c().doctoresse.texte }}
               </p>
               <ul class="m-0 flex list-none flex-col gap-3 p-0">
-                @for (point of points; track point) {
+                @for (point of c().doctoresse.points; track $index) {
                   <li class="flex gap-3 text-base leading-[1.55] text-[#4A3F49]">
                     <span
                       aria-hidden="true"
@@ -194,7 +190,7 @@
                 }
               </ul>
               <div class="grid gap-4 sm:grid-cols-2">
-                @for (stat of stats; track stat.big) {
+                @for (stat of c().doctoresse.stats; track $index) {
                   <div
                     class="flex flex-col gap-1 rounded-[20px] border border-border-warm bg-white p-[22px]"
                   >
@@ -205,13 +201,13 @@
                   </div>
                 }
               </div>
-              <p class="m-0 text-[13px] text-ink-600">
-                Les chiffres entre crochets seront fournis par la doctoresse, rien n'est inventé.
-              </p>
+              @if (c().doctoresse.noteStats) {
+                <p class="m-0 text-[13px] text-ink-600">{{ c().doctoresse.noteStats }}</p>
+              }
               <a
                 routerLink="/a-propos"
                 class="mt-1.5 self-start rounded-full bg-forest-900 px-7 py-[15px] font-display text-[15px] font-semibold text-white"
-                >Découvrir son parcours</a
+                >{{ c().doctoresse.lien }}</a
               >
             </div>
           </div>
@@ -224,17 +220,17 @@
           >
             <div class="mx-auto flex max-w-[1160px] flex-col gap-14 lg:gap-16">
               <div class="flex max-w-[700px] flex-col gap-3.5">
-                <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]"
-                  >VOTRE PARCOURS</span
-                >
+                <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+                  c().parcours.kicker
+                }}</span>
                 <h2
                   class="m-0 font-display text-[2.1rem] font-bold leading-[1.08] tracking-[-0.025em] text-white sm:text-5xl"
                 >
-                  De la réservation au plan de soins, en trois temps
+                  {{ c().parcours.titre }}
                 </h2>
               </div>
               <div class="grid gap-10 md:grid-cols-3 md:gap-0">
-                @for (e of etapes; track e.n; let i = $index) {
+                @for (e of c().parcours.etapes; track $index; let i = $index) {
                   <div class="flex flex-col gap-4 md:mr-9 md:border-r md:border-white/15 md:pr-9">
                     <span
                       class="pc-bar mb-1 block h-[3px] rounded bg-accent-500"
@@ -261,12 +257,12 @@
               <h2
                 class="m-0 max-w-[560px] font-display text-[2rem] font-bold leading-[1.12] text-forest-900 sm:text-[38px]"
               >
-                Des conseils pour mieux comprendre
+                {{ c().conseils.titre }}
               </h2>
               <a
                 routerLink="/conseils-sante"
                 class="text-[15px] font-semibold text-accent-800 hover:underline"
-                >Tous les articles</a
+                >{{ c().conseils.lien }}</a
               >
             </div>
             <div class="grid gap-6 md:grid-cols-3">
@@ -301,10 +297,10 @@
             <h2
               class="m-0 max-w-[640px] font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[44px]"
             >
-              Ce que disent les patients
+              {{ c().avis.titre }}
             </h2>
             <div class="grid gap-5 md:grid-cols-3">
-              @for (a of avis; track $index) {
+              @for (a of c().avis.items; track $index) {
                 <figure
                   class="m-0 flex flex-col justify-between gap-7 rounded-[28px] bg-cream-50 p-9"
                 >
@@ -317,10 +313,9 @@
                 </figure>
               }
             </div>
-            <p class="m-0 text-[13.5px] leading-relaxed text-[#5B4F59]">
-              Emplacement des avis : à remplir avec de vrais témoignages, recueillis avec l'accord
-              écrit des patients.
-            </p>
+            @if (c().avis.note) {
+              <p class="m-0 text-[13.5px] leading-relaxed text-[#5B4F59]">{{ c().avis.note }}</p>
+            }
           </div>
         </section>
 
@@ -342,7 +337,7 @@
                 <h2
                   class="m-0 font-display text-[28px] font-bold leading-[1.15] tracking-[-0.02em] text-forest-900 sm:text-[32px]"
                 >
-                  Nous trouver à Sacré-Cœur
+                  {{ c().trouver.titre }}
                 </h2>
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span
@@ -384,16 +379,16 @@
         <section class="bg-cream-100 px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
           <div class="mx-auto flex max-w-[1160px] flex-wrap gap-10 lg:gap-16">
             <div class="flex min-w-0 flex-[0_1_380px] flex-col gap-4">
-              <span class="text-xs font-semibold tracking-[0.12em] text-accent-700"
-                >QUESTIONS FRÉQUENTES</span
-              >
+              <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
+                c().faq.kicker
+              }}</span>
               <h2
                 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]"
               >
-                Avant de venir, vous vous demandez peut-être…
+                {{ c().faq.titre }}
               </h2>
               <p class="m-0 text-base leading-[1.65] text-[#4A3F49]">
-                Une autre question ? Appelez le cabinet ou écrivez-nous sur WhatsApp.
+                {{ c().faq.intro }}
               </p>
             </div>
             <div
@@ -435,16 +430,16 @@
             <h2
               class="m-0 font-display text-[2rem] font-bold leading-[1.12] text-white sm:text-[42px]"
             >
-              Prenez soin de votre santé dès cette semaine.
+              {{ c().appel.titre }}
             </h2>
             <p class="m-0 text-[17px] leading-[1.65] text-[#E8DACE]">
-              Réservez en ligne en trois minutes. Vous recevez la confirmation immédiatement.
+              {{ c().appel.texte }}
             </p>
           </div>
           <a
             routerLink="/rendez-vous"
             class="rounded-full bg-accent-500 px-9 py-[18px] font-display text-base font-semibold text-[#140B19] transition hover:bg-accent-600"
-            >Prendre rendez-vous</a
+            >{{ c().appel.bouton }}</a
           >
         </div>
       </section>

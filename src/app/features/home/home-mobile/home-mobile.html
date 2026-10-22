@@ -35,13 +35,13 @@
         @if (slotLabel(); as slot) {
           Créneau libre : {{ slot }}
         } @else {
-          Réservation en ligne
+          {{ c().carte.sansCreneau }}
         }
       </span>
       <h1
         class="m-0 font-display text-[34px] font-bold leading-[1.04] tracking-[-0.03em] text-forest-900 [@media(max-height:720px)]:text-[29px]"
       >
-        @for (w of heroWords; track $index) {
+        @for (w of heroWords(); track $index) {
           @if (w.underlined) {
             <span class="ul"
               ><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span
@@ -54,15 +54,14 @@
         }
       </h1>
       <p class="m-0 text-[15.5px] leading-[1.55] text-ink-600 [@media(max-height:720px)]:hidden">
-        Endocrinologue à Sacré-Cœur, Dakar. Diabète, thyroïde, poids, nutrition : une consultation
-        qui prend le temps d'expliquer.
+        {{ c().hero.introTelephone }}
       </p>
       <div class="flex items-center gap-3">
         <a
           #heroCta
           routerLink="/rendez-vous"
           class="flex-1 rounded-full bg-accent-500 px-6 py-[17px] text-center font-display text-base font-bold text-forest-900"
-          >Prendre rendez-vous</a
+          >{{ c().hero.boutonPrincipal }}</a
         >
         <a
           [href]="site.telHref()"
@@ -89,7 +88,7 @@
       <a
         routerLink="/premiere-consultation"
         class="self-center py-1 text-[15px] font-semibold text-accent-800 underline decoration-accent-500 decoration-2 underline-offset-4"
-        >Ma première visite →</a
+        >{{ c().hero.lienTelephone }}</a
       >
     </div>
   </section>
@@ -102,7 +101,7 @@
       <a
         routerLink="/rendez-vous"
         class="flex-1 rounded-full bg-accent-500 px-5 py-3.5 text-center font-display text-[15px] font-bold text-forest-900"
-        >Prendre rendez-vous</a
+        >{{ c().hero.boutonPrincipal }}</a
       >
       <a
         [href]="site.telHref()"
@@ -151,25 +150,24 @@
           height="56"
           class="h-14 w-14 shrink-0 rounded-full border-2 border-accent-500 bg-[#2a1930] object-cover object-[50%_28%]"
         />
-        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]"
-          >NOTRE FAÇON DE SOIGNER</span
-        >
+        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+          c().declaration.kicker
+        }}</span>
       </div>
       <p
         class="m-0 font-display text-[29px] font-medium leading-[1.25] tracking-[-0.02em] text-white"
       >
-        Un cabinet où l'on prend le temps de comprendre, pour que chaque patient devienne acteur de
-        sa santé.
+        {{ c().declaration.texte }}
       </p>
       <a
         routerLink="/a-propos"
         class="rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-[15px] font-bold text-forest-900"
-        >Faire connaissance avec la doctoresse</a
+        >{{ c().declaration.boutonPrincipal }}</a
       >
       <a
         routerLink="/premiere-consultation"
         class="rounded-full border-[1.5px] border-[#F1C99B] px-6 py-3.5 text-center font-display text-[15px] font-semibold text-[#F1C99B]"
-        >La première consultation</a
+        >{{ c().declaration.boutonSecondaire }}</a
       >
     </section>
 
@@ -177,14 +175,16 @@
     <section class="relative -mt-8 rounded-t-[32px] bg-cream-50 px-5 pb-[72px] pt-14">
       <div class="sil-grid flex flex-col gap-[22px]">
         <div class="flex flex-col gap-2">
-          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">SPÉCIALITÉS</span>
+          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">{{
+            c().specialites.kicker
+          }}</span>
           <h2
             class="m-0 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-forest-900"
           >
-            Ce que je prends en charge
+            {{ c().specialites.titre }}
           </h2>
           <p class="m-0 text-[15.5px] leading-[1.6] text-[#4A3F49]">
-            Touchez une spécialité : l'organe concerné s'allume sur la silhouette.
+            {{ c().specialites.introTelephone }}
           </p>
         </div>
         <div
@@ -264,14 +264,16 @@
       class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
     >
       <div class="flex flex-col gap-2.5">
-        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">VOTRE PARCOURS</span>
+        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+          c().parcours.kicker
+        }}</span>
         <h2
           class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
         >
-          De la réservation au plan de soins, en trois temps
+          {{ c().parcours.titre }}
         </h2>
       </div>
-      @for (e of etapes; track e.n; let i = $index) {
+      @for (e of c().parcours.etapes; track $index; let i = $index) {
         <div
           class="pcm flex gap-[18px] border-t border-white/15 pt-6"
           [style.animation-delay]="0.48 + i * 3.12 + 's'"
@@ -319,18 +321,19 @@
           "
         ></div>
       </div>
-      <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">LA DOCTORESSE</span>
+      <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">{{
+        c().doctoresse.kicker
+      }}</span>
       <h2
         class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
       >
         Dr Aissatou Mamadou Fall
       </h2>
       <p class="m-0 text-[16.5px] leading-[1.7] text-[#4A3F49]">
-        Médecin endocrinologue et nutritionniste. [Une phrase sur son parcours : formation, années
-        d'exercice.]
+        {{ c().doctoresse.texteTelephone }}
       </p>
       <div class="grid grid-cols-2 gap-3">
-        @for (stat of stats; track stat.big) {
+        @for (stat of c().doctoresse.stats; track $index) {
           <div
             class="flex flex-col gap-0.5 rounded-[18px] border border-border-warm bg-white p-[18px]"
           >
@@ -348,9 +351,9 @@
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
-        Ce que disent les patients
+        {{ c().avis.titre }}
       </h2>
-      @for (a of avis; track $index) {
+      @for (a of c().avis.items; track $index) {
         <figure class="m-0 flex flex-col gap-[18px] rounded-[22px] bg-cream-50 p-[26px]">
           <blockquote class="m-0 font-display text-lg font-medium leading-[1.45] text-forest-900">
             {{ a.texte }}
@@ -370,7 +373,7 @@
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
       >
-        Nous trouver à Sacré-Cœur
+        {{ c().trouver.titre }}
       </h2>
       <iframe
         title="Plan d'accès au cabinet"
@@ -430,7 +433,7 @@
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
-        Avant de venir, vous vous demandez…
+        {{ c().faq.titre }}
       </h2>
       <div class="flex flex-col rounded-[22px] bg-cream-50 px-[22px] py-1">
         @for (item of faq(); track item.question; let i = $index) {
@@ -465,7 +468,7 @@
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
       >
-        Comprendre pour mieux se soigner
+        {{ c().conseils.titreTelephone }}
       </h2>
       @for (a of articles(); track a.titre) {
         <a
@@ -491,7 +494,7 @@
       <a
         routerLink="/conseils-sante"
         class="pt-1 text-center text-[15px] font-semibold text-accent-800"
-        >Tous les articles</a
+        >{{ c().conseils.lien }}</a
       >
     </section>
   </div>
@@ -502,7 +505,7 @@
       <h2
         class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-forest-900"
       >
-        Prenez rendez-vous cette semaine.
+        {{ c().appel.titreTelephone }}
       </h2>
       <p class="m-0 text-base leading-[1.6] text-forest-800">
         En ligne en trois minutes, ou au {{ site.phone() }}.
@@ -510,7 +513,7 @@
       <a
         routerLink="/rendez-vous"
         class="rounded-full bg-forest-900 p-[17px] text-center font-display text-base font-semibold text-white"
-        >Prendre rendez-vous</a
+        >{{ c().appel.bouton }}</a
       >
       @if (site.whatsappHref()) {
         <a

@@ -16,6 +16,8 @@ import { ChatIcon } from '../../../shared/chat-widget/chat-icon';
 import { ChatState } from '../../../core/chat-state';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
+import { PageContent } from '../../../core/services/page-content';
+import { ACCUEIL } from '../../../core/page-content/defs/accueil';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
@@ -23,8 +25,6 @@ import { Parallax } from '../../../shared/parallax';
 import { AvailabilityService } from '../../../core/services/availability';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SPECIALTIES } from '../../../core/specialties';
-
-const HERO_TITLE = 'Suivre votre santé hormonale, simplement et dans la durée.';
 
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
@@ -53,45 +53,16 @@ export class HomeMobile implements OnInit {
   );
   readonly rows = SPECIALTIES;
 
-  readonly heroWords = HERO_TITLE.split(' ').map((word, index, words) => ({
-    word,
-    delay: index * 0.22,
-    underlined: index >= words.length - 3,
-  }));
-
-  readonly etapes = [
-    {
-      n: '01',
-      titre: 'Vous réservez en ligne',
-      texte:
-        'Créez votre compte en une minute, puis choisissez un créneau. Confirmation immédiate, rappel la veille.',
-    },
-    {
-      n: '02',
-      titre: 'Vous êtes écouté',
-      texte: 'Une vraie conversation, un examen complet, des explications avec des mots simples.',
-    },
-    {
-      n: '03',
-      titre: 'Vous repartez avec un plan',
-      texte: 'Ordonnance, examens à faire et prochain rendez-vous, noirs sur blanc.',
-    },
-  ];
-
-  readonly stats = [
-    { big: '[XX] ans', small: "d'expérience" },
-    { big: '[XXXX]', small: 'patients suivis' },
-    { big: '[Diplôme]', small: '[Université]' },
-    { big: '[Société]', small: '[Affiliation]' },
-  ];
-
-  readonly avis = [
-    { texte: '« [Un avis de patient, avec son accord.] »', auteur: '[Prénom], [quartier]' },
-    {
-      texte: '« [Un autre avis : clarté des explications, suivi.] »',
-      auteur: '[Prénom], [quartier]',
-    },
-  ];
+  protected readonly c = inject(PageContent).use(ACCUEIL);
+  readonly heroWords = computed(() =>
+    this.c()
+      .hero.titre.split(' ')
+      .map((word, index, words) => ({
+        word,
+        delay: index * 0.22,
+        underlined: index >= words.length - 3,
+      })),
+  );
 
   private readonly siteArticles = inject(SiteArticles);
   readonly articles = computed(() =>

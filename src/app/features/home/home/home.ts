@@ -13,11 +13,9 @@ import { SiteSettings } from '../../../core/services/site-settings';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
 import { OpeningHours } from '../../../core/services/opening-hours';
+import { PageContent } from '../../../core/services/page-content';
+import { ACCUEIL } from '../../../core/page-content/defs/accueil';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
-
-const HERO_TITLE = 'Suivre votre santé hormonale, simplement et dans la durée.';
-const HERO_SUBTITLE =
-  "Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer, et un suivi que vous pouvez gérer en ligne.";
 
 function formatNextSlot(slot: AvailableSlotDto): string {
   const d = new Date(`${slot.date}T${slot.time}`);
@@ -75,45 +73,19 @@ export class Home implements OnInit {
     'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
   );
 
-  /** Titre de la maquette : les mots arrivent un par un, les trois derniers sont soulignés. */
-  readonly heroWords = HERO_TITLE.split(' ').map((word, index, words) => ({
-    word,
-    delay: index * 0.22,
-    underlined: index >= words.length - 3,
-  }));
-  readonly heroSubtitle = HERO_SUBTITLE;
-  protected readonly hours = inject(OpeningHours);
-  readonly points = [
-    'Des explications avec des mots simples, autant de fois que nécessaire',
-    'Un plan écrit, adapté à votre alimentation et à votre quotidien',
-    'Un suivi régulier, avec rappel de rendez-vous la veille',
-  ];
-  readonly stats = [
-    { big: '[XX] ans', small: "d'expérience" },
-    { big: '[XXXX]', small: 'patients suivis' },
-    { big: '[Diplôme]', small: '[Université, pays]' },
-    { big: '[Société]', small: '[Affiliation professionnelle]' },
-  ];
+  protected readonly c = inject(PageContent).use(ACCUEIL);
 
-  readonly etapes = [
-    {
-      n: '01',
-      titre: 'Vous réservez en ligne',
-      texte:
-        'Créez votre compte en une minute, puis choisissez un créneau libre. Confirmation immédiate, rappel la veille.',
-    },
-    {
-      n: '02',
-      titre: 'Vous êtes écouté',
-      texte:
-        'Une vraie conversation, un examen complet, et des explications avec des mots simples.',
-    },
-    {
-      n: '03',
-      titre: 'Vous repartez avec un plan',
-      texte: 'Ordonnance, examens à faire et prochain rendez-vous, noirs sur blanc.',
-    },
-  ];
+  /** Titre de la maquette : les mots arrivent un par un, les trois derniers sont soulignés. */
+  readonly heroWords = computed(() =>
+    this.c()
+      .hero.titre.split(' ')
+      .map((word, index, words) => ({
+        word,
+        delay: index * 0.22,
+        underlined: index >= words.length - 3,
+      })),
+  );
+  protected readonly hours = inject(OpeningHours);
 
   private readonly siteArticles = inject(SiteArticles);
   readonly articles = computed(() =>
@@ -122,21 +94,6 @@ export class Home implements OnInit {
       .slice(0, 3)
       .map((a) => ({ categorie: a.category.toUpperCase(), titre: a.title, photo: a.photo })),
   );
-
-  readonly avis = [
-    {
-      texte: "« [Un avis de patient, avec son accord : ce qui l'a marqué dans la consultation.] »",
-      auteur: '[Prénom], [ville ou quartier]',
-    },
-    {
-      texte: '« [Un autre avis : la clarté des explications, le suivi.] »',
-      auteur: '[Prénom], [ville ou quartier]',
-    },
-    {
-      texte: '« [Un troisième avis, idéalement sur la première consultation.] »',
-      auteur: '[Prénom], [ville ou quartier]',
-    },
-  ];
 
   ngOnInit(): void {
     const from = new Date();
