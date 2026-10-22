@@ -1,5 +1,6 @@
 import {
   Component,
+  DestroyRef,
   OnDestroy,
   afterNextRender,
   computed,
@@ -43,17 +44,21 @@ const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', pati
 export class HomeHeader implements OnDestroy {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly navSub: Subscription;
 
   readonly variant = input<'overlay' | 'bar'>('overlay');
-  private readonly bar = computed(() => this.variant() === 'bar');
+  /** Menu de l'accueil qui réapparaît en barre fixe quand on remonte la page. */
+  readonly stuck = signal(false);
+  private readonly bar = computed(() => this.variant() === 'bar' || this.stuck());
   readonly currentUrl = signal(this.router.url);
 
-  readonly headerClass = computed(() =>
-    this.bar()
-      ? 'sticky top-0 z-50 border-b border-white/10 bg-forest-900'
-      : 'absolute inset-x-0 top-0 z-50',
-  );
+  readonly headerClass = computed(() => {
+    if (this.variant() === 'bar') return 'sticky top-0 z-50 border-b border-white/10 bg-forest-900';
+    return this.stuck()
+      ? 'header-reveal fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-forest-900'
+      : 'absolute inset-x-0 top-0 z-50';
+  });
   readonly innerClass = computed(
     () =>
       'mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10 ' +
@@ -135,7 +140,10 @@ export class HomeHeader implements OnDestroy {
   }
 
   constructor() {
-    afterNextRender(() => preloadNavImages());
+    afterNextRender(() => {
+      preloadNavImages();
+      this.watchScroll();
+    });
     this.navSub = this.router.events
       .pipe(
         filter(
@@ -151,6 +159,49 @@ export class HomeHeader implements OnDestroy {
         }
         this.closeAll();
       });
+  }
+
+  /**
+   * Sur l'accueil, l'en-tête est posé sur la photo et défile avec la page. Dès qu'on remonte un peu
+   * (de n'importe quelle hauteur), il revient en barre fixe ; il repart quand on redescend.
+   */
+  private watchScroll(): void {
+    if (this.variant() === 'bar') return;
+    const REVEAL_AFTER = 80;
+    const DISTANCE = 24;
+    let anchor = window.scrollY;
+    let frame = 0;
+
+    const update = (): void => {
+      frame = 0;
+      const y = window.scrollY;
+      if (y <= REVEAL_AFTER) {
+        anchor = y;
+        this.stuck.set(false);
+        return;
+      }
+      if (this.stuck()) {
+        anchor = Math.min(anchor, y);
+        if (y - anchor > DISTANCE && !this.openGroup() && !this.mobileOpen()) {
+          this.stuck.set(false);
+          anchor = y;
+        }
+      } else {
+        anchor = Math.max(anchor, y);
+        if (anchor - y > DISTANCE) {
+          this.stuck.set(true);
+          anchor = y;
+        }
+      }
+    };
+    const onScroll = (): void => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    this.destroyRef.onDestroy(() => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+    });
   }
 
   ngOnDestroy(): void {

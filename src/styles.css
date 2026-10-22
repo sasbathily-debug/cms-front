@@ -353,3 +353,18 @@ button[class*='rounded-full']:not(:disabled):active {
     transform: none;
   }
 }
+
+/* Menu de l'accueil qui revient en barre fixe quand on remonte la page. */
+.header-reveal {
+  animation: header-reveal 0.25s ease-out;
+}
+@keyframes header-reveal {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-reveal {
+    animation: none;
+  }
+}

@@ -231,13 +231,18 @@
   transition:
     background 0.2s,
     border-color 0.2s,
-    transform 0.2s;
+    box-shadow 0.2s;
 }
 .row:hover,
 .row:focus-visible {
   background: #ffffff;
   border-color: #e0873f;
-  transform: translateX(6px);
+  box-shadow: 0 0 0 3px rgba(224, 135, 63, 0.25);
+}
+/* Version sombre (accueil) : le texte est clair, la ligne reste sombre au survol. */
+.row-dark:hover,
+.row-dark:focus-visible {
+  background: rgba(224, 135, 63, 0.16);
 }
 @media (prefers-reduced-motion: reduce) {
   .sil-wrap .gl {
