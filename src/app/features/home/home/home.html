@@ -38,8 +38,9 @@
           @for (w of heroWords; track $index) {
             @if (w.underlined) {
               <span class="ul"
-                ><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span>
-              </span>
+                ><span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span
+                >{{ ' ' }}</span
+              >
             } @else {
               <span class="wd" [style.animation-delay]="w.delay + 's'">{{ w.word }}</span
               >{{ ' ' }}
