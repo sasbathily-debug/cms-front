@@ -11,7 +11,7 @@ import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
-import { NAV_GROUPS, NAV_SIMPLE, NavGroup } from '../../core/site-nav';
+import { NAV_GROUPS, NAV_SIMPLE, NavGroup, preloadNavImages } from '../../core/site-nav';
 
 @Component({
   selector: 'app-header',
@@ -43,16 +43,7 @@ export class AppHeader implements OnDestroy {
   });
 
   constructor() {
-    // Les photos des sous-menus se chargent en douce, pour qu'elles soient là à la première ouverture.
-    afterNextRender(() => {
-      const preload = (): void => {
-        for (const group of NAV_GROUPS) {
-          for (const card of group.cards ?? []) new Image().src = card.image;
-        }
-      };
-      if ('requestIdleCallback' in window) requestIdleCallback(preload);
-      else setTimeout(preload, 1500);
-    });
+    afterNextRender(() => preloadNavImages());
     this.navSub = this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {

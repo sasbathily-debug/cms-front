@@ -115,3 +115,14 @@ export const NAV_SIMPLE: { key: string; label: string; route: string }[] = [
   { key: 'conseils', label: 'Conseils santé', route: '/conseils-sante' },
   { key: 'contact', label: 'Contact', route: '/contact' },
 ];
+
+/** Charge en douce les photos des sous-menus quand le navigateur est au repos, pour qu'elles soient là à la première ouverture. */
+export function preloadNavImages(): void {
+  const preload = (): void => {
+    for (const group of NAV_GROUPS) {
+      for (const card of group.cards ?? []) new Image().src = card.image;
+    }
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(preload);
+  else setTimeout(preload, 1500);
+}

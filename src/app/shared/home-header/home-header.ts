@@ -1,9 +1,9 @@
-import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, afterNextRender, computed, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
-import { NAV_GROUPS, NAV_SIMPLE, NavGroup } from '../../core/site-nav';
+import { NAV_GROUPS, NAV_SIMPLE, NavGroup, preloadNavImages } from '../../core/site-nav';
 
 interface Tile {
   key: string;
@@ -69,6 +69,7 @@ export class HomeHeader implements OnDestroy {
   }
 
   constructor() {
+    afterNextRender(() => preloadNavImages());
     this.navSub = this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe(() => this.closeAll());
