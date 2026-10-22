@@ -1,6 +1,7 @@
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { InView } from '../../../shared/in-view';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
@@ -65,6 +66,7 @@ function formatNextSlot(slot: AvailableSlotDto): string {
 @Component({
   selector: 'app-home',
   imports: [
+    InView,
     RouterLink,
     OpenNow,
     PublicPage,

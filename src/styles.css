@@ -416,3 +416,46 @@ button[class*='rounded-full']:not(:disabled):active {
     opacity: 1;
   }
 }
+
+/* Portraits de la doctoresse : très lent zoom et un reflet de lumière qui traverse une seule fois. */
+.photo-life::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+}
+.photo-life.inview > img {
+  animation: photo-zoom 20s ease-out both;
+}
+.photo-life.inview::after {
+  animation: photo-glare 1.8s ease-in-out 0.6s both;
+}
+@keyframes photo-zoom {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.07;
+  }
+}
+@keyframes photo-glare {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-life.inview > img,
+  .photo-life.inview::after {
+    animation: none;
+  }
+}

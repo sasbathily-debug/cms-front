@@ -8,12 +8,13 @@ import {
   viewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { InView } from '../../../shared/in-view';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 
 @Component({
   selector: 'app-premiere-consultation',
-  imports: [RouterLink, PublicPage, CtaBand],
+  imports: [RouterLink, InView, PublicPage, CtaBand],
   styleUrl: './premiere-consultation.css',
   templateUrl: './premiere-consultation.html',
 })
