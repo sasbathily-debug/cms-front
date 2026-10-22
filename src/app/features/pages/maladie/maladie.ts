@@ -6,12 +6,13 @@ import { PublicPage } from '../../../shared/public-page/public-page';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { MaladieArt } from '../../../shared/maladie-art/maladie-art';
+import { AnneauVerre } from '../../../shared/anneau-verre/anneau-verre';
 import { MALADIES, MaladieContent } from './maladies.data';
 
 /** Page d'une maladie (diabète, thyroïde, obésité) : le contenu vient de `maladies.data.ts`. */
 @Component({
   selector: 'app-maladie',
-  imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt],
+  imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt, AnneauVerre],
   templateUrl: './maladie.html',
 })
 export class Maladie {

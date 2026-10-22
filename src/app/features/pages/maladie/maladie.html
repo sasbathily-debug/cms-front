@@ -98,6 +98,26 @@
               <span class="text-[12.5px] text-ink-600"
                 >Illustrations simplifiées, pour comprendre le principe.</span
               >
+              @if (c.slug === 'obesite') {
+                <div
+                  class="flex flex-col items-center gap-6 rounded-[22px] bg-[#2A1930] px-[22px] py-7 md:flex-row md:gap-10 md:px-9"
+                >
+                  <app-anneau-verre class="w-full max-w-[320px] shrink-0" />
+                  <div class="flex min-w-0 flex-col gap-3.5">
+                    <h3 class="m-0 font-display text-[22px] font-bold text-[#F1C99B]">
+                      Un repère simple : le tour de taille
+                    </h3>
+                    <p class="m-0 text-[14.5px] leading-[1.65] text-[#E8DACE]">
+                      L'IMC ne dit pas tout : l'endroit où se loge la graisse compte aussi. Le tour
+                      de taille se mesure à mi-distance entre les dernières côtes et le haut des
+                      hanches. [À valider par le Dr Fall]
+                    </p>
+                    <span class="text-[12.5px] text-[#CDBBC9]"
+                      >Illustration abstraite : glissez l'anneau pour le faire tourner.</span
+                    >
+                  </div>
+                </div>
+              }
             </div>
           </section>
 

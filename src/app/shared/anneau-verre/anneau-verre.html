@@ -1,0 +1,23 @@
+<div
+  class="relative mx-auto aspect-square w-full max-w-[320px] cursor-grab touch-pan-y select-none overflow-hidden rounded-[28px] bg-[#2A1930] active:cursor-grabbing"
+  role="img"
+  aria-label="Anneau en verre qui tourne, illustration abstraite : glissez pour le faire tourner"
+  (pointermove)="pointerMove($event)"
+  (pointerdown)="pointerDown($event)"
+  (pointerup)="pointerUp()"
+  (pointercancel)="pointerUp()"
+  (pointerleave)="pointerLeave()"
+>
+  @if (mode() === 'css') {
+    <div class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+      <div
+        class="h-[62%] w-[62%] rounded-full border-[26px] border-transparent opacity-90 [background:linear-gradient(#2A1930,#2A1930)_padding-box,conic-gradient(from_200deg,#E0873F,#8B5CF6,#F1C99B,#E0873F)_border-box]"
+      ></div>
+    </div>
+  }
+  <canvas
+    #stage
+    class="absolute inset-0 h-full w-full"
+    [class.invisible]="mode() !== '3d'"
+  ></canvas>
+</div>
