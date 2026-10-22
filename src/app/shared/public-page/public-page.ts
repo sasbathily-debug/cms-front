@@ -23,11 +23,14 @@ import { FloatingActions } from '../floating-actions/floating-actions';
         <main><ng-content /></main>
       </div>
       <app-footer />
-      <app-floating-actions />
+      <div [class]="hideFloatingOnMobile() ? 'hidden lg:block' : ''"><app-floating-actions /></div>
     </div>
   `,
 })
 export class PublicPage {
   /** Sur l'accueil, le menu à tuiles se pose sur la photo au lieu de la barre blanche. */
   readonly tileHeader = input(false);
+
+  /** Sur l'accueil mobile, la barre de réservation remplace les boutons ronds flottants. */
+  readonly hideFloatingOnMobile = input(false);
 }

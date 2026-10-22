@@ -284,3 +284,26 @@
     background-size: 100% 5px;
   }
 }
+
+/* Portrait : fondu en haut pour se fondre dans le fond prune de l'écran. */
+.hero-portrait {
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
+}
+
+/* Barre de réservation : glisse depuis le bas. */
+@keyframes cta-bar-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.cta-bar {
+  animation: cta-bar-in 0.28s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-bar {
+    animation: none;
+  }
+}

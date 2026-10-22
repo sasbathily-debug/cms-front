@@ -1,4 +1,14 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  OnInit,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
@@ -35,7 +45,12 @@ const FAQ = [
 export class HomeMobile implements OnInit {
   private readonly availability = inject(AvailabilityService);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly site = inject(SiteSettings);
+
+  private readonly heroCta = viewChild<ElementRef<HTMLElement>>('heroCta');
+  /** Barre de réservation collée en bas : visible une fois le bouton du haut dépassé. */
+  readonly showBar = signal(false);
 
   readonly nextSlot = signal<string | null>(null);
   readonly faq = signal(FAQ.map((item, i) => ({ ...item, open: i === 0 })));
@@ -100,6 +115,34 @@ export class HomeMobile implements OnInit {
   );
 
   readonly slotLabel = computed(() => this.nextSlot());
+
+  constructor() {
+    afterNextRender(() => {
+      const cta = this.heroCta()?.nativeElement;
+      if (!cta || typeof IntersectionObserver === 'undefined') return;
+      let ctaPassed = false;
+      let footerVisible = false;
+      const update = (): void => this.showBar.set(ctaPassed && !footerVisible);
+
+      const ctaObserver = new IntersectionObserver(([entry]) => {
+        ctaPassed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        update();
+      });
+      ctaObserver.observe(cta);
+
+      const footer = document.querySelector('app-footer');
+      const footerObserver = new IntersectionObserver(([entry]) => {
+        footerVisible = entry.isIntersecting;
+        update();
+      });
+      if (footer) footerObserver.observe(footer);
+
+      this.destroyRef.onDestroy(() => {
+        ctaObserver.disconnect();
+        footerObserver.disconnect();
+      });
+    });
+  }
 
   ngOnInit(): void {
     const from = new Date();
