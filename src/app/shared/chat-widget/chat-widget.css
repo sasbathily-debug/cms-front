@@ -26,9 +26,17 @@
 
 .chat-3d {
   display: block;
-  width: 38px;
-  height: 38px;
-  perspective: 220px;
+  width: 30px;
+  height: 30px;
+  perspective: 180px;
+}
+
+@media (min-width: 640px) {
+  .chat-3d {
+    width: 38px;
+    height: 38px;
+    perspective: 220px;
+  }
 }
 
 .chat-3d-body {
