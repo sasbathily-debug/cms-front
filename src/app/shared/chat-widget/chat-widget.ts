@@ -8,7 +8,6 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
@@ -56,7 +55,6 @@ function storage(): Storage | null {
  */
 @Component({
   selector: 'app-chat-widget',
-  imports: [FormsModule],
   styleUrl: './chat-widget.css',
   templateUrl: './chat-widget.html',
   host: { '(document:keydown.escape)': 'close()' },
@@ -73,13 +71,9 @@ export class ChatWidget {
     'M8 7h24a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H18l-9 7v-7H8a5 5 0 0 1-5-5V12a5 5 0 0 1 5-5z';
   protected readonly layers = [
     { z: -4, fill: '#7A430F' },
-    { z: -3, fill: '#8A4C13' },
     { z: -2, fill: '#9A5518' },
-    { z: -1, fill: '#AE6320' },
     { z: 0, fill: '#C7702A' },
-    { z: 1, fill: '#C7702A' },
     { z: 2, fill: '#D07A33' },
-    { z: 3, fill: '#D88338' },
   ];
 
   protected readonly maxLength = MAX_LENGTH;
@@ -141,6 +135,10 @@ export class ChatWidget {
 
   protected close(): void {
     this.opened.set(false);
+  }
+
+  protected onInput(event: Event): void {
+    this.draft.set((event.target as HTMLInputElement).value);
   }
 
   protected submit(): void {

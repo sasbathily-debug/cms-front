@@ -131,9 +131,9 @@
             name="message"
             type="text"
             autocomplete="off"
-            [maxlength]="maxLength"
-            [ngModel]="draft()"
-            (ngModelChange)="draft.set($event)"
+            [attr.maxlength]="maxLength"
+            [value]="draft()"
+            (input)="onInput($event)"
             placeholder="Votre question"
             class="min-w-0 flex-1 rounded-full border-[1.5px] border-[#D9C8B8] bg-white px-3.5 py-2 text-[14px] text-forest-900 outline-none sm:px-4 sm:py-2.5 sm:text-[15px] transition placeholder:text-[#8A7E88] focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
           />

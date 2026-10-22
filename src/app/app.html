@@ -1,2 +1,4 @@
 <router-outlet />
-<app-chat-widget />
+@defer (on idle) {
+  <app-chat-widget />
+}
