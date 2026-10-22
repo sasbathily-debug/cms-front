@@ -4,10 +4,9 @@ import { UserService } from '../../../core/services/user';
 import { FileUploadService } from '../../../core/services/file-upload';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
 import { PatientShell } from '../../../shared/patient-shell/patient-shell';
-import { NavIcon } from '../../../shared/nav-icon/nav-icon';
 
 @Component({
-  imports: [ReactiveFormsModule, PatientShell, NavIcon],
+  imports: [ReactiveFormsModule, PatientShell],
   selector: 'app-profile',
   templateUrl: './profile.html',
 })
