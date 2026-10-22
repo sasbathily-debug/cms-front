@@ -1,0 +1,19 @@
+/* Entrée du menu : le symbole s'allume à l'approche, l'entrée active passe en orange. */
+.admin-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+.admin-link:hover .admin-sym {
+  border-color: #e0873f;
+}
+.admin-link-active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(224, 135, 63, 0.55);
+  color: #fff;
+  font-weight: 600;
+}
+.admin-link-active .admin-sym {
+  border-color: #e0873f;
+  background: #e0873f;
+  color: #1f1226;
+}

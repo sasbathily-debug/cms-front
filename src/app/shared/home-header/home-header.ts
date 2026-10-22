@@ -7,7 +7,13 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
@@ -131,9 +137,18 @@ export class HomeHeader implements OnDestroy {
   constructor() {
     afterNextRender(() => preloadNavImages());
     this.navSub = this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .pipe(
+        filter(
+          (event) =>
+            event instanceof NavigationEnd ||
+            event instanceof NavigationError ||
+            event instanceof NavigationCancel,
+        ),
+      )
       .subscribe((event) => {
-        this.currentUrl.set(event.urlAfterRedirects);
+        if (event instanceof NavigationEnd) {
+          this.currentUrl.set(event.urlAfterRedirects);
+        }
         this.closeAll();
       });
   }
