@@ -2,6 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PageContent } from '../../../core/services/page-content';
+import { CONTACT } from '../../../core/page-content/defs/contact';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { PublicPage } from '../../../shared/public-page/public-page';
@@ -23,6 +25,9 @@ export class Contact {
   private readonly contact = inject(ContactService);
 
   readonly motifs = MOTIFS;
+  /** Pages vers lesquelles mènent les trois cartes « Avant de nous écrire », dans l'ordre. */
+  protected readonly avantLiens = ['/rendez-vous', '/infos-pratiques', '/premiere-consultation'];
+  protected readonly c = inject(PageContent).use(CONTACT);
   readonly crumbs = [{ label: 'Accueil', route: '/' }, { label: 'Contact' }];
 
   readonly form = this.fb.group({

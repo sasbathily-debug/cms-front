@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SiteContentService } from '../../../core/services/site-content';
 import { PageContent } from '../../../core/services/page-content';
@@ -25,6 +26,7 @@ type Path = readonly (string | number)[];
 })
 export class AdminPageEditor implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
   private readonly content = inject(SiteContentService);
   private readonly pageContent = inject(PageContent);
@@ -42,15 +44,20 @@ export class AdminPageEditor implements OnInit {
   protected readonly dirty = computed(() => JSON.stringify(this.draft()) !== this.initial());
 
   ngOnInit(): void {
-    const def = pageBySlug(this.route.snapshot.paramMap.get('slug') ?? '');
-    if (!def) {
-      void this.router.navigate(['/admin/pages']);
-      return;
-    }
-    this.def.set(def);
-    this.content.getPage(def.slug).subscribe({
-      next: (page) => this.start(def, page.content),
-      error: () => this.start(def, null),
+    // Suit l'adresse : si l'on passe d'une page à une autre, le formulaire est rechargé.
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      const def = pageBySlug(params.get('slug') ?? '');
+      if (!def) {
+        void this.router.navigate(['/admin/pages']);
+        return;
+      }
+      this.def.set(def);
+      this.loading.set(true);
+      this.message.set(null);
+      this.content.getPage(def.slug).subscribe({
+        next: (page) => this.start(def, page.content),
+        error: () => this.start(def, null),
+      });
     });
   }
 

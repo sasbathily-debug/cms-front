@@ -4,6 +4,8 @@ import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { SiteSettings } from '../../../core/services/site-settings';
+import { PageContent } from '../../../core/services/page-content';
+import { INFOS_PRATIQUES } from '../../../core/page-content/defs/infos-pratiques';
 import { OpeningHours } from '../../../core/services/opening-hours';
 
 @Component({
@@ -20,28 +22,5 @@ export class InfosPratiques {
   );
 
   protected readonly openingHours = inject(OpeningHours);
-
-  /** Texte d'exemple : les passages entre crochets sont à confirmer par la doctoresse. */
-  readonly tarifs = [
-    { acte: 'Première consultation', prix: '[tarif] FCFA' },
-    { acte: 'Consultation de suivi', prix: '[tarif] FCFA' },
-    { acte: 'Bilan nutritionnel', prix: '[tarif] FCFA' },
-    { acte: 'Paiement', prix: '[espèces, Wave, Orange Money…]' },
-  ];
-
-  readonly blocs = [
-    {
-      titre: 'Accès',
-      texte:
-        '[Repères pour trouver le cabinet : lieu connu, étage, entrée. Taxis ou bus à proximité.]',
-    },
-    {
-      titre: 'Stationnement et accessibilité',
-      texte: '[Parking ? Accès pour personnes à mobilité réduite ? Ascenseur ?]',
-    },
-    {
-      titre: 'Assurances et mutuelles',
-      texte: '[Liste des assurances et mutuelles acceptées, démarches de remboursement.]',
-    },
-  ];
+  protected readonly c = inject(PageContent).use(INFOS_PRATIQUES);
 }

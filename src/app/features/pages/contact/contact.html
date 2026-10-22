@@ -1,14 +1,10 @@
 <app-public-page>
-  <app-page-hero
-    [crumbs]="crumbs"
-    title="Une question ? Appelez ou écrivez-nous."
-    lead="Nous répondons pendant les horaires d'ouverture. Pour un rendez-vous, la réservation en ligne est le moyen le plus rapide."
-  >
+  <app-page-hero [crumbs]="crumbs" [title]="c().hero.titre" [lead]="c().hero.intro">
     <a
       actions
       routerLink="/rendez-vous"
       class="mt-1 self-start rounded-full bg-accent-500 px-7 py-4 font-display text-base font-semibold text-forest-900 transition hover:bg-accent-600"
-      >Prendre rendez-vous en ligne</a
+      >{{ c().hero.bouton }}</a
     >
     <div
       aside
@@ -26,9 +22,9 @@
           <span class="font-display text-[16px] font-bold leading-tight text-white"
             >Dr Aissatou Mamadou Fall</span
           >
-          <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]"
-            >APPELER LE CABINET</span
-          >
+          <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+            c().carteAppel.label
+          }}</span>
         </div>
       </div>
       <div class="flex items-center gap-5">
@@ -63,7 +59,7 @@
         >
       </div>
       <p class="m-0 text-[15px] leading-relaxed text-[#E8DACE]">
-        Hors des horaires d'ouverture, laissez un message : nous vous rappelons.
+        {{ c().carteAppel.note }}
       </p>
       @if (site.whatsappHref()) {
         <a
@@ -85,7 +81,7 @@
           >
             <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" />
           </svg>
-          Écrire sur WhatsApp
+          {{ c().carteAppel.boutonWhatsapp }}
         </a>
       }
     </div>
@@ -111,11 +107,10 @@
             />
           </svg>
           <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-[#14532D]">
-            Message envoyé
+            {{ c().formulaire.confirmationTitre }}
           </h2>
           <p class="m-0 max-w-[460px] text-[15.5px] leading-relaxed text-[#1F4D36]">
-            Le cabinet a bien reçu votre message et vous répondra par téléphone ou par e-mail. Pour
-            une urgence, appelez directement.
+            {{ c().formulaire.confirmationTexte }}
           </p>
           <button
             type="button"
@@ -134,7 +129,7 @@
           <h2
             class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900 sm:text-[30px]"
           >
-            Envoyer un message
+            {{ c().formulaire.titre }}
           </h2>
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="flex flex-col gap-2 text-[13.5px] font-semibold text-forest-900">
@@ -250,9 +245,9 @@
             >
               {{ status() === 'sending' ? 'Envoi en cours…' : 'Envoyer le message' }}
             </button>
-            <span class="text-[13.5px] text-ink-600"
-              >Réponse sous [délai à préciser par la doctoresse].</span
-            >
+            @if (c().formulaire.delai) {
+              <span class="text-[13.5px] text-ink-600">{{ c().formulaire.delai }}</span>
+            }
           </div>
           <div
             class="rounded-[14px] bg-accent-100 px-[18px] py-3.5 text-sm leading-relaxed text-[#5A3410]"
@@ -341,47 +336,21 @@
       <h2
         class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]"
       >
-        Avant de nous écrire
+        {{ c().avant.titre }}
       </h2>
       <div class="grid gap-5 md:grid-cols-3">
-        <a
-          routerLink="/rendez-vous"
-          class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition"
-        >
-          <h3 class="m-0 font-display text-xl font-bold text-forest-900">Prendre rendez-vous</h3>
-          <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">
-            Créez votre compte en une minute et choisissez votre créneau. La confirmation est
-            immédiate.
-          </p>
-          <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800"
-            >Réserver en ligne</span
+        @for (carte of c().avant.cartes; track $index; let i = $index) {
+          <a
+            [routerLink]="avantLiens[i] ?? '/contact'"
+            class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition"
           >
-        </a>
-        <a
-          routerLink="/infos-pratiques"
-          class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition"
-        >
-          <h3 class="m-0 font-display text-xl font-bold text-forest-900">Tarifs et paiement</h3>
-          <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">
-            Le prix d'une consultation, les moyens de paiement et les assurances acceptées. [À
-            confirmer par la doctoresse]
-          </p>
-          <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800"
-            >Voir les infos pratiques</span
-          >
-        </a>
-        <a
-          routerLink="/premiere-consultation"
-          class="flex flex-col gap-2.5 rounded-3xl border border-border-warm bg-white p-7 transition"
-        >
-          <h3 class="m-0 font-display text-xl font-bold text-forest-900">Première consultation</h3>
-          <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">
-            Ce qu'il faut apporter et comment elle se déroule, pour venir l'esprit tranquille.
-          </p>
-          <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800"
-            >Préparer ma visite</span
-          >
-        </a>
+            <h3 class="m-0 font-display text-xl font-bold text-forest-900">{{ carte.titre }}</h3>
+            <p class="m-0 text-[15px] leading-relaxed text-[#5B4F59]">{{ carte.texte }}</p>
+            <span class="mt-auto pt-1.5 text-[14.5px] font-semibold text-accent-800">{{
+              carte.lien
+            }}</span>
+          </a>
+        }
       </div>
       <iframe
         title="Plan d'accès au cabinet"
