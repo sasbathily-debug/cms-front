@@ -28,7 +28,7 @@
         (mouseleave)="leaveGroups()"
       >
         @for (group of groups; track group.key) {
-          <div class="relative" (mouseenter)="hoverGroup(group.key)">
+          <div (mouseenter)="hoverGroup(group.key)">
             <button
               type="button"
               (click)="toggleGroup(group.key)"
@@ -45,45 +45,97 @@
             </button>
             @if (openGroup() === group.key) {
               <div
-                class="absolute left-0 top-full z-50 pt-3"
-                [class]="group.links.length > 4 ? 'w-[560px]' : 'w-[400px]'"
+                class="absolute left-1/2 top-full z-50 -mt-5 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 pt-5"
               >
                 <div
-                  class="rounded-[22px] border border-border-warm bg-white p-3 shadow-[0_28px_60px_rgba(31,18,38,0.22)]"
+                  class="flex gap-3 rounded-[24px] border border-border-warm bg-white p-3 shadow-[0_28px_60px_rgba(31,18,38,0.22)]"
                 >
-                  <div
-                    class="grid gap-0.5"
-                    [class]="group.links.length > 4 ? 'grid-cols-2' : 'grid-cols-1'"
-                  >
-                    @for (link of group.links; track link.label) {
-                      <a
-                        [routerLink]="link.route"
-                        class="flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-forest-900 transition hover:bg-cream-50"
-                      >
-                        <span
-                          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cream-100 font-display text-[15px] font-bold text-accent-700"
-                          >{{ link.sym }}</span
+                  @if (group.cards?.length) {
+                    <div class="flex w-[236px] shrink-0 flex-col gap-3">
+                      @for (card of group.cards; track card.title) {
+                        <a
+                          [routerLink]="card.route"
+                          class="group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-forest-900"
                         >
-                        <span class="flex flex-col gap-0.5">
-                          <span class="font-display text-[15px] font-semibold">{{
-                            link.label
-                          }}</span>
-                          @if (link.hint) {
-                            <span class="text-[13px] leading-snug text-ink-600">{{
-                              link.hint
+                          <img
+                            [src]="card.image"
+                            alt=""
+                            loading="lazy"
+                            class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="absolute inset-0 bg-gradient-to-t from-[#140B19]/80 via-[#140B19]/10 to-transparent"
+                          ></span>
+                          <span class="relative flex w-full items-end justify-between gap-3 p-4">
+                            <span class="flex flex-col gap-0.5">
+                              <span
+                                class="font-display text-[17px] font-semibold leading-tight text-white"
+                                >{{ card.title }}</span
+                              >
+                              <span class="text-[12.5px] leading-snug text-white/80">{{
+                                card.hint
+                              }}</span>
+                            </span>
+                            <span
+                              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-forest-900 transition-transform duration-300 group-hover:translate-x-0.5"
+                            >
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                              >
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                              </svg>
+                            </span>
+                          </span>
+                        </a>
+                      }
+                    </div>
+                  }
+                  <div class="flex min-w-0 flex-1 flex-col">
+                    <div
+                      class="grid gap-0.5"
+                      [class]="
+                        group.links.length > 4 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'
+                      "
+                    >
+                      @for (link of group.links; track link.label) {
+                        <a
+                          [routerLink]="link.route"
+                          class="flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-forest-900 transition hover:bg-cream-50"
+                        >
+                          <span
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cream-100 font-display text-[15px] font-bold text-accent-700"
+                            >{{ link.sym }}</span
+                          >
+                          <span class="flex flex-col gap-0.5">
+                            <span class="font-display text-[15px] font-semibold">{{
+                              link.label
                             }}</span>
-                          }
-                        </span>
-                      </a>
+                            @if (link.hint) {
+                              <span class="text-[13px] leading-snug text-ink-600">{{
+                                link.hint
+                              }}</span>
+                            }
+                          </span>
+                        </a>
+                      }
+                    </div>
+                    @if (group.allLabel) {
+                      <a
+                        [routerLink]="group.route"
+                        class="mt-1.5 block border-t border-border-warm px-3 pb-1 pt-3 text-sm font-semibold text-accent-800"
+                        >{{ group.allLabel }}</a
+                      >
                     }
                   </div>
-                  @if (group.allLabel) {
-                    <a
-                      [routerLink]="group.route"
-                      class="mt-1.5 block border-t border-border-warm px-3 pb-1 pt-3 text-sm font-semibold text-accent-800"
-                      >{{ group.allLabel }}</a
-                    >
-                  }
                 </div>
               </div>
             }

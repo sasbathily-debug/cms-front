@@ -5,12 +5,21 @@ export interface NavLink {
   hint?: string;
 }
 
+/** Carte photo affichée à côté de la liste dans le sous-menu (photos de la maquette, à remplacer par celles validées). */
+export interface NavCard {
+  title: string;
+  hint: string;
+  route: string;
+  image: string;
+}
+
 export interface NavGroup {
   key: string;
   label: string;
   route: string;
   links: NavLink[];
   allLabel?: string;
+  cards?: NavCard[];
 }
 
 export const SPECIALTY_LINKS: NavLink[] = [
@@ -29,11 +38,27 @@ export const NAV_GROUPS: NavGroup[] = [
     route: '/specialites',
     links: SPECIALTY_LINKS,
     allLabel: 'Toutes les spécialités',
+    cards: [
+      {
+        title: 'Nos spécialités',
+        hint: 'Diabète, thyroïde, poids…',
+        route: '/specialites',
+        image: '/img/photo-3.jpg',
+      },
+    ],
   },
   {
     key: 'cabinet',
     label: 'Le cabinet',
     route: '/le-cabinet',
+    cards: [
+      {
+        title: 'Le cabinet',
+        hint: 'Le lieu et ceux qui vous accueillent',
+        route: '/le-cabinet',
+        image: '/img/photo-1.jpg',
+      },
+    ],
     links: [
       {
         sym: 'Ap',
@@ -59,6 +84,14 @@ export const NAV_GROUPS: NavGroup[] = [
     key: 'patients',
     label: 'Patients',
     route: '/premiere-consultation',
+    cards: [
+      {
+        title: 'Prendre rendez-vous',
+        hint: 'Choisissez un créneau en ligne',
+        route: '/rendez-vous',
+        image: '/img/photo-2.jpg',
+      },
+    ],
     links: [
       {
         sym: 'Pv',
