@@ -12,6 +12,8 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { InView } from '../../../shared/in-view';
 import { RouterLink } from '@angular/router';
+import { ChatIcon } from '../../../shared/chat-widget/chat-icon';
+import { ChatState } from '../../../core/chat-state';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
@@ -41,7 +43,7 @@ const FAQ = [
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
   selector: 'app-home-mobile',
-  imports: [RouterLink, InView, OpenNow, OrangeThread, Parallax],
+  imports: [RouterLink, InView, ChatIcon, OpenNow, OrangeThread, Parallax],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
 })
@@ -50,6 +52,7 @@ export class HomeMobile implements OnInit {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly site = inject(SiteSettings);
+  protected readonly chat = inject(ChatState);
 
   private readonly heroCta = viewChild<ElementRef<HTMLElement>>('heroCta');
   /** Barre de réservation collée en bas : visible une fois le bouton du haut dépassé. */
@@ -120,6 +123,9 @@ export class HomeMobile implements OnInit {
   readonly slotLabel = computed(() => this.nextSlot());
 
   constructor() {
+    // La barre fixe de cette page porte déjà le bouton de chat : la bulle flottante se retire.
+    this.chat.onBar.set(true);
+    this.destroyRef.onDestroy(() => this.chat.onBar.set(false));
     afterNextRender(() => {
       const cta = this.heroCta()?.nativeElement;
       if (!cta || typeof IntersectionObserver === 'undefined') return;

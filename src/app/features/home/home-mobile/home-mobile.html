@@ -94,42 +94,6 @@
     </div>
   </section>
 
-  <!-- Horaires, contact, adresse -->
-  <section class="bg-cream-100 px-5 pb-12 pt-6">
-    <div class="flex flex-col divide-y divide-[#E3D3C2]">
-      <div class="flex flex-col gap-1 py-4">
-        <span class="text-[11.5px] font-semibold tracking-[0.1em] text-accent-700">HORAIRES</span>
-        <span class="text-[15.5px] leading-normal text-forest-900"
-          >Lun – Ven · 9h00 – 17h30<br />Samedi · 9h00 – 13h00</span
-        >
-        <app-open-now class="mt-1" />
-      </div>
-      <div class="flex flex-col gap-2 py-4">
-        <span class="text-[11.5px] font-semibold tracking-[0.1em] text-accent-700"
-          >TÉLÉPHONE ET WHATSAPP</span
-        >
-        <a [href]="site.telHref()" class="font-display text-xl font-bold text-forest-900">{{
-          site.phone()
-        }}</a>
-        @if (site.whatsappHref()) {
-          <a
-            [href]="site.whatsappHref()"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-fit text-[15px] font-semibold text-accent-800 underline decoration-accent-500 decoration-2 underline-offset-4"
-            >Écrire sur WhatsApp →</a
-          >
-        }
-      </div>
-      <div class="flex flex-col gap-1 py-4">
-        <span class="text-[11.5px] font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span>
-        <span class="text-[15.5px] leading-normal text-forest-900"
-          >[Rue et numéro], {{ site.address() }}</span
-        >
-      </div>
-    </div>
-  </section>
-
   <!-- Barre de réservation : apparaît quand le bouton du haut est passé, disparaît devant le pied de page -->
   @if (showBar()) {
     <div
@@ -161,37 +125,56 @@
           />
         </svg>
       </a>
+      <button
+        type="button"
+        (click)="chat.open()"
+        aria-label="Poser une question à l'assistant du cabinet"
+        class="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-[#F1C99B]"
+      >
+        <app-chat-icon />
+      </button>
     </div>
   }
 
   <div class="relative">
     <app-orange-thread />
 
-    <!-- Déclaration -->
-    <section class="flex flex-col gap-6 bg-cream-50 px-4 py-16">
-      <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
-        >NOTRE FAÇON DE SOIGNER</span
-      >
+    <!-- Déclaration : feuille prune qui remonte sur le bas du banner -->
+    <section
+      class="relative -mt-6 flex flex-col gap-6 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-12"
+    >
+      <div class="flex items-center gap-3.5">
+        <img
+          src="/img/dr-fall-sourire-640.webp"
+          alt=""
+          width="56"
+          height="56"
+          class="h-14 w-14 shrink-0 rounded-full border-2 border-accent-500 bg-[#2a1930] object-cover object-[50%_28%]"
+        />
+        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]"
+          >NOTRE FAÇON DE SOIGNER</span
+        >
+      </div>
       <p
-        class="m-0 font-display text-[29px] font-medium leading-[1.25] tracking-[-0.02em] text-forest-900"
+        class="m-0 font-display text-[29px] font-medium leading-[1.25] tracking-[-0.02em] text-white"
       >
         Un cabinet où l'on prend le temps de comprendre, pour que chaque patient devienne acteur de
         sa santé.
       </p>
       <a
         routerLink="/a-propos"
-        class="rounded-full bg-forest-900 px-6 py-[15px] text-center font-display text-[15px] font-semibold text-white"
+        class="rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-[15px] font-bold text-forest-900"
         >Faire connaissance avec la doctoresse</a
       >
       <a
         routerLink="/premiere-consultation"
-        class="rounded-full border-[1.5px] border-forest-900 px-6 py-3.5 text-center font-display text-[15px] font-semibold text-forest-900"
+        class="rounded-full border-[1.5px] border-[#F1C99B] px-6 py-3.5 text-center font-display text-[15px] font-semibold text-[#F1C99B]"
         >La première consultation</a
       >
     </section>
 
     <!-- Spécialités : silhouette + liste (on touche une ligne pour allumer l'organe) -->
-    <section class="bg-cream-50 px-4 pb-[72px]">
+    <section class="relative -mt-8 rounded-t-[32px] bg-cream-50 px-5 pb-[72px] pt-14">
       <div class="sil-grid flex flex-col gap-[22px]">
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">SPÉCIALITÉS</span>
@@ -277,7 +260,9 @@
     </section>
 
     <!-- Parcours -->
-    <section class="mx-2 flex flex-col gap-8 rounded-[32px] bg-forest-900 px-5 py-14">
+    <section
+      class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
+    >
       <div class="flex flex-col gap-2.5">
         <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">VOTRE PARCOURS</span>
         <h2
@@ -303,7 +288,9 @@
     </section>
 
     <!-- La doctoresse -->
-    <section class="-mt-8 flex flex-col gap-[22px] bg-cream-50 px-4 pb-16 pt-24">
+    <section
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-cream-50 px-5 pb-16 pt-14"
+    >
       <div
         appInView
         class="photo-life relative h-[400px] overflow-hidden rounded-[190px_190px_28px_28px] bg-[#2a1930]"
@@ -355,9 +342,11 @@
     </section>
 
     <!-- Avis -->
-    <section class="flex flex-col gap-[22px] bg-cream-100 px-4 py-16">
+    <section
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
+    >
       <h2
-        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
         Ce que disent les patients
       </h2>
@@ -369,13 +358,15 @@
           <figcaption class="text-[13.5px] text-ink-600">{{ a.auteur }}</figcaption>
         </figure>
       }
-      <p class="m-0 text-[12.5px] leading-relaxed text-[#5B4F59]">
+      <p class="m-0 text-[12.5px] leading-relaxed text-[#D8C9BB]">
         À remplir avec de vrais avis, recueillis avec l'accord des patients.
       </p>
     </section>
 
     <!-- Nous trouver -->
-    <section class="flex flex-col gap-4 bg-cream-50 px-4 py-16">
+    <section
+      class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-cream-50 px-5 pb-16 pt-20"
+    >
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
       >
@@ -403,6 +394,24 @@
           ><span class="text-[15px] leading-normal text-[#4A3F49]"
             >Lun – Ven 9h00 – 17h30<br />Samedi 9h00 – 13h00</span
           >
+          <app-open-now class="mt-1" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700"
+            >TÉLÉPHONE ET WHATSAPP</span
+          >
+          <a [href]="site.telHref()" class="font-display text-xl font-bold text-forest-900">{{
+            site.phone()
+          }}</a>
+          @if (site.whatsappHref()) {
+            <a
+              [href]="site.whatsappHref()"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-fit text-[15px] font-semibold text-accent-800 underline decoration-accent-500 decoration-2 underline-offset-4"
+              >Écrire sur WhatsApp →</a
+            >
+          }
         </div>
         <a
           routerLink="/infos-pratiques"
@@ -413,9 +422,11 @@
     </section>
 
     <!-- FAQ -->
-    <section class="flex flex-col gap-5 bg-cream-100 px-4 py-16">
+    <section
+      class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
+    >
       <h2
-        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
         Avant de venir, vous vous demandez…
       </h2>
@@ -446,7 +457,9 @@
     </section>
 
     <!-- Articles -->
-    <section class="flex flex-col gap-[22px] bg-cream-50 px-4 py-16">
+    <section
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-cream-50 px-5 pb-16 pt-20"
+    >
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
       >

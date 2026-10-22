@@ -4,6 +4,7 @@ import {
   ElementRef,
   afterNextRender,
   computed,
+  effect,
   inject,
   signal,
   viewChild,
@@ -13,6 +14,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SiteSettings } from '../../core/services/site-settings';
+import { ChatState } from '../../core/chat-state';
+import { ChatIcon } from './chat-icon';
 
 interface ChatAction {
   label: string;
@@ -55,6 +58,7 @@ function storage(): Storage | null {
  */
 @Component({
   selector: 'app-chat-widget',
+  imports: [ChatIcon],
   styleUrl: './chat-widget.css',
   templateUrl: './chat-widget.html',
   host: { '(document:keydown.escape)': 'close()' },
@@ -66,18 +70,10 @@ export class ChatWidget {
   private readonly list = viewChild<ElementRef<HTMLElement>>('list');
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
 
-  /** Icône de la bulle : une bulle de dialogue empilée en couches pour lui donner de l'épaisseur. */
-  protected readonly bubble =
-    'M8 7h24a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H18l-9 7v-7H8a5 5 0 0 1-5-5V12a5 5 0 0 1 5-5z';
-  protected readonly layers = [
-    { z: -4, fill: '#7A430F' },
-    { z: -2, fill: '#9A5518' },
-    { z: 0, fill: '#C7702A' },
-    { z: 2, fill: '#D07A33' },
-  ];
-
   protected readonly maxLength = MAX_LENGTH;
-  protected readonly opened = signal(false);
+  private readonly state = inject(ChatState);
+  protected readonly opened = this.state.opened;
+  protected readonly onBar = this.state.onBar;
   /** Petit signal discret, une seule fois par visite, pour rappeler que l'assistant existe. */
   protected readonly nudge = signal(false);
   protected readonly loading = signal(false);
@@ -107,6 +103,12 @@ export class ChatWidget {
 
   constructor() {
     const destroyRef = inject(DestroyRef);
+    effect(() => {
+      if (this.opened()) {
+        this.nudge.set(false);
+        setTimeout(() => this.field()?.nativeElement.focus());
+      }
+    });
     afterNextRender(() => {
       if (storage()?.getItem(NUDGE_KEY)) return;
       let hide: ReturnType<typeof setTimeout> | undefined;
