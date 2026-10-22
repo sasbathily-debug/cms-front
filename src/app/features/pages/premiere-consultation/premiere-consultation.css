@@ -46,3 +46,45 @@
     background: #e0873f;
   }
 }
+
+/* Le déroulé s'allume étape par étape pendant le défilement. */
+.step-num {
+  color: rgba(241, 201, 155, 0.3);
+  transition: color 0.5s;
+}
+.step-text {
+  opacity: 0.45;
+  transition: opacity 0.5s;
+}
+.step-dot {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: #1f1226;
+  transition:
+    border-color 0.4s,
+    background-color 0.4s;
+}
+.step-on .step-num {
+  color: #f1c99b;
+}
+.step-on .step-text {
+  opacity: 1;
+}
+.step-on .step-dot {
+  border-color: #e0873f;
+  background: #e0873f;
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-num {
+    color: #f1c99b;
+    transition: none;
+  }
+  .step-text {
+    opacity: 1;
+    transition: none;
+  }
+  .step-dot {
+    border-color: #e0873f;
+    background: #e0873f;
+    transition: none;
+  }
+}
