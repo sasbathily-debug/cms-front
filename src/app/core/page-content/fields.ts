@@ -1,6 +1,6 @@
 /** Un champ modifiable d'une page : du texte, un paragraphe, une liste de textes, ou une liste de blocs. */
 export type Field =
-  | { key: string; label: string; type: 'text' | 'textarea'; hint?: string }
+  | { key: string; label: string; type: 'text' | 'textarea' | 'image'; hint?: string }
   | { key: string; label: string; type: 'strings'; itemLabel: string; hint?: string }
   | {
       key: string;

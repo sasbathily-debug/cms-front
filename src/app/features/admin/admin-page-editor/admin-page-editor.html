@@ -169,6 +169,50 @@
           </button>
         </div>
       }
+      @case ('image') {
+        <div>
+          <label
+            [attr.for]="id(path.concat(f.key))"
+            class="mb-1.5 block text-xs font-semibold text-forest-900"
+            >{{ f.label }}</label
+          >
+          <div class="flex items-center gap-3">
+            @if (text(path.concat(f.key))) {
+              <img
+                [src]="text(path.concat(f.key))"
+                alt=""
+                class="h-14 w-14 shrink-0 rounded-lg border border-border-warm object-cover"
+              />
+            }
+            <input
+              [id]="id(path.concat(f.key))"
+              type="text"
+              [value]="text(path.concat(f.key))"
+              (input)="setValue(path.concat(f.key), $any($event.target).value)"
+              placeholder="Adresse de l'image, ou choisissez un fichier"
+              class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+            />
+          </div>
+          <label
+            class="mt-2 inline-flex w-fit cursor-pointer items-center gap-2 rounded-full border border-border-warm px-4 py-2 text-xs font-semibold text-forest-900"
+          >
+            {{
+              uploading() === id(path.concat(f.key))
+                ? 'Envoi...'
+                : "Choisir une image sur l'ordinateur"
+            }}
+            <input
+              type="file"
+              accept="image/*"
+              class="hidden"
+              (change)="uploadImage($event, path.concat(f.key))"
+            />
+          </label>
+          @if (f.hint) {
+            <p class="mt-1 text-xs text-ink-600">{{ f.hint }}</p>
+          }
+        </div>
+      }
       @case ('textarea') {
         <div>
           <label

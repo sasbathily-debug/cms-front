@@ -3,6 +3,7 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SiteContentService } from '../../../core/services/site-content';
 import { PageContent } from '../../../core/services/page-content';
+import { FileUploadService } from '../../../core/services/file-upload';
 import {
   Field,
   PageDef,
@@ -27,12 +28,15 @@ export class AdminPageEditor implements OnInit {
   private readonly router = inject(Router);
   private readonly content = inject(SiteContentService);
   private readonly pageContent = inject(PageContent);
+  private readonly uploads = inject(FileUploadService);
 
   protected readonly def = signal<PageDef<object> | null>(null);
   protected readonly draft = signal<Record<string, unknown>>({});
   private readonly initial = signal('');
   protected readonly loading = signal(true);
   protected readonly saving = signal(false);
+  /** Adresse (id du champ) de l'image en cours d'envoi. */
+  protected readonly uploading = signal<string | null>(null);
   protected readonly message = signal<{ ok: boolean; text: string } | null>(null);
 
   protected readonly dirty = computed(() => JSON.stringify(this.draft()) !== this.initial());
@@ -122,6 +126,25 @@ export class AdminPageEditor implements OnInit {
 
   protected moveAt(path: Path, index: number, direction: -1 | 1): void {
     this.setValue(path, moveItem(this.list(path), index, index + direction));
+  }
+
+  /** Envoie une image choisie sur l'ordinateur et en met l'adresse dans le champ. */
+  protected uploadImage(event: Event, path: Path): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    this.uploading.set(this.id(path));
+    this.uploads.upload(file).subscribe({
+      next: (res) => {
+        this.setValue(path, res.url);
+        this.uploading.set(null);
+      },
+      error: () => {
+        this.uploading.set(null);
+        this.message.set({ ok: false, text: "L'image n'a pas pu être envoyée. Réessayez." });
+      },
+    });
+    input.value = '';
   }
 
   // ----- Enregistrement -----
