@@ -1,15 +1,16 @@
 <app-public-page>
   <section class="px-4 pb-8 pt-12 sm:px-6 sm:pt-16 lg:px-10 lg:pt-[72px]">
     <div class="mx-auto flex max-w-[1160px] flex-col gap-[26px]">
-      <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">CONSEILS SANTÉ</span>
+      <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
+        c().hero.kicker
+      }}</span>
       <h1
         class="m-0 max-w-[900px] text-balance font-display text-[2.6rem] font-bold leading-[0.98] tracking-[-0.035em] text-forest-900 sm:text-6xl lg:text-[76px]"
       >
-        Comprendre sa santé, un article à la fois
+        {{ c().hero.titre }}
       </h1>
       <p class="m-0 max-w-[680px] text-lg leading-[1.6] text-[#4A3F49] sm:text-xl">
-        Des textes courts, écrits par la doctoresse, pour mieux vivre avec le diabète, la thyroïde
-        ou votre poids.
+        {{ c().hero.intro }}
       </p>
       <div class="mt-1.5 flex flex-wrap gap-2.5" role="group" aria-label="Filtrer par thème">
         @for (category of categories(); track category) {
@@ -38,21 +39,21 @@
       <div
         class="order-2 flex flex-col justify-center gap-4 px-6 py-8 sm:px-10 lg:order-1 lg:py-10"
       >
-        <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]"
-          >ÉCRIT PAR LA DOCTORESSE</span
-        >
+        <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+          c().auteur.kicker
+        }}</span>
         <h2
           class="m-0 font-display text-[1.75rem] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:text-4xl"
         >
-          Dr Aissatou Mamadou Fall
+          {{ c().auteur.nom }}
         </h2>
         <p class="m-0 text-[15.5px] leading-[1.65] text-[#E8DACE]">
-          Médecin endocrinologue et nutritionniste à Dakar.
+          {{ c().auteur.texte }}
         </p>
         <a
           routerLink="/a-propos"
           class="self-start py-1 text-[15px] font-semibold text-[#F1C99B] underline decoration-accent-500 decoration-2 underline-offset-4"
-          >Découvrir son parcours →</a
+          >{{ c().auteur.lien }}</a
         >
       </div>
       <div
@@ -88,19 +89,18 @@
         aria-label="Photo de l'article à la une"
       ></div>
       <div class="flex flex-col justify-center gap-[18px] px-6 py-10 sm:p-14">
-        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]"
-          >À LA UNE · RAMADAN · 6 MIN</span
-        >
+        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+          c().alaune.kicker
+        }}</span>
         <h2
           class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-white sm:text-[40px]"
         >
-          Ramadan et diabète : bien se préparer
+          {{ c().alaune.titre }}
         </h2>
         <p class="m-0 text-base leading-[1.7] text-[#E8DACE]">
-          Peut-on jeûner ? Comment adapter son traitement et son alimentation ? Les questions à
-          poser à votre médecin avant le premier jour.
+          {{ c().alaune.texte }}
         </p>
-        <span class="text-[15px] font-semibold text-[#F1C99B]">Lire l'article</span>
+        <span class="text-[15px] font-semibold text-[#F1C99B]">{{ c().alaune.lien }}</span>
       </div>
     </div>
   </section>
@@ -149,10 +149,10 @@
         <h2
           class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-white sm:text-[40px]"
         >
-          Suivez le cabinet sur Instagram
+          {{ c().instagram.titre }}
         </h2>
         <p class="m-0 text-[17px] leading-[1.65] text-[#E8DACE]">
-          Des conseils courts et des réponses aux questions des patients. @dr_aissatou.m
+          {{ c().instagram.texte }}
         </p>
       </div>
       <a
@@ -160,10 +160,10 @@
         target="_blank"
         rel="noopener noreferrer"
         class="rounded-full bg-accent-500 px-[34px] py-[18px] font-display text-base font-semibold text-forest-900 transition hover:bg-accent-600"
-        >Ouvrir Instagram</a
+        >{{ c().instagram.bouton }}</a
       >
     </div>
   </section>
 
-  <app-cta-band title="Une question qui n'est pas traitée ici ?" />
+  <app-cta-band [title]="c().appel.titre" />
 </app-public-page>

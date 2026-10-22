@@ -4,6 +4,8 @@ import { PublicPage } from '../../../shared/public-page/public-page';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { SiteSettings } from '../../../core/services/site-settings';
+import { PageContent } from '../../../core/services/page-content';
+import { FAQ_PAGE } from '../../../core/page-content/defs/faq';
 import { SiteFaq } from '../../../core/services/site-faq';
 
 const normalize = (text: string): string => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -18,17 +20,20 @@ export class Faq {
   readonly crumbs = [{ label: 'Accueil', route: '/' }, { label: 'Questions fréquentes' }];
   readonly query = signal('');
 
-  readonly bubbles = computed(() => [
-    {
-      q: 'Dois-je créer un compte pour réserver ?',
-      a: 'Oui, en une minute avec votre numéro de téléphone.',
-    },
-    { q: 'Que dois-je apporter ?', a: 'Vos analyses récentes et la liste de vos médicaments.' },
-    {
-      q: "Et si j'ai une urgence ?",
-      a: `Appelez le ${this.site.emergencyNumber() || 'SAMU au 1515'}. Ne passez pas par le site.`,
-    },
-  ]);
+  protected readonly c = inject(PageContent).use(FAQ_PAGE);
+
+  /** Les bulles animées ; `{urgence}` est remplacé par le numéro saisi dans les réglages. */
+  readonly bubbles = computed(() =>
+    this.c().bulles.map((b) => ({ q: b.q, a: this.withUrgence(b.a) })),
+  );
+
+  /** Remplace `{urgence}` par le numéro d'urgence des réglages (à défaut, le SAMU, à confirmer). */
+  protected withUrgence(text: string): string {
+    return text.replace(
+      '{urgence}',
+      this.site.emergencyNumber() || 'SAMU au 1515 [numéro à confirmer]',
+    );
+  }
 
   protected readonly site = inject(SiteSettings);
   private readonly siteFaq = inject(SiteFaq);

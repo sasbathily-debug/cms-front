@@ -1,16 +1,12 @@
 <app-public-page>
-  <app-page-hero
-    [crumbs]="crumbs"
-    title="Vos questions, nos réponses."
-    lead="Rendez-vous, consultation, paiement, confidentialité : les réponses courtes aux questions que l'on nous pose le plus souvent."
-  >
+  <app-page-hero [crumbs]="crumbs" [title]="c().hero.titre" [lead]="c().hero.intro">
     <div
       aside
       class="relative h-[270px] rounded-[28px] border border-white/15 bg-white/[0.06] p-5 sm:p-7"
       aria-hidden="true"
     >
       <div class="relative h-full">
-        @for (pair of bubbles(); track pair.q; let i = $index) {
+        @for (pair of bubbles(); track $index; let i = $index) {
           <div
             class="qa qa-q absolute left-0 top-0 max-w-[82%] rounded-[20px_20px_20px_5px] bg-cream-50 px-5 py-4 text-base font-medium leading-snug text-ink-900"
             [class]="'qa-p' + i"
@@ -52,7 +48,7 @@
           type="search"
           [value]="query()"
           (input)="onSearch($event)"
-          placeholder="Rechercher une question (par exemple : « annuler », « tarif », « apporter »)"
+          [placeholder]="c().recherche.placeholder"
           aria-label="Rechercher une question"
           class="w-full min-w-0 bg-transparent text-base text-ink-900 outline-none placeholder:text-[#8A7E88]"
         />
@@ -131,32 +127,28 @@
         </div>
         <div class="flex flex-col gap-3.5 rounded-[22px] bg-forest-900 p-7">
           <h2 class="m-0 font-display text-[22px] font-bold leading-tight text-white">
-            Vous ne trouvez pas votre réponse ?
+            {{ c().contact.titre }}
           </h2>
           <p class="m-0 text-[14.5px] leading-relaxed text-[#E8DACE]">
-            Écrivez-nous ou appelez pendant les horaires d'ouverture.
+            {{ c().contact.texte }}
           </p>
           <a
             routerLink="/contact"
             class="rounded-full bg-accent-500 px-[22px] py-3.5 text-center font-display text-[15px] font-semibold text-forest-900"
-            >Nous contacter</a
+            >{{ c().contact.bouton }}</a
           >
         </div>
         <div class="flex flex-col gap-2.5 rounded-[22px] bg-cream-100 p-[26px]">
-          <h2 class="m-0 font-display text-lg font-bold text-forest-900">Urgence</h2>
-          <span class="text-[14.5px] leading-relaxed text-[#4A3F49]"
-            >En cas de malaise, de douleur dans la poitrine ou de difficulté à respirer, appelez le
-            @if (site.emergencyNumber()) {
-              {{ site.emergencyNumber() }}
-            } @else {
-              SAMU au 1515 <span class="text-ink-600">[numéro à confirmer]</span>
-            }
-            . Ne passez pas par le site.</span
-          >
+          <h2 class="m-0 font-display text-lg font-bold text-forest-900">
+            {{ c().urgence.titre }}
+          </h2>
+          <span class="text-[14.5px] leading-relaxed text-[#4A3F49]">{{
+            withUrgence(c().urgence.texte)
+          }}</span>
         </div>
       </aside>
     </div>
   </section>
 
-  <app-cta-band title="Une consultation, des réponses claires." />
+  <app-cta-band [title]="c().appel.titre" />
 </app-public-page>

@@ -5,6 +5,8 @@ import { PREMIERE_CONSULTATION } from './defs/premiere-consultation';
 import { INFOS_PRATIQUES } from './defs/infos-pratiques';
 import { CONTACT } from './defs/contact';
 import { ACCUEIL } from './defs/accueil';
+import { FAQ_PAGE } from './defs/faq';
+import { CONSEILS_SANTE } from './defs/conseils-sante';
 
 /** Toutes les pages dont le contenu se modifie depuis l'admin. Pour en ajouter une : sa définition, puis une ligne ici. */
 export const PAGES = [
@@ -14,6 +16,8 @@ export const PAGES = [
   INFOS_PRATIQUES,
   CONTACT,
   ACCUEIL,
+  FAQ_PAGE,
+  CONSEILS_SANTE,
 ] as PageDef<object>[];
 
 export function pageBySlug(slug: string): PageDef<object> | undefined {
