@@ -4,7 +4,8 @@ import { AppointmentService } from '../../../core/services/appointment';
 import { PatientDocumentService } from '../../../core/services/patient-document';
 import { SiteContentService } from '../../../core/services/site-content';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
-import { ADDRESS_STREET, SiteSettings, WEEK_HOURS } from '../../../core/services/site-settings';
+import { ADDRESS_STREET, SiteSettings } from '../../../core/services/site-settings';
+import { OpeningHours } from '../../../core/services/opening-hours';
 import { AppointmentDto } from '../../../core/models/appointment.models';
 import { DocumentCategory, PatientDocumentDto } from '../../../core/models/patient-document.models';
 import { HealthTipDto } from '../../../core/models/site-content.models';
@@ -75,7 +76,7 @@ export class ClientHome implements OnInit {
   readonly healthTips = signal<HealthTipDto[]>([]);
   readonly documentFilter = signal<DocumentCategory | 'ALL'>('ALL');
 
-  readonly hours = WEEK_HOURS;
+  protected readonly openingHours = inject(OpeningHours);
   readonly addressStreet = ADDRESS_STREET;
 
   readonly firstName = computed(() => this.store.user()?.firstName ?? '');

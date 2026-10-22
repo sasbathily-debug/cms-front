@@ -8,6 +8,7 @@ import { AvailabilityService } from '../../../core/services/availability';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 import { Auth } from '../../../core/services/auth';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
+import { OpeningHours } from '../../../core/services/opening-hours';
 import { SiteSettings } from '../../../core/services/site-settings';
 
 const MOTIFS = ['Première consultation', 'Suivi', "Résultats d'analyses", 'Nutrition', 'Autre'];
@@ -36,6 +37,7 @@ export class RendezVous implements OnInit {
   private readonly currentUserStore = inject(CurrentUserStore);
   private readonly auth = inject(Auth);
   protected readonly site = inject(SiteSettings);
+  protected readonly openingHours = inject(OpeningHours);
 
   readonly motifs = MOTIFS;
   readonly isAuthenticated = computed(() => this.auth.isAuthenticated());

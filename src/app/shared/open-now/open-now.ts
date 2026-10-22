@@ -1,17 +1,29 @@
-import { Component, DestroyRef, afterNextRender, inject, input, signal } from '@angular/core';
-
-/** Horaires du cabinet par jour (0 = dimanche), en minutes depuis minuit ; à confirmer avec la doctoresse. */
-const SCHEDULE: Record<number, [number, number] | null> = {
-  0: null,
-  1: [9 * 60, 17 * 60 + 30],
-  2: [9 * 60, 17 * 60 + 30],
-  3: [9 * 60, 17 * 60 + 30],
-  4: [9 * 60, 17 * 60 + 30],
-  5: [9 * 60, 17 * 60 + 30],
-  6: [9 * 60, 13 * 60],
-};
+import {
+  Component,
+  DestroyRef,
+  afterNextRender,
+  effect,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
+import { OpeningHourDto } from '../../core/models/site-content.models';
+import { DEFAULT_DAYS } from '../../core/opening-hours';
+import { OpeningHours } from '../../core/services/opening-hours';
 
 const DAY_NAMES = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+
+const toMinutes = (time: string): number => {
+  const [h, m] = time.split(':');
+  return Number(h) * 60 + Number(m);
+};
+
+/** Horaires de la journée `day` (0 = dimanche), en minutes depuis minuit ; `null` si fermé. */
+function scheduleFor(days: OpeningHourDto[], day: number): [number, number] | null {
+  const found = days.find((d) => d.dayOfWeek === (day === 0 ? 7 : day));
+  if (!found || found.closed || !found.opens || !found.closes) return null;
+  return [toMinutes(found.opens), toMinutes(found.closes)];
+}
 const WEEKDAYS: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
 interface Status {
@@ -41,9 +53,9 @@ function dakarNow(date: Date): { day: number; minutes: number } {
   };
 }
 
-export function statusAt(date: Date): Status {
+export function statusAt(date: Date, days: OpeningHourDto[] = DEFAULT_DAYS): Status {
   const { day, minutes } = dakarNow(date);
-  const today = SCHEDULE[day];
+  const today = scheduleFor(days, day);
   if (today && minutes >= today[0] && minutes < today[1]) {
     return { open: true, text: `Ouvert · jusqu'à ${formatTime(today[1])}` };
   }
@@ -52,7 +64,7 @@ export function statusAt(date: Date): Status {
   }
   for (let offset = 1; offset <= 7; offset++) {
     const next = (day + offset) % 7;
-    const hours = SCHEDULE[next];
+    const hours = scheduleFor(days, next);
     if (hours) {
       const when = offset === 1 ? 'demain' : DAY_NAMES[next];
       return { open: false, text: `Fermé · réouverture ${when} ${formatTime(hours[0])}` };
@@ -82,14 +94,22 @@ export function statusAt(date: Date): Status {
 })
 export class OpenNow {
   readonly tone = input<'light' | 'dark'>('light');
+  private readonly hours = inject(OpeningHours);
   protected readonly status = signal<Status | null>(null);
+  /** Heure de la dernière mise à jour ; `null` tant que la page n'est pas affichée dans le navigateur. */
+  private readonly now = signal<Date | null>(null);
 
   constructor() {
     const destroyRef = inject(DestroyRef);
+    // Se recalcule chaque minute, et dès que les horaires de l'admin arrivent.
+    effect(() => {
+      const now = this.now();
+      const days = this.hours.days();
+      if (now) this.status.set(statusAt(now, days));
+    });
     afterNextRender(() => {
-      const refresh = () => this.status.set(statusAt(new Date()));
-      refresh();
-      const timer = setInterval(refresh, 60_000);
+      this.now.set(new Date());
+      const timer = setInterval(() => this.now.set(new Date()), 60_000);
       destroyRef.onDestroy(() => clearInterval(timer));
     });
   }

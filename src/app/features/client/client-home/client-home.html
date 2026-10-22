@@ -475,9 +475,9 @@
       >
       <span class="flex flex-col gap-0.5"
         ><span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">HORAIRES</span
-        ><span class="font-display text-[17px] font-bold leading-snug"
-          >Lun – Ven 9h00 – 17h30 · Sam 9h00 – 13h00</span
-        ></span
+        ><span class="font-display text-[17px] font-bold leading-snug">{{
+          openingHours.homeLines().join(' · ')
+        }}</span></span
       >
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ADDRESS_STREET, FOOTER_HOURS, SiteSettings } from '../../core/services/site-settings';
+import { ADDRESS_STREET, SiteSettings } from '../../core/services/site-settings';
+import { OpeningHours } from '../../core/services/opening-hours';
 import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
 
@@ -24,5 +25,5 @@ export class AppFooter {
   readonly mapsUrl = 'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125';
 
   readonly addressLines = [ADDRESS_STREET, 'Sacré-Cœur 3, Dakar, Sénégal'];
-  readonly hoursLines = FOOTER_HOURS;
+  protected readonly hours = inject(OpeningHours);
 }

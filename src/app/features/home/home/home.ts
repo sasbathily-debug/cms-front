@@ -9,7 +9,8 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { AvailabilityService } from '../../../core/services/availability';
-import { ADDRESS_STREET, HOME_HOURS, SiteSettings } from '../../../core/services/site-settings';
+import { ADDRESS_STREET, SiteSettings } from '../../../core/services/site-settings';
+import { OpeningHours } from '../../../core/services/opening-hours';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 
 interface FaqView {
@@ -112,7 +113,7 @@ export class Home implements OnInit {
     underlined: index >= words.length - 3,
   }));
   readonly heroSubtitle = HERO_SUBTITLE;
-  readonly hoursLines = HOME_HOURS;
+  protected readonly hours = inject(OpeningHours);
   readonly points = [
     'Des explications avec des mots simples, autant de fois que nécessaire',
     'Un plan écrit, adapté à votre alimentation et à votre quotidien',

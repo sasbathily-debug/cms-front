@@ -3,7 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
-import { SiteSettings, WEEK_HOURS } from '../../../core/services/site-settings';
+import { SiteSettings } from '../../../core/services/site-settings';
+import { OpeningHours } from '../../../core/services/opening-hours';
 
 @Component({
   selector: 'app-infos-pratiques',
@@ -18,7 +19,7 @@ export class InfosPratiques {
     'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
   );
 
-  readonly hours = WEEK_HOURS;
+  protected readonly openingHours = inject(OpeningHours);
 
   /** Texte d'exemple : les passages entre crochets sont à confirmer par la doctoresse. */
   readonly tarifs = [

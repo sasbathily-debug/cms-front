@@ -101,7 +101,7 @@
             <div class="flex flex-col gap-1.5">
               <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">HORAIRES</span>
               <span class="text-[15.5px] leading-normal text-forest-900">
-                @for (line of hoursLines; track $index) {
+                @for (line of hours.homeLines(); track $index) {
                   {{ line }}<br />
                 }
               </span>
@@ -358,9 +358,9 @@
                 </div>
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">OUVERT</span
-                  ><span class="text-base leading-[1.55] text-[#4A3F49]"
-                    >Lun – Ven 9h00 – 17h30 · Samedi 9h00 – 13h00</span
-                  >
+                  ><span class="text-base leading-[1.55] text-[#4A3F49]">{{
+                    hours.homeLines().join(' · ')
+                  }}</span>
                   <app-open-now />
                 </div>
                 <div class="mt-1 flex flex-wrap gap-3">

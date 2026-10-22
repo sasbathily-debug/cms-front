@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { OpeningHours } from '../../../core/services/opening-hours';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { PageHero } from '../../../shared/page-hero/page-hero';
@@ -38,11 +39,7 @@ export class Contact {
   readonly status = signal<'idle' | 'sending' | 'sent' | 'error'>('idle');
   readonly errorText = signal('');
 
-  readonly hours = [
-    { jour: 'Lundi au vendredi', heures: '9h00 – 17h30' },
-    { jour: 'Samedi', heures: '9h00 – 13h00' },
-    { jour: 'Dimanche', heures: 'Fermé' },
-  ];
+  protected readonly openingHours = inject(OpeningHours);
 
   /** Solution de repli si l'envoi échoue : ouvre l'application de messagerie avec le message prérempli. */
   get mailtoHref(): string {

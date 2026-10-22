@@ -391,9 +391,11 @@
         </div>
         <div class="flex flex-col gap-1">
           <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">OUVERT</span
-          ><span class="text-[15px] leading-normal text-[#4A3F49]"
-            >Lun – Ven 9h00 – 17h30<br />Samedi 9h00 – 13h00</span
-          >
+          ><span class="text-[15px] leading-normal text-[#4A3F49]">
+            @for (line of hours.homeLines(); track $index) {
+              {{ line }}<br />
+            }
+          </span>
           <app-open-now class="mt-1" />
         </div>
         <div class="flex flex-col gap-1.5">

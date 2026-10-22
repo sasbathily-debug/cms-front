@@ -1,4 +1,5 @@
 import { statusAt } from './open-now';
+import { DEFAULT_DAYS } from '../../core/opening-hours';
 
 // Dakar est à UTC+0 toute l'année : l'heure UTC est l'heure du cabinet.
 describe('statusAt', () => {
@@ -39,5 +40,22 @@ describe('statusAt', () => {
   it("lit l'heure de Dakar même si le visiteur est ailleurs", () => {
     // 11h en UTC+1 (Paris l'hiver) = 10h à Dakar : ouvert.
     expect(statusAt(new Date('2026-12-07T10:00:00Z')).open).toBe(true);
+  });
+
+  it('suit les horaires fournis par l’admin', () => {
+    const days = DEFAULT_DAYS.map((d) =>
+      d.dayOfWeek === 1 ? { ...d, opens: '14:00', closes: '18:00' } : d,
+    );
+    expect(statusAt(new Date('2026-10-19T10:00:00Z'), days).text).toBe('Fermé · ouvre à 14h00');
+    expect(statusAt(new Date('2026-10-19T15:00:00Z'), days).text).toBe("Ouvert · jusqu'à 18h00");
+  });
+
+  it('annonce la prochaine ouverture quand le samedi est fermé', () => {
+    const days = DEFAULT_DAYS.map((d) =>
+      d.dayOfWeek === 6 ? { ...d, opens: null, closes: null, closed: true } : d,
+    );
+    expect(statusAt(new Date('2026-10-23T18:00:00Z'), days).text).toBe(
+      'Fermé · réouverture lundi 9h00',
+    );
   });
 });

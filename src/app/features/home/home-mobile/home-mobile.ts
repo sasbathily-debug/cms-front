@@ -14,6 +14,7 @@ import { InView } from '../../../shared/in-view';
 import { RouterLink } from '@angular/router';
 import { ChatIcon } from '../../../shared/chat-widget/chat-icon';
 import { ChatState } from '../../../core/chat-state';
+import { OpeningHours } from '../../../core/services/opening-hours';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
@@ -53,6 +54,7 @@ export class HomeMobile implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   protected readonly site = inject(SiteSettings);
   protected readonly chat = inject(ChatState);
+  protected readonly hours = inject(OpeningHours);
 
   private readonly heroCta = viewChild<ElementRef<HTMLElement>>('heroCta');
   /** Barre de réservation collée en bas : visible une fois le bouton du haut dépassé. */
