@@ -25,7 +25,8 @@ export class Register {
   readonly form = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
-    email: ['', [Validators.email]],
+    // Obligatoire tant que le code n'est pas envoyé par SMS : le serveur l'envoie par e-mail.
+    email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required]],
   });
 
@@ -42,16 +43,8 @@ export class Register {
       this.form.markAllAsTouched();
       this.errorMessage.set(
         this.form.controls.email.invalid
-          ? 'Vérifiez votre adresse e-mail.'
+          ? 'Indiquez une adresse e-mail valide : nous y envoyons votre code.'
           : 'Renseignez votre prénom, votre nom et votre numéro de téléphone.',
-      );
-      return;
-    }
-    // Maquette : l'e-mail est facultatif. Tant que le code n'est pas envoyé par SMS, le serveur
-    // en a besoin pour envoyer le code de vérification.
-    if (!this.form.getRawValue().email) {
-      this.errorMessage.set(
-        "L'envoi du code par SMS n'est pas encore branché : indiquez votre e-mail pour recevoir le code.",
       );
       return;
     }
