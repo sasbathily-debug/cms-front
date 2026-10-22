@@ -94,34 +94,36 @@
                 <span class="text-[13px] font-semibold text-forest-900">{{
                   itemTitle(path.concat(f.key), i, f.fields, f.itemLabel, f.titleKey)
                 }}</span>
-                <span class="flex gap-1.5">
-                  <button
-                    type="button"
-                    (click)="moveAt(child(path, f.key), i, -1)"
-                    [disabled]="i === 0"
-                    [attr.aria-label]="'Monter ' + f.itemLabel"
-                    class="h-8 w-8 rounded-full border border-border-warm bg-white text-sm text-forest-900 disabled:opacity-30"
-                  >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    (click)="moveAt(child(path, f.key), i, 1)"
-                    [disabled]="last"
-                    [attr.aria-label]="'Descendre ' + f.itemLabel"
-                    class="h-8 w-8 rounded-full border border-border-warm bg-white text-sm text-forest-900 disabled:opacity-30"
-                  >
-                    ↓
-                  </button>
-                  <button
-                    type="button"
-                    (click)="removeAt(child(path, f.key), i)"
-                    [attr.aria-label]="'Supprimer ' + f.itemLabel"
-                    class="rounded-full border border-[#B2453B] px-3 py-1 text-xs font-semibold text-[#B2453B]"
-                  >
-                    Supprimer
-                  </button>
-                </span>
+                @if (!f.fixed) {
+                  <span class="flex gap-1.5">
+                    <button
+                      type="button"
+                      (click)="moveAt(child(path, f.key), i, -1)"
+                      [disabled]="i === 0"
+                      [attr.aria-label]="'Monter ' + f.itemLabel"
+                      class="h-8 w-8 rounded-full border border-border-warm bg-white text-sm text-forest-900 disabled:opacity-30"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      (click)="moveAt(child(path, f.key), i, 1)"
+                      [disabled]="last"
+                      [attr.aria-label]="'Descendre ' + f.itemLabel"
+                      class="h-8 w-8 rounded-full border border-border-warm bg-white text-sm text-forest-900 disabled:opacity-30"
+                    >
+                      ↓
+                    </button>
+                    <button
+                      type="button"
+                      (click)="removeAt(child(path, f.key), i)"
+                      [attr.aria-label]="'Supprimer ' + f.itemLabel"
+                      class="rounded-full border border-[#B2453B] px-3 py-1 text-xs font-semibold text-[#B2453B]"
+                    >
+                      Supprimer
+                    </button>
+                  </span>
+                }
               </div>
               <ng-container
                 [ngTemplateOutlet]="fieldsTpl"
@@ -129,13 +131,15 @@
               />
             </div>
           }
-          <button
-            type="button"
-            (click)="addItem(child(path, f.key), f.fields)"
-            class="w-fit rounded-full border border-dashed border-accent-500 px-5 py-2 text-sm font-semibold text-accent-800"
-          >
-            + Ajouter {{ f.itemLabel }}
-          </button>
+          @if (!f.fixed) {
+            <button
+              type="button"
+              (click)="addItem(child(path, f.key), f.fields)"
+              class="w-fit rounded-full border border-dashed border-accent-500 px-5 py-2 text-sm font-semibold text-accent-800"
+            >
+              + Ajouter {{ f.itemLabel }}
+            </button>
+          }
         </div>
       }
       @case ('strings') {

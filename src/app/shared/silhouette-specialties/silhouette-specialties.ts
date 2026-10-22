@@ -1,7 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Spotlight } from '../spotlight';
-import { SPECIALTIES } from '../../core/specialties';
+import { Specialties } from '../../core/services/specialties';
 
 /**
  * La silhouette du logo avec les glandes qui s'allument tour à tour, à côté de la liste
@@ -23,5 +23,5 @@ export class SilhouetteSpecialties {
   /** « dark » : version de l'accueil (fond prune, phrase de présentation et flèche sur chaque ligne). */
   readonly variant = input<'light' | 'dark'>('light');
 
-  readonly rows = SPECIALTIES;
+  readonly rows = inject(Specialties).list;
 }

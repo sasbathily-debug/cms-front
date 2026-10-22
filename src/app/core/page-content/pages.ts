@@ -7,6 +7,7 @@ import { CONTACT } from './defs/contact';
 import { ACCUEIL } from './defs/accueil';
 import { FAQ_PAGE } from './defs/faq';
 import { CONSEILS_SANTE } from './defs/conseils-sante';
+import { SPECIALITES } from './defs/specialites';
 
 /** Toutes les pages dont le contenu se modifie depuis l'admin. Pour en ajouter une : sa définition, puis une ligne ici. */
 export const PAGES = [
@@ -18,6 +19,7 @@ export const PAGES = [
   ACCUEIL,
   FAQ_PAGE,
   CONSEILS_SANTE,
+  SPECIALITES,
 ] as PageDef<object>[];
 
 export function pageBySlug(slug: string): PageDef<object> | undefined {

@@ -55,7 +55,7 @@
       {{ intro() }}
     </p>
     <div class="mt-1 flex flex-col gap-2.5">
-      @for (row of rows; track row.key) {
+      @for (row of rows(); track row.key) {
         <a
           [routerLink]="row.route"
           [class]="

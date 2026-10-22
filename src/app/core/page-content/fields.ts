@@ -9,6 +9,8 @@ export type Field =
       itemLabel: string;
       /** Champ dont le texte sert de titre à chaque bloc dans l'admin (par défaut, le premier champ texte). */
       titleKey?: string;
+      /** Liste à nombre d'éléments fixe : on modifie les blocs, mais on ne peut ni en ajouter, ni en supprimer, ni les déplacer. */
+      fixed?: boolean;
       fields: Field[];
       hint?: string;
     }

@@ -24,7 +24,7 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { AvailabilityService } from '../../../core/services/availability';
 import { SiteSettings } from '../../../core/services/site-settings';
-import { SPECIALTIES } from '../../../core/specialties';
+import { Specialties } from '../../../core/services/specialties';
 
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
@@ -51,7 +51,7 @@ export class HomeMobile implements OnInit {
   readonly faq = computed(() =>
     this.siteFaq.homeItems().map((item, i) => ({ ...item, open: this.openFaq().has(i) })),
   );
-  readonly rows = SPECIALTIES;
+  readonly rows = inject(Specialties).list;
 
   protected readonly c = inject(PageContent).use(ACCUEIL);
   readonly heroWords = computed(() =>

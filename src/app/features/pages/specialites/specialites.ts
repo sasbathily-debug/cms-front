@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
-import { SPECIALTIES } from '../../../core/specialties';
+import { Specialties } from '../../../core/services/specialties';
 
 @Component({
   selector: 'app-specialites',
@@ -11,5 +11,7 @@ import { SPECIALTIES } from '../../../core/specialties';
   templateUrl: './specialites.html',
 })
 export class Specialites {
-  readonly specialties = SPECIALTIES;
+  private readonly all = inject(Specialties);
+  protected readonly c = this.all.content;
+  readonly specialties = this.all.list;
 }
