@@ -8,6 +8,8 @@ import { AvailabilityService } from '../../../core/services/availability';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
 import { Auth } from '../../../core/services/auth';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
+import { PageContent } from '../../../core/services/page-content';
+import { RENDEZ_VOUS } from '../../../core/page-content/defs/rendez-vous';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { SiteSettings } from '../../../core/services/site-settings';
 
@@ -49,19 +51,7 @@ export class RendezVous implements OnInit {
   readonly confirmedLabel = signal('');
   readonly errorMessage = signal<string | null>(null);
 
-  readonly etapes = [
-    {
-      n: '1',
-      titre: 'Choisissez',
-      texte: 'un motif, un jour et une heure parmi les créneaux libres.',
-    },
-    { n: '2', titre: 'Vérifiez', texte: 'vos coordonnées, déjà remplies depuis votre compte.' },
-    {
-      n: '3',
-      titre: 'Confirmez',
-      texte: 'et recevez votre confirmation. Un rappel vous est envoyé avant le rendez-vous.',
-    },
-  ];
+  protected readonly c = inject(PageContent).use(RENDEZ_VOUS);
 
   readonly form = this.fb.group({
     fullName: ['', Validators.required],

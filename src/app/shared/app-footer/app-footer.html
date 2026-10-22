@@ -121,10 +121,8 @@
     </div>
 
     <div class="flex flex-wrap items-end justify-between gap-10">
-      <p class="m-0 max-w-[460px] text-sm leading-[1.7] text-[#B5A9B8]">
-        Dr Aïssatou Mamadou Fall, médecin endocrinologue, diabétologue et nutritionniste.<br />
-        Inscrite à l'Ordre des médecins du Sénégal, n° [numéro d'inscription].<br />
-        [Mention légale et autorisation d'exercer, à confirmer.]
+      <p class="m-0 max-w-[460px] whitespace-pre-line text-sm leading-[1.7] text-[#B5A9B8]">
+        {{ c().mentions.texte }}
       </p>
       <img
         src="/logo/logo-full-light.png"
@@ -137,9 +135,7 @@
   <div
     class="mx-auto mt-14 flex max-w-[1160px] flex-wrap justify-between gap-4 border-t border-white/15 pb-7 pt-6"
   >
-    <span class="text-[13px] text-[#B5A9B8]"
-      >© {{ year }} Dr Aïssatou Mamadou Fall. Tous droits réservés.</span
-    >
+    <span class="text-[13px] text-[#B5A9B8]">© {{ year }} {{ c().bas.copyright }}</span>
     <span class="text-[13px] text-[#B5A9B8]"
       >Site réalisé par
       <a
@@ -150,8 +146,6 @@
         >Azertica</a
       ></span
     >
-    <span class="text-[13px] text-[#B5A9B8]"
-      >Mentions légales · Politique de confidentialité · Plan du site</span
-    >
+    <span class="text-[13px] text-[#B5A9B8]">{{ c().bas.liens }}</span>
   </div>
 </footer>

@@ -1,6 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiteSettings } from '../../core/services/site-settings';
+import { PageContent } from '../../core/services/page-content';
+import { PIED_DE_PAGE } from '../../core/page-content/defs/pied-de-page';
 import { OpeningHours } from '../../core/services/opening-hours';
 import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
@@ -29,4 +31,5 @@ export class AppFooter {
     `${this.site.address()}, Sénégal`,
   ]);
   protected readonly hours = inject(OpeningHours);
+  protected readonly c = inject(PageContent).use(PIED_DE_PAGE);
 }

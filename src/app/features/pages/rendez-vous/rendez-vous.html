@@ -5,21 +5,20 @@
         class="flex min-w-0 flex-[1_1_420px] flex-col justify-between gap-10 rounded-[32px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] px-6 py-10 text-white sm:rounded-[40px] sm:px-12 sm:py-14"
       >
         <div class="flex flex-col gap-[26px]">
-          <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]"
-            >PRENDRE RENDEZ-VOUS</span
-          >
+          <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+            c().hero.kicker
+          }}</span>
           <h1
             class="m-0 text-balance font-display text-[2.4rem] font-bold leading-none tracking-[-0.035em] text-white sm:text-6xl"
           >
-            Réservez en trois minutes.
+            {{ c().hero.titre }}
           </h1>
           <p class="m-0 text-[17px] leading-[1.65] text-[#E8DACE] sm:text-lg">
-            Choisissez un créneau libre, vérifiez vos coordonnées et confirmez. Pour modifier ou
-            annuler un rendez-vous, contactez le cabinet.
+            {{ c().hero.intro }}
           </p>
         </div>
         <ol class="m-0 flex list-none flex-col p-0">
-          @for (e of etapes; track e.n) {
+          @for (e of c().etapes; track $index) {
             <li class="flex items-start gap-[18px] border-t border-white/15 py-5">
               <span
                 class="shrink-0 font-display text-[40px] font-bold leading-[0.95] text-[#F1C99B]"
@@ -32,9 +31,7 @@
           }
         </ol>
         <div class="flex flex-col gap-3 rounded-3xl bg-white/[0.08] p-6">
-          <span class="font-display text-[17px] font-semibold"
-            >Vous préférez nous écrire ou appeler ?</span
-          >
+          <span class="font-display text-[17px] font-semibold">{{ c().aide.titre }}</span>
           <span class="text-[14.5px] leading-relaxed text-[#E8DACE]"
             >{{ site.phone() }}, {{ openingHours.sentence() }}.</span
           >
@@ -79,11 +76,10 @@
               </svg>
             </div>
             <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900">
-              Connectez-vous pour réserver
+              {{ c().connexion.titre }}
             </h2>
             <p class="m-0 max-w-[420px] text-[15px] leading-relaxed text-ink-600">
-              Un compte nous permet de suivre votre demande, de vous prévenir par e-mail à chaque
-              étape et de retrouver l'historique de vos rendez-vous. Il se crée en une minute.
+              {{ c().connexion.texte }}
             </p>
             <div class="flex flex-wrap gap-3">
               <a
@@ -103,7 +99,7 @@
         } @else if (!submitted()) {
           <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
             <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-forest-900">
-              Votre rendez-vous
+              {{ c().formulaire.titre }}
             </h2>
 
             <fieldset class="m-0 flex flex-col gap-2.5 border-0 p-0">
@@ -202,10 +198,10 @@
               [disabled]="submitting()"
               class="rounded-full bg-accent-500 px-7 py-[18px] text-center font-display text-[17px] font-bold text-forest-900 transition hover:bg-accent-600 disabled:opacity-50"
             >
-              {{ submitting() ? 'Confirmation…' : 'Confirmer le rendez-vous' }}
+              {{ submitting() ? 'Confirmation…' : c().formulaire.bouton }}
             </button>
             <p class="m-0 text-center text-[13px] leading-relaxed text-ink-600">
-              Vos données servent uniquement à gérer votre rendez-vous.
+              {{ c().formulaire.note }}
             </p>
           </form>
         } @else {
@@ -226,13 +222,14 @@
                 />
               </svg>
               <span class="text-[14.5px] leading-normal text-[#1F4D36]">
-                <strong class="font-display text-[17px] text-[#14532D]">Rendez-vous confirmé</strong
+                <strong class="font-display text-[17px] text-[#14532D]">{{
+                  c().confirmation.titre
+                }}</strong
                 ><br />{{ confirmedLabel() }}
               </span>
             </div>
             <p class="m-0 max-w-[420px] text-[15px] leading-relaxed text-ink-600">
-              Votre créneau est réservé. Vous recevrez un rappel avant le rendez-vous et vous
-              retrouverez l'historique dans votre espace patient.
+              {{ c().confirmation.texte }}
             </p>
             <div class="flex flex-wrap gap-3">
               <a
