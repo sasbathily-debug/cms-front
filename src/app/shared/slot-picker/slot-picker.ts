@@ -17,6 +17,11 @@ const MONTH_FORMATTER = new Intl.DateTimeFormat('fr-FR', { month: 'short' });
   templateUrl: './slot-picker.html',
 })
 export class SlotPicker {
+  /** Les horaires apparaissent en cascade, un par un (plafonné pour ne pas faire attendre). */
+  protected delay(index: number): number {
+    return Math.min(index, 10) * 40;
+  }
+
   readonly slots = input.required<AvailableSlotDto[]>();
   readonly loading = input(false);
   readonly initialDate = input<string | null>(null);

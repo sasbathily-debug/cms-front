@@ -57,11 +57,12 @@
       <p class="text-sm text-ink-600">Aucun créneau ce jour-là.</p>
     } @else {
       <div class="grid grid-cols-3 gap-2 sm:grid-cols-4">
-        @for (time of timesForSelectedDate(); track time) {
+        @for (time of timesForSelectedDate(); track selectedDate() + time; let i = $index) {
           <button
             type="button"
             (click)="selectTime(time)"
-            class="rounded-[14px] border px-1 py-3 text-[14.5px] font-medium tabular-nums transition"
+            [style.animation-delay.ms]="delay(i)"
+            class="slot-in rounded-[14px] border px-1 py-3 text-[14.5px] font-medium tabular-nums transition"
             [class]="
               selectedTime() === time
                 ? 'slot-selected border-forest-900 bg-forest-900 text-white'

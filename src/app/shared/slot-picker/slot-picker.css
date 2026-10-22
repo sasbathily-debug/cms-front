@@ -1,0 +1,15 @@
+/* Les horaires d'un jour apparaissent en cascade. */
+.slot-in {
+  animation: slot-in 0.3s ease-out both;
+}
+@keyframes slot-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot-in {
+    animation: none;
+  }
+}
