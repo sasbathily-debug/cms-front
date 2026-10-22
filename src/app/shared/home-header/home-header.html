@@ -1,7 +1,5 @@
-<header class="absolute inset-x-0 top-0 z-50" (keydown.escape)="closeAll()">
-  <div
-    class="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-10 lg:py-6"
-  >
+<header [class]="headerClass()" (keydown.escape)="closeAll()">
+  <div [class]="innerClass()">
     <a routerLink="/" class="flex shrink-0 items-center gap-3 text-white" (click)="closeAll()">
       <span
         class="flex h-[46px] w-[46px] shrink-0 items-center justify-center overflow-hidden rounded-[14px] bg-accent-500"
@@ -22,18 +20,16 @@
               [routerLink]="tile.route"
               (pointerdown)="tilePointerDown($event, tile.key)"
               (click)="tileClick($event, tile)"
-              class="flex h-[74px] w-24 flex-col justify-between rounded-xl border border-white/35 bg-[rgba(20,11,25,0.55)] px-3 py-2.5 text-white backdrop-blur-sm transition hover:border-accent-500 hover:bg-[rgba(20,11,25,0.8)]"
+              [class]="tileClass(tile)"
             >
               <span class="flex items-start justify-between">
-                <span class="font-display text-[22px] font-bold leading-none">{{ tile.sym }}</span>
+                <span [class]="symClass()">{{ tile.sym }}</span>
                 <span class="text-[11px] text-[#D8C9BB]">{{ tile.count }}</span>
               </span>
-              <span class="text-[12.5px] font-medium">{{ tile.label }}</span>
+              <span [class]="labelClass()">{{ tile.label }}</span>
             </a>
             @if (tile.group && openGroup() === tile.key) {
-              <div
-                class="absolute left-1/2 top-full z-50 -mt-7 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 pt-7"
-              >
+              <div [class]="panelClass()">
                 <div
                   class="flex gap-3 rounded-[24px] border border-border-warm bg-white p-3 shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
                 >
@@ -116,11 +112,7 @@
           </div>
         }
       </nav>
-      <a
-        routerLink="/rendez-vous"
-        class="flex h-[74px] items-center whitespace-nowrap rounded-[14px] bg-accent-500 px-6 font-display text-[15px] font-bold text-[#140B19] transition hover:bg-accent-600"
-        >Prendre rendez-vous</a
-      >
+      <a routerLink="/rendez-vous" [class]="ctaClass()">Prendre rendez-vous</a>
     </div>
 
     <button

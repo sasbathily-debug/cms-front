@@ -1,4 +1,12 @@
-import { Component, OnDestroy, afterNextRender, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  afterNextRender,
+  computed,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
@@ -16,7 +24,11 @@ interface Tile {
 
 const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', patients: 'Pa' };
 
-/** En-tête de l'accueil : des tuiles (comme un tableau périodique) posées sur la photo. */
+/**
+ * En-tête à tuiles (comme un tableau périodique), commun à toutes les pages publiques.
+ * `overlay` : posé sur la photo du haut de l'accueil ; `bar` : barre sombre fixe, un peu plus compacte,
+ * pour les autres pages (la tuile de la section en cours est mise en évidence).
+ */
 @Component({
   selector: 'app-home-header',
   imports: [RouterLink, MobileMenu],
@@ -26,6 +38,54 @@ export class HomeHeader implements OnDestroy {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
   private readonly navSub: Subscription;
+
+  readonly variant = input<'overlay' | 'bar'>('overlay');
+  private readonly bar = computed(() => this.variant() === 'bar');
+  readonly currentUrl = signal(this.router.url);
+
+  readonly headerClass = computed(() =>
+    this.bar()
+      ? 'sticky top-0 z-50 border-b border-white/10 bg-forest-900'
+      : 'absolute inset-x-0 top-0 z-50',
+  );
+  readonly innerClass = computed(
+    () =>
+      'mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10 ' +
+      (this.bar() ? 'py-3' : 'py-4 lg:py-6'),
+  );
+  readonly symClass = computed(
+    () => 'font-display font-bold leading-none ' + (this.bar() ? 'text-[18px]' : 'text-[22px]'),
+  );
+  readonly labelClass = computed(
+    () => (this.bar() ? 'whitespace-nowrap text-[11px]' : 'text-[12.5px]') + ' font-medium',
+  );
+  readonly ctaClass = computed(
+    () =>
+      'flex items-center whitespace-nowrap rounded-[14px] bg-accent-500 px-6 font-display text-[15px] font-bold text-[#140B19] transition hover:bg-accent-600 ' +
+      (this.bar() ? 'h-[60px]' : 'h-[74px]'),
+  );
+  readonly panelClass = computed(
+    () =>
+      'absolute left-1/2 top-full z-50 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 ' +
+      (this.bar() ? '-mt-3 pt-3' : '-mt-7 pt-7'),
+  );
+
+  tileClass(tile: Tile): string {
+    const size = this.bar() ? 'h-[60px] w-[96px] px-2 py-2' : 'h-[74px] w-24 px-3 py-2.5';
+    const state = this.isActive(tile)
+      ? 'border-accent-500 bg-[rgba(20,11,25,0.85)]'
+      : 'border-white/35 bg-[rgba(20,11,25,0.55)]';
+    return `flex flex-col justify-between rounded-xl border ${size} ${state} text-white backdrop-blur-sm transition hover:border-accent-500 hover:bg-[rgba(20,11,25,0.8)]`;
+  }
+
+  /** La tuile de la section où l'on se trouve. */
+  isActive(tile: Tile): boolean {
+    const url = this.currentUrl().split(/[?#]/)[0];
+    if (tile.group) {
+      return tile.group.links.some((l) => url === l.route || url.startsWith(l.route + '/'));
+    }
+    return url === tile.route;
+  }
 
   readonly openGroup = signal<string | null>(null);
   readonly mobileOpen = signal(false);
@@ -72,7 +132,10 @@ export class HomeHeader implements OnDestroy {
     afterNextRender(() => preloadNavImages());
     this.navSub = this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(() => this.closeAll());
+      .subscribe((event) => {
+        this.currentUrl.set(event.urlAfterRedirects);
+        this.closeAll();
+      });
   }
 
   ngOnDestroy(): void {
