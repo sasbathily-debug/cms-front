@@ -70,8 +70,21 @@
 }
 
 <ng-template #fieldsTpl let-fields let-path="path">
-  @for (f of fields; track f.key) {
+  @for (f of fields; track $index) {
     @switch (f.type) {
+      @case ('section') {
+        <fieldset
+          class="m-0 flex flex-col gap-4 rounded-2xl border border-border-warm bg-white p-5 sm:p-6"
+        >
+          <legend class="px-1 font-display text-[15px] font-bold text-forest-900">
+            {{ f.label }}
+          </legend>
+          <ng-container
+            [ngTemplateOutlet]="fieldsTpl"
+            [ngTemplateOutletContext]="{ $implicit: f.fields, path: path }"
+          />
+        </fieldset>
+      }
       @case ('group') {
         <fieldset
           class="m-0 flex flex-col gap-4 rounded-2xl border border-border-warm bg-white p-5 sm:p-6"

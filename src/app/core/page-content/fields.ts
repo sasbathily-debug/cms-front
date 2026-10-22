@@ -14,7 +14,9 @@ export type Field =
       fields: Field[];
       hint?: string;
     }
-  | { key: string; label: string; type: 'group'; fields: Field[]; hint?: string };
+  | { key: string; label: string; type: 'group'; fields: Field[]; hint?: string }
+  /** Cadre visuel qui regroupe des champs sans ajouter de niveau dans le contenu (pas de clé propre). */
+  | { key?: undefined; label: string; type: 'section'; fields: Field[]; hint?: string };
 
 /** Une page modifiable : ses champs pour l'admin et ses textes d'origine (ceux du site tant que rien n'est saisi). */
 export interface PageDef<T extends object = Record<string, unknown>> {
@@ -88,6 +90,9 @@ export function emptyItem(fields: Field[]): Record<string, Json> {
         break;
       case 'group':
         item[field.key] = emptyItem(field.fields);
+        break;
+      case 'section':
+        Object.assign(item, emptyItem(field.fields));
         break;
       default:
         item[field.key] = '';

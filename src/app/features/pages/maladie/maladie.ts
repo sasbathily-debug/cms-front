@@ -8,9 +8,11 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { MaladieArt } from '../../../shared/maladie-art/maladie-art';
 import { AnneauVerre } from '../../../shared/anneau-verre/anneau-verre';
-import { MALADIES, MaladieContent } from './maladies.data';
+import { MaladieContent } from './maladies.data';
+import { PageContent } from '../../../core/services/page-content';
+import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
 
-/** Page d'une maladie (diabète, thyroïde, obésité) : le contenu vient de `maladies.data.ts`. */
+/** Page d'une maladie (diabète, thyroïde, obésité) : textes d'origine dans `maladies.data.ts`, modifiables depuis l'admin. */
 @Component({
   selector: 'app-maladie',
   imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt, AnneauVerre],
@@ -28,7 +30,12 @@ export class Maladie {
     },
   );
 
-  readonly content = computed<MaladieContent | null>(() => MALADIES[this.slug()] ?? null);
+  /** Les textes de chaque maladie : ceux du site, remplacés par ce que l'admin a saisi. */
+  private readonly contents = Object.fromEntries(
+    Object.entries(MALADIE_DEFS).map(([slug, def]) => [slug, inject(PageContent).use(def)]),
+  );
+
+  readonly content = computed<MaladieContent | null>(() => this.contents[this.slug()]?.() ?? null);
 
   readonly crumbs = computed(() => [
     { label: 'Accueil', route: '/' },
