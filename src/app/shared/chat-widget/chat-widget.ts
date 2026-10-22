@@ -48,6 +48,20 @@ export class ChatWidget {
   private readonly list = viewChild<ElementRef<HTMLElement>>('list');
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
 
+  /** Icône de la bulle : une bulle de dialogue empilée en couches pour lui donner de l'épaisseur. */
+  protected readonly bubble =
+    'M8 7h24a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H18l-9 7v-7H8a5 5 0 0 1-5-5V12a5 5 0 0 1 5-5z';
+  protected readonly layers = [
+    { z: -4, fill: '#7A430F' },
+    { z: -3, fill: '#8A4C13' },
+    { z: -2, fill: '#9A5518' },
+    { z: -1, fill: '#AE6320' },
+    { z: 0, fill: '#C7702A' },
+    { z: 1, fill: '#C7702A' },
+    { z: 2, fill: '#D07A33' },
+    { z: 3, fill: '#D88338' },
+  ];
+
   protected readonly maxLength = MAX_LENGTH;
   protected readonly opened = signal(false);
   protected readonly loading = signal(false);
