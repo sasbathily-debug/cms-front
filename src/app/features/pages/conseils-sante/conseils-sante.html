@@ -109,7 +109,8 @@
     <div class="mx-auto grid max-w-[1160px] gap-6 md:grid-cols-2 lg:grid-cols-3">
       @for (a of articles(); track a.title) {
         <article
-          class="flex flex-col overflow-hidden rounded-[28px] border border-border-warm bg-white"
+          appSpotlight
+          class="relative flex flex-col overflow-hidden rounded-[28px] border border-border-warm bg-white"
         >
           <div
             class="h-[200px] bg-cover bg-center"

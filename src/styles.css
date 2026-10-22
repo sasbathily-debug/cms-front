@@ -395,3 +395,24 @@ button[class*='rounded-full']:not(:disabled):active {
     animation: none;
   }
 }
+
+/* Halo qui suit la souris (directive appSpotlight) : un voile, sans aucun déplacement de l'élément. */
+.spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+  background: radial-gradient(
+    200px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(224, 135, 63, 0.2),
+    transparent 70%
+  );
+}
+@media (hover: hover) {
+  .spot:hover::after {
+    opacity: 1;
+  }
+}

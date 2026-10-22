@@ -2,6 +2,7 @@ import { RouterLink } from '@angular/router';
 import { Component, computed, signal } from '@angular/core';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
+import { Spotlight } from '../../../shared/spotlight';
 
 interface Article {
   category: string;
@@ -61,7 +62,7 @@ const ARTICLES: Article[] = [
 
 @Component({
   selector: 'app-conseils-sante',
-  imports: [RouterLink, PublicPage, CtaBand],
+  imports: [RouterLink, PublicPage, CtaBand, Spotlight],
   templateUrl: './conseils-sante.html',
 })
 export class ConseilsSante {

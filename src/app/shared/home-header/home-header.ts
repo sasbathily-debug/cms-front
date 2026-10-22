@@ -18,6 +18,7 @@ import {
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
+import { Spotlight } from '../spotlight';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup, preloadNavImages } from '../../core/site-nav';
 
 interface Tile {
@@ -38,7 +39,7 @@ const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', pati
  */
 @Component({
   selector: 'app-home-header',
-  imports: [RouterLink, MobileMenu],
+  imports: [RouterLink, MobileMenu, Spotlight],
   templateUrl: './home-header.html',
 })
 export class HomeHeader implements OnDestroy {

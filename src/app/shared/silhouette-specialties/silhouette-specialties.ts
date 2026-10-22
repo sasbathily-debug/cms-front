@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Spotlight } from '../spotlight';
 import { SPECIALTIES } from '../../core/specialties';
 
 /**
@@ -8,7 +9,7 @@ import { SPECIALTIES } from '../../core/specialties';
  */
 @Component({
   selector: 'app-silhouette-specialties',
-  imports: [RouterLink],
+  imports: [RouterLink, Spotlight],
   styleUrl: './silhouette-specialties.css',
   templateUrl: './silhouette-specialties.html',
 })

@@ -38,6 +38,7 @@
                       @for (card of tile.group.cards; track card.title) {
                         <a
                           [routerLink]="card.route"
+                          appSpotlight
                           class="group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-forest-900"
                         >
                           <img
