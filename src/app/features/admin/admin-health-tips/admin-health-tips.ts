@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SiteContentService } from '../../../core/services/site-content';
+import { FileUploadService } from '../../../core/services/file-upload';
 import { HealthTipDto } from '../../../core/models/site-content.models';
 import { HEALTH_ICON_NAMES, HealthIcon } from '../../../shared/health-icon/health-icon';
 
@@ -13,11 +14,15 @@ import { HEALTH_ICON_NAMES, HealthIcon } from '../../../shared/health-icon/healt
 export class AdminHealthTips implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly siteContentService = inject(SiteContentService);
+  private readonly fileUploadService = inject(FileUploadService);
 
   readonly iconNames = HEALTH_ICON_NAMES;
+  /** Thèmes proposés ; on peut aussi en saisir un autre. */
+  readonly categorySuggestions = ['Diabète', 'Thyroïde', 'Nutrition', 'Ramadan'];
   readonly tips = signal<HealthTipDto[]>([]);
   readonly loading = signal(true);
   readonly saving = signal(false);
+  readonly uploadingPhoto = signal(false);
   readonly editingId = signal<string | null>(null);
   readonly deletingId = signal<string | null>(null);
 
@@ -26,15 +31,34 @@ export class AdminHealthTips implements OnInit {
     body: ['', [Validators.required]],
     icon: [''],
     displayOrder: [0, [Validators.required]],
+    category: [''],
+    readingMinutes: [null as number | null, [Validators.min(1), Validators.max(120)]],
+    photoUrl: [''],
+    published: [true],
   });
 
   ngOnInit(): void {
     this.refresh();
   }
 
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    this.uploadingPhoto.set(true);
+    this.fileUploadService.upload(file).subscribe({
+      next: (res) => {
+        this.form.patchValue({ photoUrl: res.url });
+        this.uploadingPhoto.set(false);
+      },
+      error: () => this.uploadingPhoto.set(false),
+    });
+    input.value = '';
+  }
+
   refresh(): void {
     this.loading.set(true);
-    this.siteContentService.getHealthTips().subscribe({
+    this.siteContentService.getHealthTipsAdmin().subscribe({
       next: (tips) => {
         this.tips.set(tips);
         this.loading.set(false);
@@ -50,12 +74,25 @@ export class AdminHealthTips implements OnInit {
       body: tip.body,
       icon: tip.icon ?? '',
       displayOrder: tip.displayOrder,
+      category: tip.category ?? '',
+      readingMinutes: tip.readingMinutes,
+      photoUrl: tip.photoUrl ?? '',
+      published: tip.published,
     });
   }
 
   cancelEdit(): void {
     this.editingId.set(null);
-    this.form.reset({ title: '', body: '', icon: '', displayOrder: 0 });
+    this.form.reset({
+      title: '',
+      body: '',
+      icon: '',
+      displayOrder: 0,
+      category: '',
+      readingMinutes: null,
+      photoUrl: '',
+      published: true,
+    });
   }
 
   submit(): void {
@@ -71,6 +108,10 @@ export class AdminHealthTips implements OnInit {
       body: value.body!,
       icon: value.icon || null,
       displayOrder: value.displayOrder!,
+      category: value.category?.trim() || null,
+      readingMinutes: value.readingMinutes ?? null,
+      photoUrl: value.photoUrl?.trim() || null,
+      published: value.published ?? true,
     };
 
     const editingId = this.editingId();

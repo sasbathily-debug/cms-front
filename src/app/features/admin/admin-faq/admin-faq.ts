@@ -23,7 +23,18 @@ export class AdminFaq implements OnInit {
     question: ['', [Validators.required]],
     answer: ['', [Validators.required]],
     displayOrder: [0, [Validators.required]],
+    category: [''],
+    published: [true],
   });
+
+  /** Thèmes de la page FAQ ; on peut aussi en saisir un autre. */
+  readonly categorySuggestions = [
+    'Rendez-vous et compte',
+    'La consultation',
+    'Tarifs et paiement',
+    'Vos questions de santé',
+    'Vos données et votre confidentialité',
+  ];
 
   ngOnInit(): void {
     this.refresh();
@@ -31,7 +42,7 @@ export class AdminFaq implements OnInit {
 
   refresh(): void {
     this.loading.set(true);
-    this.siteContentService.getFaq().subscribe({
+    this.siteContentService.getFaqAdmin().subscribe({
       next: (items) => {
         this.items.set(items);
         this.loading.set(false);
@@ -46,12 +57,14 @@ export class AdminFaq implements OnInit {
       question: item.question,
       answer: item.answer,
       displayOrder: item.displayOrder,
+      category: item.category ?? '',
+      published: item.published,
     });
   }
 
   cancelEdit(): void {
     this.editingId.set(null);
-    this.form.reset({ question: '', answer: '', displayOrder: 0 });
+    this.form.reset({ question: '', answer: '', displayOrder: 0, category: '', published: true });
   }
 
   submit(): void {
@@ -66,6 +79,8 @@ export class AdminFaq implements OnInit {
       question: value.question!,
       answer: value.answer!,
       displayOrder: value.displayOrder!,
+      category: value.category?.trim() || null,
+      published: value.published ?? true,
     };
 
     const editingId = this.editingId();

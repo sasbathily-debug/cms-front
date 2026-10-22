@@ -10,29 +10,62 @@
     </h2>
     <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-4">
       <div>
-        <label for="admin-faq-question" class="mb-1.5 block text-xs font-semibold text-forest-900">Question</label>
-        <input id="admin-faq-question"
+        <label for="admin-faq-question" class="mb-1.5 block text-xs font-semibold text-forest-900"
+          >Question</label
+        >
+        <input
+          id="admin-faq-question"
           type="text"
           formControlName="question"
           class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
         />
       </div>
       <div>
-        <label for="admin-faq-answer" class="mb-1.5 block text-xs font-semibold text-forest-900">Réponse</label>
-        <textarea id="admin-faq-answer"
+        <label for="admin-faq-answer" class="mb-1.5 block text-xs font-semibold text-forest-900"
+          >Réponse</label
+        >
+        <textarea
+          id="admin-faq-answer"
           formControlName="answer"
           rows="3"
           class="w-full resize-none rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
         ></textarea>
       </div>
+      <div>
+        <label for="admin-faq-category" class="mb-1.5 block text-xs font-semibold text-forest-900"
+          >Thème</label
+        >
+        <input
+          id="admin-faq-category"
+          type="text"
+          list="admin-faq-categories"
+          formControlName="category"
+          placeholder="Rendez-vous et compte…"
+          class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+        />
+        <datalist id="admin-faq-categories">
+          @for (c of categorySuggestions; track c) {
+            <option [value]="c"></option>
+          }
+        </datalist>
+      </div>
       <div class="w-32">
-        <label for="admin-faq-displayOrder" class="mb-1.5 block text-xs font-semibold text-forest-900">Ordre</label>
-        <input id="admin-faq-displayOrder"
+        <label
+          for="admin-faq-displayOrder"
+          class="mb-1.5 block text-xs font-semibold text-forest-900"
+          >Ordre</label
+        >
+        <input
+          id="admin-faq-displayOrder"
           type="number"
           formControlName="displayOrder"
           class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
         />
       </div>
+      <label class="flex items-center gap-2.5 text-sm text-forest-900">
+        <input type="checkbox" formControlName="published" class="h-4 w-4 accent-accent-500" />
+        Publiée sur le site (décochez pour garder un brouillon)
+      </label>
       <div class="flex gap-2">
         <button
           type="submit"
@@ -42,7 +75,11 @@
           {{ saving() ? 'Enregistrement...' : editingId() ? 'Mettre à jour' : 'Ajouter' }}
         </button>
         @if (editingId()) {
-          <button type="button" (click)="cancelEdit()" class="rounded-full border border-border-warm px-6 py-2.5 text-sm font-semibold text-ink-600">
+          <button
+            type="button"
+            (click)="cancelEdit()"
+            class="rounded-full border border-border-warm px-6 py-2.5 text-sm font-semibold text-ink-600"
+          >
             Annuler
           </button>
         }
@@ -53,7 +90,9 @@
   @if (loading()) {
     <div class="flex flex-col gap-3">
       @for (i of [0, 1, 2]; track i) {
-        <div class="flex items-start justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5">
+        <div
+          class="flex items-start justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5"
+        >
           <div class="min-w-[200px] flex-1">
             <div class="skeleton mb-2 h-4 w-2/3 rounded"></div>
             <div class="skeleton h-3.5 w-full rounded"></div>
@@ -68,13 +107,35 @@
   } @else {
     <div class="flex flex-col gap-3">
       @for (item of items(); track item.id) {
-        <div class="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5">
+        <div
+          class="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5"
+        >
           <div class="min-w-[200px] flex-1">
-            <div class="font-display text-sm font-bold text-forest-900">{{ item.question }}</div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-display text-sm font-bold text-forest-900">{{
+                item.question
+              }}</span>
+              @if (!item.published) {
+                <span
+                  class="rounded-full bg-[#F1E4D6] px-2.5 py-0.5 text-[11px] font-semibold text-[#7A430F]"
+                  >Brouillon</span
+                >
+              }
+              @if (item.category) {
+                <span
+                  class="rounded-full border border-border-warm px-2.5 py-0.5 text-[11px] text-ink-600"
+                  >{{ item.category }}</span
+                >
+              }
+            </div>
             <p class="mt-1 text-[13.5px] text-ink-600">{{ item.answer }}</p>
           </div>
           <div class="flex shrink-0 gap-2">
-            <button type="button" (click)="edit(item)" class="rounded-full border border-border-warm px-4 py-2 text-xs font-semibold text-forest-900">
+            <button
+              type="button"
+              (click)="edit(item)"
+              class="rounded-full border border-border-warm px-4 py-2 text-xs font-semibold text-forest-900"
+            >
               Modifier
             </button>
             <button
