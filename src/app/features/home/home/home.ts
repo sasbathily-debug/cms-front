@@ -2,6 +2,7 @@ import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angula
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
+import { OpenNow } from '../../../shared/open-now/open-now';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
@@ -63,7 +64,15 @@ function formatNextSlot(slot: AvailableSlotDto): string {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, PublicPage, SilhouetteSpecialties, OrangeThread, HomeMobile, Parallax],
+  imports: [
+    RouterLink,
+    OpenNow,
+    PublicPage,
+    SilhouetteSpecialties,
+    OrangeThread,
+    HomeMobile,
+    Parallax,
+  ],
   styleUrl: './home.css',
   templateUrl: './home.html',
 })

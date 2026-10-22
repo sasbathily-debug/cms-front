@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ADDRESS_STREET, FOOTER_HOURS, SiteSettings } from '../../core/services/site-settings';
 import { SPECIALTY_LINKS } from '../../core/site-nav';
+import { OpenNow } from '../open-now/open-now';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, OpenNow],
   styleUrl: './app-footer.css',
   templateUrl: './app-footer.html',
 })

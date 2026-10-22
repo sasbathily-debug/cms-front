@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { OpenNow } from '../../../shared/open-now/open-now';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
@@ -12,7 +13,7 @@ const MOTIFS = ['Rendez-vous', "Résultats d'analyses", 'Question sur un traitem
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, RouterLink, PublicPage, PageHero, CtaBand],
+  imports: [ReactiveFormsModule, RouterLink, OpenNow, PublicPage, PageHero, CtaBand],
   templateUrl: './contact.html',
 })
 export class Contact {

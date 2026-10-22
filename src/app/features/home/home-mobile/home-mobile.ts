@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { AvailabilityService } from '../../../core/services/availability';
@@ -39,7 +40,7 @@ const FAQ = [
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
   selector: 'app-home-mobile',
-  imports: [RouterLink, OrangeThread, Parallax],
+  imports: [RouterLink, OpenNow, OrangeThread, Parallax],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
 })

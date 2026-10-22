@@ -1,0 +1,33 @@
+:host {
+  display: inline-block;
+}
+
+.open-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: #b5a9b8;
+}
+
+.open-dot-on {
+  background: #2fb36d;
+  animation: open-breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes open-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(47, 179, 109, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(47, 179, 109, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open-dot-on {
+    animation: none;
+  }
+}
