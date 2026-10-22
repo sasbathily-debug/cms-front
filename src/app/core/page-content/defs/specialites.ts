@@ -33,6 +33,7 @@ export type SpecialitesContent = typeof defaults;
 
 export const SPECIALITES: PageDef<SpecialitesContent> = {
   slug: 'specialites',
+  editable: false,
   title: 'Spécialités',
   route: '/specialites',
   defaults,

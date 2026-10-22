@@ -17,6 +17,7 @@ export class PageContent {
 
   /** Les textes de la page, toujours complets (jamais de champ manquant). */
   use<T extends object>(def: PageDef<T>): Signal<T> {
+    if (def.editable === false) return computed(() => def.defaults);
     this.load(def.slug);
     const saved = this.slot(def.slug);
     return computed(() => mergeContent(def.defaults, saved()));

@@ -141,6 +141,7 @@ const FIELDS: Field[] = [
 function maladie(slug: string, title: string): PageDef<MaladieContent> {
   return {
     slug: `maladie-${slug}`,
+    editable: false,
     title,
     route: `/specialites/${slug}`,
     fields: FIELDS,

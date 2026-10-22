@@ -42,6 +42,7 @@ export type RendezVousContent = typeof defaults;
 
 export const RENDEZ_VOUS: PageDef<RendezVousContent> = {
   slug: 'rendez-vous',
+  editable: false,
   title: 'Prise de rendez-vous',
   route: '/rendez-vous',
   defaults,

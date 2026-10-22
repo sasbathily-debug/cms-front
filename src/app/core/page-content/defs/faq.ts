@@ -41,6 +41,7 @@ const urgenceHint =
 
 export const FAQ_PAGE: PageDef<FaqPageContent> = {
   slug: 'faq',
+  editable: false,
   title: 'Questions fréquentes',
   route: '/faq',
   defaults,

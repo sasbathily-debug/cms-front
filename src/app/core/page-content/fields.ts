@@ -25,6 +25,12 @@ export interface PageDef<T extends object = Record<string, unknown>> {
   title: string;
   /** Adresse de la page sur le site, pour le lien « Voir la page ». */
   route: string;
+  /**
+   * `false` : la page n'est pas modifiable depuis l'admin. Elle affiche toujours ses textes d'origine
+   * (ceux du code) et ne lit rien dans la base : une correction dans le code ne peut pas être masquée
+   * par un ancien texte enregistré.
+   */
+  editable?: boolean;
   fields: Field[];
   defaults: T;
 }

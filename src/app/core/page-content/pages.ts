@@ -12,23 +12,29 @@ import { RENDEZ_VOUS } from './defs/rendez-vous';
 import { PIED_DE_PAGE } from './defs/pied-de-page';
 import { MALADIE_DIABETE, MALADIE_OBESITE, MALADIE_THYROIDE } from './defs/maladies';
 
-/** Toutes les pages dont le contenu se modifie depuis l'admin. Pour en ajouter une : sa définition, puis une ligne ici. */
-export const PAGES = [
+/**
+ * Toutes les pages décrites, modifiables ou non. Une page ajoutée ici apparaît dans l'admin
+ * sauf si sa définition porte `editable: false` (ses textes restent alors dans le code).
+ */
+export const ALL_PAGES = [
+  ACCUEIL,
   A_PROPOS,
   LE_CABINET,
   PREMIERE_CONSULTATION,
   INFOS_PRATIQUES,
   CONTACT,
-  ACCUEIL,
-  FAQ_PAGE,
-  CONSEILS_SANTE,
+  PIED_DE_PAGE,
   SPECIALITES,
   MALADIE_DIABETE,
   MALADIE_THYROIDE,
   MALADIE_OBESITE,
+  FAQ_PAGE,
+  CONSEILS_SANTE,
   RENDEZ_VOUS,
-  PIED_DE_PAGE,
 ] as PageDef<object>[];
+
+/** Les pages que la doctoresse peut modifier depuis l'admin. */
+export const PAGES = ALL_PAGES.filter((page) => page.editable !== false);
 
 export function pageBySlug(slug: string): PageDef<object> | undefined {
   return PAGES.find((page) => page.slug === slug);

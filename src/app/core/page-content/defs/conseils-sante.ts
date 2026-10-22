@@ -36,6 +36,7 @@ export type ConseilsSanteContent = typeof defaults;
 
 export const CONSEILS_SANTE: PageDef<ConseilsSanteContent> = {
   slug: 'conseils-sante',
+  editable: false,
   title: 'Conseils santé (textes de la page)',
   route: '/conseils-sante',
   defaults,
