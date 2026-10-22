@@ -7,6 +7,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { SiteSettings } from '../../../core/services/site-settings';
 import { RouterLink } from '@angular/router';
 import { InView } from '../../../shared/in-view';
 import { PublicPage } from '../../../shared/public-page/public-page';
@@ -19,6 +20,7 @@ import { CtaBand } from '../../../shared/cta-band/cta-band';
   templateUrl: './premiere-consultation.html',
 })
 export class PremiereConsultation {
+  protected readonly site = inject(SiteSettings);
   private readonly destroyRef = inject(DestroyRef);
   private readonly grid = viewChild<ElementRef<HTMLElement>>('grid');
 

@@ -12,7 +12,7 @@
         ou votre poids.
       </p>
       <div class="mt-1.5 flex flex-wrap gap-2.5" role="group" aria-label="Filtrer par thème">
-        @for (category of categories; track category) {
+        @for (category of categories(); track category) {
           <button
             type="button"
             (click)="selected.set(category)"
@@ -120,12 +120,17 @@
           ></div>
           <div class="flex flex-col gap-2.5 p-7">
             <span class="text-xs font-semibold tracking-[0.08em] text-accent-800"
-              >{{ a.category.toUpperCase() }} · {{ a.duration }}</span
-            >
+              >{{ a.category.toUpperCase() }}
+              @if (a.duration) {
+                {{ ' · ' + a.duration }}
+              }
+            </span>
             <h3 class="m-0 font-display text-[22px] font-bold leading-tight text-forest-900">
               {{ a.title }}
             </h3>
-            <p class="m-0 text-[14.5px] leading-[1.65] text-[#5B4F59]">{{ a.text }}</p>
+            <p class="m-0 whitespace-pre-line text-[14.5px] leading-[1.65] text-[#5B4F59]">
+              {{ a.text }}
+            </p>
           </div>
         </article>
       }

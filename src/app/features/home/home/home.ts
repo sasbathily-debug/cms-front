@@ -10,49 +10,14 @@ import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { AvailabilityService } from '../../../core/services/availability';
 import { ADDRESS_STREET, SiteSettings } from '../../../core/services/site-settings';
+import { SiteArticles } from '../../../core/services/site-articles';
+import { SiteFaq } from '../../../core/services/site-faq';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
-
-interface FaqView {
-  question: string;
-  answer: string;
-  open: boolean;
-}
 
 const HERO_TITLE = 'Suivre votre santé hormonale, simplement et dans la durée.';
 const HERO_SUBTITLE =
   "Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer, et un suivi que vous pouvez gérer en ligne.";
-
-/** Texte d'exemple : les passages entre crochets sont à compléter avec la doctoresse. */
-const STATIC_FAQ: Omit<FaqView, 'open'>[] = [
-  {
-    question: 'Comment réserver un rendez-vous ?',
-    answer:
-      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp au +221 77 226 39 06. Vous recevez une confirmation par e-mail et un rappel la veille.",
-  },
-  {
-    question: 'Que dois-je apporter ?',
-    answer:
-      'Vos analyses récentes, vos ordonnances, la liste de vos médicaments et votre carnet de glycémie si vous en avez un.',
-  },
-  {
-    question: 'Faut-il une ordonnance pour consulter ?',
-    answer: '[À confirmer par la doctoresse.]',
-  },
-  {
-    question: 'Quels moyens de paiement acceptez-vous ?',
-    answer: '[Espèces, Wave, Orange Money, assurances : à confirmer.]',
-  },
-  {
-    question: 'Comment annuler ou déplacer un rendez-vous ?',
-    answer: "Depuis votre espace patient ou par téléphone, au moins [24 heures] à l'avance.",
-  },
-  {
-    question: "Que faire en cas d'urgence ?",
-    answer:
-      'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches. [Numéro à indiquer.]',
-  },
-];
 
 function formatNextSlot(slot: AvailableSlotDto): string {
   const d = new Date(`${slot.date}T${slot.time}`);
@@ -100,7 +65,11 @@ export class Home implements OnInit {
   protected readonly site = inject(SiteSettings);
 
   readonly nextSlot = signal<string | null>(null);
-  readonly faq = signal<FaqView[]>(STATIC_FAQ.map((item, i) => ({ ...item, open: i === 0 })));
+  private readonly siteFaq = inject(SiteFaq);
+  private readonly openFaq = signal<ReadonlySet<number>>(new Set([0]));
+  readonly faq = computed(() =>
+    this.siteFaq.homeItems().map((item, i) => ({ ...item, open: this.openFaq().has(i) })),
+  );
 
   readonly mapUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
     'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
@@ -147,19 +116,13 @@ export class Home implements OnInit {
     },
   ];
 
-  readonly articles = [
-    {
-      categorie: 'RAMADAN',
-      titre: 'Ramadan et diabète : bien se préparer',
-      photo: '/img/photo-3.jpg',
-    },
-    { categorie: 'DIABÈTE', titre: 'Comprendre son HbA1c', photo: '/img/photo-1.jpg' },
-    {
-      categorie: 'NUTRITION',
-      titre: 'Manger équilibré avec la cuisine sénégalaise',
-      photo: '/img/photo-2.jpg',
-    },
-  ];
+  private readonly siteArticles = inject(SiteArticles);
+  readonly articles = computed(() =>
+    this.siteArticles
+      .items()
+      .slice(0, 3)
+      .map((a) => ({ categorie: a.category.toUpperCase(), titre: a.title, photo: a.photo })),
+  );
 
   readonly avis = [
     {
@@ -189,8 +152,10 @@ export class Home implements OnInit {
   }
 
   toggleFaq(index: number): void {
-    this.faq.update((list) =>
-      list.map((item, i) => (i === index ? { ...item, open: !item.open } : item)),
-    );
+    this.openFaq.update((open) => {
+      const next = new Set(open);
+      if (!next.delete(index)) next.add(index);
+      return next;
+    });
   }
 }

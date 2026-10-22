@@ -1,64 +1,9 @@
 import { RouterLink } from '@angular/router';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { SiteArticles } from '../../../core/services/site-articles';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { Spotlight } from '../../../shared/spotlight';
-
-interface Article {
-  category: string;
-  duration: string;
-  title: string;
-  text: string;
-  photo: string;
-}
-
-const CATEGORIES = ['Tous', 'Diabète', 'Thyroïde', 'Nutrition', 'Ramadan'];
-
-/** Articles d'exemple : à écrire ou à valider avec la doctoresse avant la mise en ligne. */
-const ARTICLES: Article[] = [
-  {
-    category: 'Diabète',
-    duration: '5 min',
-    title: 'Comprendre son HbA1c',
-    text: 'Ce que mesure ce chiffre, à quelle fréquence le contrôler et comment le lire avec votre médecin.',
-    photo: '/img/photo-3.jpg',
-  },
-  {
-    category: 'Diabète',
-    duration: '4 min',
-    title: 'Surveiller sa glycémie à la maison',
-    text: 'Quand mesurer, comment noter ses résultats et quelles valeurs doivent vous faire réagir.',
-    photo: '/img/photo-1.jpg',
-  },
-  {
-    category: 'Thyroïde',
-    duration: '5 min',
-    title: "Hypothyroïdie : les signes qu'on ne remarque pas",
-    text: 'Fatigue, frilosité, prise de poids : quand ces signaux justifient un bilan thyroïdien.',
-    photo: '/img/photo-3.jpg',
-  },
-  {
-    category: 'Nutrition',
-    duration: '6 min',
-    title: 'Manger équilibré avec la cuisine sénégalaise',
-    text: 'Thiéboudienne, mafé, yassa : adapter les portions et les accompagnements sans renoncer à ses plats.',
-    photo: '/img/photo-2.jpg',
-  },
-  {
-    category: 'Nutrition',
-    duration: '4 min',
-    title: 'Les boissons sucrées, un piège du quotidien',
-    text: 'Jus, sodas, thé sucré : combien de sucre cachent-ils et par quoi les remplacer.',
-    photo: '/img/photo-1.jpg',
-  },
-  {
-    category: 'Diabète',
-    duration: '5 min',
-    title: 'Prendre soin de ses pieds quand on est diabétique',
-    text: 'Les gestes simples à faire chaque jour pour éviter les plaies et les infections.',
-    photo: '/img/photo-2.jpg',
-  },
-];
 
 @Component({
   selector: 'app-conseils-sante',
@@ -66,11 +11,13 @@ const ARTICLES: Article[] = [
   templateUrl: './conseils-sante.html',
 })
 export class ConseilsSante {
-  readonly categories = CATEGORIES;
+  private readonly site = inject(SiteArticles);
+  readonly categories = this.site.categories;
   readonly selected = signal('Tous');
 
   readonly articles = computed(() => {
     const category = this.selected();
-    return category === 'Tous' ? ARTICLES : ARTICLES.filter((a) => a.category === category);
+    const all = this.site.items();
+    return category === 'Tous' ? all : all.filter((a) => a.category === category);
   });
 }

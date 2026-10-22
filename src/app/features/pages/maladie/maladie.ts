@@ -1,4 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
+import { SiteSettings } from '../../../core/services/site-settings';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
@@ -16,6 +17,7 @@ import { MALADIES, MaladieContent } from './maladies.data';
   templateUrl: './maladie.html',
 })
 export class Maladie {
+  protected readonly site = inject(SiteSettings);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 

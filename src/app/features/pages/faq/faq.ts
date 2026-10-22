@@ -3,7 +3,8 @@ import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
-import { FAQ_GROUPS, FaqGroup } from './faq.data';
+import { SiteSettings } from '../../../core/services/site-settings';
+import { SiteFaq } from '../../../core/services/site-faq';
 
 const normalize = (text: string): string => text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
@@ -26,14 +27,16 @@ export class Faq {
     { q: "Et si j'ai une urgence ?", a: 'Appelez le SAMU au 1515. Ne passez pas par le site.' },
   ];
 
-  readonly allGroups = FAQ_GROUPS;
+  protected readonly site = inject(SiteSettings);
+  private readonly siteFaq = inject(SiteFaq);
+  readonly allGroups = this.siteFaq.groups;
 
   readonly groups = computed(() => {
     const q = normalize(this.query().trim());
     if (!q) {
-      return this.allGroups;
+      return this.allGroups();
     }
-    return this.allGroups
+    return this.allGroups()
       .map((group) => ({
         ...group,
         items: group.items.filter((item) =>

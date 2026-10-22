@@ -14,6 +14,8 @@ import { InView } from '../../../shared/in-view';
 import { RouterLink } from '@angular/router';
 import { ChatIcon } from '../../../shared/chat-widget/chat-icon';
 import { ChatState } from '../../../core/chat-state';
+import { SiteArticles } from '../../../core/services/site-articles';
+import { SiteFaq } from '../../../core/services/site-faq';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
@@ -23,23 +25,6 @@ import { SiteSettings } from '../../../core/services/site-settings';
 import { SPECIALTIES } from '../../../core/specialties';
 
 const HERO_TITLE = 'Suivre votre santé hormonale, simplement et dans la durée.';
-
-/** Texte d'exemple : les passages entre crochets sont à compléter avec la doctoresse. */
-const FAQ = [
-  {
-    question: 'Comment réserver un rendez-vous ?',
-    answer:
-      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp au +221 77 226 39 06.",
-  },
-  {
-    question: 'Que dois-je apporter ?',
-    answer: 'Vos analyses, ordonnances et votre carnet de glycémie.',
-  },
-  { question: 'Faut-il une ordonnance ?', answer: '[À confirmer.]' },
-  { question: 'Quels moyens de paiement ?', answer: '[À confirmer.]' },
-  { question: 'Comment annuler ?', answer: 'Depuis votre espace ou par téléphone.' },
-  { question: "Que faire en cas d'urgence ?", answer: '[Numéro à indiquer.]' },
-];
 
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
@@ -61,7 +46,11 @@ export class HomeMobile implements OnInit {
   readonly showBar = signal(false);
 
   readonly nextSlot = signal<string | null>(null);
-  readonly faq = signal(FAQ.map((item, i) => ({ ...item, open: i === 0 })));
+  private readonly siteFaq = inject(SiteFaq);
+  private readonly openFaq = signal<ReadonlySet<number>>(new Set([0]));
+  readonly faq = computed(() =>
+    this.siteFaq.homeItems().map((item, i) => ({ ...item, open: this.openFaq().has(i) })),
+  );
   readonly rows = SPECIALTIES;
 
   readonly heroWords = HERO_TITLE.split(' ').map((word, index, words) => ({
@@ -104,19 +93,13 @@ export class HomeMobile implements OnInit {
     },
   ];
 
-  readonly articles = [
-    {
-      categorie: 'RAMADAN',
-      titre: 'Ramadan et diabète : bien se préparer',
-      photo: '/img/photo-3.jpg',
-    },
-    { categorie: 'DIABÈTE', titre: 'Comprendre son HbA1c', photo: '/img/photo-1.jpg' },
-    {
-      categorie: 'NUTRITION',
-      titre: 'Manger équilibré avec la cuisine sénégalaise',
-      photo: '/img/photo-2.jpg',
-    },
-  ];
+  private readonly siteArticles = inject(SiteArticles);
+  readonly articles = computed(() =>
+    this.siteArticles
+      .items()
+      .slice(0, 3)
+      .map((a) => ({ categorie: a.category.toUpperCase(), titre: a.title, photo: a.photo })),
+  );
 
   readonly mapUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
     'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
@@ -176,8 +159,10 @@ export class HomeMobile implements OnInit {
   }
 
   toggleFaq(index: number): void {
-    this.faq.update((list) =>
-      list.map((item, i) => (i === index ? { ...item, open: !item.open } : item)),
-    );
+    this.openFaq.update((open) => {
+      const next = new Set(open);
+      if (!next.delete(index)) next.add(index);
+      return next;
+    });
   }
 }

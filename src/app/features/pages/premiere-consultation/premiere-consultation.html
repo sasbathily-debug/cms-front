@@ -174,7 +174,9 @@
         <p class="m-0 text-base leading-[1.7] text-[#4A3F49]">
           Le cabinet ne prend pas en charge les urgences. En cas de malaise ou de glycémie très
           anormale, rendez-vous aux urgences les plus proches.
-          <strong class="text-forest-900">[Numéro d'urgence à indiquer]</strong>
+          <strong class="text-forest-900">{{
+            site.emergencyNumber() || "[Numéro d'urgence à indiquer]"
+          }}</strong>
         </p>
       </div>
     </div>

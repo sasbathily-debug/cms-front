@@ -20,7 +20,7 @@
           <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">ADRESSE</span>
           <span class="font-display text-[22px] font-bold leading-snug">[Rue et numéro]</span>
           <span class="text-[15px] leading-relaxed text-[#D8C9BB]"
-            >{{ site.address() }}. [Repère connu à côté du cabinet]</span
+            >{{ site.address() }}. {{ site.landmark() || '[Repère connu à côté du cabinet]' }}</span
           >
         </span>
       </div>

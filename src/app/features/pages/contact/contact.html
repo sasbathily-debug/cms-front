@@ -258,8 +258,12 @@
             class="rounded-[14px] bg-accent-100 px-[18px] py-3.5 text-sm leading-relaxed text-[#5A3410]"
           >
             <strong class="text-forest-900">Urgence :</strong> ne passez pas par ce formulaire.
-            Appelez le SAMU au 1515 <span class="text-ink-600">[numéro à confirmer]</span> ou
-            rendez-vous aux urgences les plus proches.
+            @if (site.emergencyNumber()) {
+              Appelez le {{ site.emergencyNumber() }}
+            } @else {
+              Appelez le SAMU au 1515 <span class="text-ink-600">[numéro à confirmer]</span>
+            }
+            ou rendez-vous aux urgences les plus proches.
           </div>
         </form>
       }
@@ -311,9 +315,9 @@
             <span class="font-display text-[19px] font-bold leading-snug"
               >[Rue et numéro], {{ site.address() }}</span
             >
-            <span class="text-sm leading-normal text-[#D8C9BB]"
-              >[Repère connu à côté du cabinet]</span
-            >
+            <span class="text-sm leading-normal text-[#D8C9BB]">{{
+              site.landmark() || '[Repère connu à côté du cabinet]'
+            }}</span>
           </span>
         </div>
         <div class="flex flex-col gap-1 rounded-3xl bg-cream-100 px-7 py-6">

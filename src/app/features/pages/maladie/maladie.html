@@ -47,7 +47,7 @@
         >
           <span class="text-[14.5px] leading-normal text-[#5A3410]">
             <strong class="text-forest-900">Urgence :</strong> {{ c.essentiel.urgence }}
-            <span class="text-ink-600">[Numéro à confirmer]</span>
+            <span class="text-ink-600">{{ site.emergencyNumber() || '[Numéro à confirmer]' }}</span>
           </span>
           <a
             routerLink="/rendez-vous"
@@ -191,9 +191,10 @@
             </h2>
             <p class="m-0 text-base leading-[1.7] text-[#4A3F49]">
               {{ c.urgence }}
-              <strong class="text-forest-900"
-                >[Numéro d'urgence ou structure à contacter : à confirmer par la doctoresse]</strong
-              >
+              <strong class="text-forest-900">{{
+                site.emergencyNumber() ||
+                  "[Numéro d'urgence ou structure à contacter : à confirmer par la doctoresse]"
+              }}</strong>
             </p>
           </section>
 
