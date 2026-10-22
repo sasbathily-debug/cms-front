@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-auth-mobile-bar',
   imports: [RouterLink],
+  host: { class: 'block lg:hidden' },
   template: `
     <div class="flex items-center justify-between bg-forest-900 px-4 py-3.5 lg:hidden">
       <a routerLink="/" class="flex items-center gap-2.5">
