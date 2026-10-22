@@ -26,10 +26,10 @@
         class="photo-life relative h-[380px] w-full min-w-0 overflow-hidden rounded-[200px_200px_36px_36px] bg-[#2a1930] sm:h-[460px] lg:h-[520px] lg:w-auto lg:flex-[0_1_420px]"
       >
         <img
-          src="/img/dr-fall-sourire-640.webp"
-          srcset="/img/dr-fall-sourire-640.webp 640w, /img/dr-fall-sourire.webp 1024w"
+          [src]="c().hero.photo | optimizedImage: 900"
+          [attr.srcset]="c().hero.photo | srcset"
           sizes="(max-width: 1023px) 92vw, 540px"
-          alt="Le Dr Aissatou Mamadou Fall vous accueille, sourire aux lèvres"
+          [alt]="c().hero.photoAlt"
           width="1024"
           height="793"
           fetchpriority="high"

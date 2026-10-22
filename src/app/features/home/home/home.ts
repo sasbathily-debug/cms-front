@@ -16,6 +16,8 @@ import { OpeningHours } from '../../../core/services/opening-hours';
 import { PageContent } from '../../../core/services/page-content';
 import { ACCUEIL } from '../../../core/page-content/defs/accueil';
 import { AvailableSlotDto } from '../../../core/models/availability.models';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { SrcsetPipe } from '../../../core/page-content/images';
 
 function formatNextSlot(slot: AvailableSlotDto): string {
   const d = new Date(`${slot.date}T${slot.time}`);
@@ -38,6 +40,8 @@ function formatNextSlot(slot: AvailableSlotDto): string {
     OrangeThread,
     HomeMobile,
     Parallax,
+    OptimizedImagePipe,
+    SrcsetPipe,
   ],
   styleUrl: './home.css',
   templateUrl: './home.html',

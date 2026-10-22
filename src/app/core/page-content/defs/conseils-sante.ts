@@ -13,6 +13,8 @@ const defaults = {
     nom: 'Dr Aissatou Mamadou Fall',
     texte: 'Médecin endocrinologue et nutritionniste à Dakar.',
     lien: 'Découvrir son parcours →',
+    photo: '/img/dr-fall-conference-640.webp',
+    photoAlt: "Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique",
   },
   alaune: {
     kicker: 'À LA UNE · RAMADAN · 6 MIN',
@@ -20,6 +22,7 @@ const defaults = {
     texte:
       'Peut-on jeûner ? Comment adapter son traitement et son alimentation ? Les questions à poser à votre médecin avant le premier jour.',
     lien: "Lire l'article",
+    photo: '/img/photo-2.jpg',
   },
   instagram: {
     titre: 'Suivez le cabinet sur Instagram',
@@ -56,6 +59,12 @@ export const CONSEILS_SANTE: PageDef<ConseilsSanteContent> = {
         { key: 'nom', label: 'Nom', type: 'text' },
         { key: 'texte', label: 'Texte', type: 'textarea' },
         { key: 'lien', label: 'Texte du lien', type: 'text' },
+        { key: 'photo', label: 'Photo', type: 'image' },
+        {
+          key: 'photoAlt',
+          label: 'Description de la photo (pour les malvoyants)',
+          type: 'text',
+        },
       ],
     },
     {
@@ -67,6 +76,7 @@ export const CONSEILS_SANTE: PageDef<ConseilsSanteContent> = {
         { key: 'titre', label: 'Titre', type: 'text' },
         { key: 'texte', label: 'Texte', type: 'textarea' },
         { key: 'lien', label: 'Texte du lien', type: 'text' },
+        { key: 'photo', label: 'Photo', type: 'image' },
       ],
     },
     {

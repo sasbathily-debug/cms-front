@@ -12,6 +12,7 @@ const defaults = {
     label: 'APPELER LE CABINET',
     note: "Hors des horaires d'ouverture, laissez un message : nous vous rappelons.",
     boutonWhatsapp: 'Écrire sur WhatsApp',
+    photo: '/img/dr-fall-sourire-640.webp',
   },
   formulaire: {
     titre: 'Envoyer un message',
@@ -75,6 +76,7 @@ export const CONTACT: PageDef<ContactContent> = {
         },
         { key: 'note', label: 'Phrase sous le numéro', type: 'textarea' },
         { key: 'boutonWhatsapp', label: 'Texte du bouton WhatsApp', type: 'text' },
+        { key: 'photo', label: 'Petite photo ronde', type: 'image' },
       ],
     },
     {

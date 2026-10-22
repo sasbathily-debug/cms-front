@@ -6,28 +6,47 @@
       aria-hidden="true"
     >
       <div
-        class="cb-t1 absolute left-0 top-0 flex h-[200px] w-[62%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-4 sm:h-[220px]"
+        class="cb-t1 absolute left-0 top-0 flex h-[200px] w-[62%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-4 sm:h-[220px] bg-cover bg-center"
+        [style.background-image]="
+          c().hero.photoCabinet
+            ? 'url(' + (c().hero.photoCabinet | optimizedImage: 800) + ')'
+            : null
+        "
       >
-        <span
-          class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
-          >PHOTO : cabinet de consultation [à fournir]</span
-        >
+        @if (!c().hero.photoCabinet) {
+          <span
+            class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
+            >PHOTO : cabinet de consultation [à fournir]</span
+          >
+        }
       </div>
       <div
-        class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-3 sm:h-[160px]"
+        class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-3 sm:h-[160px] bg-cover bg-center"
+        [style.background-image]="
+          c().hero.photoAccueil
+            ? 'url(' + (c().hero.photoAccueil | optimizedImage: 800) + ')'
+            : null
+        "
       >
-        <span
-          class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
-          >PHOTO : accueil [à fournir]</span
-        >
+        @if (!c().hero.photoAccueil) {
+          <span
+            class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
+            >PHOTO : accueil [à fournir]</span
+          >
+        }
       </div>
       <div
-        class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-3 sm:h-[130px]"
+        class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-3 sm:h-[130px] bg-cover bg-center"
+        [style.background-image]="
+          c().hero.photoSalle ? 'url(' + (c().hero.photoSalle | optimizedImage: 800) + ')' : null
+        "
       >
-        <span
-          class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
-          >PHOTO : salle d'attente [à fournir]</span
-        >
+        @if (!c().hero.photoSalle) {
+          <span
+            class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
+            >PHOTO : salle d'attente [à fournir]</span
+          >
+        }
       </div>
     </div>
   </app-page-hero>

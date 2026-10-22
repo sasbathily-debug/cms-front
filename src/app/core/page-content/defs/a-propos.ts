@@ -12,6 +12,9 @@ const defaults = {
     citationNote: '[Citation à confirmer par la doctoresse]',
     boutonPrincipal: 'Prendre rendez-vous',
     boutonSecondaire: 'Mes spécialités',
+    banniere: '/img/photo-1.jpg',
+    portrait: '/img/dr-fall-sourire-640.webp',
+    portraitAlt: 'Portrait souriant du Dr Aissatou Mamadou Fall',
   },
   histoire: {
     kicker: 'MON HISTOIRE',
@@ -81,6 +84,8 @@ const defaults = {
     titre: 'Enseignement et publications',
     texte:
       "Lors d'une intervention [événement et date à préciser]. [Autres interventions, congrès, articles : à renseigner si la doctoresse en a.]",
+    photo: '/img/dr-fall-conference-640.webp',
+    photoAlt: "Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique",
   },
   appel: {
     titre: "Envie d'en parler ? Prenons rendez-vous.",
@@ -113,6 +118,18 @@ export const A_PROPOS: PageDef<AProposContent> = {
         },
         { key: 'boutonPrincipal', label: 'Texte du bouton orange', type: 'text' },
         { key: 'boutonSecondaire', label: 'Texte du bouton contour', type: 'text' },
+        {
+          key: 'banniere',
+          label: 'Photo de fond en haut de page',
+          type: 'image',
+          hint: 'Format conseillé : large (paysage).',
+        },
+        { key: 'portrait', label: 'Portrait', type: 'image' },
+        {
+          key: 'portraitAlt',
+          label: 'Description du portrait (pour les malvoyants)',
+          type: 'text',
+        },
       ],
     },
     {
@@ -184,6 +201,12 @@ export const A_PROPOS: PageDef<AProposContent> = {
       fields: [
         { key: 'titre', label: 'Titre', type: 'text' },
         { key: 'texte', label: 'Texte', type: 'textarea' },
+        { key: 'photo', label: 'Photo', type: 'image' },
+        {
+          key: 'photoAlt',
+          label: 'Description de la photo (pour les malvoyants)',
+          type: 'text',
+        },
       ],
     },
     {

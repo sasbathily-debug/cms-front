@@ -25,11 +25,22 @@ import { Parallax } from '../../../shared/parallax';
 import { AvailabilityService } from '../../../core/services/availability';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { Specialties } from '../../../core/services/specialties';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { SrcsetPipe } from '../../../core/page-content/images';
 
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
 @Component({
   selector: 'app-home-mobile',
-  imports: [RouterLink, InView, ChatIcon, OpenNow, OrangeThread, Parallax],
+  imports: [
+    RouterLink,
+    InView,
+    ChatIcon,
+    OpenNow,
+    OrangeThread,
+    Parallax,
+    OptimizedImagePipe,
+    SrcsetPipe,
+  ],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
 })

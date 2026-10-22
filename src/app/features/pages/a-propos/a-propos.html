@@ -2,10 +2,10 @@
   <div class="bg-cream-50">
     <section
       class="relative h-[280px] bg-forest-800 bg-cover bg-[position:62%_28%] sm:h-[380px] lg:h-[460px]"
-      style="
-        background-image:
-          linear-gradient(180deg, rgba(20, 11, 25, 0.1) 0%, rgba(20, 11, 25, 0.6) 100%),
-          url(/img/photo-1.jpg);
+      [style.background-image]="
+        'linear-gradient(180deg, rgba(20, 11, 25, 0.1) 0%, rgba(20, 11, 25, 0.6) 100%), url(' +
+        (c().hero.banniere | optimizedImage: 1600) +
+        ')'
       "
       aria-hidden="true"
     ></section>
@@ -63,10 +63,10 @@
           class="photo-life relative h-[420px] overflow-hidden rounded-[26px] bg-[#2a1930] shadow-[0_30px_60px_rgba(31,18,38,0.22)] lg:h-[560px]"
         >
           <img
-            src="/img/dr-fall-sourire-640.webp"
-            srcset="/img/dr-fall-sourire-640.webp 640w, /img/dr-fall-sourire.webp 1024w"
+            [src]="c().hero.portrait | optimizedImage: 900"
+            [attr.srcset]="c().hero.portrait | srcset"
             sizes="(max-width: 1023px) 92vw, 540px"
-            alt="Portrait souriant du Dr Aissatou Mamadou Fall"
+            [alt]="c().hero.portraitAlt"
             width="1024"
             height="793"
             fetchpriority="high"
@@ -182,10 +182,10 @@
       </div>
       <div class="flex flex-col overflow-hidden rounded-[26px] border border-border-warm bg-white">
         <img
-          src="/img/dr-fall-conference-640.webp"
-          srcset="/img/dr-fall-conference-640.webp 640w, /img/dr-fall-conference.webp 952w"
+          [src]="c().interventions.photo | optimizedImage: 900"
+          [attr.srcset]="c().interventions.photo | srcset"
           sizes="(max-width: 767px) 92vw, 570px"
-          alt="Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique"
+          [alt]="c().interventions.photoAlt"
           width="952"
           height="552"
           loading="lazy"

@@ -6,6 +6,9 @@ const defaults = {
     titre: 'Un cabinet calme, pensé pour prendre le temps.',
     intro:
       "Endocrinologie et nutrition à Sacré-Cœur 3, Dakar. Ici, chaque consultation commence par l'écoute, dans un lieu simple et accueillant.",
+    photoCabinet: '',
+    photoAccueil: '',
+    photoSalle: '',
   },
   enBref: {
     kicker: 'LE CABINET EN BREF',
@@ -120,6 +123,14 @@ export const LE_CABINET: PageDef<LeCabinetContent> = {
       fields: [
         { key: 'titre', label: 'Titre', type: 'text' },
         { key: 'intro', label: 'Présentation', type: 'textarea' },
+        {
+          key: 'photoCabinet',
+          label: 'Photo du cabinet de consultation',
+          type: 'image',
+          hint: 'Sans photo, un cadre « photo à fournir » s’affiche.',
+        },
+        { key: 'photoAccueil', label: 'Photo de l’accueil', type: 'image' },
+        { key: 'photoSalle', label: 'Photo de la salle d’attente', type: 'image' },
       ],
     },
     {

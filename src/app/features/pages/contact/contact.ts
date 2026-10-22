@@ -11,12 +11,23 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { ContactService } from '../../../core/services/contact';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { SrcsetPipe } from '../../../core/page-content/images';
 
 const MOTIFS = ['Rendez-vous', "Résultats d'analyses", 'Question sur un traitement', 'Autre'];
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, RouterLink, OpenNow, PublicPage, PageHero, CtaBand],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    OpenNow,
+    PublicPage,
+    PageHero,
+    CtaBand,
+    OptimizedImagePipe,
+    SrcsetPipe,
+  ],
   templateUrl: './contact.html',
 })
 export class Contact {

@@ -7,8 +7,8 @@
       >
         <div class="absolute inset-y-0 right-0 z-0 w-[58%]">
           <img
-            src="/img/dr-fall.webp"
-            alt="Le Dr Aissatou Mamadou Fall, endocrinologue et nutritionniste, en blouse blanche, les bras croisés"
+            [src]="c().hero.photo | optimizedImage: 1200"
+            [alt]="c().hero.photoAlt"
             width="1080"
             height="1080"
             fetchpriority="high"
@@ -154,10 +154,10 @@
               class="photo-life relative h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-[28px] bg-[#2a1930] sm:h-[560px] lg:rounded-[36px]"
             >
               <img
-                src="/img/dr-fall-sourire-640.webp"
-                srcset="/img/dr-fall-sourire-640.webp 640w, /img/dr-fall-sourire.webp 1024w"
+                [src]="c().doctoresse.photo | optimizedImage: 900"
+                [attr.srcset]="c().doctoresse.photo | srcset"
                 sizes="(max-width: 1023px) 92vw, 540px"
-                alt="Portrait souriant du Dr Aissatou Mamadou Fall"
+                [alt]="c().doctoresse.photoAlt"
                 width="1024"
                 height="793"
                 loading="lazy"

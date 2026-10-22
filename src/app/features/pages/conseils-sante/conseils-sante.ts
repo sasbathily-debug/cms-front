@@ -6,10 +6,12 @@ import { SiteArticles } from '../../../core/services/site-articles';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { Spotlight } from '../../../shared/spotlight';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
   selector: 'app-conseils-sante',
-  imports: [RouterLink, PublicPage, CtaBand, Spotlight],
+  imports: [RouterLink, PublicPage, CtaBand, Spotlight, OptimizedImagePipe, SrcsetPipe],
   templateUrl: './conseils-sante.html',
 })
 export class ConseilsSante {

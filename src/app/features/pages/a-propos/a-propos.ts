@@ -6,10 +6,12 @@ import { InView } from '../../../shared/in-view';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
   selector: 'app-a-propos',
-  imports: [RouterLink, PublicPage, CtaBand, Parallax, InView],
+  imports: [RouterLink, PublicPage, CtaBand, Parallax, InView, OptimizedImagePipe, SrcsetPipe],
   templateUrl: './a-propos.html',
 })
 export class APropos {

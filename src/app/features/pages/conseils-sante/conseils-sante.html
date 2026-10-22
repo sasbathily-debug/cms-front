@@ -60,10 +60,10 @@
         class="relative order-1 aspect-[16/10] bg-[#F1E4D6] lg:order-2 lg:aspect-auto lg:min-h-[340px]"
       >
         <img
-          src="/img/dr-fall-conference-640.webp"
-          srcset="/img/dr-fall-conference-640.webp 640w, /img/dr-fall-conference.webp 952w"
+          [src]="c().auteur.photo | optimizedImage: 900"
+          [attr.srcset]="c().auteur.photo | srcset"
           sizes="(max-width: 1023px) 92vw, 700px"
-          alt="Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique"
+          [alt]="c().auteur.photoAlt"
           width="952"
           height="552"
           loading="lazy"
@@ -84,7 +84,7 @@
     >
       <div
         class="min-h-[280px] bg-cover bg-center lg:min-h-[420px]"
-        style="background-image: url(/img/photo-2.jpg)"
+        [style.background-image]="'url(' + (c().alaune.photo | optimizedImage: 1200) + ')'"
         role="img"
         aria-label="Photo de l'article à la une"
       ></div>

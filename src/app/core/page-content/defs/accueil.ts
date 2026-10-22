@@ -12,6 +12,10 @@ const defaults = {
     boutonPrincipal: 'Prendre rendez-vous',
     boutonSecondaire: 'Ma première consultation',
     lienTelephone: 'Ma première visite →',
+    photo: '/img/dr-fall.webp',
+    photoTelephone: '/img/dr-fall-640.webp',
+    photoAlt:
+      'Le Dr Aissatou Mamadou Fall, endocrinologue et nutritionniste, en blouse blanche, les bras croisés',
   },
   carte: {
     sansCreneau: 'Réservez votre créneau en ligne',
@@ -50,6 +54,8 @@ const defaults = {
     ],
     noteStats: "Les chiffres entre crochets seront fournis par la doctoresse, rien n'est inventé.",
     lien: 'Découvrir son parcours',
+    photo: '/img/dr-fall-sourire-640.webp',
+    photoAlt: 'Portrait souriant du Dr Aissatou Mamadou Fall',
     titreTelephone: 'Dr Aissatou Mamadou Fall',
     texteTelephone:
       "Médecin endocrinologue et nutritionniste. [Une phrase sur son parcours : formation, années d'exercice.]",
@@ -142,6 +148,22 @@ export const ACCUEIL: PageDef<AccueilContent> = {
         { key: 'boutonPrincipal', label: 'Texte du bouton orange', type: 'text' },
         { key: 'boutonSecondaire', label: 'Texte du bouton contour (ordinateur)', type: 'text' },
         { key: 'lienTelephone', label: 'Texte du lien (téléphone)', type: 'text' },
+        {
+          key: 'photo',
+          label: 'Photo du haut de page (ordinateur)',
+          type: 'image',
+          hint: 'Format conseillé : carré, la doctoresse centrée.',
+        },
+        {
+          key: 'photoTelephone',
+          label: 'Photo du haut de page (téléphone)',
+          type: 'image',
+        },
+        {
+          key: 'photoAlt',
+          label: 'Description des photos du haut de page (pour les malvoyants)',
+          type: 'text',
+        },
       ],
     },
     {
@@ -208,6 +230,12 @@ export const ACCUEIL: PageDef<AccueilContent> = {
           hint: 'Laissez vide pour ne rien afficher. Ne saisissez que des chiffres exacts.',
         },
         { key: 'lien', label: 'Texte du lien (ordinateur)', type: 'text' },
+        { key: 'photo', label: 'Portrait (ordinateur et téléphone)', type: 'image' },
+        {
+          key: 'photoAlt',
+          label: 'Description du portrait (pour les malvoyants)',
+          type: 'text',
+        },
         { key: 'titreTelephone', label: 'Titre (téléphone)', type: 'text' },
         { key: 'texteTelephone', label: 'Présentation (téléphone)', type: 'textarea' },
       ],

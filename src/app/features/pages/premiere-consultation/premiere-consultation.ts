@@ -14,10 +14,12 @@ import { RouterLink } from '@angular/router';
 import { InView } from '../../../shared/in-view';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
+import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
   selector: 'app-premiere-consultation',
-  imports: [RouterLink, InView, PublicPage, CtaBand],
+  imports: [RouterLink, InView, PublicPage, CtaBand, OptimizedImagePipe, SrcsetPipe],
   styleUrl: './premiere-consultation.css',
   templateUrl: './premiere-consultation.html',
 })

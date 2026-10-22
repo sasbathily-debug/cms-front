@@ -8,6 +8,8 @@ const defaults = {
     intro:
       'Venir voir un spécialiste peut impressionner. Voici, étape par étape, comment se passe une première consultation, pour que vous arriviez sereinement.',
     bouton: 'Prendre rendez-vous',
+    photo: '/img/dr-fall-sourire-640.webp',
+    photoAlt: 'Le Dr Aissatou Mamadou Fall vous accueille, sourire aux lèvres',
   },
   deroule: {
     kicker: 'DÉROULEMENT',
@@ -93,6 +95,12 @@ export const PREMIERE_CONSULTATION: PageDef<PremiereConsultationContent> = {
         { key: 'titre', label: 'Titre', type: 'text' },
         { key: 'intro', label: 'Présentation', type: 'textarea' },
         { key: 'bouton', label: 'Texte du bouton', type: 'text' },
+        { key: 'photo', label: 'Portrait', type: 'image' },
+        {
+          key: 'photoAlt',
+          label: 'Description du portrait (pour les malvoyants)',
+          type: 'text',
+        },
       ],
     },
     {
