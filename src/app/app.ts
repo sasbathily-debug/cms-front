@@ -4,10 +4,12 @@ import { CurrentUserStore } from './core/services/current-user-store';
 import { Reveal } from './core/reveal';
 import { Theme } from './core/theme';
 import { PageContent } from './core/services/page-content';
+import { Analytics } from './core/analytics';
 import { ChatWidget } from './shared/chat-widget/chat-widget';
+import { CookieBanner } from './shared/cookie-banner/cookie-banner';
 
 @Component({
-  imports: [RouterOutlet, ChatWidget],
+  imports: [RouterOutlet, ChatWidget, CookieBanner],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
@@ -19,6 +21,7 @@ export class App {
     inject(CurrentUserStore);
     inject(Reveal);
     inject(Theme);
+    inject(Analytics).start();
     this.prefetchPageTexts();
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { Analytics } from '../../../core/analytics';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
@@ -34,6 +35,7 @@ function formatSlot(date: string, time: string): string {
 })
 export class RendezVous implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly analytics = inject(Analytics);
   private readonly appointmentService = inject(AppointmentService);
   private readonly availabilityService = inject(AvailabilityService);
   private readonly currentUserStore = inject(CurrentUserStore);
@@ -128,6 +130,7 @@ export class RendezVous implements OnInit {
           this.submitting.set(false);
           this.confirmedLabel.set(formatSlot(v.preferredDate!, v.preferredTime!));
           this.submitted.set(true);
+          this.analytics.track('rendez_vous_reserve');
         },
         error: (err) => {
           this.submitting.set(false);
