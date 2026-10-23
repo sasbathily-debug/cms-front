@@ -23,25 +23,30 @@ describe('CookieBanner', () => {
   const find = (root: HTMLElement, label: RegExp) =>
     [...root.querySelectorAll('button')].find((b) => label.test(b.textContent ?? ''));
 
-  it('affiche tout le détail sans rien à déplier', () => {
+  it("affiche l'essentiel sans rien à déplier", () => {
     const root = render();
     const text = root.textContent ?? '';
-    expect(text).toContain('Cookies nécessaires');
+    expect(text).toContain('Nécessaires');
     expect(text).toContain('Google Analytics');
-    expect(text).toContain("Nous n'envoyons jamais");
+    expect(text).toContain("Nous n'envoyons ni nom");
+    expect(text).toContain('2 mois');
     expect(text).toContain('Gérer les cookies');
     expect(find(root, /En savoir plus/)).toBeUndefined();
   });
 
-  it('est une vraie fenêtre de dialogue, nommée et modale', () => {
-    const dialog = render().querySelector('[role=dialog]')!;
-    expect(dialog.getAttribute('aria-modal')).toBe('true');
+  it("est un panneau de dialogue nommé, collé au bord de l'écran, qui ne bloque pas la page", () => {
+    const root = render();
+    const dialog = root.querySelector('[role=dialog]')!;
     expect(dialog.getAttribute('aria-labelledby')).toBe('cookie-title');
+    expect(dialog.getAttribute('aria-modal')).toBeNull();
+    expect(dialog.className).toContain('cookie-panel');
+    expect(dialog.className).toContain('sm:left-0');
+    expect(root.querySelector('.backdrop-blur-\\[3px\\]')).toBeNull();
   });
 
   it('propose « Refuser » et « Accepter » avec le même poids', () => {
     const root = render();
-    const refuse = find(root, /Refuser les cookies/)!;
+    const refuse = find(root, /^\s*Refuser\s*$/)!;
     const accept = find(root, /Accepter les cookies/)!;
     expect(refuse.className).toContain('flex-1');
     expect(accept.className).toContain('flex-1');
@@ -56,7 +61,7 @@ describe('CookieBanner', () => {
     const root = render();
     find(root, /Accepter les cookies/)!.click();
     expect(analytics.accept).toHaveBeenCalledTimes(1);
-    find(root, /Refuser les cookies/)!.click();
+    find(root, /^\s*Refuser\s*$/)!.click();
     expect(analytics.refuse).toHaveBeenCalledTimes(1);
   });
 });
