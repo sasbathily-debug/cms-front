@@ -2,7 +2,6 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  OnInit,
   afterNextRender,
   computed,
   inject,
@@ -22,7 +21,7 @@ import { OpeningHours } from '../../../core/services/opening-hours';
 import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
-import { AvailabilityService } from '../../../core/services/availability';
+import { NextSlot } from '../../../core/services/next-slot';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { Specialties } from '../../../core/services/specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
@@ -44,8 +43,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
 })
-export class HomeMobile implements OnInit {
-  private readonly availability = inject(AvailabilityService);
+export class HomeMobile {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly site = inject(SiteSettings);
@@ -56,7 +54,6 @@ export class HomeMobile implements OnInit {
   /** Barre de réservation collée en bas : visible une fois le bouton du haut dépassé. */
   readonly showBar = signal(false);
 
-  readonly nextSlot = signal<string | null>(null);
   private readonly siteFaq = inject(SiteFaq);
   private readonly openFaq = signal<ReadonlySet<number>>(new Set([0]));
   readonly faq = computed(() =>
@@ -87,7 +84,12 @@ export class HomeMobile implements OnInit {
     'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125&z=17&output=embed',
   );
 
-  readonly slotLabel = computed(() => this.nextSlot());
+  private readonly slots = inject(NextSlot);
+  /** Le prochain créneau libre, tenu à jour tant que la page est ouverte (voir NextSlot). */
+  readonly slotLabel = computed(() => {
+    const slot = this.slots.next();
+    return slot ? `${this.slots.dayLabel(slot)} ${slot.time.slice(0, 2)}h` : null;
+  });
 
   constructor() {
     // La barre fixe de cette page porte déjà le bouton de chat : la bulle flottante se retire.
@@ -118,26 +120,6 @@ export class HomeMobile implements OnInit {
         footerObserver.disconnect();
       });
     });
-  }
-
-  ngOnInit(): void {
-    const from = new Date();
-    const to = new Date();
-    to.setDate(to.getDate() + 45);
-    this.availability
-      .getAvailableSlots(from.toISOString().slice(0, 10), to.toISOString().slice(0, 10))
-      .subscribe({
-        next: (slots) => {
-          const slot = slots[0];
-          if (!slot) {
-            return;
-          }
-          const d = new Date(`${slot.date}T${slot.time}`);
-          const weekday = new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(d);
-          this.nextSlot.set(`${weekday} ${slot.time.slice(0, 2)}h`);
-        },
-        error: () => undefined,
-      });
   }
 
   toggleFaq(index: number): void {

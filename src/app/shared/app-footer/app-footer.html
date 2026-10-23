@@ -143,7 +143,18 @@
   <div
     class="mx-auto mt-14 flex max-w-[1160px] flex-wrap justify-between gap-4 border-t border-white/15 pb-7 pt-6"
   >
-    <span class="text-[13px] text-on-plum-subtle">© {{ year }} {{ c().bas.copyright }}</span>
+    <span class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-on-plum-subtle">
+      <span>© {{ year }} {{ c().bas.copyright }}</span>
+      @if (analytics.enabled) {
+        <button
+          type="button"
+          (click)="analytics.reopen()"
+          class="cursor-pointer border-0 bg-transparent p-0 text-[13px] text-on-plum-subtle underline underline-offset-[3px] hover:text-white"
+        >
+          Gérer les cookies
+        </button>
+      }
+    </span>
     <span class="text-[13px] text-on-plum-subtle"
       >Site réalisé par
       <a

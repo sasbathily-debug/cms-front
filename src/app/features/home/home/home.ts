@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { InView } from '../../../shared/in-view';
@@ -8,26 +8,15 @@ import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/si
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
-import { AvailabilityService } from '../../../core/services/availability';
+import { NextSlot } from '../../../core/services/next-slot';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { PageContent } from '../../../core/services/page-content';
 import { ACCUEIL } from '../../../core/page-content/defs/accueil';
-import { AvailableSlotDto } from '../../../core/models/availability.models';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
-
-function formatNextSlot(slot: AvailableSlotDto): string {
-  const d = new Date(`${slot.date}T${slot.time}`);
-  const today = new Date();
-  const sameDay = d.toDateString() === today.toDateString();
-  const weekday = sameDay
-    ? "aujourd'hui"
-    : new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(d);
-  return `${weekday} ${slot.time.slice(0, 5).replace(':', 'h')}`;
-}
 
 @Component({
   selector: 'app-home',
@@ -46,7 +35,7 @@ function formatNextSlot(slot: AvailableSlotDto): string {
   styleUrl: './home.css',
   templateUrl: './home.html',
 })
-export class Home implements OnInit {
+export class Home {
   /**
    * Une seule version de l'accueil est construite (bureau ou téléphone) : un seul titre principal dans la page
    * et aucune image téléchargée pour la version qu'on ne voit pas.
@@ -62,11 +51,15 @@ export class Home implements OnInit {
     this.destroyRef.onDestroy(() => query.removeEventListener('change', onChange));
   }
 
-  private readonly availability = inject(AvailabilityService);
+  private readonly slots = inject(NextSlot);
   private readonly sanitizer = inject(DomSanitizer);
   protected readonly site = inject(SiteSettings);
 
-  readonly nextSlot = signal<string | null>(null);
+  /** Le prochain créneau libre, tenu à jour tant que la page est ouverte (voir NextSlot). */
+  readonly nextSlot = computed(() => {
+    const slot = this.slots.next();
+    return slot ? `${this.slots.dayLabel(slot)} ${slot.time.slice(0, 5).replace(':', 'h')}` : null;
+  });
   private readonly siteFaq = inject(SiteFaq);
   private readonly openFaq = signal<ReadonlySet<number>>(new Set([0]));
   readonly faq = computed(() =>
@@ -98,18 +91,6 @@ export class Home implements OnInit {
       .slice(0, 3)
       .map((a) => ({ categorie: a.category.toUpperCase(), titre: a.title, photo: a.photo })),
   );
-
-  ngOnInit(): void {
-    const from = new Date();
-    const to = new Date();
-    to.setDate(to.getDate() + 45);
-    this.availability
-      .getAvailableSlots(from.toISOString().slice(0, 10), to.toISOString().slice(0, 10))
-      .subscribe({
-        next: (slots) => this.nextSlot.set(slots[0] ? formatNextSlot(slots[0]) : null),
-        error: () => undefined,
-      });
-  }
 
   toggleFaq(index: number): void {
     this.openFaq.update((open) => {

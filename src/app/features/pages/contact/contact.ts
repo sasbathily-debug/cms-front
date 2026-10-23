@@ -1,3 +1,4 @@
+import { Analytics } from '../../../core/analytics';
 import { Component, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -32,6 +33,7 @@ const MOTIFS = ['Rendez-vous', "Résultats d'analyses", 'Question sur un traitem
 })
 export class Contact {
   private readonly fb = inject(FormBuilder);
+  private readonly analytics = inject(Analytics);
   protected readonly site = inject(SiteSettings);
   private readonly contact = inject(ContactService);
 
@@ -91,7 +93,10 @@ export class Contact {
         website: v.website ?? '',
       })
       .subscribe({
-        next: () => this.status.set('sent'),
+        next: () => {
+          this.status.set('sent');
+          this.analytics.track('contact_envoye');
+        },
         error: (error: HttpErrorResponse) => {
           const tooMany = error.status === 429;
           this.errorText.set(

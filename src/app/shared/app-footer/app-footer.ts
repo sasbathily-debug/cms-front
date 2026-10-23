@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Analytics } from '../../core/analytics';
 import { SiteSettings } from '../../core/services/site-settings';
 import { PageContent } from '../../core/services/page-content';
 import { PIED_DE_PAGE } from '../../core/page-content/defs/pied-de-page';
@@ -15,6 +16,7 @@ import { OpenNow } from '../open-now/open-now';
 })
 export class AppFooter {
   protected readonly site = inject(SiteSettings);
+  protected readonly analytics = inject(Analytics);
 
   readonly year = new Date().getFullYear();
   readonly instagramUrl = 'https://www.instagram.com/dr_aissatou.m/';

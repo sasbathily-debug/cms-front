@@ -9,6 +9,7 @@ import {
   provideRouter,
   withInMemoryScrolling,
   withNavigationErrorHandler,
+  withPreloading,
   withRouterConfig,
 } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -17,6 +18,7 @@ import { routes } from './app.routes';
 import { SiteTitleStrategy } from './core/site-title';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { Auth } from './core/services/auth';
+import { IdlePreload } from './core/idle-preload';
 
 /**
  * Après une mise à jour du site, un onglet resté ouvert garde l'ancienne version : le morceau de code de la
@@ -42,6 +44,8 @@ export const appConfig: ApplicationConfig = {
       // Cliquer sur le lien de la page où l'on est déjà ramène en haut au lieu de ne rien faire.
       withRouterConfig({ onSameUrlNavigation: 'reload' }),
       withNavigationErrorHandler(reloadOnStaleChunk),
+      // Les pages publiques se chargent en tâche de fond : le clic suivant est immédiat.
+      withPreloading(IdlePreload),
     ),
     { provide: TitleStrategy, useClass: SiteTitleStrategy },
     provideHttpClient(withInterceptors([authInterceptor])),
