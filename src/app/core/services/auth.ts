@@ -5,9 +5,11 @@ import { SKIP_AUTH_REDIRECT } from '../interceptors/auth-interceptor';
 import { environment } from '../../../environments/environment';
 import {
   CompleteRegistrationRequest,
+  ForgotPasswordRequest,
   LoginRequest,
   RegisterRequest,
   RegisterResponse,
+  ResetPasswordRequest,
   ResendOtpRequest,
   VerifyOtpRequest,
   VerifyOtpResponse,
@@ -25,8 +27,16 @@ export class Auth {
   readonly isAuthenticated = computed(() => !!this.user());
   readonly isReady = computed(() => this.ready());
 
+  private resolveReady!: () => void;
+  private readonly readyPromise = new Promise<void>((resolve) => (this.resolveReady = resolve));
+
+  /** Se résout quand on sait si le visiteur est connecté ou non (réponse du serveur reçue). */
+  whenReady(): Promise<void> {
+    return this.readyPromise;
+  }
+
   /**
-   * Checks for an existing session. Awaited once at app bootstrap. The access token only lives a few
+   * Checks for an existing session. Started at app bootstrap (the bootstrap waits for it at most a few seconds). The access token only lives a few
    * minutes, so a 401 here usually means "expired", not "logged out": try the refresh token before
    * concluding the visitor is anonymous.
    */
@@ -40,6 +50,7 @@ export class Auth {
         tap((user) => {
           this.user.set(user);
           this.ready.set(true);
+          this.resolveReady();
         }),
       );
   }
@@ -66,6 +77,14 @@ export class Auth {
 
   resendOtp(request: ResendOtpRequest): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}/auth/resend-otp`, request);
+  }
+
+  forgotPassword(request: ForgotPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/auth/forgot-password`, request);
+  }
+
+  resetPassword(request: ResetPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/auth/reset-password`, request);
   }
 
   refresh(): Observable<UserDto> {

@@ -1,23 +1,136 @@
-@keyframes services-marquee {
+/* Photo du haut : zoom très lent. */
+@keyframes hero-zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+}
+.hero-zoom {
+  animation: hero-zoom 26s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Titre : les mots arrivent un par un au chargement, puis restent affichés ; le dernier groupe est souligné. */
+@keyframes wd {
   from {
-    transform: translateX(0);
+    opacity: 0;
+    transform: translateY(16px);
   }
   to {
-    transform: translateX(-33.3333%);
+    opacity: 1;
+    transform: none;
   }
 }
-
-.services-track {
-  animation: services-marquee 36s linear infinite;
-  will-change: transform;
+.wd {
+  display: inline-block;
+  opacity: 0;
+  animation: wd 0.7s ease-out both;
+}
+@keyframes ul-draw {
+  from {
+    background-size: 0 5px;
+  }
+  to {
+    background-size: 100% 5px;
+  }
+}
+.ul {
+  background-image: linear-gradient(var(--color-accent-500), var(--color-accent-500));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 5px;
+  padding-bottom: 6px;
+  animation: ul-draw 0.9s ease-out 1.8s both;
 }
 
-.services-track:hover {
-  animation-play-state: paused;
+/* Parcours : la barre se remplit et le numéro s'allume, étape après étape. */
+@keyframes pc-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  12%,
+  88% {
+    transform: scaleX(1);
+  }
+  96%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes pc-num {
+  0% {
+    opacity: 0.28;
+  }
+  6%,
+  88% {
+    opacity: 1;
+  }
+  96%,
+  100% {
+    opacity: 0.28;
+  }
+}
+@keyframes pc-txt {
+  0% {
+    opacity: 0.3;
+    transform: translateY(8px);
+  }
+  8%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  96%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(8px);
+  }
+}
+.pc-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: pc-bar 12s ease-in-out infinite;
+}
+.pc-num {
+  animation: pc-num 12s ease-in-out infinite;
+}
+.pc-txt {
+  animation: pc-txt 12s ease-in-out infinite;
+}
+
+.dot-live {
+  animation: dot-pulse 2.4s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px rgba(63, 179, 127, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(63, 179, 127, 0.08);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .services-track {
+  .hero-zoom,
+  .wd,
+  .ul,
+  .pc-bar,
+  .pc-num,
+  .pc-txt,
+  .dot-live {
     animation: none;
+  }
+  .wd {
+    opacity: 1;
+  }
+  .ul {
+    background-size: 100% 5px;
+  }
+  .pc-bar {
+    transform: scaleX(1);
   }
 }

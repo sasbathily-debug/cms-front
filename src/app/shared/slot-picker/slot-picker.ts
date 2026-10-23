@@ -17,6 +17,11 @@ const MONTH_FORMATTER = new Intl.DateTimeFormat('fr-FR', { month: 'short' });
   templateUrl: './slot-picker.html',
 })
 export class SlotPicker {
+  /** Les horaires apparaissent en cascade, un par un (plafonné pour ne pas faire attendre). */
+  protected delay(index: number): number {
+    return Math.min(index, 10) * 40;
+  }
+
   readonly slots = input.required<AvailableSlotDto[]>();
   readonly loading = input(false);
   readonly initialDate = input<string | null>(null);
@@ -33,6 +38,10 @@ export class SlotPicker {
     return map;
   });
 
+  /** Les jours s'affichent par groupes de cinq, comme sur la maquette. */
+  private readonly pageSize = 5;
+  readonly dayPage = signal(0);
+
   readonly selectedDate = signal<string | null>(null);
   readonly selectedTime = signal<string | null>(null);
 
@@ -47,6 +56,19 @@ export class SlotPicker {
       };
     }),
   );
+
+  readonly visibleChips = computed(() => {
+    const start = this.dayPage() * this.pageSize;
+    return this.dayChips().slice(start, start + this.pageSize);
+  });
+  readonly canGoBack = computed(() => this.dayPage() > 0);
+  readonly canGoForward = computed(
+    () => (this.dayPage() + 1) * this.pageSize < this.dayChips().length,
+  );
+
+  changeDayPage(delta: number): void {
+    this.dayPage.update((page) => Math.max(0, page + delta));
+  }
 
   readonly timesForSelectedDate = computed(() => {
     const date = this.selectedDate();
@@ -80,7 +102,11 @@ export class SlotPicker {
           return;
         }
 
-        if (preselectDate && preselectDate !== this.lastAppliedPreselect && map.has(preselectDate)) {
+        if (
+          preselectDate &&
+          preselectDate !== this.lastAppliedPreselect &&
+          map.has(preselectDate)
+        ) {
           this.applySelection(preselectDate, preselectTime, map);
           this.lastAppliedPreselect = preselectDate;
         }

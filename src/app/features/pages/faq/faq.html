@@ -1,0 +1,154 @@
+<app-public-page>
+  <app-page-hero [crumbs]="crumbs" [title]="c().hero.titre" [lead]="c().hero.intro">
+    <div
+      aside
+      class="relative h-[270px] rounded-[28px] border border-white/15 bg-white/[0.06] p-5 sm:p-7"
+      aria-hidden="true"
+    >
+      <div class="relative h-full">
+        @for (pair of bubbles(); track $index; let i = $index) {
+          <div
+            class="qa qa-q absolute left-0 top-0 max-w-[82%] rounded-[20px_20px_20px_5px] bg-page px-5 py-4 text-base font-medium leading-snug text-fg"
+            [class]="'qa-p' + i"
+          >
+            {{ pair.q }}
+          </div>
+          <div
+            class="qa qa-a absolute right-0 top-24 max-w-[82%] rounded-[20px_20px_5px_20px] bg-accent-500 px-5 py-4 text-base font-semibold leading-snug text-on-accent"
+            [class]="'qa-p' + i"
+          >
+            {{ pair.a }}
+          </div>
+        }
+      </div>
+    </div>
+  </app-page-hero>
+
+  <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
+    <div
+      class="mx-auto flex max-w-[1040px] flex-col gap-[18px] rounded-[28px] border border-line bg-surface px-5 py-7 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:px-9 sm:py-8"
+    >
+      <label
+        class="flex items-center gap-3.5 rounded-full border-[1.5px] border-line-strong bg-page px-6 py-4"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--color-muted)"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="M20 20l-4-4" />
+        </svg>
+        <input
+          type="search"
+          [value]="query()"
+          (input)="onSearch($event)"
+          [placeholder]="c().recherche.placeholder"
+          aria-label="Rechercher une question"
+          class="w-full min-w-0 bg-transparent text-base text-fg outline-none placeholder:text-subtle"
+        />
+      </label>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <span class="mr-1.5 text-xs font-semibold tracking-[0.1em] text-accent-700">THÈMES</span>
+        @for (group of allGroups(); track group.id) {
+          <button
+            type="button"
+            (click)="scrollTo(group.id)"
+            class="rounded-full border-[1.5px] border-line-strong bg-surface px-[18px] py-2.5 text-sm font-medium text-fg transition hover:border-fg"
+          >
+            {{ group.title }}
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 pb-24 pt-14 sm:px-6 lg:px-10 lg:pt-[72px]">
+    <div class="mx-auto flex max-w-[1160px] flex-wrap items-start gap-14">
+      <div class="flex min-w-0 flex-[1_1_640px] flex-col gap-[52px]">
+        <div
+          class="rounded-[14px] bg-accent-soft px-[18px] py-3.5 text-sm leading-relaxed text-accent-ink"
+        >
+          Exemple de contenu : les réponses entre crochets sont à compléter ou à valider par la
+          doctoresse avant la mise en ligne.
+        </div>
+
+        @for (group of groups(); track group.id) {
+          <section [id]="group.id" class="flex scroll-mt-28 flex-col gap-1.5">
+            <h2
+              class="m-0 mb-2.5 font-display text-[28px] font-bold leading-[1.1] tracking-[-0.02em] text-fg sm:text-[34px]"
+            >
+              {{ group.title }}
+            </h2>
+            @for (item of group.items; track item.question) {
+              <details class="border-b border-line py-1" [open]="query().trim().length > 0">
+                <summary
+                  class="flex cursor-pointer items-center justify-between gap-[18px] py-[18px] font-display text-[17px] font-semibold leading-snug text-fg sm:text-lg"
+                >
+                  <span>{{ item.question }}</span>
+                  <span
+                    class="plus flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sunken text-xl text-accent-800"
+                    aria-hidden="true"
+                    >+</span
+                  >
+                </summary>
+                <p class="m-0 mb-[18px] max-w-[640px] text-[15.5px] leading-[1.7] text-muted">
+                  {{ item.answer }}
+                </p>
+              </details>
+            }
+          </section>
+        } @empty {
+          <p class="m-0 text-base text-muted">
+            Aucune question ne correspond à « {{ query() }} ». Essayez un autre mot, ou
+            <a routerLink="/contact" class="font-semibold text-accent-800 underline">écrivez-nous</a
+            >.
+          </p>
+        }
+      </div>
+
+      <aside class="flex min-w-0 flex-[0_1_320px] flex-col gap-5">
+        <div class="flex flex-col gap-3 rounded-[22px] border border-line bg-surface p-[26px]">
+          <h2 class="m-0 font-display text-lg font-bold text-fg">Sur cette page</h2>
+          @for (group of allGroups(); track group.id) {
+            <button
+              type="button"
+              (click)="scrollTo(group.id)"
+              class="text-left text-[15px] text-accent-800 hover:underline"
+            >
+              {{ group.title }}
+            </button>
+          }
+        </div>
+        <div class="flex flex-col gap-3.5 rounded-[22px] bg-plum-900 p-7">
+          <h2 class="m-0 font-display text-[22px] font-bold leading-tight text-white">
+            {{ c().contact.titre }}
+          </h2>
+          <p class="m-0 text-[14.5px] leading-relaxed text-on-plum-muted">
+            {{ c().contact.texte }}
+          </p>
+          <a
+            routerLink="/contact"
+            class="rounded-full bg-accent-500 px-[22px] py-3.5 text-center font-display text-[15px] font-semibold text-on-accent"
+            >{{ c().contact.bouton }}</a
+          >
+        </div>
+        <div class="flex flex-col gap-2.5 rounded-[22px] bg-sunken p-[26px]">
+          <h2 class="m-0 font-display text-lg font-bold text-fg">
+            {{ c().urgence.titre }}
+          </h2>
+          <span class="text-[14.5px] leading-relaxed text-body">{{
+            withUrgence(c().urgence.texte)
+          }}</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <app-cta-band [title]="c().appel.titre" />
+</app-public-page>

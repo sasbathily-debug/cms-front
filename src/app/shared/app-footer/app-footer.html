@@ -1,55 +1,159 @@
-<footer class="bg-forest-900 pt-16">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-    <div class="flex flex-wrap gap-10 pb-11 sm:gap-14">
-      <div class="min-w-[240px] flex-1 basis-64">
-        <div class="mb-4 flex items-center gap-3">
-          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent-500">
-            <img src="/logo/logo-icon-dark.png" alt="Logo" class="h-2/3 w-2/3 object-contain" />
-          </span>
-          <span class="font-display text-base font-bold text-white">Dr Aissatou Mamadou Fall</span>
-        </div>
-        <p class="max-w-[280px] text-[13.5px] leading-relaxed text-[#9C8FA0]">
-          Cabinet d'endocrinologie et de nutrition à Dakar — suivi du diabète, des maladies métaboliques et des
-          troubles hormonaux.
-        </p>
-      </div>
-
-      <div class="min-w-[160px] flex-1 basis-40">
-        <div class="mb-4 font-display text-sm font-bold text-white">Le cabinet</div>
-        <div class="flex flex-col gap-2.5">
-          <a href="#about" class="text-[13.5px] text-[#9C8FA0] hover:text-white">À propos</a>
-          <a href="#services" class="text-[13.5px] text-[#9C8FA0] hover:text-white">Services</a>
-          <a href="#parcours" class="text-[13.5px] text-[#9C8FA0] hover:text-white">Parcours de soins</a>
-          <a href="#faq" class="text-[13.5px] text-[#9C8FA0] hover:text-white">FAQ</a>
-        </div>
-      </div>
-
-      <div class="min-w-[220px] flex-1 basis-56">
-        <div class="mb-4 font-display text-sm font-bold text-white">Contact</div>
-        <div class="flex flex-col gap-2.5">
-          <span class="text-[13.5px] text-[#9C8FA0]">{{ address() }}</span>
-          <span class="text-[13.5px] text-[#9C8FA0]">{{ phone() }}</span>
-          <span class="text-[13.5px] text-[#9C8FA0]">{{ email() }}</span>
+<footer class="overflow-hidden bg-plum-900 px-4 pt-16 text-on-plum-muted sm:px-6 sm:pt-20 lg:px-10">
+  <div class="mx-auto flex max-w-[1160px] flex-col gap-14 lg:gap-[72px]">
+    <div class="flex flex-col gap-8">
+      <a
+        [href]="site.telHref()"
+        class="font-display text-[clamp(2.1rem,9.2vw,6.5rem)] font-bold leading-none tracking-[-0.035em] text-cream-50"
+        >{{ site.phone() }}</a
+      >
+      <div class="flex flex-wrap gap-3.5">
+        <a
+          [href]="mapsUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-3.5 rounded-full border-[1.5px] border-line px-6 py-4 font-display text-[17px] font-semibold text-cream-50 sm:px-[30px]"
+        >
+          <svg
+            width="34"
+            height="14"
+            viewBox="0 0 34 14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M1 12V8h24M25 4l7 4-7 4z" />
+          </svg>
+          Itinéraire
+        </a>
+        @if (site.whatsappHref()) {
           <a
-            [href]="instagramUrl"
+            [href]="site.whatsappHref()"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex w-fit items-center gap-2 text-[13.5px] text-[#9C8FA0] hover:text-white"
+            class="flex items-center gap-2.5 rounded-full bg-success-solid px-6 py-[18px] font-display text-[17px] font-semibold text-white sm:px-[30px]"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" />
             </svg>
-            <span>Instagram · {{ instagramHandle }}</span>
+            Écrire sur WhatsApp
           </a>
-        </div>
+        }
+        <a
+          routerLink="/rendez-vous"
+          class="flex items-center rounded-full bg-accent-500 px-6 py-[18px] font-display text-[17px] font-bold text-on-accent sm:px-[30px]"
+          >Prendre rendez-vous</a
+        >
       </div>
     </div>
 
-    <div class="flex flex-wrap justify-between gap-2.5 border-t border-white/10 py-5">
-      <span class="text-xs text-[#6B5D6E]">© {{ year }} Dr Aissatou Mamadou Fall — Tous droits réservés</span>
-      <span class="text-xs text-[#6B5D6E]">Sacré-Cœur 3, Dakar, Sénégal</span>
+    <div
+      class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.5fr_1.2fr_0.9fr_1.2fr_1.1fr] lg:gap-10"
+    >
+      <div class="col-span-2 flex flex-col gap-3 md:col-span-1">
+        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+          CONTACT
+        </div>
+        <span class="text-[15.5px] leading-relaxed text-on-plum-muted">
+          @for (line of addressLines(); track $index) {
+            {{ line }}<br />
+          }
+        </span>
+        <a [href]="'mailto:' + site.email()" class="break-all text-[15.5px] text-white">{{
+          site.email()
+        }}</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+          HORAIRES
+        </div>
+        <app-open-now tone="dark" />
+        <span class="text-[15.5px] leading-relaxed text-on-plum-muted">
+          @for (line of hours.footerLines(); track $index) {
+            {{ line }}<br />
+          }
+        </span>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+          RÉSEAUX
+        </div>
+        <a
+          [href]="instagramUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[15.5px] text-white"
+          >Instagram</a
+        >
+        @if (site.whatsappHref()) {
+          <a
+            [href]="site.whatsappHref()"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[15.5px] text-white"
+            >WhatsApp</a
+          >
+        }
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+          SPÉCIALITÉS
+        </div>
+        @for (link of specialties; track link.label) {
+          <a [routerLink]="link.route" class="text-[15.5px] text-white">{{ link.label }}</a>
+        }
+        <a routerLink="/specialites" class="text-[15.5px] text-white">Toutes les spécialités</a>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+          PATIENTS
+        </div>
+        <a routerLink="/premiere-consultation" class="text-[15.5px] text-white">Première visite</a>
+        <a routerLink="/infos-pratiques" class="text-[15.5px] text-white">Tarifs et assurances</a>
+        <a routerLink="/faq" class="text-[15.5px] text-white">Questions fréquentes</a>
+        <a routerLink="/conseils-sante" class="text-[15.5px] text-white">Conseils santé</a>
+        <a routerLink="/client" class="text-[15.5px] text-white">Mon espace</a>
+      </div>
     </div>
+
+    <div class="flex flex-wrap items-end justify-between gap-10">
+      <p class="m-0 max-w-[460px] whitespace-pre-line text-sm leading-[1.7] text-on-plum-subtle">
+        {{ c().mentions.texte }}
+      </p>
+      <img
+        src="/logo/logo-full-light.png"
+        alt="Cabinet d'Endocrinologie, Diabétologie & Nutrition — Dr Aïssatou Mamadou Fall"
+        class="block h-auto w-[400px] max-w-full"
+      />
+    </div>
+  </div>
+
+  <div
+    class="mx-auto mt-14 flex max-w-[1160px] flex-wrap justify-between gap-4 border-t border-white/15 pb-7 pt-6"
+  >
+    <span class="text-[13px] text-on-plum-subtle">© {{ year }} {{ c().bas.copyright }}</span>
+    <span class="text-[13px] text-on-plum-subtle"
+      >Site réalisé par
+      <a
+        href="https://www.azertica.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-semibold text-cream-50 underline underline-offset-[3px]"
+        >Azertica</a
+      ></span
+    >
+    <span class="text-[13px] text-on-plum-subtle">{{ c().bas.liens }}</span>
   </div>
 </footer>

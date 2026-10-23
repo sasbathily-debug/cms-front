@@ -1,0 +1,158 @@
+<header [class]="headerClass()" (keydown.escape)="closeAll()">
+  <div [class]="innerClass()">
+    <a routerLink="/" class="flex shrink-0 items-center gap-3 text-white" (click)="closeAll()">
+      <span
+        class="pulse-logo flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] bg-accent-500"
+      >
+        <img src="/logo/logo-icon-dark.png" alt="" class="h-[70%] w-[70%] object-contain" />
+      </span>
+      <span class="flex flex-col leading-tight">
+        <span class="font-display text-[17px] font-bold">Dr Aissatou Mamadou Fall</span>
+        <span class="text-xs tracking-[0.08em] text-on-plum-muted">ENDOCRINOLOGIE · NUTRITION</span>
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-3 xl:flex">
+      <nav aria-label="Navigation principale" class="flex gap-2.5" (mouseleave)="leave()">
+        @for (tile of tiles(); track tile.key) {
+          <div (mouseenter)="tile.group ? hover(tile.key) : leave()">
+            <a
+              [routerLink]="tile.route"
+              (pointerdown)="tilePointerDown($event, tile.key)"
+              (click)="tileClick($event, tile)"
+              [class]="tileClass(tile)"
+            >
+              <span class="flex items-start justify-between">
+                <span [class]="symClass()">{{ tile.sym }}</span>
+                <span class="text-[11px] text-on-plum-muted">{{ tile.count }}</span>
+              </span>
+              <span [class]="labelClass()">{{ tile.label }}</span>
+            </a>
+            @if (tile.group && openGroup() === tile.key) {
+              <div [class]="panelClass()">
+                <div
+                  class="flex gap-3 rounded-[24px] border border-line bg-surface p-3 shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
+                >
+                  @if (tile.group.cards?.length) {
+                    <div class="flex w-[236px] shrink-0 flex-col gap-3">
+                      @for (card of tile.group.cards; track card.title) {
+                        <a
+                          [routerLink]="card.route"
+                          appSpotlight
+                          class="group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-plum-900"
+                        >
+                          <img
+                            [src]="card.image"
+                            alt=""
+                            loading="lazy"
+                            class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="absolute inset-0 bg-gradient-to-t from-plum-950/80 via-plum-950/10 to-transparent"
+                          ></span>
+                          <span class="relative block w-full p-4">
+                            <span class="flex flex-col gap-0.5">
+                              <span
+                                class="font-display text-[17px] font-semibold leading-tight text-white"
+                                >{{ card.title }}</span
+                              >
+                              <span class="pr-11 text-[12.5px] leading-snug text-white/80">{{
+                                card.hint
+                              }}</span>
+                            </span>
+                            <span
+                              class="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-fg transition-transform duration-300 group-hover:translate-x-0.5"
+                            >
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                              >
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                              </svg>
+                            </span>
+                          </span>
+                        </a>
+                      }
+                    </div>
+                  }
+                  <div
+                    class="grid min-w-0 flex-1 content-start gap-0.5"
+                    [class]="tile.group.links.length > 4 ? 'grid-cols-2' : 'grid-cols-1'"
+                  >
+                    @for (link of tile.group.links; track link.label) {
+                      <a
+                        [routerLink]="link.route"
+                        class="flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-fg transition hover:bg-page"
+                      >
+                        <span
+                          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sunken font-display text-[15px] font-bold text-accent-700"
+                          >{{ link.sym }}</span
+                        >
+                        <span class="flex flex-col gap-0.5">
+                          <span class="font-display text-[15px] font-semibold">{{
+                            link.label
+                          }}</span>
+                          @if (link.hint) {
+                            <span class="text-[13px] text-muted">{{ link.hint }}</span>
+                          }
+                        </span>
+                      </a>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </nav>
+      <app-theme-toggle [onDark]="true" />
+      <a routerLink="/rendez-vous" [class]="ctaClass()">Prendre rendez-vous</a>
+    </div>
+
+    <button
+      type="button"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/40 bg-[rgba(20,11,25,0.55)] text-white xl:hidden"
+      (click)="toggleMobile()"
+      [attr.aria-expanded]="mobileOpen()"
+      aria-label="Ouvrir le menu"
+    >
+      @if (!mobileOpen()) {
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      } @else {
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      }
+    </button>
+  </div>
+
+  @if (mobileOpen()) {
+    <app-mobile-menu (closed)="closeAll()" />
+  }
+</header>

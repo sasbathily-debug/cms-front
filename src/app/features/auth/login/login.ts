@@ -1,3 +1,4 @@
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -5,7 +6,7 @@ import { Auth } from '../../../core/services/auth';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel],
+  imports: [ThemeToggle, ReactiveFormsModule, RouterLink, AuthVisualPanel],
   selector: 'app-login',
   styleUrl: './login.css',
   templateUrl: './login.html',
@@ -18,15 +19,26 @@ export class Login {
 
   readonly errorMessage = signal<string | null>(null);
   readonly loading = signal(false);
+  readonly showPassword = signal(false);
   readonly returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+  /** Vrai quand on arrive de « Mot de passe oublié » après un changement réussi. */
+  readonly passwordWasReset = this.route.snapshot.queryParamMap.get('reset') === '1';
 
   readonly form = this.fb.group({
     identifier: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
 
+  /** Si l'identifiant déjà saisi est une adresse e-mail, la page « Mot de passe oublié » la reprend. */
+  forgotQueryParams(): { email?: string } {
+    const identifier = this.form.controls.identifier.value?.trim() ?? '';
+    return identifier.includes('@') ? { email: identifier } : {};
+  }
+
   submit(): void {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.errorMessage.set('Saisissez votre identifiant et votre mot de passe.');
       return;
     }
 

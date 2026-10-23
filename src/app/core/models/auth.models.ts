@@ -31,3 +31,13 @@ export interface CompleteRegistrationRequest {
 export interface ResendOtpRequest {
   email: string;
 }
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  email: string;
+  otp: string;
+  password: string;
+}

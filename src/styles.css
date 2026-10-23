@@ -1,28 +1,156 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
+@import 'tailwindcss';
 
+/*
+ * Couleurs en deux familles.
+ *  - Constantes (@theme) : la marque et les surfaces toujours sombres (prune, pêche, orange).
+ *  - Sémantiques (@theme inline, variables --c-*) : fond, texte, bordures… qui changent avec le thème.
+ * Aucune couleur ne s'écrit en dur dans les pages : on utilise ces noms (bg-page, text-fg, border-line…).
+ * Le thème est posé par ThemeService sur <html data-theme="light|dark">.
+ */
 @theme {
-  /* Black Plum / Silk Cream */
-  --color-forest-900: #1F1226;
-  --color-forest-800: #2A1930;
-  --color-forest-700: #34203C;
-  --color-cream-50: #FBF5EE;
-  --color-cream-100: #F1E4D6;
-  --color-accent-100: #FBE3C4;
-  --color-accent-500: #E0873F;
-  --color-accent-600: #C7702A;
-  --color-accent-700: #9A5518;
-  --color-accent-800: #7A430F;
-  --color-ink-900: #241827;
-  --color-ink-600: #6B5F68;
-  --color-border-warm: #E8DACE;
+  --color-plum-950: #140b19;
+  --color-plum-900: #1f1226;
+  --color-plum-850: #241829;
+  --color-plum-800: #2a1930;
+  --color-plum-750: #201a25;
+  --color-plum-700: #34203c;
+  --color-plum-600: #5a3b63;
+  --color-plum-brown: #3a2418;
+  --color-cream-50: #fbf5ee;
+  --color-cream-100: #f1e4d6;
+  --color-accent-100: #fbe3c4;
+  --color-accent-500: #e0873f;
+  --color-accent-600: #c7702a;
+  --color-plum-975: #1c131f;
+  --color-plum-725: #2d2035;
+  --color-accent-300: #f6ae6b;
+  --color-accent-550: #d07a33;
+  --color-success-bright: #2fb36d;
+  --color-violet-500: #8b5cf6;
+  --color-ice-100: #cfe0f5;
+  --color-ice-500: #5b9be0;
+  --color-mint-100: #bde8d2;
+  --color-mint-500: #3fb37f;
+  --color-danger-solid: #d9564b;
+  --color-info-solid: #3e6fa9;
+  --color-brown-solid: #a9673e;
+  --color-peach: #f1c99b;
+  --color-peach-soft: #f6d2ae;
+  --color-peach-pale: #ffe2be;
+  /* Texte posé sur une surface toujours sombre */
+  --color-on-plum: #f3eae0;
+  --color-on-plum-muted: #d8c9bb;
+  --color-on-plum-subtle: #b5a9b8;
+  /* Texte posé sur l'orange de la marque */
+  --color-on-accent: #1f1226;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
+
+:root {
+  color-scheme: light;
+  --c-page: #fbf5ee;
+  --c-sunken: #f1e4d6;
+  --c-surface: #ffffff;
+  --c-line: #e8dace;
+  --c-line-strong: #d9c8b8;
+  --c-fg: #1f1226;
+  --c-body: #4a3f49;
+  --c-muted: #6b5f68;
+  --c-subtle: #8a7e88;
+  --c-inverse: #1f1226;
+  --c-inverse-fg: #fbf5ee;
+  --c-accent-700: #9a5518;
+  --c-accent-800: #7a430f;
+  --c-accent-soft: #fbe3c4;
+  --c-accent-ink: #5a3410;
+  --c-danger: #b2453b;
+  --c-danger-soft: #fbe7e6;
+  --c-danger-line: #f0c4c0;
+  --c-danger-ink: #7a1f18;
+  --c-success: #2e7d46;
+  --c-success-solid: #178a48;
+  --c-success-soft: #eaf7f0;
+  --c-success-line: #bfe5d0;
+  --c-success-ink: #14532d;
+  --c-info: #2e5c8a;
+  --c-info-soft: #e3e9f1;
+  --c-brown: #8a4a2e;
+  --c-brown-soft: #f1e6e3;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --c-page: #150c1a;
+  --c-sunken: #1b1022;
+  --c-surface: #221529;
+  --c-line: #3a2946;
+  --c-line-strong: #4d3a5a;
+  --c-fg: #f6ede3;
+  --c-body: #d9ccd4;
+  --c-muted: #b3a5b0;
+  --c-subtle: #8e7f8c;
+  --c-inverse: #f6ede3;
+  --c-inverse-fg: #1f1226;
+  --c-accent-700: #f0a262;
+  --c-accent-800: #f6b87f;
+  --c-accent-soft: rgba(224, 135, 63, 0.18);
+  --c-accent-ink: #f6d2ae;
+  --c-danger: #f08a80;
+  --c-danger-soft: rgba(240, 138, 128, 0.14);
+  --c-danger-line: rgba(240, 138, 128, 0.4);
+  --c-danger-ink: #f6b3ac;
+  --c-success: #6fcf97;
+  --c-success-solid: #178a48;
+  --c-success-soft: rgba(111, 207, 151, 0.14);
+  --c-success-line: rgba(111, 207, 151, 0.38);
+  --c-success-ink: #a6e3c0;
+  --c-info: #8fb8e8;
+  --c-info-soft: rgba(143, 184, 232, 0.14);
+  --c-brown: #d9a07f;
+  --c-brown-soft: rgba(217, 160, 127, 0.14);
+}
+
+@theme inline {
+  --color-page: var(--c-page);
+  --color-sunken: var(--c-sunken);
+  --color-surface: var(--c-surface);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+  --color-fg: var(--c-fg);
+  --color-body: var(--c-body);
+  --color-muted: var(--c-muted);
+  --color-subtle: var(--c-subtle);
+  --color-inverse: var(--c-inverse);
+  --color-inverse-fg: var(--c-inverse-fg);
+  --color-accent-700: var(--c-accent-700);
+  --color-accent-800: var(--c-accent-800);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-accent-ink: var(--c-accent-ink);
+  --color-danger: var(--c-danger);
+  --color-danger-soft: var(--c-danger-soft);
+  --color-danger-line: var(--c-danger-line);
+  --color-danger-ink: var(--c-danger-ink);
+  --color-success: var(--c-success);
+  --color-success-solid: var(--c-success-solid);
+  --color-success-soft: var(--c-success-soft);
+  --color-success-line: var(--c-success-line);
+  --color-success-ink: var(--c-success-ink);
+  --color-info: var(--c-info);
+  --color-info-soft: var(--c-info-soft);
+  --color-brown: var(--c-brown);
+  --color-brown-soft: var(--c-brown-soft);
+}
+
+/* Variante « dark: » pour les rares cas où un élément doit changer de forme (logo, image) selon le thème. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 body {
   font-family: var(--font-body);
+  background-color: var(--color-page);
+  color: var(--color-fg);
 }
 
 /*
@@ -31,7 +159,7 @@ body {
  * sur fond clair utilisent accent-700 (~5,3:1 sur crème) au lieu d'accent-600 (~3,4:1).
  */
 .bg-accent-500.text-white {
-  color: var(--color-forest-900);
+  color: var(--color-on-accent);
 }
 
 .text-accent-600 {
@@ -71,13 +199,23 @@ body {
 }
 
 .skeleton {
-  background-image: linear-gradient(100deg, var(--color-cream-100) 32%, #fffaf3 50%, var(--color-cream-100) 68%);
+  background-image: linear-gradient(
+    100deg,
+    var(--color-sunken) 32%,
+    var(--color-surface) 50%,
+    var(--color-sunken) 68%
+  );
   background-size: 250% 100%;
   animation: skeleton-shimmer 1.6s ease-in-out infinite;
 }
 
 .skeleton-dark {
-  background-image: linear-gradient(100deg, var(--color-forest-800) 32%, #4a3153 50%, var(--color-forest-800) 68%);
+  background-image: linear-gradient(
+    100deg,
+    var(--color-plum-800) 32%,
+    var(--color-plum-700) 50%,
+    var(--color-plum-800) 68%
+  );
   background-size: 250% 100%;
   animation: skeleton-shimmer 1.6s ease-in-out infinite;
 }
@@ -87,9 +225,378 @@ body {
   .skeleton-dark {
     animation: none;
     background-image: none;
-    background-color: var(--color-cream-100);
+    background-color: var(--color-sunken);
   }
   .skeleton-dark {
-    background-color: var(--color-forest-800);
+    background-color: var(--color-plum-800);
+  }
+}
+
+/* Boutons ronds appel / WhatsApp (flottants) */
+@keyframes call-wiggle {
+  0%,
+  84%,
+  100% {
+    transform: rotate(0);
+  }
+  86% {
+    transform: rotate(-16deg);
+  }
+  88% {
+    transform: rotate(14deg);
+  }
+  90% {
+    transform: rotate(-10deg);
+  }
+  92% {
+    transform: rotate(8deg);
+  }
+  94% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes call-halo {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 8px rgba(224, 135, 63, 0.28),
+      0 18px 36px rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 0 18px rgba(224, 135, 63, 0.06),
+      0 18px 36px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.call-btn {
+  animation: call-halo 3s ease-in-out infinite;
+}
+.call-ico {
+  animation: call-wiggle 8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-btn,
+  .call-ico {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Animations et survols
+ * Tout est coupé pour les visiteurs qui demandent moins de mouvement.
+ * ------------------------------------------------------------------------- */
+
+/* Changement de page : la nouvelle page apparaît en fondu (opacité seule, rien ne bloque la navigation) */
+router-outlet + * {
+  animation: page-in 0.28s ease both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apparition des blocs au défilement (voir core/reveal.ts) */
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.reveal-in {
+  animation: reveal-up 0.7s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Coche de confirmation qui se dessine, créneau qui « prend » */
+.anim-check-circle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.anim-check-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.45s ease-out 0.28s forwards;
+}
+.slot-selected {
+  animation: slot-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes pop-in {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes slot-pop {
+  0% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Espace patient : anneau de progression et fil du suivi (déclenchés par la directive InView) */
+.anim-ring {
+  stroke-dashoffset: var(--ring-offset, 0);
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+[appInView]:not(.inview) .anim-ring {
+  stroke-dashoffset: 100;
+}
+.anim-line {
+  transform-origin: top;
+}
+[appInView]:not(.inview) .anim-line {
+  transform: scaleY(0);
+}
+.inview .anim-line {
+  animation: line-draw 0.5s ease-out both;
+}
+[appInView]:not(.inview) .anim-dot {
+  transform: scale(0);
+}
+.inview .anim-dot {
+  animation: dot-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes line-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes dot-pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/*
+ * Survols : même geste partout, sans jamais déplacer ni redimensionner l'élément. Un élément qui bouge
+ * sous le pointeur fait perdre le clic quand on appuie près du bord (le pointeur en sort avant le relâchement).
+ * Le retour visuel passe donc par l'ombre, la bordure et la luminosité.
+ */
+@media (hover: hover) {
+  a[class*='rounded-'][class*='border']:not([class*='rounded-full']):not(.fixed),
+  button[class*='rounded-'][class*='border']:not([class*='rounded-full']):not(:disabled) {
+    transition:
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  a[class*='rounded-'][class*='border']:not([class*='rounded-full']):not(.fixed):hover,
+  button[class*='rounded-'][class*='border']:not([class*='rounded-full']):not(:disabled):hover {
+    box-shadow: 0 14px 30px rgba(31, 18, 38, 0.12);
+  }
+  a[class*='rounded-full'][class*='bg-']:not(.fixed),
+  a[class*='rounded-full'][class*='border']:not(.fixed),
+  button[class*='rounded-full'][class*='bg-']:not(:disabled),
+  button[class*='rounded-full'][class*='border']:not(:disabled) {
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      filter 0.2s ease;
+  }
+  a[class*='rounded-full'][class*='bg-']:not(.fixed):hover,
+  a[class*='rounded-full'][class*='border']:not(.fixed):hover,
+  button[class*='rounded-full'][class*='bg-']:not(:disabled):hover,
+  button[class*='rounded-full'][class*='border']:not(:disabled):hover {
+    filter: brightness(1.05);
+  }
+}
+a[class*='rounded-full']:not(.fixed):active,
+button[class*='rounded-full']:not(:disabled):active {
+  filter: brightness(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  router-outlet + * {
+    animation: none;
+  }
+  .reveal-pending,
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .anim-check-circle,
+  .anim-check-path,
+  .slot-selected,
+  .inview .anim-line,
+  .inview .anim-dot {
+    animation: none;
+  }
+  .anim-check-path {
+    stroke-dashoffset: 0;
+  }
+  .anim-ring,
+  [appInView]:not(.inview) .anim-ring {
+    stroke-dashoffset: var(--ring-offset, 0);
+    transition: none;
+  }
+  [appInView]:not(.inview) .anim-line,
+  [appInView]:not(.inview) .anim-dot {
+    transform: none;
+  }
+  a,
+  button {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .reveal-pending {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Menu de l'accueil qui revient en barre fixe quand on remonte la page. */
+.header-reveal {
+  animation: header-reveal 0.25s ease-out;
+}
+@keyframes header-reveal {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-reveal {
+    animation: none;
+  }
+}
+
+/* Pouls : le logo du cabinet bat discrètement, double battement puis repos (un cycle par seconde et demie).
+   Seuls transform et opacité s'animent : le navigateur n'a rien à repeindre. */
+.pulse-logo {
+  position: relative;
+}
+.pulse-logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid rgba(224, 135, 63, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  animation: pulse-logo 1.5s ease-out infinite;
+}
+@keyframes pulse-logo {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  12% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+  24% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  36%,
+  100% {
+    opacity: 0;
+    transform: scale(1.26);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-logo::after {
+    animation: none;
+  }
+}
+
+/* Halo qui suit la souris (directive appSpotlight) : un voile, sans aucun déplacement de l'élément. */
+.spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+  background: radial-gradient(
+    200px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(224, 135, 63, 0.2),
+    transparent 70%
+  );
+}
+@media (hover: hover) {
+  .spot:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Portraits de la doctoresse : très lent zoom et un reflet de lumière qui traverse une seule fois. */
+.photo-life::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+}
+.photo-life.inview > img {
+  animation: photo-zoom 20s ease-out both;
+}
+.photo-life.inview::after {
+  animation: photo-glare 1.8s ease-in-out 0.6s both;
+}
+@keyframes photo-zoom {
+  from {
+    scale: 1;
+  }
+  to {
+    scale: 1.07;
+  }
+}
+@keyframes photo-glare {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-life.inview > img,
+  .photo-life.inview::after {
+    animation: none;
   }
 }

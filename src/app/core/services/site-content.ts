@@ -10,6 +10,9 @@ import {
   HealthTipDto,
   HealthTipRequest,
   HeroImageDto,
+  OpeningHourDto,
+  SitePageDto,
+  SitePageSummaryDto,
   SiteSettingsDto,
   UpdateSiteSettingsRequest,
 } from '../models/site-content.models';
@@ -34,8 +37,14 @@ export class SiteContentService {
     return this.http.delete<void>(`${environment.apiUrl}/site/services/${id}`);
   }
 
+  /** Questions publiées (site public). */
   getFaq(): Observable<FaqItemDto[]> {
     return this.http.get<FaqItemDto[]>(`${environment.apiUrl}/site/faq`);
+  }
+
+  /** Toutes les questions, brouillons compris (admin). */
+  getFaqAdmin(): Observable<FaqItemDto[]> {
+    return this.http.get<FaqItemDto[]>(`${environment.apiUrl}/site/faq/all`);
   }
 
   createFaq(request: FaqItemRequest): Observable<FaqItemDto> {
@@ -58,8 +67,41 @@ export class SiteContentService {
     return this.http.put<SiteSettingsDto>(`${environment.apiUrl}/site/settings`, request);
   }
 
+  /** Articles publiés (site public). */
   getHealthTips(): Observable<HealthTipDto[]> {
     return this.http.get<HealthTipDto[]>(`${environment.apiUrl}/site/health-tips`);
+  }
+
+  /** Tous les articles, brouillons compris (admin). */
+  getHealthTipsAdmin(): Observable<HealthTipDto[]> {
+    return this.http.get<HealthTipDto[]>(`${environment.apiUrl}/site/health-tips/all`);
+  }
+
+  /** Contenu saisi pour une page (404 tant que l'admin n'y a rien saisi). */
+  getPage(slug: string): Observable<SitePageDto> {
+    return this.http.get<SitePageDto>(`${environment.apiUrl}/site/pages/${slug}`);
+  }
+
+  /** Les pages modifiées depuis l'admin (admin). */
+  listPages(): Observable<SitePageSummaryDto[]> {
+    return this.http.get<SitePageSummaryDto[]>(`${environment.apiUrl}/site/pages`);
+  }
+
+  savePage(slug: string, content: Record<string, unknown>): Observable<SitePageDto> {
+    return this.http.put<SitePageDto>(`${environment.apiUrl}/site/pages/${slug}`, { content });
+  }
+
+  /** Supprime le contenu saisi : la page retrouve ses textes d'origine. */
+  resetPage(slug: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/site/pages/${slug}`);
+  }
+
+  getOpeningHours(): Observable<OpeningHourDto[]> {
+    return this.http.get<OpeningHourDto[]>(`${environment.apiUrl}/site/opening-hours`);
+  }
+
+  updateOpeningHours(days: OpeningHourDto[]): Observable<OpeningHourDto[]> {
+    return this.http.put<OpeningHourDto[]>(`${environment.apiUrl}/site/opening-hours`, { days });
   }
 
   createHealthTip(request: HealthTipRequest): Observable<HealthTipDto> {
@@ -79,7 +121,10 @@ export class SiteContentService {
   }
 
   createHeroImage(imageUrl: string, title?: string): Observable<HeroImageDto> {
-    return this.http.post<HeroImageDto>(`${environment.apiUrl}/site/hero-images`, { imageUrl, title });
+    return this.http.post<HeroImageDto>(`${environment.apiUrl}/site/hero-images`, {
+      imageUrl,
+      title,
+    });
   }
 
   updateHeroImageTitle(id: string, title: string): Observable<HeroImageDto> {

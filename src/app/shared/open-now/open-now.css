@@ -1,0 +1,43 @@
+:host {
+  display: inline-block;
+}
+
+.open-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: var(--color-subtle);
+}
+
+.open-dot-on {
+  background: var(--color-success-bright);
+}
+
+.open-dot-on::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(47, 179, 109, 0.5);
+  animation: open-breathe 2.6s ease-out infinite;
+}
+
+@keyframes open-breathe {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open-dot-on::after {
+    animation: none;
+  }
+}

@@ -1,40 +1,112 @@
 <div>
   <div class="mb-7">
-    <h1 class="mb-1.5 font-display text-xl font-bold text-forest-900 sm:text-2xl">Conseils santé</h1>
-    <p class="text-sm text-ink-600">Gérez les conseils affichés sur la page du patient</p>
+    <h1 class="mb-1.5 font-display text-xl font-bold text-fg sm:text-2xl">Conseils santé</h1>
+    <p class="text-sm text-muted">
+      Gérez les articles de la page « Conseils santé » du site. Un brouillon n'apparaît pas sur le
+      site.
+    </p>
   </div>
 
-  <div class="mb-8 max-w-xl rounded-2xl border border-border-warm bg-white p-6">
-    <h2 class="mb-4 font-display text-base font-bold text-forest-900">
-      {{ editingId() ? 'Modifier le conseil' : 'Ajouter un conseil' }}
+  <div class="mb-8 max-w-xl rounded-2xl border border-line bg-surface p-6">
+    <h2 class="mb-4 font-display text-base font-bold text-fg">
+      {{ editingId() ? "Modifier l'article" : 'Ajouter un article' }}
     </h2>
     <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-4">
       <div>
-        <label for="admin-health-tips-title" class="mb-1.5 block text-xs font-semibold text-forest-900">Titre</label>
-        <input id="admin-health-tips-title"
+        <label for="admin-health-tips-title" class="mb-1.5 block text-xs font-semibold text-fg"
+          >Titre</label
+        >
+        <input
+          id="admin-health-tips-title"
           type="text"
           formControlName="title"
-          class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+          class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
         />
       </div>
       <div>
-        <label for="admin-health-tips-body" class="mb-1.5 block text-xs font-semibold text-forest-900">Contenu</label>
-        <textarea id="admin-health-tips-body"
+        <label for="admin-health-tips-body" class="mb-1.5 block text-xs font-semibold text-fg"
+          >Contenu</label
+        >
+        <textarea
+          id="admin-health-tips-body"
           formControlName="body"
           rows="3"
-          class="w-full resize-none rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+          class="w-full resize-none rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
         ></textarea>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label for="admin-health-tips-category" class="mb-1.5 block text-xs font-semibold text-fg"
+            >Thème</label
+          >
+          <input
+            id="admin-health-tips-category"
+            type="text"
+            list="admin-health-tips-categories"
+            formControlName="category"
+            placeholder="Diabète, Thyroïde…"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+          />
+          <datalist id="admin-health-tips-categories">
+            @for (c of categorySuggestions; track c) {
+              <option [value]="c"></option>
+            }
+          </datalist>
+        </div>
+        <div>
+          <label for="admin-health-tips-minutes" class="mb-1.5 block text-xs font-semibold text-fg"
+            >Lecture (minutes)</label
+          >
+          <input
+            id="admin-health-tips-minutes"
+            type="number"
+            min="1"
+            max="120"
+            formControlName="readingMinutes"
+            placeholder="5"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+          />
+        </div>
+      </div>
+      <div>
+        <label for="admin-health-tips-photo" class="mb-1.5 block text-xs font-semibold text-fg"
+          >Photo</label
+        >
+        <div class="flex items-center gap-3">
+          @if (form.value.photoUrl) {
+            <img
+              [src]="form.value.photoUrl"
+              alt=""
+              class="h-11 w-16 shrink-0 rounded-lg border border-line object-cover"
+            />
+          }
+          <input
+            id="admin-health-tips-photo"
+            type="text"
+            formControlName="photoUrl"
+            placeholder="https://… ou /img/photo-1.jpg"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+          />
+        </div>
+        <label
+          class="mt-2 inline-flex w-fit cursor-pointer items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-fg"
+        >
+          {{ uploadingPhoto() ? 'Envoi...' : "Choisir une image sur l'ordinateur" }}
+          <input type="file" accept="image/*" class="hidden" (change)="onPhotoSelected($event)" />
+        </label>
       </div>
       <div class="flex gap-4">
         <div class="flex-1">
-          <label class="mb-1.5 block text-xs font-semibold text-forest-900">Icône</label>
+          <label class="mb-1.5 block text-xs font-semibold text-fg">Icône</label>
           <div class="flex items-center gap-3">
-            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-100">
-              <app-health-icon [name]="form.value.icon ?? null" color="#9A5518" />
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft"
+            >
+              <app-health-icon [name]="form.value.icon ?? null" color="var(--color-accent-700)" />
             </div>
             <select
               formControlName="icon"
-              class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+              class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
             >
               <option value="">Icône par défaut</option>
               @for (icon of iconNames; track icon) {
@@ -44,14 +116,23 @@
           </div>
         </div>
         <div class="w-32">
-          <label for="admin-health-tips-displayOrder" class="mb-1.5 block text-xs font-semibold text-forest-900">Ordre</label>
-          <input id="admin-health-tips-displayOrder"
+          <label
+            for="admin-health-tips-displayOrder"
+            class="mb-1.5 block text-xs font-semibold text-fg"
+            >Ordre</label
+          >
+          <input
+            id="admin-health-tips-displayOrder"
             type="number"
             formControlName="displayOrder"
-            class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           />
         </div>
       </div>
+      <label class="flex items-center gap-2.5 text-sm text-fg">
+        <input type="checkbox" formControlName="published" class="h-4 w-4 accent-accent-500" />
+        Publié sur le site (décochez pour garder un brouillon)
+      </label>
       <div class="flex gap-2">
         <button
           type="submit"
@@ -61,7 +142,11 @@
           {{ saving() ? 'Enregistrement...' : editingId() ? 'Mettre à jour' : 'Ajouter' }}
         </button>
         @if (editingId()) {
-          <button type="button" (click)="cancelEdit()" class="rounded-full border border-border-warm px-6 py-2.5 text-sm font-semibold text-ink-600">
+          <button
+            type="button"
+            (click)="cancelEdit()"
+            class="rounded-full border border-line px-6 py-2.5 text-sm font-semibold text-muted"
+          >
             Annuler
           </button>
         }
@@ -72,7 +157,9 @@
   @if (loading()) {
     <div class="flex flex-col gap-3">
       @for (i of [0, 1, 2]; track i) {
-        <div class="flex items-start justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5">
+        <div
+          class="flex items-start justify-between gap-3 rounded-2xl border border-line bg-surface p-5"
+        >
           <div class="flex min-w-[200px] flex-1 gap-3.5">
             <div class="skeleton h-11 w-11 shrink-0 rounded-xl"></div>
             <div class="flex-1">
@@ -90,32 +177,56 @@
   } @else {
     <div class="flex flex-col gap-3">
       @for (tip of tips(); track tip.id) {
-        <div class="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5">
+        <div
+          class="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-line bg-surface p-5"
+        >
           <div class="flex min-w-[200px] flex-1 gap-3.5">
-            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-100">
-              <app-health-icon [name]="tip.icon" color="#9A5518" />
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft"
+            >
+              <app-health-icon [name]="tip.icon" color="var(--color-accent-700)" />
             </div>
             <div>
-              <div class="font-display text-sm font-bold text-forest-900">{{ tip.title }}</div>
-              <p class="mt-1 text-[13.5px] text-ink-600">{{ tip.body }}</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-display text-sm font-bold text-fg">{{ tip.title }}</span>
+                @if (!tip.published) {
+                  <span
+                    class="rounded-full bg-sunken px-2.5 py-0.5 text-[11px] font-semibold text-accent-800"
+                    >Brouillon</span
+                  >
+                }
+                @if (tip.category) {
+                  <span class="rounded-full border border-line px-2.5 py-0.5 text-[11px] text-muted"
+                    >{{ tip.category }}
+                    @if (tip.readingMinutes) {
+                      · {{ tip.readingMinutes }} min
+                    }
+                  </span>
+                }
+              </div>
+              <p class="mt-1 text-[13.5px] text-muted">{{ tip.body }}</p>
             </div>
           </div>
           <div class="flex shrink-0 gap-2">
-            <button type="button" (click)="edit(tip)" class="rounded-full border border-border-warm px-4 py-2 text-xs font-semibold text-forest-900">
+            <button
+              type="button"
+              (click)="edit(tip)"
+              class="rounded-full border border-line px-4 py-2 text-xs font-semibold text-fg"
+            >
               Modifier
             </button>
             <button
               type="button"
               (click)="delete(tip)"
               [disabled]="deletingId() === tip.id"
-              class="rounded-full border border-[#B2453B] px-4 py-2 text-xs font-semibold text-[#B2453B] disabled:opacity-50"
+              class="rounded-full border border-danger px-4 py-2 text-xs font-semibold text-danger disabled:opacity-50"
             >
               Supprimer
             </button>
           </div>
         </div>
       } @empty {
-        <p class="text-sm text-ink-600">Aucun conseil pour le moment.</p>
+        <p class="text-sm text-muted">Aucun conseil pour le moment.</p>
       }
     </div>
   }

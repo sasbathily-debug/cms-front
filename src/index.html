@@ -10,29 +10,42 @@
       content="Cabinet du Dr Aissatou Mamadou Fall, endocrinologue à Dakar (Sacré-Cœur) : diabète, troubles métaboliques et hormonaux. Prenez rendez-vous en ligne."
     />
     <meta name="theme-color" content="#1f1226" />
+    <script>
+      // Pose le thème avant le premier affichage pour éviter un éclair clair sur un écran sombre.
+      (function () {
+        var root = document.documentElement;
+        try {
+          // Clair par défaut ; le sombre seulement si le visiteur l'a choisi.
+          var dark = localStorage.getItem('theme') === 'dark';
+          root.setAttribute('data-theme', dark ? 'dark' : 'light');
+          if (dark)
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#150c1a');
+        } catch (e) {
+          root.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="icon" type="image/png" sizes="512x512" href="logo/logo-icon-light.png" />
     <link rel="apple-touch-icon" href="logo/logo-icon-light.png" />
     <link rel="canonical" href="https://draissatoumamadou.com/" />
     <script type="application/ld+json">
-{
-      "@context": "https://schema.org",
-      "@type": "Physician",
-      "name": "Dr Aissatou Mamadou Fall",
-      "url": "https://draissatoumamadou.com/",
-      "image": "https://draissatoumamadou.com/logo/logo-icon-light.png",
-      "medicalSpecialty": "Endocrine",
-      "description": "Cabinet d'endocrinologie et de nutrition à Dakar : diabète, troubles métaboliques et hormonaux.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Dakar",
-        "addressRegion": "Sacré-Cœur",
-        "addressCountry": "SN"
-      },
-      "sameAs": [
-        "https://www.instagram.com/dr_aissatou.m/"
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Physician",
+        "name": "Dr Aissatou Mamadou Fall",
+        "url": "https://draissatoumamadou.com/",
+        "image": "https://draissatoumamadou.com/logo/logo-icon-light.png",
+        "medicalSpecialty": "Endocrine",
+        "description": "Cabinet d'endocrinologie et de nutrition à Dakar : diabète, troubles métaboliques et hormonaux.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Dakar",
+          "addressRegion": "Sacré-Cœur",
+          "addressCountry": "SN"
+        },
+        "sameAs": ["https://www.instagram.com/dr_aissatou.m/"]
+      }
     </script>
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
@@ -54,6 +67,9 @@
           align-items: center;
           justify-content: center;
           background: #fbf5ee;
+        }
+        [data-theme='dark'] #app-boot-loader {
+          background: #150c1a;
         }
         #app-boot-loader .badge {
           display: flex;

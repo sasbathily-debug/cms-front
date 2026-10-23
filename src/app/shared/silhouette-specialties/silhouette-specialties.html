@@ -1,0 +1,105 @@
+<div
+  class="sil-grid mx-auto grid max-w-[1160px] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12"
+>
+  <div
+    class="sil-wrap relative flex min-h-[460px] items-center justify-center rounded-[32px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] py-8 sm:min-h-[600px]"
+    [class.border]="variant() === 'dark'"
+    [class.border-white/15]="variant() === 'dark'"
+  >
+    <div class="relative w-[260px] sm:w-[300px]">
+      <img
+        src="/img/silhouette.png"
+        alt="Silhouette assise du logo du cabinet, avec les glandes endocrines repérées"
+        class="block h-auto w-full opacity-90"
+      />
+      <div class="gl g-hy r" style="left: 50%; top: 18%">
+        <span class="dot"></span><span class="line"></span><span class="lab">Hypophyse</span>
+      </div>
+      <div class="gl g-th l" style="left: 50%; top: 34%">
+        <span class="dot"></span><span class="line"></span><span class="lab">Thyroïde</span>
+      </div>
+      <div class="gl g-fo r" style="left: 59%; top: 45%">
+        <span class="dot"></span><span class="line"></span><span class="lab">Foie</span>
+      </div>
+      <div class="gl g-pa l" style="left: 50%; top: 52%">
+        <span class="dot"></span><span class="line"></span><span class="lab">Pancréas</span>
+      </div>
+      <div class="gl g-su r" style="left: 50%; top: 60%">
+        <span class="dot"></span><span class="line"></span><span class="lab">Surrénales</span>
+      </div>
+      <div class="gl g-ov l" style="left: 50%; top: 68%">
+        <span class="dot"></span><span class="line"></span
+        ><span class="lab">Ovaires et testicules</span>
+      </div>
+    </div>
+    <span class="absolute bottom-[18px] left-6 text-[12.5px] text-on-plum-subtle"
+      >Schéma simplifié, pas une carte anatomique.</span
+    >
+  </div>
+  <div class="flex flex-col gap-[22px]">
+    <span
+      class="text-xs font-semibold tracking-[0.12em]"
+      [class]="variant() === 'dark' ? 'text-peach' : 'text-accent-700'"
+      >{{ eyebrow() }}</span
+    >
+    <h2
+      class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] sm:text-[44px]"
+      [class]="variant() === 'dark' ? 'text-white' : 'text-fg'"
+    >
+      {{ title() }}
+    </h2>
+    <p
+      class="m-0 text-[17px] leading-[1.65]"
+      [class]="variant() === 'dark' ? 'text-on-plum-muted' : 'text-body'"
+    >
+      {{ intro() }}
+    </p>
+    <div class="mt-1 flex flex-col gap-2.5">
+      @for (row of rows(); track row.key) {
+        <a
+          [routerLink]="row.route"
+          [class]="
+            'row row-' +
+            row.key +
+            (variant() === 'dark'
+              ? ' row-dark border-white/15 bg-white/[0.06] px-5 py-4 text-white'
+              : ' border-line bg-page px-[18px] py-3.5 text-fg')
+          "
+          appSpotlight
+          class="relative flex items-center gap-4 rounded-[18px] border"
+        >
+          <span
+            class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] font-display text-[17px] font-bold text-peach"
+            [class]="variant() === 'dark' ? 'bg-[rgba(241,201,155,0.16)]' : 'bg-plum-900'"
+            >{{ row.sym }}</span
+          >
+          <span class="flex min-w-0 flex-1 flex-col gap-1">
+            <span
+              class="font-display font-bold"
+              [class]="variant() === 'dark' ? 'text-[19px]' : 'text-lg'"
+              >{{ row.title }}</span
+            >
+            @if (variant() === 'dark') {
+              <span class="text-[14.5px] leading-[1.55] text-on-plum-muted">{{
+                row.homeText
+              }}</span>
+              <span class="text-[12.5px] tracking-[0.02em] text-peach">{{ row.organ }}</span>
+            } @else {
+              <span class="text-sm text-muted">{{ row.organ }}</span>
+            }
+          </span>
+          @if (variant() === 'dark') {
+            <span aria-hidden="true" class="shrink-0 text-[22px] text-peach">→</span>
+          }
+        </a>
+      }
+    </div>
+    @if (variant() === 'dark') {
+      <a
+        routerLink="/specialites"
+        class="mt-1.5 self-start text-[15px] font-semibold text-peach hover:underline"
+        >Toutes les spécialités →</a
+      >
+    }
+  </div>
+</div>

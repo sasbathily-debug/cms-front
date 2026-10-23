@@ -1,26 +1,20 @@
 import { Component, HostListener, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { UserService } from '../../../core/services/user';
 import { FileUploadService } from '../../../core/services/file-upload';
-import { Auth } from '../../../core/services/auth';
 import { CurrentUserStore } from '../../../core/services/current-user-store';
-import { AppHeader } from '../../../shared/app-header/app-header';
+import { PatientShell } from '../../../shared/patient-shell/patient-shell';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AppHeader],
+  imports: [ReactiveFormsModule, PatientShell],
   selector: 'app-profile',
-  styleUrl: './profile.css',
   templateUrl: './profile.html',
 })
 export class Profile {
   private readonly fb = inject(FormBuilder);
   private readonly userService = inject(UserService);
   private readonly fileUploadService = inject(FileUploadService);
-  private readonly auth = inject(Auth);
   private readonly currentUserStore = inject(CurrentUserStore);
-
-  readonly backLink = this.auth.currentUser()?.role === 'ADMIN' ? '/admin' : '/client';
 
   readonly loading = signal(true);
   readonly saving = signal(false);
@@ -30,6 +24,9 @@ export class Profile {
   readonly profilePictureUrl = signal<string | null>(null);
   readonly email = signal('');
   readonly zoomOpen = signal(false);
+  readonly showCurrent = signal(false);
+  readonly showNew = signal(false);
+  readonly showConfirm = signal(false);
 
   readonly passwordSaving = signal(false);
   readonly passwordSuccess = signal<string | null>(null);

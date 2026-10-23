@@ -11,40 +11,62 @@
       }
     </div>
   } @else if (!hasSlots()) {
-    <p class="text-sm text-ink-600">Aucun créneau disponible pour le moment. Contactez le cabinet directement.</p>
+    <p class="text-sm text-muted">
+      Aucun créneau disponible pour le moment. Contactez le cabinet directement.
+    </p>
   } @else {
-    <div class="mb-4 flex gap-2 overflow-x-auto pb-2">
-      @for (chip of dayChips(); track chip.date) {
+    <div class="mb-2 flex items-center justify-end gap-2">
+      <button
+        type="button"
+        (click)="changeDayPage(-1)"
+        [disabled]="!canGoBack()"
+        aria-label="Jours précédents"
+        class="flex h-8 w-8 items-center justify-center rounded-full border border-line text-fg transition hover:border-fg disabled:opacity-30"
+      >
+        ‹
+      </button>
+      <button
+        type="button"
+        (click)="changeDayPage(1)"
+        [disabled]="!canGoForward()"
+        aria-label="Jours suivants"
+        class="flex h-8 w-8 items-center justify-center rounded-full border border-line text-fg transition hover:border-fg disabled:opacity-30"
+      >
+        ›
+      </button>
+    </div>
+    <div class="mb-4 grid grid-cols-5 gap-2.5">
+      @for (chip of visibleChips(); track chip.date) {
         <button
           type="button"
           (click)="selectDate(chip.date)"
-          class="flex w-16 shrink-0 flex-col items-center gap-0.5 rounded-xl border py-2.5 text-center transition"
+          class="flex flex-col items-center gap-0.5 rounded-2xl border px-1 py-3.5 text-center transition"
           [class]="
             selectedDate() === chip.date
-              ? 'border-accent-500 bg-accent-500 text-white'
-              : 'border-[#DCD0B4] bg-white text-ink-900 hover:border-accent-500'
+              ? 'slot-selected border-fg bg-inverse text-inverse-fg'
+              : 'border-line bg-surface text-body hover:border-fg'
           "
         >
-          <span class="text-[10px] font-medium uppercase tracking-wide opacity-80">{{ chip.weekday }}</span>
-          <span class="font-display text-base font-bold">{{ chip.day }}</span>
-          <span class="text-[10px] opacity-80">{{ chip.month }}</span>
+          <span class="text-xs tracking-[0.04em] opacity-80">{{ chip.weekday }}</span>
+          <span class="font-display text-[22px] font-bold">{{ chip.day }}</span>
         </button>
       }
     </div>
 
     @if (timesForSelectedDate().length === 0) {
-      <p class="text-sm text-ink-600">Aucun créneau ce jour-là.</p>
+      <p class="text-sm text-muted">Aucun créneau ce jour-là.</p>
     } @else {
       <div class="grid grid-cols-3 gap-2 sm:grid-cols-4">
-        @for (time of timesForSelectedDate(); track time) {
+        @for (time of timesForSelectedDate(); track selectedDate() + time; let i = $index) {
           <button
             type="button"
             (click)="selectTime(time)"
-            class="rounded-lg border px-2 py-2.5 text-sm font-medium transition"
+            [style.animation-delay.ms]="delay(i)"
+            class="slot-in rounded-[14px] border px-1 py-3 text-[14.5px] font-medium tabular-nums transition"
             [class]="
               selectedTime() === time
-                ? 'border-accent-500 bg-accent-500 text-white'
-                : 'border-[#DCD0B4] bg-white text-ink-900 hover:border-accent-500'
+                ? 'slot-selected border-fg bg-inverse text-inverse-fg'
+                : 'border-line bg-surface text-body hover:border-fg'
             "
           >
             {{ formatTime(time) }}
