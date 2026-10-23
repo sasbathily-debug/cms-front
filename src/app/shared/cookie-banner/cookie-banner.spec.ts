@@ -33,10 +33,14 @@ describe('CookieBanner', () => {
     expect(find(root, /En savoir plus/)).toBeUndefined();
   });
 
-  it('est une vraie fenêtre de dialogue, nommée et modale', () => {
-    const dialog = render().querySelector('[role=dialog]')!;
-    expect(dialog.getAttribute('aria-modal')).toBe('true');
+  it("est un panneau de dialogue nommé, collé au bord de l'écran, qui ne bloque pas la page", () => {
+    const root = render();
+    const dialog = root.querySelector('[role=dialog]')!;
     expect(dialog.getAttribute('aria-labelledby')).toBe('cookie-title');
+    expect(dialog.getAttribute('aria-modal')).toBeNull();
+    expect(dialog.className).toContain('cookie-panel');
+    expect(dialog.className).toContain('sm:left-0');
+    expect(root.querySelector('.backdrop-blur-\\[3px\\]')).toBeNull();
   });
 
   it('propose « Refuser » et « Accepter » avec le même poids', () => {
