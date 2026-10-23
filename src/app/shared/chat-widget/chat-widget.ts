@@ -46,6 +46,9 @@ const HIDDEN_PREFIXES = [
 ];
 
 const MAX_LENGTH = 500;
+/** Délai de réponse du service déjà réveillé, puis du service qui dort (l'hébergeur gratuit met près d'une minute à le réveiller). */
+const WARM_TIMEOUT_MS = 15_000;
+const COLD_TIMEOUT_MS = 60_000;
 const NUDGE_AFTER_MS = 20_000;
 const NUDGE_KEY = 'chat-nudged';
 
@@ -86,6 +89,9 @@ export class ChatWidget {
   protected readonly loading = signal(false);
   protected readonly draft = signal('');
   protected readonly messages = signal<ChatMessage[]>([]);
+  /** Vrai dès que le service a répondu une fois : les délais d'attente sont alors courts. */
+  private warm = false;
+  private wakeRequested = false;
 
   /** Questions proposées à l'ouverture : uniquement des réponses déjà validées par le cabinet. */
   protected readonly starters = [
@@ -113,6 +119,7 @@ export class ChatWidget {
     const destroyRef = inject(DestroyRef);
     effect(() => {
       if (this.opened()) {
+        this.wakeUp();
         this.nudge.set(false);
         setTimeout(() => this.field()?.nativeElement.focus());
       }
@@ -177,10 +184,24 @@ export class ChatWidget {
       });
   }
 
+  /** À la première ouverture, réveille le service pendant que le visiteur lit : sa première question n'attend plus le démarrage. */
+  private wakeUp(): void {
+    if (!environment.chatbotUrl || this.wakeRequested) return;
+    this.wakeRequested = true;
+    fetch(`${environment.chatbotUrl}/health`)
+      .then((response) => {
+        this.warm = response.ok;
+      })
+      .catch(() => undefined);
+  }
+
   private async fetchReply(message: string): Promise<ChatReply> {
     if (!environment.chatbotUrl) throw new Error('indisponible');
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
+    const timer = setTimeout(
+      () => controller.abort(),
+      this.warm ? WARM_TIMEOUT_MS : COLD_TIMEOUT_MS,
+    );
     try {
       const response = await fetch(`${environment.chatbotUrl}/chat`, {
         method: 'POST',
@@ -190,6 +211,7 @@ export class ChatWidget {
       });
       if (response.status === 429) throw new Error('limite');
       if (!response.ok) throw new Error('indisponible');
+      this.warm = true;
       const data = (await response.json()) as Partial<ChatReply>;
       return {
         answer: data.answer ?? '',
