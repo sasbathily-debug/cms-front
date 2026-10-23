@@ -40,7 +40,7 @@ describe('CookieBanner', () => {
     expect(dialog.getAttribute('aria-labelledby')).toBe('cookie-title');
     expect(dialog.getAttribute('aria-modal')).toBeNull();
     expect(dialog.className).toContain('cookie-panel');
-    expect(dialog.className).toContain('sm:left-0');
+    expect(dialog.className).toContain('sm:left-6');
     expect(root.querySelector('.backdrop-blur-\\[3px\\]')).toBeNull();
   });
 
