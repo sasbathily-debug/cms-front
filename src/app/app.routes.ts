@@ -12,31 +12,37 @@ const SPECIALTY_TITLES: Record<string, string> = {
 export const routes: Routes = [
   {
     path: '',
+    data: { preload: true },
     loadComponent: () => import('./features/home/home/home').then((m) => m.Home),
   },
   {
     path: 'contact',
+    data: { preload: true },
     title: 'Contact',
     loadComponent: () => import('./features/pages/contact/contact').then((m) => m.Contact),
   },
   {
     path: 'faq',
+    data: { preload: true },
     title: 'Questions fréquentes',
     loadComponent: () => import('./features/pages/faq/faq').then((m) => m.Faq),
   },
   {
     path: 'a-propos',
+    data: { preload: true },
     title: 'À propos',
     loadComponent: () => import('./features/pages/a-propos/a-propos').then((m) => m.APropos),
   },
   {
     path: 'specialites',
+    data: { preload: true },
     title: 'Spécialités',
     loadComponent: () =>
       import('./features/pages/specialites/specialites').then((m) => m.Specialites),
   },
   {
     path: 'premiere-consultation',
+    data: { preload: true },
     title: 'Première consultation',
     loadComponent: () =>
       import('./features/pages/premiere-consultation/premiere-consultation').then(
@@ -45,28 +51,33 @@ export const routes: Routes = [
   },
   {
     path: 'conseils-sante',
+    data: { preload: true },
     title: 'Conseils santé',
     loadComponent: () =>
       import('./features/pages/conseils-sante/conseils-sante').then((m) => m.ConseilsSante),
   },
   {
     path: 'infos-pratiques',
+    data: { preload: true },
     title: 'Infos pratiques et accès',
     loadComponent: () =>
       import('./features/pages/infos-pratiques/infos-pratiques').then((m) => m.InfosPratiques),
   },
   {
     path: 'le-cabinet',
+    data: { preload: true },
     title: 'Le cabinet',
     loadComponent: () => import('./features/pages/le-cabinet/le-cabinet').then((m) => m.LeCabinet),
   },
   {
     path: 'specialites/:slug',
+    data: { preload: true },
     title: (route) => SPECIALTY_TITLES[route.paramMap.get('slug') ?? ''] ?? 'Spécialités',
     loadComponent: () => import('./features/pages/maladie/maladie').then((m) => m.Maladie),
   },
   {
     path: 'rendez-vous',
+    data: { preload: true },
     title: 'Prendre rendez-vous',
     loadComponent: () =>
       import('./features/pages/rendez-vous/rendez-vous').then((m) => m.RendezVous),
