@@ -23,12 +23,13 @@ describe('CookieBanner', () => {
   const find = (root: HTMLElement, label: RegExp) =>
     [...root.querySelectorAll('button')].find((b) => label.test(b.textContent ?? ''));
 
-  it('affiche tout le détail sans rien à déplier', () => {
+  it("affiche l'essentiel sans rien à déplier", () => {
     const root = render();
     const text = root.textContent ?? '';
-    expect(text).toContain('Cookies nécessaires');
+    expect(text).toContain('Nécessaires');
     expect(text).toContain('Google Analytics');
-    expect(text).toContain("Nous n'envoyons jamais");
+    expect(text).toContain("Nous n'envoyons ni nom");
+    expect(text).toContain('2 mois');
     expect(text).toContain('Gérer les cookies');
     expect(find(root, /En savoir plus/)).toBeUndefined();
   });
@@ -45,7 +46,7 @@ describe('CookieBanner', () => {
 
   it('propose « Refuser » et « Accepter » avec le même poids', () => {
     const root = render();
-    const refuse = find(root, /Refuser les cookies/)!;
+    const refuse = find(root, /^\s*Refuser\s*$/)!;
     const accept = find(root, /Accepter les cookies/)!;
     expect(refuse.className).toContain('flex-1');
     expect(accept.className).toContain('flex-1');
@@ -60,7 +61,7 @@ describe('CookieBanner', () => {
     const root = render();
     find(root, /Accepter les cookies/)!.click();
     expect(analytics.accept).toHaveBeenCalledTimes(1);
-    find(root, /Refuser les cookies/)!.click();
+    find(root, /^\s*Refuser\s*$/)!.click();
     expect(analytics.refuse).toHaveBeenCalledTimes(1);
   });
 });

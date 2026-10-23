@@ -2,10 +2,9 @@ import { AfterViewChecked, Component, ElementRef, inject, viewChild } from '@ang
 import { Analytics } from '../../core/analytics';
 
 /**
- * Panneau de consentement qui glisse depuis le bord de l'écran (la gauche sur ordinateur, le bas sur téléphone),
- * sur toute la hauteur : tout le détail est lisible sans rien déplier (cookies nécessaires, mesure d'audience,
- * ce qui est envoyé ou non) et « Refuser » pèse autant qu'« Accepter ». Le texte défile, les boutons restent visibles.
- * Il ne bloque pas la page : on peut continuer à lire le site avant de répondre.
+ * Petit panneau de consentement qui glisse depuis le bord gauche de l'écran (depuis le bas sur téléphone).
+ * L'essentiel est lisible sans rien déplier : ce qui est toujours actif, ce que mesure Google Analytics, ce qui
+ * n'est jamais envoyé. « Refuser » pèse autant qu'« Accepter ». Il ne bloque pas la page.
  */
 @Component({
   selector: 'app-cookie-banner',
@@ -17,17 +16,17 @@ import { Analytics } from '../../core/analytics';
         aria-labelledby="cookie-title"
         aria-describedby="cookie-intro"
         tabindex="-1"
-        class="cookie-panel fixed inset-x-0 bottom-0 z-[80] flex max-h-[92vh] flex-col overflow-hidden rounded-t-[28px] border border-line bg-surface text-fg shadow-[0_-20px_60px_rgba(0,0,0,0.35)] outline-none sm:inset-x-auto sm:inset-y-0 sm:left-0 sm:max-h-none sm:w-[480px] sm:rounded-none sm:rounded-r-[28px] sm:border-y-0 sm:border-l-0 sm:shadow-[24px_0_70px_rgba(0,0,0,0.35)]"
+        class="cookie-panel fixed inset-x-3 bottom-3 z-[80] flex max-h-[85vh] flex-col overflow-hidden rounded-[22px] border border-line bg-surface text-fg shadow-[0_18px_50px_rgba(0,0,0,0.3)] outline-none sm:inset-x-auto sm:bottom-6 sm:left-0 sm:w-[370px] sm:rounded-l-none sm:border-l-0"
       >
-        <div class="flex min-h-0 flex-col gap-5 overflow-y-auto px-6 pb-2 pt-7 sm:px-8 sm:pt-10">
-          <div class="flex items-center gap-4">
+        <div class="flex min-h-0 flex-col gap-3 overflow-y-auto px-5 pb-1 pt-5">
+          <div class="flex items-center gap-3">
             <span
-              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent-700"
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-700"
               aria-hidden="true"
             >
               <svg
-                width="30"
-                height="30"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -41,88 +40,56 @@ import { Analytics } from '../../core/analytics';
                 <circle cx="8.5" cy="15.5" r="0.9" fill="currentColor" stroke="none" />
               </svg>
             </span>
-            <div class="flex flex-col gap-0.5">
-              <h2
-                id="cookie-title"
-                class="m-0 font-display text-[1.65rem] font-bold leading-tight tracking-[-0.02em]"
-              >
-                Vos données, vos choix
-              </h2>
-              <p class="m-0 text-[15px] text-muted">Nous respectons votre vie privée.</p>
-            </div>
+            <h2 id="cookie-title" class="m-0 font-display text-[1.1rem] font-bold leading-tight">
+              Vos données, vos choix
+            </h2>
           </div>
 
-          <p id="cookie-intro" class="m-0 text-[15px] leading-[1.7] text-body">
-            Ce site utilise des cookies. Ceux qui sont nécessaires à son fonctionnement sont
-            toujours actifs. Les autres ne sont utilisés qu'avec votre accord, et refuser ne vous
-            empêche en rien d'utiliser le site, de prendre rendez-vous ou de vous connecter.
+          <p id="cookie-intro" class="m-0 text-[13.5px] leading-[1.55] text-body">
+            Les cookies nécessaires au site sont toujours actifs. Nous ne mesurons les visites
+            qu'avec votre accord.
           </p>
 
-          <section class="flex flex-col gap-2 rounded-[18px] bg-sunken p-5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <h3 class="m-0 font-display text-[16px] font-bold">Cookies nécessaires</h3>
-              <span
-                class="rounded-full bg-success-soft px-3 py-1 text-[12px] font-semibold text-success"
-                >Toujours actifs</span
-              >
-            </div>
-            <p class="m-0 text-[14px] leading-[1.65] text-body">
-              Ils gardent votre connexion à votre espace patient ou professionnel ouverte et
-              retiennent votre choix de thème (clair ou sombre) et votre réponse à cette fenêtre.
-              Ils ne servent pas à vous suivre et ne demandent pas votre accord.
-            </p>
-          </section>
+          <ul class="m-0 flex list-none flex-col gap-2.5 p-0">
+            <li class="flex flex-col gap-0.5 rounded-xl bg-sunken px-3.5 py-3">
+              <span class="text-[13px] font-bold text-fg">
+                Nécessaires
+                <span class="font-semibold text-success">· toujours actifs</span>
+              </span>
+              <span class="text-[12.5px] leading-[1.5] text-body">
+                Votre connexion, le thème clair ou sombre et ce choix. Aucun suivi.
+              </span>
+            </li>
+            <li class="flex flex-col gap-0.5 rounded-xl bg-sunken px-3.5 py-3">
+              <span class="text-[13px] font-bold text-fg">
+                Google Analytics
+                <span class="font-semibold text-accent-800">· avec votre accord</span>
+              </span>
+              <span class="text-[12.5px] leading-[1.5] text-body">
+                Compte les pages vues, la provenance et le type d'appareil (cookies _ga, 2 ans ;
+                données gardées 2 mois). Nous n'envoyons ni nom, ni e-mail, ni téléphone, ni donnée
+                de santé, et rien n'est mesuré dans l'espace patient.
+              </span>
+            </li>
+          </ul>
 
-          <section class="flex flex-col gap-2 rounded-[18px] bg-sunken p-5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <h3 class="m-0 font-display text-[16px] font-bold">
-                Mesure d'audience : Google Analytics
-              </h3>
-              <span
-                class="rounded-full bg-accent-soft px-3 py-1 text-[12px] font-semibold text-accent-800"
-                >Avec votre accord</span
-              >
-            </div>
-            <p class="m-0 text-[14px] leading-[1.65] text-body">
-              Pour améliorer le site, nous comptons les visites : les pages publiques consultées, la
-              provenance approximative (moteur de recherche, réseau social, lien direct), le type
-              d'appareil, et le nombre de rendez-vous réservés ou de messages envoyés, sans aucun
-              détail.
-            </p>
-            <p class="m-0 text-[14px] leading-[1.65] text-body">
-              Cookies déposés par Google :
-              <strong class="font-semibold text-fg">_ga</strong> et
-              <strong class="font-semibold text-fg">_ga_…</strong>, qui contiennent un identifiant
-              aléatoire. Durée de vie du cookie : 2 ans. Les données associées sont conservées 2
-              mois par Google, qui peut les traiter hors du Sénégal.
-            </p>
-            <p class="m-0 text-[14px] leading-[1.65] text-body">
-              <strong class="font-semibold text-fg">Nous n'envoyons jamais</strong> votre nom, votre
-              e-mail, votre téléphone ni aucune information de santé. Rien n'est mesuré dans votre
-              espace patient, l'administration, la connexion ni la création de compte.
-            </p>
-          </section>
-
-          <p class="m-0 pb-3 text-[13.5px] leading-[1.6] text-muted">
-            Vous pouvez changer d'avis à tout moment avec le lien « Gérer les cookies » en bas de
-            chaque page.
+          <p class="m-0 text-[12px] leading-[1.5] text-muted">
+            Modifiable à tout moment : « Gérer les cookies » en bas de page.
           </p>
         </div>
 
-        <div
-          class="flex shrink-0 flex-col gap-3 border-t border-line bg-surface px-6 py-5 sm:flex-row sm:px-8"
-        >
+        <div class="flex shrink-0 gap-2.5 px-5 pb-5 pt-3">
           <button
             type="button"
             (click)="analytics.refuse()"
-            class="flex-1 cursor-pointer rounded-full border-[1.5px] border-fg bg-transparent px-5 py-3.5 font-display text-[15px] font-semibold text-fg transition hover:bg-sunken"
+            class="flex-1 cursor-pointer rounded-full border-[1.5px] border-fg bg-transparent px-3 py-2.5 font-display text-[13.5px] font-semibold text-fg transition hover:bg-sunken"
           >
-            Refuser les cookies
+            Refuser
           </button>
           <button
             type="button"
             (click)="analytics.accept()"
-            class="flex-1 cursor-pointer rounded-full border-[1.5px] border-fg bg-inverse px-5 py-3.5 font-display text-[15px] font-semibold text-inverse-fg transition hover:opacity-90"
+            class="flex-1 cursor-pointer rounded-full border-[1.5px] border-fg bg-inverse px-3 py-2.5 font-display text-[13.5px] font-semibold text-inverse-fg transition hover:opacity-90"
           >
             Accepter les cookies
           </button>
@@ -136,7 +103,7 @@ export class CookieBanner implements AfterViewChecked {
   private readonly dialog = viewChild<ElementRef<HTMLElement>>('dialog');
   private focused = false;
 
-  /** À l'ouverture, le focus va sur la fenêtre : un lecteur d'écran la lit tout de suite et le clavier y reste. */
+  /** À l'ouverture, le focus va sur le panneau : un lecteur d'écran le lit tout de suite et le clavier y reste. */
   ngAfterViewChecked(): void {
     const dialog = this.dialog()?.nativeElement;
     if (dialog && !this.focused) {
