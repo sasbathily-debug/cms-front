@@ -36,7 +36,14 @@ interface ChatReply {
 }
 
 /** Pages où l'assistant n'a pas sa place : connexion, création de compte, espace professionnel. */
-const HIDDEN_PREFIXES = ['/admin', '/login', '/register', '/verify-otp', '/set-password'];
+const HIDDEN_PREFIXES = [
+  '/admin',
+  '/login',
+  '/register',
+  '/verify-otp',
+  '/set-password',
+  '/mot-de-passe-oublie',
+];
 
 const MAX_LENGTH = 500;
 const NUDGE_AFTER_MS = 20_000;

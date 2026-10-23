@@ -84,6 +84,13 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/register/register').then((m) => m.Register),
   },
   {
+    path: 'mot-de-passe-oublie',
+    title: 'Mot de passe oublié',
+    data: { noindex: true },
+    loadComponent: () =>
+      import('./features/auth/forgot-password/forgot-password').then((m) => m.ForgotPassword),
+  },
+  {
     path: 'verify-otp',
     title: 'Vérification du code',
     data: { noindex: true },

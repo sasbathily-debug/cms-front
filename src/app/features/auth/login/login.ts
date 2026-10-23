@@ -20,11 +20,19 @@ export class Login {
   readonly loading = signal(false);
   readonly showPassword = signal(false);
   readonly returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+  /** Vrai quand on arrive de « Mot de passe oublié » après un changement réussi. */
+  readonly passwordWasReset = this.route.snapshot.queryParamMap.get('reset') === '1';
 
   readonly form = this.fb.group({
     identifier: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
+
+  /** Si l'identifiant déjà saisi est une adresse e-mail, la page « Mot de passe oublié » la reprend. */
+  forgotQueryParams(): { email?: string } {
+    const identifier = this.form.controls.identifier.value?.trim() ?? '';
+    return identifier.includes('@') ? { email: identifier } : {};
+  }
 
   submit(): void {
     if (this.form.invalid) {

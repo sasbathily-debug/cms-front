@@ -20,6 +20,12 @@
         </p>
       </div>
 
+      @if (passwordWasReset) {
+        <p class="m-0 rounded-lg bg-[#E3F1E6] px-3.5 py-2.5 text-sm text-[#2E7D46]" role="status">
+          Mot de passe modifié. Connectez-vous avec le nouveau.
+        </p>
+      }
+
       <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
         <div class="flex flex-col gap-2">
           <label for="login-identifier" class="text-[14.5px] font-semibold text-forest-900"
@@ -80,7 +86,8 @@
 
         <div class="-mt-2.5 flex justify-end">
           <a
-            routerLink="/set-password"
+            routerLink="/mot-de-passe-oublie"
+            [queryParams]="forgotQueryParams()"
             class="text-sm font-semibold text-accent-800 hover:underline"
             >Mot de passe oublié ?</a
           >

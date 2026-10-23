@@ -5,9 +5,11 @@ import { SKIP_AUTH_REDIRECT } from '../interceptors/auth-interceptor';
 import { environment } from '../../../environments/environment';
 import {
   CompleteRegistrationRequest,
+  ForgotPasswordRequest,
   LoginRequest,
   RegisterRequest,
   RegisterResponse,
+  ResetPasswordRequest,
   ResendOtpRequest,
   VerifyOtpRequest,
   VerifyOtpResponse,
@@ -75,6 +77,14 @@ export class Auth {
 
   resendOtp(request: ResendOtpRequest): Observable<void> {
     return this.http.post<void>(`${environment.apiUrl}/auth/resend-otp`, request);
+  }
+
+  forgotPassword(request: ForgotPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/auth/forgot-password`, request);
+  }
+
+  resetPassword(request: ResetPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/auth/reset-password`, request);
   }
 
   refresh(): Observable<UserDto> {
