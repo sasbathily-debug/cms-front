@@ -1,19 +1,19 @@
 /* Entrée du menu : le symbole s'allume à l'approche, l'entrée active passe en orange. */
 .admin-link:hover {
   background: rgba(255, 255, 255, 0.06);
-  color: #fff;
+  color: var(--color-white);
 }
 .admin-link:hover .admin-sym {
-  border-color: #e0873f;
+  border-color: var(--color-accent-500);
 }
 .admin-link-active {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(224, 135, 63, 0.55);
-  color: #fff;
+  color: var(--color-white);
   font-weight: 600;
 }
 .admin-link-active .admin-sym {
-  border-color: #e0873f;
-  background: #e0873f;
-  color: #1f1226;
+  border-color: var(--color-accent-500);
+  background: var(--color-accent-500);
+  color: var(--color-plum-900);
 }

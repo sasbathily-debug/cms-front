@@ -12,10 +12,10 @@ import { Component, input } from '@angular/core';
               class="flex h-[34px] w-[34px] items-center justify-center rounded-full border-2 font-display text-[15px] font-bold"
               [class]="
                 i + 1 < step()
-                  ? 'border-forest-900 bg-forest-900 text-cream-50'
+                  ? 'border-inverse bg-inverse text-inverse-fg'
                   : i + 1 === step()
-                    ? 'border-accent-500 bg-accent-500 text-forest-900'
-                    : 'border-[#D9C8B8] bg-white text-[#8A7E88]'
+                    ? 'border-accent-500 bg-accent-500 text-on-accent'
+                    : 'border-line-strong bg-surface text-subtle'
               "
             >
               @if (i + 1 < step()) {
@@ -40,10 +40,10 @@ import { Component, input } from '@angular/core';
               class="whitespace-nowrap text-[12.5px]"
               [class]="
                 i + 1 === step()
-                  ? 'font-semibold text-forest-900'
+                  ? 'font-semibold text-fg'
                   : i + 1 < step()
-                    ? 'font-medium text-forest-900'
-                    : 'font-medium text-[#8A7E88]'
+                    ? 'font-medium text-fg'
+                    : 'font-medium text-subtle'
               "
               >{{ label }}</span
             >
@@ -51,7 +51,7 @@ import { Component, input } from '@angular/core';
           @if (i < labels.length - 1) {
             <span
               class="mx-2 mt-[17px] h-0.5 flex-1"
-              [class]="i + 1 < step() ? 'bg-forest-900' : 'bg-[#D9C8B8]'"
+              [class]="i + 1 < step() ? 'bg-plum-900' : 'bg-line-strong'"
             ></span>
           }
         </li>

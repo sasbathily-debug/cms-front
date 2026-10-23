@@ -1,18 +1,25 @@
 <div>
   <div class="mb-7">
-    <h1 class="mb-1.5 font-display text-xl font-bold text-forest-900 sm:text-2xl">Agenda &amp; disponibilités</h1>
-    <p class="text-sm text-ink-600">Définissez vos horaires récurrents et vos jours d'exception</p>
+    <h1 class="mb-1.5 font-display text-xl font-bold text-fg sm:text-2xl">
+      Agenda &amp; disponibilités
+    </h1>
+    <p class="text-sm text-muted">Définissez vos horaires récurrents et vos jours d'exception</p>
   </div>
 
   <div class="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-    <div class="rounded-2xl border border-border-warm bg-white p-6">
-      <h2 class="mb-4 font-display text-base font-bold text-forest-900">Ajouter un créneau récurrent</h2>
+    <div class="rounded-2xl border border-line bg-surface p-6">
+      <h2 class="mb-4 font-display text-base font-bold text-fg">Ajouter un créneau récurrent</h2>
       <form (ngSubmit)="submitRule()" [formGroup]="ruleForm" class="space-y-4">
         <div>
-          <label for="admin-availability-dayOfWeek" class="mb-1.5 block text-xs font-semibold text-forest-900">Jour</label>
-          <select id="admin-availability-dayOfWeek"
+          <label
+            for="admin-availability-dayOfWeek"
+            class="mb-1.5 block text-xs font-semibold text-fg"
+            >Jour</label
+          >
+          <select
+            id="admin-availability-dayOfWeek"
             formControlName="dayOfWeek"
-            class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           >
             <option value="MONDAY">Lundi</option>
             <option value="TUESDAY">Mardi</option>
@@ -25,34 +32,49 @@
         </div>
         <div class="flex gap-4">
           <div class="flex-1">
-            <label for="admin-availability-startTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Début</label>
-            <input id="admin-availability-startTime"
+            <label
+              for="admin-availability-startTime"
+              class="mb-1.5 block text-xs font-semibold text-fg"
+              >Début</label
+            >
+            <input
+              id="admin-availability-startTime"
               type="time"
               formControlName="startTime"
-              class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+              class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
             />
           </div>
           <div class="flex-1">
-            <label for="admin-availability-endTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Fin</label>
-            <input id="admin-availability-endTime"
+            <label
+              for="admin-availability-endTime"
+              class="mb-1.5 block text-xs font-semibold text-fg"
+              >Fin</label
+            >
+            <input
+              id="admin-availability-endTime"
               type="time"
               formControlName="endTime"
-              class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+              class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
             />
           </div>
         </div>
         <div class="w-40">
-          <label for="admin-availability-slotDurationMinutes" class="mb-1.5 block text-xs font-semibold text-forest-900">Durée du créneau (min)</label>
-          <input id="admin-availability-slotDurationMinutes"
+          <label
+            for="admin-availability-slotDurationMinutes"
+            class="mb-1.5 block text-xs font-semibold text-fg"
+            >Durée du créneau (min)</label
+          >
+          <input
+            id="admin-availability-slotDurationMinutes"
             type="number"
             formControlName="slotDurationMinutes"
             min="5"
             step="5"
-            class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           />
         </div>
         @if (ruleError()) {
-          <p class="text-sm font-medium text-red-600">{{ ruleError() }}</p>
+          <p class="text-sm font-medium text-danger">{{ ruleError() }}</p>
         }
         <button
           type="submit"
@@ -64,56 +86,74 @@
       </form>
     </div>
 
-    <div class="rounded-2xl border border-border-warm bg-white p-6">
-      <h2 class="mb-4 font-display text-base font-bold text-forest-900">Ajouter une exception</h2>
-      <p class="mb-4 text-[13px] text-ink-600">Jour férié, congé, ou horaires spéciaux pour une date précise.</p>
+    <div class="rounded-2xl border border-line bg-surface p-6">
+      <h2 class="mb-4 font-display text-base font-bold text-fg">Ajouter une exception</h2>
+      <p class="mb-4 text-[13px] text-muted">
+        Jour férié, congé, ou horaires spéciaux pour une date précise.
+      </p>
       <form (ngSubmit)="submitException()" [formGroup]="exceptionForm" class="space-y-4">
         <div>
-          <label for="admin-availability-date" class="mb-1.5 block text-xs font-semibold text-forest-900">Date</label>
-          <input id="admin-availability-date"
+          <label for="admin-availability-date" class="mb-1.5 block text-xs font-semibold text-fg"
+            >Date</label
+          >
+          <input
+            id="admin-availability-date"
             type="date"
             formControlName="date"
-            class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           />
         </div>
         <label class="flex cursor-pointer items-center gap-2.5">
           <input type="checkbox" formControlName="closed" class="h-4 w-4 accent-accent-500" />
-          <span class="text-sm text-ink-900">Cabinet fermé ce jour-là</span>
+          <span class="text-sm text-fg">Cabinet fermé ce jour-là</span>
         </label>
 
         @if (!exceptionForm.value.closed) {
           <div class="flex gap-4">
             <div class="flex-1">
-              <label for="admin-availability-customStartTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Début</label>
-              <input id="admin-availability-customStartTime"
+              <label
+                for="admin-availability-customStartTime"
+                class="mb-1.5 block text-xs font-semibold text-fg"
+                >Début</label
+              >
+              <input
+                id="admin-availability-customStartTime"
                 type="time"
                 formControlName="customStartTime"
-                class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
               />
             </div>
             <div class="flex-1">
-              <label for="admin-availability-customEndTime" class="mb-1.5 block text-xs font-semibold text-forest-900">Fin</label>
-              <input id="admin-availability-customEndTime"
+              <label
+                for="admin-availability-customEndTime"
+                class="mb-1.5 block text-xs font-semibold text-fg"
+                >Fin</label
+              >
+              <input
+                id="admin-availability-customEndTime"
                 type="time"
                 formControlName="customEndTime"
-                class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+                class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
               />
             </div>
           </div>
         }
 
         <div>
-          <label for="admin-availability-note" class="mb-1.5 block text-xs font-semibold text-forest-900">Note (optionnel)</label>
-          <input id="admin-availability-note"
+          <label for="admin-availability-note" class="mb-1.5 block text-xs font-semibold text-fg"
+            >Note (optionnel)</label
+          >
+          <input
+            id="admin-availability-note"
             type="text"
             formControlName="note"
             placeholder="Ex. : Jour férié — Tabaski"
-            class="w-full rounded-lg border border-border-warm px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+            class="w-full rounded-lg border border-line px-3.5 py-2.5 text-sm focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
           />
         </div>
 
         @if (exceptionError()) {
-          <p class="text-sm font-medium text-red-600">{{ exceptionError() }}</p>
+          <p class="text-sm font-medium text-danger">{{ exceptionError() }}</p>
         }
         <button
           type="submit"
@@ -129,7 +169,7 @@
   @if (loading()) {
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       @for (col of [0, 1]; track col) {
-        <div class="rounded-2xl border border-border-warm bg-white p-6">
+        <div class="rounded-2xl border border-line bg-surface p-6">
           <div class="skeleton mb-4 h-4 w-40 rounded"></div>
           <div class="flex flex-col gap-2">
             @for (i of [0, 1, 2]; track i) {
@@ -141,22 +181,31 @@
     </div>
   } @else {
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-      <div class="rounded-2xl border border-border-warm bg-white p-6">
-        <h2 class="mb-4 font-display text-base font-bold text-forest-900">Grille hebdomadaire</h2>
+      <div class="rounded-2xl border border-line bg-surface p-6">
+        <h2 class="mb-4 font-display text-base font-bold text-fg">Grille hebdomadaire</h2>
         <div class="flex flex-col gap-4">
           @for (day of dayOrder; track day) {
             @if (rulesForDay(day).length > 0) {
               <div>
-                <div class="mb-2 text-xs font-semibold uppercase tracking-wide text-accent-600">{{ dayLabel(day) }}</div>
+                <div class="mb-2 text-xs font-semibold uppercase tracking-wide text-accent-600">
+                  {{ dayLabel(day) }}
+                </div>
                 <div class="flex flex-col gap-2">
                   @for (rule of rulesForDay(day); track rule.id) {
-                    <div class="flex items-center justify-between rounded-lg bg-cream-100 px-3.5 py-2.5">
-                      <span class="text-sm text-ink-900">{{ rule.startTime.slice(0, 5) }} &ndash; {{ rule.endTime.slice(0, 5) }} ({{ rule.slotDurationMinutes }} min)</span>
+                    <div
+                      class="flex items-center justify-between rounded-lg bg-sunken px-3.5 py-2.5"
+                    >
+                      <span class="text-sm text-fg"
+                        >{{ rule.startTime.slice(0, 5) }} &ndash; {{ rule.endTime.slice(0, 5) }} ({{
+                          rule.slotDurationMinutes
+                        }}
+                        min)</span
+                      >
                       <button
                         type="button"
                         (click)="deleteRule(rule)"
                         [disabled]="deletingRuleId() === rule.id"
-                        class="text-xs font-semibold text-[#B2453B] disabled:opacity-50"
+                        class="text-xs font-semibold text-danger disabled:opacity-50"
                       >
                         Supprimer
                       </button>
@@ -167,26 +216,27 @@
             }
           }
           @if (rules().length === 0) {
-            <p class="text-sm text-ink-600">Aucun créneau récurrent défini.</p>
+            <p class="text-sm text-muted">Aucun créneau récurrent défini.</p>
           }
         </div>
       </div>
 
-      <div class="rounded-2xl border border-border-warm bg-white p-6">
-        <h2 class="mb-4 font-display text-base font-bold text-forest-900">Exceptions à venir</h2>
+      <div class="rounded-2xl border border-line bg-surface p-6">
+        <h2 class="mb-4 font-display text-base font-bold text-fg">Exceptions à venir</h2>
         @if (exceptions().length === 0) {
-          <p class="text-sm text-ink-600">Aucune exception planifiée.</p>
+          <p class="text-sm text-muted">Aucune exception planifiée.</p>
         } @else {
           <div class="flex flex-col gap-2">
             @for (exception of exceptions(); track exception.id) {
-              <div class="flex items-center justify-between rounded-lg bg-cream-100 px-3.5 py-2.5">
+              <div class="flex items-center justify-between rounded-lg bg-sunken px-3.5 py-2.5">
                 <div>
-                  <span class="text-sm font-medium text-ink-900">{{ exception.date }}</span>
-                  <span class="ml-2 text-xs text-ink-600">
+                  <span class="text-sm font-medium text-fg">{{ exception.date }}</span>
+                  <span class="ml-2 text-xs text-muted">
                     @if (exception.closed) {
                       Fermé
                     } @else {
-                      {{ exception.customStartTime?.slice(0, 5) }} &ndash; {{ exception.customEndTime?.slice(0, 5) }}
+                      {{ exception.customStartTime?.slice(0, 5) }} &ndash;
+                      {{ exception.customEndTime?.slice(0, 5) }}
                     }
                     @if (exception.note) {
                       &middot; {{ exception.note }}
@@ -197,7 +247,7 @@
                   type="button"
                   (click)="deleteException(exception)"
                   [disabled]="deletingExceptionId() === exception.id"
-                  class="text-xs font-semibold text-[#B2453B] disabled:opacity-50"
+                  class="text-xs font-semibold text-danger disabled:opacity-50"
                 >
                   Supprimer
                 </button>

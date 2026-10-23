@@ -1,3 +1,4 @@
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -5,7 +6,7 @@ import { Auth } from '../../../core/services/auth';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel],
+  imports: [ThemeToggle, ReactiveFormsModule, RouterLink, AuthVisualPanel],
   selector: 'app-login',
   styleUrl: './login.css',
   templateUrl: './login.html',

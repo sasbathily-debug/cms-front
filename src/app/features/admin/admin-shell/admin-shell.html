@@ -1,9 +1,9 @@
-<div class="flex min-h-screen bg-cream-50">
+<div class="flex min-h-screen bg-page">
   <ng-template #navLinks>
     <nav class="flex flex-col gap-1" aria-label="Espace professionnel">
       @for (group of groups; track group.title; let first = $first) {
         <div
-          class="mb-1.5 px-1 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[#F1C99B]/70"
+          class="mb-1.5 px-1 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-peach/70"
           [class]="first ? 'pt-1' : 'mt-5'"
         >
           {{ group.title }}
@@ -13,10 +13,10 @@
             [routerLink]="link.route"
             routerLinkActive="admin-link-active"
             (click)="closeMobileMenu()"
-            class="admin-link flex items-center gap-3 rounded-xl border border-transparent px-2 py-2 text-sm font-medium text-[#D8CFDA]"
+            class="admin-link flex items-center gap-3 rounded-xl border border-transparent px-2 py-2 text-sm font-medium text-on-plum-muted"
           >
             <span
-              class="admin-sym flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[10px] border border-white/25 bg-[rgba(20,11,25,0.55)] font-display text-[15px] font-bold text-[#F1C99B]"
+              class="admin-sym flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[10px] border border-white/25 bg-[rgba(20,11,25,0.55)] font-display text-[15px] font-bold text-peach"
               >{{ link.sym }}</span
             >
             <span>{{ link.label }}</span>
@@ -27,7 +27,7 @@
   </ng-template>
 
   <aside
-    class="hidden w-[272px] shrink-0 flex-col overflow-y-auto bg-forest-900 p-5 md:sticky md:top-0 md:flex md:h-screen md:self-start"
+    class="hidden w-[272px] shrink-0 flex-col overflow-y-auto bg-plum-900 p-5 md:sticky md:top-0 md:flex md:h-screen md:self-start"
   >
     <a routerLink="/" class="mb-6 flex items-center gap-3 border-b border-white/10 px-1 pb-5">
       <span
@@ -37,20 +37,23 @@
       </span>
       <span class="flex flex-col leading-tight">
         <span class="font-display text-[15px] font-bold text-white">Dr Aissatou Mamadou Fall</span>
-        <span class="text-[11px] tracking-[0.08em] text-[#D8C9BB]">ESPACE PRO</span>
+        <span class="text-[11px] tracking-[0.08em] text-on-plum-muted">ESPACE PRO</span>
       </span>
     </a>
 
     <ng-container [ngTemplateOutlet]="navLinks" />
 
     <div class="mt-auto flex flex-col gap-3 border-t border-white/10 pt-5">
-      <a
-        routerLink="/"
-        class="flex items-center justify-between rounded-xl border border-white/20 px-3.5 py-2.5 text-sm font-medium text-[#E8DACE]"
-      >
-        Voir le site
-        <span aria-hidden="true" class="text-[#F1C99B]">→</span>
-      </a>
+      <div class="flex items-center gap-2.5">
+        <a
+          routerLink="/"
+          class="flex h-11 min-w-0 flex-1 items-center justify-between rounded-xl border border-white/20 px-3.5 text-sm font-medium text-on-plum-muted"
+        >
+          Voir le site
+          <span aria-hidden="true" class="text-peach">→</span>
+        </a>
+        <app-theme-toggle [onDark]="true" />
+      </div>
       <div class="flex items-center gap-2.5">
         <a routerLink="/profile" class="flex min-w-0 flex-1 items-center gap-2.5">
           @if (store.user()?.profilePictureUrl) {
@@ -61,7 +64,7 @@
             />
           } @else {
             <span
-              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-100 text-xs font-bold text-accent-700"
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-bold text-accent-700"
               >{{ store.initials() }}</span
             >
           }
@@ -72,7 +75,7 @@
         <button
           type="button"
           (click)="logout()"
-          class="shrink-0 rounded-lg px-2.5 py-1.5 text-[13px] font-medium text-[#C9BFCB] hover:bg-white/10 hover:text-white"
+          class="shrink-0 rounded-lg px-2.5 py-1.5 text-[13px] font-medium text-on-plum-muted hover:bg-white/10 hover:text-white"
         >
           Déconnexion
         </button>
@@ -82,7 +85,7 @@
 
   <div class="flex min-w-0 flex-1 flex-col">
     <div class="sticky top-0 z-30 md:hidden">
-      <div class="flex items-center justify-between bg-forest-900 px-4 py-3">
+      <div class="flex items-center justify-between bg-plum-900 px-4 py-3">
         <a routerLink="/" class="flex items-center gap-2.5" (click)="closeMobileMenu()">
           <span
             class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[12px] bg-accent-500"
@@ -91,44 +94,47 @@
           </span>
           <span class="flex flex-col leading-tight">
             <span class="font-display text-sm font-bold text-white">Dr Aissatou Mamadou Fall</span>
-            <span class="text-[10.5px] tracking-[0.08em] text-[#D8C9BB]">ESPACE PRO</span>
+            <span class="text-[10.5px] tracking-[0.08em] text-on-plum-muted">ESPACE PRO</span>
           </span>
         </a>
-        <button
-          type="button"
-          (click)="toggleMobileMenu()"
-          [attr.aria-expanded]="mobileMenuOpen()"
-          class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/40 bg-[rgba(20,11,25,0.55)] text-white"
-          aria-label="Ouvrir le menu"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
+        <div class="flex items-center gap-2">
+          <app-theme-toggle [onDark]="true" />
+          <button
+            type="button"
+            (click)="toggleMobileMenu()"
+            [attr.aria-expanded]="mobileMenuOpen()"
+            class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/40 bg-[rgba(20,11,25,0.55)] text-white"
+            aria-label="Ouvrir le menu"
           >
-            @if (mobileMenuOpen()) {
-              <path d="M6 6l12 12M18 6L6 18" />
-            } @else {
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            }
-          </svg>
-        </button>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              @if (mobileMenuOpen()) {
+                <path d="M6 6l12 12M18 6L6 18" />
+              } @else {
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              }
+            </svg>
+          </button>
+        </div>
       </div>
 
       @if (mobileMenuOpen()) {
         <div
-          class="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-white/10 bg-forest-900 p-4"
+          class="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-white/10 bg-plum-900 p-4"
         >
           <ng-container [ngTemplateOutlet]="navLinks" />
           <div class="mt-4 flex flex-col gap-2.5 border-t border-white/10 pt-4">
             <a
               routerLink="/"
               (click)="closeMobileMenu()"
-              class="rounded-xl border border-white/20 px-3.5 py-2.5 text-sm font-medium text-[#E8DACE]"
+              class="rounded-xl border border-white/20 px-3.5 py-2.5 text-sm font-medium text-on-plum-muted"
               >Voir le site →</a
             >
             <div class="flex items-center gap-3">
@@ -138,7 +144,11 @@
                 class="flex-1 truncate text-sm font-semibold text-white"
                 >{{ displayName() }}</a
               >
-              <button type="button" (click)="logout()" class="text-sm font-medium text-[#C9BFCB]">
+              <button
+                type="button"
+                (click)="logout()"
+                class="text-sm font-medium text-on-plum-muted"
+              >
                 Déconnexion
               </button>
             </div>

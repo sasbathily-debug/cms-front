@@ -1,10 +1,11 @@
-<div class="grid min-h-screen bg-cream-50 lg:grid-cols-2">
+<div class="grid min-h-screen bg-page lg:grid-cols-2">
   <app-auth-visual-panel />
 
   <div class="relative flex items-center justify-center px-4 py-14 sm:px-10">
+    <div class="absolute left-4 top-4 sm:left-10 sm:top-5"><app-theme-toggle /></div>
     <a
       routerLink="/"
-      class="absolute right-5 top-6 text-[14.5px] font-semibold text-[#4A3F49] hover:text-forest-900 sm:right-10 sm:top-8"
+      class="absolute right-5 top-6 text-[14.5px] font-semibold text-body hover:text-fg sm:right-10 sm:top-8"
       >← Retour à l'accueil</a
     >
 
@@ -13,18 +14,18 @@
 
       <div class="flex flex-col gap-2">
         <h1
-          class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+          class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-fg"
         >
           Vérifiez votre e-mail
         </h1>
-        <p class="m-0 text-base leading-[1.55] text-[#4A3F49]">
-          Code envoyé à <strong class="text-forest-900">{{ email() }}</strong>
+        <p class="m-0 text-base leading-[1.55] text-body">
+          Code envoyé à <strong class="text-fg">{{ email() }}</strong>
         </p>
       </div>
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
         <div class="flex flex-col gap-2.5">
-          <span id="otp-label" class="text-[14.5px] font-semibold text-forest-900"
+          <span id="otp-label" class="text-[14.5px] font-semibold text-fg"
             >Code de vérification</span
           >
           <div
@@ -44,29 +45,29 @@
                 (input)="onInput(i, $event)"
                 (keydown)="onKeydown(i, $event)"
                 [attr.aria-label]="'Chiffre ' + (i + 1)"
-                class="h-[62px] min-w-0 flex-1 rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white text-center font-display text-[28px] font-bold text-forest-900 outline-none transition focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="h-[62px] min-w-0 flex-1 rounded-[14px] border-[1.5px] border-line-strong bg-surface text-center font-display text-[28px] font-bold text-fg outline-none transition focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               />
             }
           </div>
-          <span class="text-[13px] text-ink-600">6 chiffres, valable quelques minutes.</span>
+          <span class="text-[13px] text-muted">6 chiffres, valable quelques minutes.</span>
         </div>
 
         @if (errorMessage()) {
-          <p class="m-0 text-sm text-red-600" role="alert">{{ errorMessage() }}</p>
+          <p class="m-0 text-sm text-danger" role="alert">{{ errorMessage() }}</p>
         }
         @if (resendMessage()) {
-          <p class="m-0 text-sm text-forest-800" role="status">{{ resendMessage() }}</p>
+          <p class="m-0 text-sm text-fg" role="status">{{ resendMessage() }}</p>
         }
 
         <button
           type="submit"
           [disabled]="form.invalid || loading()"
-          class="rounded-full bg-accent-500 p-[17px] text-center font-display text-[17px] font-bold text-forest-900 transition hover:bg-accent-600 disabled:opacity-50"
+          class="rounded-full bg-accent-500 p-[17px] text-center font-display text-[17px] font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
         >
           {{ loading() ? 'Vérification…' : 'Vérifier' }}
         </button>
 
-        <p class="m-0 text-center text-[15px] text-[#4A3F49]">
+        <p class="m-0 text-center text-[15px] text-body">
           Pas reçu ?
           <button
             type="button"

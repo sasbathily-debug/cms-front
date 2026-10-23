@@ -32,25 +32,25 @@
         ><span class="lab">Ovaires et testicules</span>
       </div>
     </div>
-    <span class="absolute bottom-[18px] left-6 text-[12.5px] text-[#B5A9B8]"
+    <span class="absolute bottom-[18px] left-6 text-[12.5px] text-on-plum-subtle"
       >Schéma simplifié, pas une carte anatomique.</span
     >
   </div>
   <div class="flex flex-col gap-[22px]">
     <span
       class="text-xs font-semibold tracking-[0.12em]"
-      [class]="variant() === 'dark' ? 'text-[#F1C99B]' : 'text-accent-700'"
+      [class]="variant() === 'dark' ? 'text-peach' : 'text-accent-700'"
       >{{ eyebrow() }}</span
     >
     <h2
       class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] sm:text-[44px]"
-      [class]="variant() === 'dark' ? 'text-white' : 'text-forest-900'"
+      [class]="variant() === 'dark' ? 'text-white' : 'text-fg'"
     >
       {{ title() }}
     </h2>
     <p
       class="m-0 text-[17px] leading-[1.65]"
-      [class]="variant() === 'dark' ? 'text-[#E8DACE]' : 'text-[#4A3F49]'"
+      [class]="variant() === 'dark' ? 'text-on-plum-muted' : 'text-body'"
     >
       {{ intro() }}
     </p>
@@ -63,14 +63,14 @@
             row.key +
             (variant() === 'dark'
               ? ' row-dark border-white/15 bg-white/[0.06] px-5 py-4 text-white'
-              : ' border-border-warm bg-cream-50 px-[18px] py-3.5 text-forest-900')
+              : ' border-line bg-page px-[18px] py-3.5 text-fg')
           "
           appSpotlight
           class="relative flex items-center gap-4 rounded-[18px] border"
         >
           <span
-            class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] font-display text-[17px] font-bold text-[#F1C99B]"
-            [class]="variant() === 'dark' ? 'bg-[rgba(241,201,155,0.16)]' : 'bg-forest-900'"
+            class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] font-display text-[17px] font-bold text-peach"
+            [class]="variant() === 'dark' ? 'bg-[rgba(241,201,155,0.16)]' : 'bg-plum-900'"
             >{{ row.sym }}</span
           >
           <span class="flex min-w-0 flex-1 flex-col gap-1">
@@ -80,14 +80,16 @@
               >{{ row.title }}</span
             >
             @if (variant() === 'dark') {
-              <span class="text-[14.5px] leading-[1.55] text-[#E8DACE]">{{ row.homeText }}</span>
-              <span class="text-[12.5px] tracking-[0.02em] text-[#F1C99B]">{{ row.organ }}</span>
+              <span class="text-[14.5px] leading-[1.55] text-on-plum-muted">{{
+                row.homeText
+              }}</span>
+              <span class="text-[12.5px] tracking-[0.02em] text-peach">{{ row.organ }}</span>
             } @else {
-              <span class="text-sm text-ink-600">{{ row.organ }}</span>
+              <span class="text-sm text-muted">{{ row.organ }}</span>
             }
           </span>
           @if (variant() === 'dark') {
-            <span aria-hidden="true" class="shrink-0 text-[22px] text-[#F1C99B]">→</span>
+            <span aria-hidden="true" class="shrink-0 text-[22px] text-peach">→</span>
           }
         </a>
       }
@@ -95,7 +97,7 @@
     @if (variant() === 'dark') {
       <a
         routerLink="/specialites"
-        class="mt-1.5 self-start text-[15px] font-semibold text-[#F1C99B] hover:underline"
+        class="mt-1.5 self-start text-[15px] font-semibold text-peach hover:underline"
         >Toutes les spécialités →</a
       >
     }

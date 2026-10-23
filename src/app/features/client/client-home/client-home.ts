@@ -26,10 +26,10 @@ const CATEGORY_LABELS: Record<DocumentCategory, string> = {
 };
 
 const DOT_COLORS: Record<string, { dot: string; halo: string }> = {
-  CONFIRMED: { dot: '#E0873F', halo: 'rgba(224,135,63,0.25)' },
-  COMPLETED: { dot: '#1F1226', halo: 'rgba(31,18,38,0.12)' },
-  CANCELLED: { dot: '#B3261E', halo: 'rgba(179,38,30,0.15)' },
-  NO_SHOW: { dot: '#8A4A2E', halo: 'rgba(138,74,46,0.15)' },
+  CONFIRMED: { dot: 'var(--color-accent-500)', halo: 'rgba(224,135,63,0.25)' },
+  COMPLETED: { dot: 'var(--color-plum-900)', halo: 'rgba(31,18,38,0.12)' },
+  CANCELLED: { dot: 'var(--color-danger)', halo: 'rgba(179,38,30,0.15)' },
+  NO_SHOW: { dot: 'var(--color-brown)', halo: 'rgba(138,74,46,0.15)' },
 };
 
 const PREP_ITEMS = [

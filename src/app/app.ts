@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CurrentUserStore } from './core/services/current-user-store';
 import { Reveal } from './core/reveal';
+import { Theme } from './core/theme';
 import { ChatWidget } from './shared/chat-widget/chat-widget';
 
 @Component({
@@ -16,5 +17,6 @@ export class App {
   constructor() {
     inject(CurrentUserStore);
     inject(Reveal);
+    inject(Theme);
   }
 }

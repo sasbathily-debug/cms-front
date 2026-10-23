@@ -10,7 +10,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #e0873f;
+  background: var(--color-accent-500);
   box-shadow: 0 0 0 5px rgba(224, 135, 63, 0.28);
   animation: gl-pulse 2.4s ease-in-out infinite;
 }
@@ -169,8 +169,8 @@
   display: flex;
 }
 .rowm:focus-within {
-  background: #34203c !important;
-  border-color: #e0873f !important;
+  background: var(--color-plum-700) !important;
+  border-color: var(--color-accent-500) !important;
   outline: none;
 }
 .rowm:focus-within .plus {
@@ -241,7 +241,7 @@
   }
 }
 .ul {
-  background-image: linear-gradient(#e0873f, #e0873f);
+  background-image: linear-gradient(var(--color-accent-500), var(--color-accent-500));
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: 0 5px;
@@ -287,7 +287,7 @@
 
 /* Portrait : fondu en haut pour se fondre dans le fond prune de l'écran. */
 .hero-portrait {
-  mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
+  mask-image: linear-gradient(to bottom, transparent 0, black 16%);
 }
 
 /* Barre de réservation : glisse depuis le bas. */

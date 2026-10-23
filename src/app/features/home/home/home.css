@@ -38,7 +38,7 @@
   }
 }
 .ul {
-  background-image: linear-gradient(#e0873f, #e0873f);
+  background-image: linear-gradient(var(--color-accent-500), var(--color-accent-500));
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: 0 5px;

@@ -10,7 +10,7 @@ import { FloatingActions } from '../floating-actions/floating-actions';
   template: `
     <div
       class="min-h-screen font-body"
-      [class]="tileHeader() ? 'bg-[#140B19] text-[#F3EAE0]' : 'bg-cream-50 text-ink-900'"
+      [class]="tileHeader() ? 'bg-plum-950 text-on-plum' : 'bg-page text-fg'"
     >
       @if (!tileHeader()) {
         <app-home-header variant="bar" />

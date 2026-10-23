@@ -1,10 +1,11 @@
-<div class="grid min-h-screen bg-cream-50 lg:grid-cols-2">
+<div class="grid min-h-screen bg-page lg:grid-cols-2">
   <app-auth-visual-panel />
 
   <div class="relative flex items-center justify-center px-4 py-14 sm:px-10">
+    <div class="absolute left-4 top-4 sm:left-10 sm:top-5"><app-theme-toggle /></div>
     <a
       routerLink="/"
-      class="absolute right-5 top-6 text-[14.5px] font-semibold text-[#4A3F49] hover:text-forest-900 sm:right-10 sm:top-8"
+      class="absolute right-5 top-6 text-[14.5px] font-semibold text-body hover:text-fg sm:right-10 sm:top-8"
       >← Retour à l'accueil</a
     >
 
@@ -13,23 +14,23 @@
 
       <div class="flex flex-col gap-2">
         <h1
-          class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
+          class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-fg"
         >
           Créer votre compte
         </h1>
-        <p class="m-0 text-base leading-[1.55] text-[#4A3F49]">
+        <p class="m-0 text-base leading-[1.55] text-body">
           Quelques informations pour commencer votre suivi.
         </p>
       </div>
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
-        <div class="flex flex-col gap-4 rounded-[22px] border border-border-warm bg-white p-[22px]">
+        <div class="flex flex-col gap-4 rounded-[22px] border border-line bg-surface p-[22px]">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
             >VOS INFORMATIONS</span
           >
           <div class="grid gap-3.5 sm:grid-cols-2">
             <div class="flex flex-col gap-2">
-              <label for="register-firstName" class="text-[14.5px] font-semibold text-forest-900"
+              <label for="register-firstName" class="text-[14.5px] font-semibold text-fg"
                 >Prénom</label
               >
               <input
@@ -38,36 +39,34 @@
                 formControlName="firstName"
                 autocomplete="given-name"
                 placeholder="Awa"
-                class="rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
                 [class]="fieldClass('firstName')"
               />
             </div>
             <div class="flex flex-col gap-2">
-              <label for="register-lastName" class="text-[14.5px] font-semibold text-forest-900"
-                >Nom</label
-              >
+              <label for="register-lastName" class="text-[14.5px] font-semibold text-fg">Nom</label>
               <input
                 id="register-lastName"
                 type="text"
                 formControlName="lastName"
                 autocomplete="family-name"
                 placeholder="Diop"
-                class="rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
                 [class]="fieldClass('lastName')"
               />
             </div>
           </div>
         </div>
 
-        <div class="flex flex-col gap-4 rounded-[22px] border border-border-warm bg-white p-[22px]">
+        <div class="flex flex-col gap-4 rounded-[22px] border border-line bg-surface p-[22px]">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">VOTRE NUMÉRO</span>
           <div class="flex flex-col gap-2">
-            <label for="register-phone" class="text-[14.5px] font-semibold text-forest-900"
+            <label for="register-phone" class="text-[14.5px] font-semibold text-fg"
               >Téléphone</label
             >
             <div class="flex gap-2.5">
               <span
-                class="flex shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-[#D9C8B8] bg-white px-3.5 py-[15px] text-base font-semibold text-forest-900"
+                class="flex shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-line-strong bg-surface px-3.5 py-[15px] text-base font-semibold text-fg"
               >
                 +221
                 <svg
@@ -75,7 +74,7 @@
                   height="14"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#6B5F68"
+                  stroke="var(--color-muted)"
                   stroke-width="2.4"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -90,19 +89,17 @@
                 formControlName="phone"
                 autocomplete="tel-national"
                 placeholder="77 000 00 00"
-                class="min-w-0 flex-1 rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="min-w-0 flex-1 rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
                 [class]="fieldClass('phone')"
               />
             </div>
-            <span class="text-[13px] text-ink-600"
+            <span class="text-[13px] text-muted"
               >Pour que le cabinet puisse vous joindre et retrouver votre dossier.</span
             >
           </div>
           <div class="flex flex-col gap-2">
             <div class="flex items-baseline justify-between">
-              <label for="register-email" class="text-[14.5px] font-semibold text-forest-900"
-                >E-mail</label
-              >
+              <label for="register-email" class="text-[14.5px] font-semibold text-fg">E-mail</label>
             </div>
             <input
               id="register-email"
@@ -110,10 +107,10 @@
               formControlName="email"
               autocomplete="email"
               placeholder="vous@exemple.com"
-              class="rounded-[14px] border-[1.5px] bg-white px-4 py-[15px] text-base text-forest-900 outline-none placeholder:text-[#8A7E88] focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+              class="rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               [class]="fieldClass('email')"
             />
-            <span class="text-[13px] text-ink-600"
+            <span class="text-[13px] text-muted"
               >Nous y envoyons votre code de vérification, puis vos confirmations de
               rendez-vous.</span
             >
@@ -121,7 +118,7 @@
         </div>
 
         @if (errorMessage()) {
-          <div class="rounded-lg bg-red-50 px-3.5 py-2.5 text-sm text-red-600" role="alert">
+          <div class="rounded-lg bg-danger-soft px-3.5 py-2.5 text-sm text-danger" role="alert">
             {{ errorMessage() }}
             @if (unverifiedEmail()) {
               <a
@@ -137,12 +134,12 @@
         <button
           type="submit"
           [disabled]="loading()"
-          class="rounded-full bg-accent-500 p-[17px] text-center font-display text-[17px] font-bold text-forest-900 transition hover:bg-accent-600 disabled:opacity-50"
+          class="rounded-full bg-accent-500 p-[17px] text-center font-display text-[17px] font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
         >
           {{ loading() ? 'Envoi…' : 'Continuer' }}
         </button>
 
-        <p class="m-0 text-center text-[15px] text-[#4A3F49]">
+        <p class="m-0 text-center text-[15px] text-body">
           Déjà un compte ?
           <a
             routerLink="/login"

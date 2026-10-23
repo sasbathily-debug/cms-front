@@ -4,13 +4,13 @@
     class="grid grid-cols-1 items-center gap-8 rounded-[28px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] px-6 py-8 sm:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]"
   >
     <div class="flex flex-col gap-3.5">
-      <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">TABLEAU DE BORD</span>
+      <span class="text-xs font-semibold tracking-[0.12em] text-peach">TABLEAU DE BORD</span>
       <h1
         class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-white sm:text-[44px]"
       >
         Bonjour{{ firstName() ? ' ' + firstName() : '' }}
       </h1>
-      <p class="m-0 text-[16.5px] leading-relaxed text-[#E8DACE]">
+      <p class="m-0 text-[16.5px] leading-relaxed text-on-plum-muted">
         @if (next()) {
           Votre prochain rendez-vous est {{ countdown() }}. Voici de quoi vous y préparer.
         } @else {
@@ -20,7 +20,7 @@
       <div class="mt-1.5 flex flex-wrap gap-3">
         <a
           routerLink="/rendez-vous"
-          class="rounded-full bg-accent-500 px-6 py-[15px] font-display text-[15px] font-bold text-forest-900 transition hover:bg-accent-600"
+          class="rounded-full bg-accent-500 px-6 py-[15px] font-display text-[15px] font-bold text-on-accent transition hover:bg-accent-600"
           >Nouveau rendez-vous</a
         >
         <a
@@ -32,7 +32,7 @@
     </div>
 
     @if (next(); as appt) {
-      <div class="flex flex-col gap-4 rounded-3xl bg-cream-50 p-6">
+      <div class="flex flex-col gap-4 rounded-3xl bg-page p-6">
         <div class="flex items-center justify-between gap-2">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
             >PROCHAIN RENDEZ-VOUS</span
@@ -45,18 +45,16 @@
         </div>
         <div class="flex items-center gap-[18px]">
           <span
-            class="flex h-[82px] w-[76px] shrink-0 flex-col items-center justify-center rounded-[18px] bg-forest-900"
+            class="flex h-[82px] w-[76px] shrink-0 flex-col items-center justify-center rounded-[18px] bg-plum-900"
           >
-            <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
-              nextMonth()
-            }}</span>
+            <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{ nextMonth() }}</span>
             <span class="font-display text-4xl font-bold leading-none text-white">{{
               nextDay()
             }}</span>
           </span>
           <span class="flex flex-col gap-1">
-            <span class="font-display text-[22px] font-bold text-forest-900">{{ nextWhen() }}</span>
-            <span class="text-[14.5px] leading-normal text-[#4A3F49]"
+            <span class="font-display text-[22px] font-bold text-fg">{{ nextWhen() }}</span>
+            <span class="text-[14.5px] leading-normal text-body"
               >{{ appt.reason }}, au cabinet de Sacré-Cœur</span
             >
             <span class="flex items-center gap-2 text-[13px] font-semibold text-accent-800">
@@ -70,32 +68,30 @@
             [href]="mapsUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-full border-[1.5px] border-forest-900 px-[18px] py-2.5 font-display text-sm font-semibold text-forest-900"
+            class="flex items-center gap-2 rounded-full border-[1.5px] border-fg px-[18px] py-2.5 font-display text-sm font-semibold text-fg"
             ><app-nav-icon name="pin" [size]="16" />Itinéraire</a
           >
           <button
             type="button"
             (click)="addToCalendar()"
-            class="flex items-center gap-2 rounded-full border-[1.5px] border-forest-900 px-[18px] py-2.5 font-display text-sm font-semibold text-forest-900"
+            class="flex items-center gap-2 rounded-full border-[1.5px] border-fg px-[18px] py-2.5 font-display text-sm font-semibold text-fg"
           >
             <app-nav-icon name="cal" [size]="16" />Ajouter au calendrier
           </button>
         </div>
       </div>
     } @else if (!loadingAppointments()) {
-      <div class="flex flex-col gap-3 rounded-3xl bg-cream-50 p-6">
+      <div class="flex flex-col gap-3 rounded-3xl bg-page p-6">
         <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
           >PROCHAIN RENDEZ-VOUS</span
         >
-        <span class="font-display text-[22px] font-bold text-forest-900"
-          >Aucun rendez-vous prévu</span
-        >
-        <span class="text-[14.5px] leading-normal text-[#4A3F49]"
+        <span class="font-display text-[22px] font-bold text-fg">Aucun rendez-vous prévu</span>
+        <span class="text-[14.5px] leading-normal text-body"
           >Choisissez un créneau en ligne : la confirmation est immédiate.</span
         >
         <a
           routerLink="/rendez-vous"
-          class="self-start rounded-full bg-forest-900 px-[22px] py-3 font-display text-sm font-semibold text-white"
+          class="self-start rounded-full bg-inverse px-[22px] py-3 font-display text-sm font-semibold text-inverse-fg"
           >Réserver un créneau</a
         >
       </div>
@@ -105,31 +101,27 @@
   <!-- Chiffres clés -->
   <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
     <div
-      class="flex items-center gap-4 rounded-[22px] border border-border-warm bg-white px-[22px] py-5"
+      class="flex items-center gap-4 rounded-[22px] border border-line bg-surface px-[22px] py-5"
     >
       <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-accent-100 text-accent-700"
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-accent-soft text-accent-700"
         ><app-nav-icon name="cal" [size]="22"
       /></span>
       <span class="flex flex-col"
-        ><span class="font-display text-[26px] font-bold text-forest-900">{{
-          upcomingCount()
-        }}</span
-        ><span class="text-[13.5px] text-[#5B4F59]">rendez-vous à venir</span></span
+        ><span class="font-display text-[26px] font-bold text-fg">{{ upcomingCount() }}</span
+        ><span class="text-[13.5px] text-muted">rendez-vous à venir</span></span
       >
     </div>
     <div
-      class="flex items-center gap-4 rounded-[22px] border border-border-warm bg-white px-[22px] py-5"
+      class="flex items-center gap-4 rounded-[22px] border border-line bg-surface px-[22px] py-5"
     >
       <span
-        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-accent-100 text-accent-700"
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-accent-soft text-accent-700"
         ><app-nav-icon name="doc" [size]="22"
       /></span>
       <span class="flex flex-col"
-        ><span class="font-display text-[26px] font-bold text-forest-900">{{
-          documents().length
-        }}</span
-        ><span class="text-[13.5px] text-[#5B4F59]">documents partagés</span></span
+        ><span class="font-display text-[26px] font-bold text-fg">{{ documents().length }}</span
+        ><span class="text-[13.5px] text-muted">documents partagés</span></span
       >
     </div>
   </div>
@@ -138,11 +130,11 @@
   <div class="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2">
     <section
       id="preparation"
-      class="flex scroll-mt-28 flex-col gap-[18px] rounded-3xl border border-border-warm bg-white p-6 sm:p-[26px]"
+      class="flex scroll-mt-28 flex-col gap-[18px] rounded-3xl border border-line bg-surface p-6 sm:p-[26px]"
     >
       <div class="flex flex-col gap-1">
-        <h2 class="m-0 font-display text-[21px] font-bold text-forest-900">Ma préparation</h2>
-        <span class="text-[13.5px] text-ink-600">
+        <h2 class="m-0 font-display text-[21px] font-bold text-fg">Ma préparation</h2>
+        <span class="text-[13.5px] text-muted">
           @if (next()) {
             Pour votre rendez-vous du {{ nextLongDate() }}
           } @else {
@@ -153,7 +145,7 @@
       <ul class="m-0 flex list-none flex-col gap-3.5 p-0">
         @for (item of prepItems; track item; let i = $index) {
           <li>
-            <label class="flex cursor-pointer items-center gap-3.5 text-[15px] text-[#4A3F49]">
+            <label class="flex cursor-pointer items-center gap-3.5 text-[15px] text-body">
               <input
                 type="checkbox"
                 class="peer sr-only"
@@ -161,7 +153,7 @@
                 (change)="togglePrep(i)"
               />
               <span
-                class="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md border-2 border-accent-500 text-forest-900 transition peer-checked:bg-accent-500 peer-focus-visible:ring-4 peer-focus-visible:ring-accent-500/30"
+                class="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md border-2 border-accent-500 text-on-accent transition peer-checked:bg-accent-500 peer-focus-visible:ring-4 peer-focus-visible:ring-accent-500/30"
               >
                 @if (prepDone()[i]) {
                   <app-nav-icon name="check" [size]="15" [strokeWidth]="3.2" />
@@ -180,14 +172,21 @@
           role="img"
           [attr.aria-label]="prepCount() + ' sur ' + prepItems.length + ' prêts'"
         >
-          <circle cx="32" cy="32" r="26" fill="none" stroke="#F1E4D6" stroke-width="7" />
+          <circle
+            cx="32"
+            cy="32"
+            r="26"
+            fill="none"
+            stroke="var(--color-sunken)"
+            stroke-width="7"
+          />
           <circle
             class="anim-ring"
             cx="32"
             cy="32"
             r="26"
             fill="none"
-            stroke="#E0873F"
+            stroke="var(--color-accent-500)"
             stroke-width="7"
             stroke-linecap="round"
             pathLength="100"
@@ -201,15 +200,15 @@
             text-anchor="middle"
             font-size="15"
             font-weight="700"
-            fill="#1F1226"
+            fill="var(--color-plum-900)"
             font-family="Outfit, sans-serif"
           >
             {{ prepCount() }}/{{ prepItems.length }}
           </text>
         </svg>
         <div class="flex flex-col gap-0.5">
-          <span class="text-[14.5px] font-semibold text-forest-900">Progression</span>
-          <span class="text-[13px] text-ink-600"
+          <span class="text-[14.5px] font-semibold text-fg">Progression</span>
+          <span class="text-[13px] text-muted"
             >{{ prepCount() }} sur {{ prepItems.length }} prêts</span
           >
         </div>
@@ -221,44 +220,42 @@
       >
     </section>
 
-    <section
-      class="flex flex-col gap-4 rounded-3xl border border-border-warm bg-white p-6 sm:p-[26px]"
-    >
-      <h2 class="m-0 font-display text-[21px] font-bold text-forest-900">Mes rappels</h2>
+    <section class="flex flex-col gap-4 rounded-3xl border border-line bg-surface p-6 sm:p-[26px]">
+      <h2 class="m-0 font-display text-[21px] font-bold text-fg">Mes rappels</h2>
       <div class="flex items-center justify-between gap-3.5">
         <span class="flex flex-col gap-0.5"
-          ><span class="text-[14.5px] font-semibold text-forest-900">Rappel par e-mail</span
-          ><span class="text-[12.5px] text-ink-600"
+          ><span class="text-[14.5px] font-semibold text-fg">Rappel par e-mail</span
+          ><span class="text-[12.5px] text-muted"
             >Confirmation et rappel avant chaque rendez-vous</span
           ></span
         >
         <span
           class="relative h-[26px] w-[46px] shrink-0 rounded-full"
-          [class]="store.user()?.emailReminders ? 'bg-accent-500' : 'bg-[#D9C8B8]'"
+          [class]="store.user()?.emailReminders ? 'bg-accent-500' : 'bg-line-strong'"
           role="img"
           [attr.aria-label]="store.user()?.emailReminders ? 'Activé' : 'Désactivé'"
         >
           <span
-            class="absolute top-[3px] h-5 w-5 rounded-full bg-white"
+            class="absolute top-[3px] h-5 w-5 rounded-full bg-surface"
             [class]="store.user()?.emailReminders ? 'right-[3px]' : 'left-[3px]'"
           ></span>
         </span>
       </div>
       <div class="flex items-center justify-between gap-3.5">
         <span class="flex flex-col gap-0.5"
-          ><span class="text-[14.5px] font-semibold text-forest-900">Rappel par SMS</span
-          ><span class="text-[12.5px] text-ink-600"
+          ><span class="text-[14.5px] font-semibold text-fg">Rappel par SMS</span
+          ><span class="text-[12.5px] text-muted"
             >Nécessite un numéro de téléphone valide</span
           ></span
         >
         <span
           class="relative h-[26px] w-[46px] shrink-0 rounded-full"
-          [class]="store.user()?.smsReminders ? 'bg-accent-500' : 'bg-[#D9C8B8]'"
+          [class]="store.user()?.smsReminders ? 'bg-accent-500' : 'bg-line-strong'"
           role="img"
           [attr.aria-label]="store.user()?.smsReminders ? 'Activé' : 'Désactivé'"
         >
           <span
-            class="absolute top-[3px] h-5 w-5 rounded-full bg-white"
+            class="absolute top-[3px] h-5 w-5 rounded-full bg-surface"
             [class]="store.user()?.smsReminders ? 'right-[3px]' : 'left-[3px]'"
           ></span>
         </span>
@@ -272,19 +269,19 @@
   <!-- Suivi : la frise des rendez-vous -->
   <section
     id="suivi"
-    class="flex scroll-mt-28 flex-col gap-3.5 rounded-3xl border border-border-warm bg-white p-6 sm:p-[26px]"
+    class="flex scroll-mt-28 flex-col gap-3.5 rounded-3xl border border-line bg-surface p-6 sm:p-[26px]"
   >
     <div class="flex flex-col gap-1">
-      <h2 class="m-0 font-display text-[21px] font-bold text-forest-900">Mon suivi</h2>
-      <span class="text-[13.5px] text-ink-600"
+      <h2 class="m-0 font-display text-[21px] font-bold text-fg">Mon suivi</h2>
+      <span class="text-[13.5px] text-muted"
         >Vos consultations et les documents qui y sont liés</span
       >
     </div>
     @if (loadingAppointments()) {
       <div class="skeleton h-24 rounded-2xl"></div>
     } @else if (appointments().length === 0) {
-      <div class="rounded-2xl bg-cream-100 p-6 text-center">
-        <p class="mb-3 text-sm text-ink-600">Vous n'avez pas encore de rendez-vous.</p>
+      <div class="rounded-2xl bg-sunken p-6 text-center">
+        <p class="mb-3 text-sm text-muted">Vous n'avez pas encore de rendez-vous.</p>
         <a routerLink="/rendez-vous" class="text-sm font-semibold text-accent-800 hover:underline"
           >Prendre votre premier rendez-vous →</a
         >
@@ -310,11 +307,9 @@
             <div class="flex min-w-0 flex-1 flex-col gap-2.5 pb-7">
               <div class="flex flex-wrap items-start justify-between gap-2.5">
                 <div class="flex flex-col gap-0.5">
-                  <span class="font-display text-[17px] font-bold text-forest-900">{{
-                    appt.reason
-                  }}</span>
+                  <span class="font-display text-[17px] font-bold text-fg">{{ appt.reason }}</span>
                   @if (appt.preferredDate) {
-                    <span class="text-sm text-[#5B4F59]">{{
+                    <span class="text-sm text-muted">{{
                       whenLabel(appt.preferredDate, appt.preferredTime)
                     }}</span>
                   }
@@ -330,7 +325,7 @@
                   [href]="doc.fileUrl"
                   target="_blank"
                   rel="noopener"
-                  class="inline-flex w-fit items-center gap-2 rounded-xl border border-border-warm bg-cream-50 px-3 py-2 text-[13px] text-[#4A3F49] hover:border-accent-500"
+                  class="inline-flex w-fit items-center gap-2 rounded-xl border border-line bg-page px-3 py-2 text-[13px] text-body hover:border-accent-500"
                 >
                   <app-nav-icon name="doc" [size]="15" />{{ doc.fileName }}
                 </a>
@@ -347,14 +342,12 @@
   <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
     <section
       id="documents"
-      class="flex scroll-mt-28 flex-col gap-4 rounded-3xl border border-border-warm bg-white p-6 sm:p-[26px]"
+      class="flex scroll-mt-28 flex-col gap-4 rounded-3xl border border-line bg-surface p-6 sm:p-[26px]"
     >
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="flex flex-col gap-1">
-          <h2 class="m-0 font-display text-[21px] font-bold text-forest-900">
-            Documents et ordonnances
-          </h2>
-          <span class="text-[13.5px] text-ink-600">Partagés par le cabinet</span>
+          <h2 class="m-0 font-display text-[21px] font-bold text-fg">Documents et ordonnances</h2>
+          <span class="text-[13.5px] text-muted">Partagés par le cabinet</span>
         </div>
         <div class="flex flex-wrap gap-2" role="group" aria-label="Filtrer les documents">
           @for (f of filters; track f.key) {
@@ -365,8 +358,8 @@
               class="rounded-full border px-3.5 py-[7px] text-[13px] transition"
               [class]="
                 documentFilter() === f.key
-                  ? 'border-forest-900 bg-forest-900 text-white'
-                  : 'border-border-warm text-[#4A3F49] hover:border-forest-900'
+                  ? 'border-fg bg-inverse text-inverse-fg'
+                  : 'border-line text-body hover:border-fg'
               "
             >
               {{ f.label }}
@@ -377,7 +370,7 @@
       @if (loadingDocuments()) {
         <div class="skeleton h-16 rounded-2xl"></div>
       } @else if (filteredDocuments().length === 0) {
-        <div class="rounded-2xl bg-cream-100 p-6 text-center text-sm text-ink-600">
+        <div class="rounded-2xl bg-sunken p-6 text-center text-sm text-muted">
           Aucun document pour le moment.
         </div>
       } @else {
@@ -387,23 +380,23 @@
               [href]="doc.fileUrl"
               target="_blank"
               rel="noopener"
-              class="flex items-center justify-between gap-3.5 rounded-2xl border border-border-warm px-4 py-3.5 transition hover:border-accent-500"
+              class="flex items-center justify-between gap-3.5 rounded-2xl border border-line px-4 py-3.5 transition hover:border-accent-500"
             >
               <span class="flex min-w-0 items-center gap-3.5">
                 <span
-                  class="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-700"
+                  class="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-700"
                   ><app-nav-icon name="doc" [size]="19"
                 /></span>
                 <span class="flex min-w-0 flex-col gap-0.5"
-                  ><span class="truncate text-[14.5px] font-semibold text-forest-900">{{
+                  ><span class="truncate text-[14.5px] font-semibold text-fg">{{
                     doc.fileName
                   }}</span
-                  ><span class="text-[12.5px] text-ink-600"
+                  ><span class="text-[12.5px] text-muted"
                     >{{ categoryLabel(doc.category) }} · {{ doc.uploadedAt.slice(0, 10) }}</span
                   ></span
                 >
               </span>
-              <span class="shrink-0 text-ink-600"><app-nav-icon name="down" [size]="20" /></span>
+              <span class="shrink-0 text-muted"><app-nav-icon name="down" [size]="20" /></span>
             </a>
           }
         </div>
@@ -411,25 +404,18 @@
     </section>
 
     <section
-      class="flex flex-col gap-1.5 rounded-3xl border border-border-warm bg-white p-6 sm:p-[26px]"
+      class="flex flex-col gap-1.5 rounded-3xl border border-line bg-surface p-6 sm:p-[26px]"
     >
-      <h2 class="m-0 mb-2 font-display text-[21px] font-bold text-forest-900">
-        Conseils pour vous
-      </h2>
+      <h2 class="m-0 mb-2 font-display text-[21px] font-bold text-fg">Conseils pour vous</h2>
       @for (tip of healthTips(); track tip.id) {
-        <a
-          routerLink="/conseils-sante"
-          class="flex flex-col gap-1 border-t border-border-warm py-3.5"
-        >
-          <span class="font-display text-base font-bold leading-snug text-forest-900">{{
-            tip.title
-          }}</span>
-          <span class="line-clamp-2 text-[13px] leading-relaxed text-ink-600">{{ tip.body }}</span>
+        <a routerLink="/conseils-sante" class="flex flex-col gap-1 border-t border-line py-3.5">
+          <span class="font-display text-base font-bold leading-snug text-fg">{{ tip.title }}</span>
+          <span class="line-clamp-2 text-[13px] leading-relaxed text-muted">{{ tip.body }}</span>
         </a>
       } @empty {
         <a
           routerLink="/conseils-sante"
-          class="border-t border-border-warm py-3.5 text-[14.5px] font-semibold text-accent-800"
+          class="border-t border-line py-3.5 text-[14.5px] font-semibold text-accent-800"
           >Lire les conseils santé</a
         >
       }
@@ -441,11 +427,11 @@
     <div
       class="flex items-center gap-[18px] rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-[26px] py-[22px] text-white"
     >
-      <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-[#F1C99B]"
+      <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-peach"
         >Ad</span
       >
       <span class="flex flex-col gap-0.5"
-        ><span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">ADRESSE</span
+        ><span class="text-xs font-semibold tracking-[0.1em] text-peach">ADRESSE</span
         ><span class="font-display text-[17px] font-bold leading-snug"
           >{{ site.street() }}, {{ site.address() }}</span
         ></span
@@ -454,12 +440,11 @@
     <div
       class="flex items-center gap-[18px] rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-[26px] py-[22px] text-white"
     >
-      <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-[#F1C99B]"
+      <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-peach"
         >Té</span
       >
       <span class="flex flex-col gap-0.5"
-        ><span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]"
-          >TÉLÉPHONE ET WHATSAPP</span
+        ><span class="text-xs font-semibold tracking-[0.1em] text-peach">TÉLÉPHONE ET WHATSAPP</span
         ><a
           [href]="site.telHref()"
           class="font-display text-[17px] font-bold leading-snug text-white"
@@ -470,11 +455,11 @@
     <div
       class="flex items-center gap-[18px] rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-[26px] py-[22px] text-white"
     >
-      <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-[#F1C99B]"
+      <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-peach"
         >Ho</span
       >
       <span class="flex flex-col gap-0.5"
-        ><span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">HORAIRES</span
+        ><span class="text-xs font-semibold tracking-[0.1em] text-peach">HORAIRES</span
         ><span class="font-display text-[17px] font-bold leading-snug">{{
           openingHours.homeLines().join(' · ')
         }}</span></span

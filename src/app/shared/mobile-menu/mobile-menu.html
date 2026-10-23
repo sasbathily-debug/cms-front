@@ -1,5 +1,5 @@
 <div
-  class="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-[#160B1B]"
+  class="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-plum-950"
   role="dialog"
   aria-modal="true"
   aria-label="Menu"
@@ -12,29 +12,32 @@
       /></span>
       <span class="flex flex-col leading-tight">
         <span class="font-display text-sm font-bold">Dr Aissatou Mamadou Fall</span>
-        <span class="text-[10.5px] tracking-[0.08em] text-[#E8DACE]"
+        <span class="text-[10.5px] tracking-[0.08em] text-on-plum-muted"
           >ENDOCRINOLOGIE · NUTRITION</span
         >
       </span>
     </a>
-    <button
-      type="button"
-      (click)="closed.emit()"
-      aria-label="Fermer le menu"
-      class="flex h-[52px] w-[52px] items-center justify-center rounded-[14px] border border-white/50 bg-[rgba(20,11,25,0.55)] text-white"
-    >
-      <svg
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
+    <div class="flex items-center gap-2.5">
+      <app-theme-toggle [onDark]="true" />
+      <button
+        type="button"
+        (click)="closed.emit()"
+        aria-label="Fermer le menu"
+        class="flex h-[52px] w-[52px] items-center justify-center rounded-[14px] border border-white/50 bg-[rgba(20,11,25,0.55)] text-white"
       >
-        <path d="M6 6l12 12M18 6L6 18" />
-      </svg>
-    </button>
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
   </div>
   <nav class="flex flex-col gap-3 px-4 py-5" aria-label="Navigation mobile">
     @for (pair of tilePairs(); track $index) {
@@ -48,15 +51,15 @@
               class="flex h-[112px] flex-col justify-between rounded-[18px] border px-[18px] py-4 text-left"
               [class]="
                 mobileGroup() === tile.key
-                  ? 'border-[#F1C99B] bg-[#34203C]'
-                  : 'border-white/25 bg-[#241829]'
+                  ? 'border-peach bg-plum-700'
+                  : 'border-white/25 bg-plum-850'
               "
             >
               <span class="flex items-start justify-between">
-                <span class="font-display text-[40px] font-bold leading-none text-[#F1C99B]">{{
+                <span class="font-display text-[40px] font-bold leading-none text-peach">{{
                   tile.sym
                 }}</span>
-                <span class="text-[22px] leading-none text-[#F1C99B]" aria-hidden="true">{{
+                <span class="text-[22px] leading-none text-peach" aria-hidden="true">{{
                   mobileGroup() === tile.key ? '−' : '+'
                 }}</span>
               </span>
@@ -65,13 +68,13 @@
           } @else {
             <a
               [routerLink]="tile.route"
-              class="flex h-[112px] flex-col justify-between rounded-[18px] border border-white/25 bg-[#241829] px-[18px] py-4"
+              class="flex h-[112px] flex-col justify-between rounded-[18px] border border-white/25 bg-plum-850 px-[18px] py-4"
             >
               <span class="flex items-start justify-between">
-                <span class="font-display text-[40px] font-bold leading-none text-[#F1C99B]">{{
+                <span class="font-display text-[40px] font-bold leading-none text-peach">{{
                   tile.sym
                 }}</span>
-                <span class="text-[22px] leading-none text-[#F1C99B]" aria-hidden="true">→</span>
+                <span class="text-[22px] leading-none text-peach" aria-hidden="true">→</span>
               </span>
               <span class="text-[15px] font-medium text-white">{{ tile.label }}</span>
             </a>
@@ -80,20 +83,20 @@
       </div>
       @if (openTile(pair); as open) {
         <div
-          class="flex flex-col rounded-[22px] border border-white/20 bg-[#2A1930] px-[18px] py-1.5"
+          class="flex flex-col rounded-[22px] border border-white/20 bg-plum-800 px-[18px] py-1.5"
         >
           @for (link of open.group!.links; track link.label) {
             <a
               [routerLink]="link.route"
               class="flex items-center justify-between border-b border-white/15 py-4 text-[17px] text-white"
             >
-              {{ link.label }}<span class="text-[#F1C99B]" aria-hidden="true">→</span>
+              {{ link.label }}<span class="text-peach" aria-hidden="true">→</span>
             </a>
           }
           @if (open.group!.allLabel) {
             <a
               [routerLink]="open.group!.route"
-              class="flex items-center justify-between py-4 text-[17px] font-bold text-[#F1C99B]"
+              class="flex items-center justify-between py-4 text-[17px] font-bold text-peach"
             >
               {{ open.group!.allLabel }}<span aria-hidden="true">→</span>
             </a>
@@ -103,7 +106,7 @@
     }
     <a
       routerLink="/rendez-vous"
-      class="mt-2 rounded-full bg-accent-500 p-[18px] text-center font-display text-[17px] font-bold text-[#140B19]"
+      class="mt-2 rounded-full bg-accent-500 p-[18px] text-center font-display text-[17px] font-bold text-on-accent"
       >Prendre rendez-vous</a
     >
     @if (auth.isAuthenticated()) {
