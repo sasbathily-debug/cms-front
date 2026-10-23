@@ -2,7 +2,7 @@ import { AfterViewChecked, Component, ElementRef, inject, viewChild } from '@ang
 import { Analytics } from '../../core/analytics';
 
 /**
- * Petit panneau de consentement qui glisse depuis le bord gauche de l'écran (depuis le bas sur téléphone).
+ * Petit panneau de consentement, posé avec un peu de marge sur le côté gauche, qui glisse depuis le bord de l'écran (depuis le bas sur téléphone).
  * L'essentiel est lisible sans rien déplier : ce qui est toujours actif, ce que mesure Google Analytics, ce qui
  * n'est jamais envoyé. « Refuser » pèse autant qu'« Accepter ». Il ne bloque pas la page.
  */
@@ -16,7 +16,7 @@ import { Analytics } from '../../core/analytics';
         aria-labelledby="cookie-title"
         aria-describedby="cookie-intro"
         tabindex="-1"
-        class="cookie-panel fixed inset-x-3 bottom-3 z-[80] flex max-h-[85vh] flex-col overflow-hidden rounded-[22px] border border-line bg-surface text-fg shadow-[0_18px_50px_rgba(0,0,0,0.3)] outline-none sm:inset-x-auto sm:bottom-6 sm:left-0 sm:w-[370px] sm:rounded-l-none sm:border-l-0"
+        class="cookie-panel fixed inset-x-3 bottom-3 z-[80] flex max-h-[85vh] flex-col overflow-hidden rounded-[22px] border border-line bg-surface text-fg shadow-[0_18px_50px_rgba(0,0,0,0.3)] outline-none sm:inset-x-auto sm:bottom-6 sm:left-6 sm:w-[370px]"
       >
         <div class="flex min-h-0 flex-col gap-3 overflow-y-auto px-5 pb-1 pt-5">
           <div class="flex items-center gap-3">
