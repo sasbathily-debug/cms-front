@@ -15,10 +15,8 @@
       (function () {
         var root = document.documentElement;
         try {
-          var stored = localStorage.getItem('theme');
-          var dark =
-            stored === 'dark' ||
-            (stored !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+          // Clair par défaut ; le sombre seulement si le visiteur l'a choisi.
+          var dark = localStorage.getItem('theme') === 'dark';
           root.setAttribute('data-theme', dark ? 'dark' : 'light');
           if (dark)
             document.querySelector('meta[name="theme-color"]').setAttribute('content', '#150c1a');

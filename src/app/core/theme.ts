@@ -17,30 +17,21 @@ function readStored(): ThemeName | null {
 }
 
 /**
- * Thème clair ou sombre. Tant que le visiteur n'a rien choisi, on suit le réglage de son appareil ;
- * son choix, une fois fait, est gardé sur cet appareil. Le thème s'applique en posant
- * `data-theme` sur <html> (le script de index.html le fait avant le premier affichage, sans flash).
+ * Thème clair ou sombre. Le site s'ouvre en clair (le design validé) quel que soit le réglage de l'appareil ;
+ * le sombre n'apparaît que si le visiteur le choisit, et son choix est alors gardé sur cet appareil.
+ * Le thème s'applique en posant `data-theme` sur <html> (le script de index.html le fait avant le
+ * premier affichage, sans flash).
+ * Pour suivre le réglage de l'appareil plutôt que le clair, lire `prefers-color-scheme` ici et dans index.html.
  */
 @Service()
 export class Theme {
   private readonly document = inject(DOCUMENT);
-  /** Absent dans certains environnements (tests) : on suit alors le thème clair. */
-  private readonly systemQuery =
-    typeof window.matchMedia === 'function'
-      ? window.matchMedia('(prefers-color-scheme: dark)')
-      : null;
+  private readonly chosen = signal<ThemeName>(readStored() ?? 'light');
 
-  /** Le choix du visiteur, ou null s'il suit son appareil. */
-  private readonly chosen = signal<ThemeName | null>(readStored());
-  private readonly systemDark = signal(this.systemQuery?.matches ?? false);
-
-  readonly current = computed<ThemeName>(
-    () => this.chosen() ?? (this.systemDark() ? 'dark' : 'light'),
-  );
-  readonly isDark = computed(() => this.current() === 'dark');
+  readonly current = this.chosen.asReadonly();
+  readonly isDark = computed(() => this.chosen() === 'dark');
 
   constructor() {
-    this.systemQuery?.addEventListener('change', (event) => this.systemDark.set(event.matches));
     this.apply();
   }
 

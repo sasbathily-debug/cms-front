@@ -27,7 +27,7 @@ describe('Theme', () => {
     TestBed.resetTestingModule();
   });
 
-  it("suit le thème clair quand le visiteur n'a rien choisi et que l'appareil ne dit rien", () => {
+  it("s'ouvre en clair quand le visiteur n'a rien choisi", () => {
     const theme = TestBed.inject(Theme);
     expect(theme.current()).toBe('light');
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
@@ -38,10 +38,10 @@ describe('Theme', () => {
     theme.toggle();
     expect(theme.isDark()).toBe(true);
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(localStorage.getItem('theme')).toBe('dark');
+    expect(window.localStorage.getItem('theme')).toBe('dark');
     theme.toggle();
     expect(theme.current()).toBe('light');
-    expect(localStorage.getItem('theme')).toBe('light');
+    expect(window.localStorage.getItem('theme')).toBe('light');
   });
 
   it('reprend le choix mémorisé à la visite suivante', () => {
@@ -51,17 +51,12 @@ describe('Theme', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
   });
 
-  it("suit le réglage de l'appareil tant qu'aucun choix n'est fait", () => {
-    let onChange: ((event: { matches: boolean }) => void) | undefined;
-    vi.stubGlobal('matchMedia', () => ({
-      matches: true,
-      addEventListener: (_: string, fn: (event: { matches: boolean }) => void) => (onChange = fn),
-    }));
+  it("reste clair même si l'appareil est réglé en sombre", () => {
+    vi.stubGlobal('matchMedia', () => ({ matches: true, addEventListener: () => undefined }));
     try {
       const theme = TestBed.inject(Theme);
-      expect(theme.current()).toBe('dark');
-      onChange?.({ matches: false });
       expect(theme.current()).toBe('light');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     } finally {
       vi.unstubAllGlobals();
     }
