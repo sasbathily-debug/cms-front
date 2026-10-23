@@ -5,5 +5,8 @@ Disallow: /client
 Disallow: /profile
 Disallow: /login
 Disallow: /register
+Disallow: /mot-de-passe-oublie
+Disallow: /verify-otp
+Disallow: /set-password
 
 Sitemap: https://draissatoumamadou.com/sitemap.xml
