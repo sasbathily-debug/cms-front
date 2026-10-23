@@ -1,3 +1,4 @@
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { Component, computed, inject, signal } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -19,7 +20,7 @@ interface AdminGroup {
 /** Espace professionnel : barre latérale sombre (même langage que les tuiles du site) et contenu à droite. */
 @Component({
   selector: 'app-admin-shell',
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, NgTemplateOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, NgTemplateOutlet, ThemeToggle],
   styleUrl: './admin-shell.css',
   templateUrl: './admin-shell.html',
 })

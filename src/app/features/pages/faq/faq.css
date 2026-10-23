@@ -54,7 +54,7 @@ summary {
 }
 details[open] .plus {
   transform: rotate(45deg);
-  background-color: #e0873f;
+  background-color: var(--color-accent-500);
 }
 
 @media (prefers-reduced-motion: reduce) {

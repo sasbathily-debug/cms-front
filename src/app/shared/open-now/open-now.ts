@@ -84,7 +84,7 @@ export function statusAt(date: Date, days: OpeningHourDto[] = DEFAULT_DAYS): Sta
     @if (status(); as s) {
       <span
         class="inline-flex items-center gap-2 text-[13.5px] font-semibold"
-        [class]="tone() === 'dark' ? 'text-[#F3EAE0]' : 'text-forest-900'"
+        [class]="tone() === 'dark' ? 'text-on-plum' : 'text-fg'"
       >
         <span class="open-dot" [class.open-dot-on]="s.open" aria-hidden="true"></span>
         <span>{{ s.text }}</span>

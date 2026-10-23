@@ -3,16 +3,16 @@
     <section
       role="dialog"
       aria-label="Assistant du cabinet"
-      class="chat-panel fixed bottom-3 right-3 z-50 flex max-h-[calc(100dvh-1.5rem)] w-[min(320px,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[20px] border border-border-warm bg-cream-50 shadow-[0_24px_60px_rgba(31,18,38,0.35)] sm:bottom-7 sm:right-7 sm:w-[380px] sm:rounded-[22px]"
+      class="chat-panel fixed bottom-3 right-3 z-50 flex max-h-[calc(100dvh-1.5rem)] w-[min(320px,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-[20px] border border-line bg-page shadow-[0_24px_60px_rgba(31,18,38,0.35)] sm:bottom-7 sm:right-7 sm:w-[380px] sm:rounded-[22px]"
     >
       <header
-        class="flex items-start justify-between gap-3 bg-forest-900 px-4 py-3 text-white sm:px-5 sm:py-4"
+        class="flex items-start justify-between gap-3 bg-plum-900 px-4 py-3 text-white sm:px-5 sm:py-4"
       >
         <div class="flex flex-col gap-0.5">
           <h2 class="m-0 font-display text-[15px] font-bold sm:text-[17px]">
             Assistant du cabinet
           </h2>
-          <p class="m-0 hidden text-[12.5px] leading-snug text-[#D8C9BB] sm:block">
+          <p class="m-0 hidden text-[12.5px] leading-snug text-on-plum-muted sm:block">
             Réponses automatiques sur le cabinet, sans conseil médical.
           </p>
         </div>
@@ -43,7 +43,7 @@
         class="flex min-h-[150px] max-h-[min(300px,45dvh)] flex-1 flex-col gap-2.5 overflow-y-auto px-3 py-3 sm:min-h-[220px] sm:max-h-[420px] sm:gap-3 sm:px-4 sm:py-4"
       >
         <div
-          class="chat-bubble max-w-[88%] self-start rounded-2xl rounded-bl-md border border-border-warm bg-white px-3.5 py-2.5 text-[13.5px] leading-[1.45] sm:text-[14.5px] sm:leading-[1.5] text-ink-900"
+          class="chat-bubble max-w-[88%] self-start rounded-2xl rounded-bl-md border border-line bg-surface px-3.5 py-2.5 text-[13.5px] leading-[1.45] sm:text-[14.5px] sm:leading-[1.5] text-fg"
         >
           Bonjour, je réponds aux questions pratiques sur le cabinet : horaires, rendez-vous,
           adresse. Je ne peux pas donner d'avis médical.
@@ -55,7 +55,7 @@
               <button
                 type="button"
                 (click)="ask(question)"
-                class="chat-chip rounded-full border border-accent-500 bg-white px-3 py-1.5 text-left text-[12.5px] font-medium text-accent-800 sm:px-3.5 sm:py-2 sm:text-[13.5px]"
+                class="chat-chip rounded-full border border-accent-500 bg-surface px-3 py-1.5 text-left text-[12.5px] font-medium text-accent-800 sm:px-3.5 sm:py-2 sm:text-[13.5px]"
               >
                 {{ question }}
               </button>
@@ -72,8 +72,8 @@
               class="whitespace-pre-line px-3.5 py-2.5 text-[13.5px] leading-[1.45] sm:text-[14.5px] sm:leading-[1.5]"
               [class]="
                 message.from === 'user'
-                  ? 'rounded-2xl rounded-br-md bg-forest-900 text-white'
-                  : 'rounded-2xl rounded-bl-md border border-border-warm bg-white text-ink-900'
+                  ? 'rounded-2xl rounded-br-md bg-inverse text-inverse-fg'
+                  : 'rounded-2xl rounded-bl-md border border-line bg-surface text-fg'
               "
             >
               {{ message.text }}
@@ -85,7 +85,7 @@
                     [href]="action.url"
                     [attr.target]="isExternal(action.url) ? '_blank' : null"
                     [attr.rel]="isExternal(action.url) ? 'noopener noreferrer' : null"
-                    class="rounded-full bg-accent-500 px-3 py-1.5 text-[12.5px] font-semibold text-forest-900 sm:px-3.5 sm:py-2 sm:text-[13.5px]"
+                    class="rounded-full bg-accent-500 px-3 py-1.5 text-[12.5px] font-semibold text-on-accent sm:px-3.5 sm:py-2 sm:text-[13.5px]"
                     >{{ action.label }}</a
                   >
                 }
@@ -97,7 +97,7 @@
                   <button
                     type="button"
                     (click)="ask(question)"
-                    class="chat-chip rounded-full border border-accent-500 bg-white px-3 py-1.5 text-left text-[12.5px] font-medium text-accent-800 sm:px-3.5 sm:py-2 sm:text-[13.5px]"
+                    class="chat-chip rounded-full border border-accent-500 bg-surface px-3 py-1.5 text-left text-[12.5px] font-medium text-accent-800 sm:px-3.5 sm:py-2 sm:text-[13.5px]"
                   >
                     {{ question }}
                   </button>
@@ -109,7 +109,7 @@
 
         @if (loading()) {
           <div
-            class="chat-bubble flex items-center gap-1.5 self-start rounded-2xl rounded-bl-md border border-border-warm bg-white px-4 py-3.5"
+            class="chat-bubble flex items-center gap-1.5 self-start rounded-2xl rounded-bl-md border border-line bg-surface px-4 py-3.5"
             role="status"
             aria-label="L'assistant écrit"
           >
@@ -121,7 +121,7 @@
 
       <form
         (submit)="$event.preventDefault(); submit()"
-        class="flex flex-col gap-1.5 border-t border-border-warm bg-white px-3 pb-2.5 pt-2.5 sm:gap-2 sm:px-4 sm:pb-3 sm:pt-3"
+        class="flex flex-col gap-1.5 border-t border-line bg-surface px-3 pb-2.5 pt-2.5 sm:gap-2 sm:px-4 sm:pb-3 sm:pt-3"
       >
         <div class="flex items-center gap-2">
           <label for="chat-field" class="sr-only">Votre question</label>
@@ -135,13 +135,13 @@
             [value]="draft()"
             (input)="onInput($event)"
             placeholder="Votre question"
-            class="min-w-0 flex-1 rounded-full border-[1.5px] border-[#D9C8B8] bg-white px-3.5 py-2 text-[14px] text-forest-900 outline-none sm:px-4 sm:py-2.5 sm:text-[15px] transition placeholder:text-[#8A7E88] focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+            class="min-w-0 flex-1 rounded-full border-[1.5px] border-line-strong bg-surface px-3.5 py-2 text-[14px] text-fg outline-none sm:px-4 sm:py-2.5 sm:text-[15px] transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
           />
           <button
             type="submit"
             [disabled]="!draft().trim() || loading()"
             aria-label="Envoyer"
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-500 sm:h-11 sm:w-11 text-forest-900 disabled:opacity-40"
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-500 sm:h-11 sm:w-11 text-on-accent disabled:opacity-40"
           >
             <svg
               width="18"
@@ -158,7 +158,7 @@
             </svg>
           </button>
         </div>
-        <p class="m-0 text-center text-[11px] leading-snug text-ink-600 sm:text-[11.5px]">
+        <p class="m-0 text-center text-[11px] leading-snug text-muted sm:text-[11.5px]">
           Aucun message n'est conservé. Pour votre santé, parlez-en au cabinet.
         </p>
       </form>
@@ -170,12 +170,12 @@
       aria-label="Poser une question à l'assistant du cabinet"
       [class.chat-attn]="nudge()"
       [class.hide-on-bar]="onBar()"
-      class="chat-launcher fixed bottom-[92px] right-4 z-40 flex h-12 w-12 items-center justify-center gap-2.5 rounded-full border border-white/20 bg-forest-900 text-white sm:h-14 sm:w-auto sm:px-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] sm:bottom-[130px] sm:right-7"
+      class="chat-launcher fixed bottom-[92px] right-4 z-40 flex h-12 w-12 items-center justify-center gap-2.5 rounded-full border border-white/20 bg-plum-900 text-white sm:h-14 sm:w-auto sm:px-5 shadow-[0_14px_30px_rgba(0,0,0,0.3)] sm:bottom-[130px] sm:right-7"
     >
       @if (nudge()) {
         <span
           aria-hidden="true"
-          class="chat-tip absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-[13px] font-semibold text-forest-900 shadow-[0_8px_20px_rgba(31,18,38,0.25)] sm:hidden"
+          class="chat-tip absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-surface px-3.5 py-2 text-[13px] font-semibold text-fg shadow-[0_8px_20px_rgba(31,18,38,0.25)] sm:hidden"
           >Une question ?</span
         >
       }

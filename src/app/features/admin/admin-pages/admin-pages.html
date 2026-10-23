@@ -1,7 +1,7 @@
 <div>
   <div class="mb-7">
-    <h1 class="mb-1.5 font-display text-xl font-bold text-forest-900 sm:text-2xl">Pages du site</h1>
-    <p class="text-sm text-ink-600">
+    <h1 class="mb-1.5 font-display text-xl font-bold text-fg sm:text-2xl">Pages du site</h1>
+    <p class="text-sm text-muted">
       Modifiez les textes de chaque page. Tant qu'une page n'a pas été modifiée, le site affiche ses
       textes d'origine.
     </p>
@@ -10,11 +10,11 @@
   <div class="flex max-w-3xl flex-col gap-3">
     @for (page of pages; track page.slug) {
       <div
-        class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border-warm bg-white p-5"
+        class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5"
       >
         <div class="min-w-[200px] flex-1">
-          <div class="font-display text-[15px] font-bold text-forest-900">{{ page.title }}</div>
-          <div class="mt-1 text-[13px] text-ink-600">
+          <div class="font-display text-[15px] font-bold text-fg">{{ page.title }}</div>
+          <div class="mt-1 text-[13px] text-muted">
             @if (loading()) {
               Chargement…
             } @else if (modified()[page.slug]) {
@@ -28,12 +28,12 @@
           <a
             [routerLink]="page.route"
             target="_blank"
-            class="rounded-full border border-border-warm px-4 py-2 text-xs font-semibold text-forest-900"
+            class="rounded-full border border-line px-4 py-2 text-xs font-semibold text-fg"
             >Voir la page</a
           >
           <a
             [routerLink]="['/admin/pages', page.slug]"
-            class="rounded-full bg-accent-500 px-5 py-2 text-xs font-semibold text-forest-900"
+            class="rounded-full bg-accent-500 px-5 py-2 text-xs font-semibold text-on-accent"
             >Modifier</a
           >
         </div>

@@ -1,3 +1,4 @@
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import {
   AbstractControl,
@@ -22,7 +23,7 @@ function passwordsMatchValidator(control: AbstractControl): ValidationErrors | n
 
 /** « Mot de passe oublié » : l'adresse e-mail, puis le code reçu et le nouveau mot de passe. */
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, OtpBoxes],
+  imports: [ThemeToggle, ReactiveFormsModule, RouterLink, AuthVisualPanel, OtpBoxes],
   selector: 'app-forgot-password',
   styleUrl: './forgot-password.css',
   templateUrl: './forgot-password.html',

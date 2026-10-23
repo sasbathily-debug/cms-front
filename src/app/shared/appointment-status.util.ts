@@ -16,25 +16,25 @@ export function appointmentStatusLabel(status: AppointmentStatus): string {
 export function appointmentStatusClasses(status: AppointmentStatus): string {
   switch (status) {
     case 'CONFIRMED':
-      return 'bg-[#E3F1E6] text-[#2E7D46]';
+      return 'bg-success-soft text-success';
     case 'CANCELLED':
-      return 'bg-[#FBE7E6] text-[#B2453B]';
+      return 'bg-danger-soft text-danger';
     case 'COMPLETED':
-      return 'bg-[#E3E9F1] text-[#2E5C8A]';
+      return 'bg-info-soft text-info';
     case 'NO_SHOW':
-      return 'bg-[#F1E6E3] text-[#8A4A2E]';
+      return 'bg-brown-soft text-brown';
   }
 }
 
 export function appointmentStatusDotClasses(status: AppointmentStatus): string {
   switch (status) {
     case 'CONFIRMED':
-      return 'bg-[#3E9E5B]';
+      return 'bg-success-solid';
     case 'CANCELLED':
-      return 'bg-[#D9564B]';
+      return 'bg-danger-solid';
     case 'COMPLETED':
-      return 'bg-[#3E6FA9]';
+      return 'bg-info-solid';
     case 'NO_SHOW':
-      return 'bg-[#A9673E]';
+      return 'bg-brown-solid';
   }
 }

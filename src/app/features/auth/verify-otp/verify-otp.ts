@@ -1,3 +1,4 @@
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { AuthSteps } from '../../../shared/auth-steps/auth-steps';
 import { Component, ElementRef, OnInit, inject, signal, viewChildren } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -6,7 +7,7 @@ import { Auth } from '../../../core/services/auth';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
+  imports: [ThemeToggle, ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
   selector: 'app-verify-otp',
   styleUrl: './verify-otp.css',
   templateUrl: './verify-otp.html',

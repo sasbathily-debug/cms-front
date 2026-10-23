@@ -8,7 +8,7 @@
       </span>
       <span class="flex flex-col leading-tight">
         <span class="font-display text-[17px] font-bold">Dr Aissatou Mamadou Fall</span>
-        <span class="text-xs tracking-[0.08em] text-[#D8C9BB]">ENDOCRINOLOGIE · NUTRITION</span>
+        <span class="text-xs tracking-[0.08em] text-on-plum-muted">ENDOCRINOLOGIE · NUTRITION</span>
       </span>
     </a>
 
@@ -24,14 +24,14 @@
             >
               <span class="flex items-start justify-between">
                 <span [class]="symClass()">{{ tile.sym }}</span>
-                <span class="text-[11px] text-[#D8C9BB]">{{ tile.count }}</span>
+                <span class="text-[11px] text-on-plum-muted">{{ tile.count }}</span>
               </span>
               <span [class]="labelClass()">{{ tile.label }}</span>
             </a>
             @if (tile.group && openGroup() === tile.key) {
               <div [class]="panelClass()">
                 <div
-                  class="flex gap-3 rounded-[24px] border border-border-warm bg-white p-3 shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
+                  class="flex gap-3 rounded-[24px] border border-line bg-surface p-3 shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
                 >
                   @if (tile.group.cards?.length) {
                     <div class="flex w-[236px] shrink-0 flex-col gap-3">
@@ -39,7 +39,7 @@
                         <a
                           [routerLink]="card.route"
                           appSpotlight
-                          class="group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-forest-900"
+                          class="group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-plum-900"
                         >
                           <img
                             [src]="card.image"
@@ -49,7 +49,7 @@
                           />
                           <span
                             aria-hidden="true"
-                            class="absolute inset-0 bg-gradient-to-t from-[#140B19]/80 via-[#140B19]/10 to-transparent"
+                            class="absolute inset-0 bg-gradient-to-t from-plum-950/80 via-plum-950/10 to-transparent"
                           ></span>
                           <span class="relative block w-full p-4">
                             <span class="flex flex-col gap-0.5">
@@ -62,7 +62,7 @@
                               }}</span>
                             </span>
                             <span
-                              class="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white text-forest-900 transition-transform duration-300 group-hover:translate-x-0.5"
+                              class="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-fg transition-transform duration-300 group-hover:translate-x-0.5"
                             >
                               <svg
                                 width="16"
@@ -90,10 +90,10 @@
                     @for (link of tile.group.links; track link.label) {
                       <a
                         [routerLink]="link.route"
-                        class="flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-forest-900 transition hover:bg-cream-50"
+                        class="flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-fg transition hover:bg-page"
                       >
                         <span
-                          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cream-100 font-display text-[15px] font-bold text-accent-700"
+                          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sunken font-display text-[15px] font-bold text-accent-700"
                           >{{ link.sym }}</span
                         >
                         <span class="flex flex-col gap-0.5">
@@ -101,7 +101,7 @@
                             link.label
                           }}</span>
                           @if (link.hint) {
-                            <span class="text-[13px] text-ink-600">{{ link.hint }}</span>
+                            <span class="text-[13px] text-muted">{{ link.hint }}</span>
                           }
                         </span>
                       </a>
@@ -113,6 +113,7 @@
           </div>
         }
       </nav>
+      <app-theme-toggle [onDark]="true" />
       <a routerLink="/rendez-vous" [class]="ctaClass()">Prendre rendez-vous</a>
     </div>
 

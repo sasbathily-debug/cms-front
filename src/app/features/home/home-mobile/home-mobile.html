@@ -1,14 +1,21 @@
-<div class="bg-[#160B1B] text-[#241827]">
+<div class="bg-plum-950 text-fg">
   <!-- Portrait de la doctoresse + feuille du bas : titre, créneau libre, action -->
   <section
-    class="relative flex min-h-[620px] flex-col overflow-hidden bg-[#201A25]"
+    class="relative flex min-h-[620px] flex-col overflow-hidden bg-plum-750"
     style="height: min(100svh, 860px)"
   >
     <div class="relative min-h-0 flex-1">
       <div
         class="absolute inset-0"
         aria-hidden="true"
-        style="background: linear-gradient(180deg, #1c131f 0%, #201a25 30%, #2d2035 100%)"
+        style="
+          background: linear-gradient(
+            180deg,
+            var(--color-plum-975) 0%,
+            var(--color-plum-750) 30%,
+            var(--color-plum-725) 100%
+          );
+        "
       ></div>
       <img
         [src]="c().hero.photoTelephone | optimizedImage: 1080"
@@ -26,10 +33,10 @@
     </div>
 
     <div
-      class="relative z-[1] -mt-8 flex flex-col gap-4 rounded-t-[28px] bg-cream-50 px-5 pb-7 pt-6 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
+      class="relative z-[1] -mt-8 flex flex-col gap-4 rounded-t-[28px] bg-page px-5 pb-7 pt-6 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
     >
       <span
-        class="inline-flex w-fit items-center gap-2 rounded-full bg-accent-100 px-3 py-1.5 text-[12.5px] font-semibold text-accent-800"
+        class="inline-flex w-fit items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-[12.5px] font-semibold text-accent-800"
       >
         <span aria-hidden="true" class="h-2 w-2 shrink-0 rounded-full bg-accent-500"></span>
         @if (slotLabel(); as slot) {
@@ -39,7 +46,7 @@
         }
       </span>
       <h1
-        class="m-0 font-display text-[34px] font-bold leading-[1.04] tracking-[-0.03em] text-forest-900 [@media(max-height:720px)]:text-[29px]"
+        class="m-0 font-display text-[34px] font-bold leading-[1.04] tracking-[-0.03em] text-fg [@media(max-height:720px)]:text-[29px]"
       >
         @for (w of heroWords(); track $index) {
           @if (w.underlined) {
@@ -53,20 +60,20 @@
           }
         }
       </h1>
-      <p class="m-0 text-[15.5px] leading-[1.55] text-ink-600 [@media(max-height:720px)]:hidden">
+      <p class="m-0 text-[15.5px] leading-[1.55] text-muted [@media(max-height:720px)]:hidden">
         {{ c().hero.introTelephone }}
       </p>
       <div class="flex items-center gap-3">
         <a
           #heroCta
           routerLink="/rendez-vous"
-          class="flex-1 rounded-full bg-accent-500 px-6 py-[17px] text-center font-display text-base font-bold text-forest-900"
+          class="flex-1 rounded-full bg-accent-500 px-6 py-[17px] text-center font-display text-base font-bold text-on-accent"
           >{{ c().hero.boutonPrincipal }}</a
         >
         <a
           [href]="site.telHref()"
           aria-label="Appeler le cabinet"
-          class="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-forest-900 text-forest-900"
+          class="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-fg text-fg"
         >
           <svg
             width="22"
@@ -100,13 +107,13 @@
     >
       <a
         routerLink="/rendez-vous"
-        class="flex-1 rounded-full bg-accent-500 px-5 py-3.5 text-center font-display text-[15px] font-bold text-forest-900"
+        class="flex-1 rounded-full bg-accent-500 px-5 py-3.5 text-center font-display text-[15px] font-bold text-on-accent"
         >{{ c().hero.boutonPrincipal }}</a
       >
       <a
         [href]="site.telHref()"
         aria-label="Appeler le cabinet"
-        class="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-[#F1C99B] text-[#F1C99B]"
+        class="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-peach text-peach"
       >
         <svg
           width="20"
@@ -128,7 +135,7 @@
         type="button"
         (click)="chat.open()"
         aria-label="Poser une question à l'assistant du cabinet"
-        class="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-[#F1C99B]"
+        class="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-peach"
       >
         <app-chat-icon />
       </button>
@@ -140,7 +147,7 @@
 
     <!-- Déclaration : feuille prune qui remonte sur le bas du banner -->
     <section
-      class="relative -mt-6 flex flex-col gap-6 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-12"
+      class="relative -mt-6 flex flex-col gap-6 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-12"
     >
       <div class="flex items-center gap-3.5">
         <img
@@ -148,9 +155,9 @@
           [alt]="c().doctoresse.photoAlt"
           width="56"
           height="56"
-          class="h-14 w-14 shrink-0 rounded-full border-2 border-accent-500 bg-[#2a1930] object-cover object-[50%_28%]"
+          class="h-14 w-14 shrink-0 rounded-full border-2 border-accent-500 bg-plum-800 object-cover object-[50%_28%]"
         />
-        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+        <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
           c().declaration.kicker
         }}</span>
       </div>
@@ -161,29 +168,29 @@
       </p>
       <a
         routerLink="/a-propos"
-        class="rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-[15px] font-bold text-forest-900"
+        class="rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-[15px] font-bold text-on-accent"
         >{{ c().declaration.boutonPrincipal }}</a
       >
       <a
         routerLink="/premiere-consultation"
-        class="rounded-full border-[1.5px] border-[#F1C99B] px-6 py-3.5 text-center font-display text-[15px] font-semibold text-[#F1C99B]"
+        class="rounded-full border-[1.5px] border-peach px-6 py-3.5 text-center font-display text-[15px] font-semibold text-peach"
         >{{ c().declaration.boutonSecondaire }}</a
       >
     </section>
 
     <!-- Spécialités : silhouette + liste (on touche une ligne pour allumer l'organe) -->
-    <section class="relative -mt-8 rounded-t-[32px] bg-cream-50 px-5 pb-[72px] pt-14">
+    <section class="relative -mt-8 rounded-t-[32px] bg-page px-5 pb-[72px] pt-14">
       <div class="sil-grid flex flex-col gap-[22px]">
         <div class="flex flex-col gap-2">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">{{
             c().specialites.kicker
           }}</span>
           <h2
-            class="m-0 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-forest-900"
+            class="m-0 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-fg"
           >
             {{ c().specialites.titre }}
           </h2>
-          <p class="m-0 text-[15.5px] leading-[1.6] text-[#4A3F49]">
+          <p class="m-0 text-[15.5px] leading-[1.6] text-body">
             {{ c().specialites.introTelephone }}
           </p>
         </div>
@@ -216,35 +223,35 @@
               ><span class="lab">Ovaires, testicules</span>
             </div>
           </div>
-          <span class="absolute bottom-3.5 left-[18px] text-[11.5px] text-[#B5A9B8]"
+          <span class="absolute bottom-3.5 left-[18px] text-[11.5px] text-on-plum-subtle"
             >Schéma simplifié, pas une carte anatomique.</span
           >
         </div>
         <div class="flex flex-col gap-2.5">
           @for (r of rows(); track r.key) {
             <div
-              class="rowm flex flex-col gap-3 rounded-[18px] border border-white/15 bg-forest-900 px-4 py-3.5 text-white"
+              class="rowm flex flex-col gap-3 rounded-[18px] border border-white/15 bg-plum-900 px-4 py-3.5 text-white"
               [class]="'row-' + r.key"
               tabindex="0"
             >
               <div class="flex items-center gap-3.5">
                 <span
-                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] bg-[rgba(241,201,155,0.16)] font-display text-base font-bold text-[#F1C99B]"
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] bg-[rgba(241,201,155,0.16)] font-display text-base font-bold text-peach"
                   >{{ r.sym }}</span
                 >
                 <span class="flex-1 font-display text-lg font-bold">{{ r.title }}</span>
-                <span
-                  class="plus shrink-0 text-[26px] leading-none text-[#F1C99B]"
-                  aria-hidden="true"
+                <span class="plus shrink-0 text-[26px] leading-none text-peach" aria-hidden="true"
                   >+</span
                 >
               </div>
               <div class="more flex-col gap-2 pl-[58px]">
-                <span class="text-[14.5px] leading-[1.55] text-[#E8DACE]">{{ r.homeText }}</span>
-                <span class="text-[12.5px] text-[#F1C99B]">{{ r.organ }}</span>
+                <span class="text-[14.5px] leading-[1.55] text-on-plum-muted">{{
+                  r.homeText
+                }}</span>
+                <span class="text-[12.5px] text-peach">{{ r.organ }}</span>
                 <a
                   [routerLink]="r.route"
-                  class="mt-0.5 self-start rounded-full bg-accent-500 px-[18px] py-2.5 font-display text-sm font-bold text-forest-900"
+                  class="mt-0.5 self-start rounded-full bg-accent-500 px-[18px] py-2.5 font-display text-sm font-bold text-on-accent"
                   >Lire la page</a
                 >
               </div>
@@ -261,10 +268,10 @@
 
     <!-- Parcours -->
     <section
-      class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
     >
       <div class="flex flex-col gap-2.5">
-        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+        <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
           c().parcours.kicker
         }}</span>
         <h2
@@ -278,12 +285,12 @@
           class="pcm flex gap-[18px] border-t border-white/15 pt-6"
           [style.animation-delay]="0.48 + i * 3.12 + 's'"
         >
-          <span class="shrink-0 font-display text-[44px] font-bold leading-[0.95] text-[#F1C99B]">{{
+          <span class="shrink-0 font-display text-[44px] font-bold leading-[0.95] text-peach">{{
             e.n
           }}</span>
           <div class="flex flex-col gap-2">
             <h3 class="m-0 font-display text-xl font-bold text-white">{{ e.titre }}</h3>
-            <p class="m-0 text-[15px] leading-[1.65] text-[#E8DACE]">{{ e.texte }}</p>
+            <p class="m-0 text-[15px] leading-[1.65] text-on-plum-muted">{{ e.texte }}</p>
           </div>
         </div>
       }
@@ -291,11 +298,11 @@
 
     <!-- La doctoresse -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-cream-50 px-5 pb-16 pt-14"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-16 pt-14"
     >
       <div
         appInView
-        class="photo-life relative h-[400px] overflow-hidden rounded-[190px_190px_28px_28px] bg-[#2a1930]"
+        class="photo-life relative h-[400px] overflow-hidden rounded-[190px_190px_28px_28px] bg-plum-800"
       >
         <img
           [src]="c().doctoresse.photo | optimizedImage: 900"
@@ -324,21 +331,17 @@
       <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">{{
         c().doctoresse.kicker
       }}</span>
-      <h2
-        class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
-      >
+      <h2 class="m-0 font-display text-[34px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         Dr Aissatou Mamadou Fall
       </h2>
-      <p class="m-0 text-[16.5px] leading-[1.7] text-[#4A3F49]">
+      <p class="m-0 text-[16.5px] leading-[1.7] text-body">
         {{ c().doctoresse.texteTelephone }}
       </p>
       <div class="grid grid-cols-2 gap-3">
         @for (stat of c().doctoresse.stats; track $index) {
-          <div
-            class="flex flex-col gap-0.5 rounded-[18px] border border-border-warm bg-white p-[18px]"
-          >
-            <span class="font-display text-2xl font-bold text-forest-900">{{ stat.big }}</span>
-            <span class="text-[13px] text-ink-600">{{ stat.small }}</span>
+          <div class="flex flex-col gap-0.5 rounded-[18px] border border-line bg-surface p-[18px]">
+            <span class="font-display text-2xl font-bold text-fg">{{ stat.big }}</span>
+            <span class="text-[13px] text-muted">{{ stat.small }}</span>
           </div>
         }
       </div>
@@ -346,7 +349,7 @@
 
     <!-- Avis -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
     >
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
@@ -354,25 +357,21 @@
         {{ c().avis.titre }}
       </h2>
       @for (a of c().avis.items; track $index) {
-        <figure class="m-0 flex flex-col gap-[18px] rounded-[22px] bg-cream-50 p-[26px]">
-          <blockquote class="m-0 font-display text-lg font-medium leading-[1.45] text-forest-900">
+        <figure class="m-0 flex flex-col gap-[18px] rounded-[22px] bg-page p-[26px]">
+          <blockquote class="m-0 font-display text-lg font-medium leading-[1.45] text-fg">
             {{ a.texte }}
           </blockquote>
-          <figcaption class="text-[13.5px] text-ink-600">{{ a.auteur }}</figcaption>
+          <figcaption class="text-[13.5px] text-muted">{{ a.auteur }}</figcaption>
         </figure>
       }
-      <p class="m-0 text-[12.5px] leading-relaxed text-[#D8C9BB]">
+      <p class="m-0 text-[12.5px] leading-relaxed text-on-plum-muted">
         À remplir avec de vrais avis, recueillis avec l'accord des patients.
       </p>
     </section>
 
     <!-- Nous trouver -->
-    <section
-      class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-cream-50 px-5 pb-16 pt-20"
-    >
-      <h2
-        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
-      >
+    <section class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-page px-5 pb-16 pt-20">
+      <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         {{ c().trouver.titre }}
       </h2>
       <iframe
@@ -381,20 +380,20 @@
         loading="lazy"
         [src]="mapUrl"
       ></iframe>
-      <div class="flex flex-col gap-4 rounded-3xl border border-border-warm bg-white p-[26px]">
+      <div class="flex flex-col gap-4 rounded-3xl border border-line bg-surface p-[26px]">
         <div class="flex flex-col gap-1">
           <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">ADRESSE</span
           ><span class="text-base leading-normal">{{ site.street() }}, {{ site.address() }}</span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">REPÈRE</span
-          ><span class="text-[15px] leading-normal text-[#4A3F49]">{{
+          ><span class="text-[15px] leading-normal text-body">{{
             site.landmark() || '[À côté de quel lieu connu]'
           }}</span>
         </div>
         <div class="flex flex-col gap-1">
           <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700">OUVERT</span
-          ><span class="text-[15px] leading-normal text-[#4A3F49]">
+          ><span class="text-[15px] leading-normal text-body">
             @for (line of hours.homeLines(); track $index) {
               {{ line }}<br />
             }
@@ -405,7 +404,7 @@
           <span class="text-[11.5px] font-semibold tracking-[0.09em] text-accent-700"
             >TÉLÉPHONE ET WHATSAPP</span
           >
-          <a [href]="site.telHref()" class="font-display text-xl font-bold text-forest-900">{{
+          <a [href]="site.telHref()" class="font-display text-xl font-bold text-fg">{{
             site.phone()
           }}</a>
           @if (site.whatsappHref()) {
@@ -420,7 +419,7 @@
         </div>
         <a
           routerLink="/infos-pratiques"
-          class="rounded-full bg-forest-900 p-[15px] text-center font-display text-[15px] font-semibold text-white"
+          class="rounded-full bg-inverse p-[15px] text-center font-display text-[15px] font-semibold text-inverse-fg"
           >Itinéraire</a
         >
       </div>
@@ -428,33 +427,33 @@
 
     <!-- FAQ -->
     <section
-      class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-forest-900 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
     >
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
         {{ c().faq.titre }}
       </h2>
-      <div class="flex flex-col rounded-[22px] bg-cream-50 px-[22px] py-1">
+      <div class="flex flex-col rounded-[22px] bg-page px-[22px] py-1">
         @for (item of faq(); track item.question; let i = $index) {
-          <div class="flex flex-col gap-2.5 border-b border-border-warm py-5 last:border-b-0">
+          <div class="flex flex-col gap-2.5 border-b border-line py-5 last:border-b-0">
             <button
               type="button"
               (click)="toggleFaq(i)"
               [attr.aria-expanded]="item.open"
               class="flex w-full items-center justify-between gap-3 text-left"
             >
-              <h3 class="m-0 font-display text-[16.5px] font-semibold leading-snug text-forest-900">
+              <h3 class="m-0 font-display text-[16.5px] font-semibold leading-snug text-fg">
                 {{ item.question }}
               </h3>
               <span
                 aria-hidden="true"
-                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-forest-900 text-lg leading-none text-white"
+                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-inverse text-lg leading-none text-inverse-fg"
                 >{{ item.open ? '–' : '+' }}</span
               >
             </button>
             @if (item.open) {
-              <p class="m-0 text-[15px] leading-[1.65] text-[#5B4F59]">{{ item.answer }}</p>
+              <p class="m-0 text-[15px] leading-[1.65] text-muted">{{ item.answer }}</p>
             }
           </div>
         }
@@ -463,17 +462,15 @@
 
     <!-- Articles -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-cream-50 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-16 pt-20"
     >
-      <h2
-        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900"
-      >
+      <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         {{ c().conseils.titreTelephone }}
       </h2>
       @for (a of articles(); track a.titre) {
         <a
           routerLink="/conseils-sante"
-          class="flex items-center gap-4 rounded-[20px] border border-border-warm bg-white p-3 text-[#241827]"
+          class="flex items-center gap-4 rounded-[20px] border border-line bg-surface p-3 text-fg"
         >
           <span
             class="h-[92px] w-[92px] shrink-0 rounded-[14px] bg-cover bg-center"
@@ -485,7 +482,7 @@
             <span class="text-[11px] font-semibold tracking-[0.09em] text-accent-800">{{
               a.categorie
             }}</span>
-            <span class="font-display text-[17px] font-bold leading-snug text-forest-900">{{
+            <span class="font-display text-[17px] font-bold leading-snug text-fg">{{
               a.titre
             }}</span>
           </span>
@@ -500,19 +497,17 @@
   </div>
 
   <!-- Appel final -->
-  <section class="bg-cream-50 px-2 pb-2">
+  <section class="bg-page px-2 pb-2">
     <div class="flex flex-col gap-[18px] rounded-[32px] bg-accent-500 px-6 py-11">
-      <h2
-        class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-forest-900"
-      >
+      <h2 class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-on-accent">
         {{ c().appel.titreTelephone }}
       </h2>
-      <p class="m-0 text-base leading-[1.6] text-forest-800">
+      <p class="m-0 text-base leading-[1.6] text-on-accent">
         En ligne en trois minutes, ou au {{ site.phone() }}.
       </p>
       <a
         routerLink="/rendez-vous"
-        class="rounded-full bg-forest-900 p-[17px] text-center font-display text-base font-semibold text-white"
+        class="rounded-full bg-plum-900 p-[17px] text-center font-display text-base font-semibold text-white"
         >{{ c().appel.bouton }}</a
       >
       @if (site.whatsappHref()) {
@@ -520,7 +515,7 @@
           [href]="site.whatsappHref()"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-full border-[1.5px] border-forest-900 p-[15px] text-center font-display text-base font-semibold text-forest-900"
+          class="rounded-full border-[1.5px] border-plum-900 p-[15px] text-center font-display text-base font-semibold text-on-accent"
           >Écrire sur WhatsApp</a
         >
       }

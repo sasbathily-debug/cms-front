@@ -1,3 +1,4 @@
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { AuthSteps } from '../../../shared/auth-steps/auth-steps';
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -6,7 +7,7 @@ import { Auth } from '../../../core/services/auth';
 import { AuthVisualPanel } from '../../../shared/auth-visual-panel/auth-visual-panel';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
+  imports: [ThemeToggle, ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
   selector: 'app-register',
   styleUrl: './register.css',
   templateUrl: './register.html',
@@ -34,8 +35,8 @@ export class Register {
   fieldClass(name: 'firstName' | 'lastName' | 'email' | 'phone'): string {
     const control = this.form.controls[name];
     return control.invalid && control.touched
-      ? 'border-red-400 focus:border-red-400'
-      : 'border-[#D9C8B8] focus:border-accent-500';
+      ? 'border-danger focus:border-danger'
+      : 'border-line-strong focus:border-accent-500';
   }
 
   submit(): void {

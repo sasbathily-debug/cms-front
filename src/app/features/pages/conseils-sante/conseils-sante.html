@@ -5,11 +5,11 @@
         c().hero.kicker
       }}</span>
       <h1
-        class="m-0 max-w-[900px] text-balance font-display text-[2.6rem] font-bold leading-[0.98] tracking-[-0.035em] text-forest-900 sm:text-6xl lg:text-[76px]"
+        class="m-0 max-w-[900px] text-balance font-display text-[2.6rem] font-bold leading-[0.98] tracking-[-0.035em] text-fg sm:text-6xl lg:text-[76px]"
       >
         {{ c().hero.titre }}
       </h1>
-      <p class="m-0 max-w-[680px] text-lg leading-[1.6] text-[#4A3F49] sm:text-xl">
+      <p class="m-0 max-w-[680px] text-lg leading-[1.6] text-body sm:text-xl">
         {{ c().hero.intro }}
       </p>
       <div class="mt-1.5 flex flex-wrap gap-2.5" role="group" aria-label="Filtrer par thème">
@@ -21,8 +21,8 @@
             class="rounded-full border px-5 py-2.5 text-sm font-medium transition"
             [class]="
               selected() === category
-                ? 'border-forest-900 bg-forest-900 text-white'
-                : 'border-border-warm bg-white text-[#4A3F49] hover:border-forest-900'
+                ? 'border-fg bg-inverse text-inverse-fg'
+                : 'border-line bg-surface text-body hover:border-fg'
             "
           >
             {{ category }}
@@ -34,12 +34,12 @@
 
   <section class="px-4 pb-2 pt-4 sm:px-6 lg:px-10">
     <div
-      class="mx-auto grid max-w-[1160px] overflow-hidden rounded-[32px] bg-forest-900 text-white lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:rounded-[40px]"
+      class="mx-auto grid max-w-[1160px] overflow-hidden rounded-[32px] bg-plum-900 text-white lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:rounded-[40px]"
     >
       <div
         class="order-2 flex flex-col justify-center gap-4 px-6 py-8 sm:px-10 lg:order-1 lg:py-10"
       >
-        <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+        <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
           c().auteur.kicker
         }}</span>
         <h2
@@ -47,17 +47,17 @@
         >
           {{ c().auteur.nom }}
         </h2>
-        <p class="m-0 text-[15.5px] leading-[1.65] text-[#E8DACE]">
+        <p class="m-0 text-[15.5px] leading-[1.65] text-on-plum-muted">
           {{ c().auteur.texte }}
         </p>
         <a
           routerLink="/a-propos"
-          class="self-start py-1 text-[15px] font-semibold text-[#F1C99B] underline decoration-accent-500 decoration-2 underline-offset-4"
+          class="self-start py-1 text-[15px] font-semibold text-peach underline decoration-accent-500 decoration-2 underline-offset-4"
           >{{ c().auteur.lien }}</a
         >
       </div>
       <div
-        class="relative order-1 aspect-[16/10] bg-[#F1E4D6] lg:order-2 lg:aspect-auto lg:min-h-[340px]"
+        class="relative order-1 aspect-[16/10] bg-sunken lg:order-2 lg:aspect-auto lg:min-h-[340px]"
       >
         <img
           [src]="c().auteur.photo | optimizedImage: 900"
@@ -72,7 +72,9 @@
         <div
           aria-hidden="true"
           class="absolute inset-0 hidden lg:block"
-          style="background: linear-gradient(90deg, #1f1226 0%, rgba(31, 18, 38, 0) 26%)"
+          style="
+            background: linear-gradient(90deg, var(--color-plum-900) 0%, rgba(31, 18, 38, 0) 26%);
+          "
         ></div>
       </div>
     </div>
@@ -80,7 +82,7 @@
 
   <section class="px-4 pb-12 pt-8 sm:px-6 lg:px-10">
     <div
-      class="mx-auto grid max-w-[1160px] overflow-hidden rounded-[32px] bg-forest-900 text-white lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:rounded-[40px]"
+      class="mx-auto grid max-w-[1160px] overflow-hidden rounded-[32px] bg-plum-900 text-white lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:rounded-[40px]"
     >
       <div
         class="min-h-[280px] bg-cover bg-center lg:min-h-[420px]"
@@ -89,7 +91,7 @@
         aria-label="Photo de l'article à la une"
       ></div>
       <div class="flex flex-col justify-center gap-[18px] px-6 py-10 sm:p-14">
-        <span class="text-xs font-semibold tracking-[0.1em] text-[#F1C99B]">{{
+        <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
           c().alaune.kicker
         }}</span>
         <h2
@@ -97,10 +99,10 @@
         >
           {{ c().alaune.titre }}
         </h2>
-        <p class="m-0 text-base leading-[1.7] text-[#E8DACE]">
+        <p class="m-0 text-base leading-[1.7] text-on-plum-muted">
           {{ c().alaune.texte }}
         </p>
-        <span class="text-[15px] font-semibold text-[#F1C99B]">{{ c().alaune.lien }}</span>
+        <span class="text-[15px] font-semibold text-peach">{{ c().alaune.lien }}</span>
       </div>
     </div>
   </section>
@@ -110,7 +112,7 @@
       @for (a of articles(); track a.title) {
         <article
           appSpotlight
-          class="relative flex flex-col overflow-hidden rounded-[28px] border border-border-warm bg-white"
+          class="relative flex flex-col overflow-hidden rounded-[28px] border border-line bg-surface"
         >
           <div
             class="h-[200px] bg-cover bg-center"
@@ -125,10 +127,10 @@
                 {{ ' · ' + a.duration }}
               }
             </span>
-            <h3 class="m-0 font-display text-[22px] font-bold leading-tight text-forest-900">
+            <h3 class="m-0 font-display text-[22px] font-bold leading-tight text-fg">
               {{ a.title }}
             </h3>
-            <p class="m-0 whitespace-pre-line text-[14.5px] leading-[1.65] text-[#5B4F59]">
+            <p class="m-0 whitespace-pre-line text-[14.5px] leading-[1.65] text-muted">
               {{ a.text }}
             </p>
           </div>
@@ -137,13 +139,13 @@
     </div>
     <div class="mx-auto mt-10 flex max-w-[1160px] justify-center">
       <span
-        class="rounded-full border-[1.5px] border-forest-900 px-[30px] py-3.5 font-display text-[15px] font-semibold text-forest-900"
+        class="rounded-full border-[1.5px] border-fg px-[30px] py-3.5 font-display text-[15px] font-semibold text-fg"
         >Voir plus d'articles</span
       >
     </div>
   </section>
 
-  <section class="bg-forest-900 px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
+  <section class="bg-plum-900 px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
     <div class="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-8">
       <div class="flex max-w-[640px] flex-col gap-3">
         <h2
@@ -151,7 +153,7 @@
         >
           {{ c().instagram.titre }}
         </h2>
-        <p class="m-0 text-[17px] leading-[1.65] text-[#E8DACE]">
+        <p class="m-0 text-[17px] leading-[1.65] text-on-plum-muted">
           {{ c().instagram.texte }}
         </p>
       </div>
@@ -159,7 +161,7 @@
         href="https://www.instagram.com/dr_aissatou.m/"
         target="_blank"
         rel="noopener noreferrer"
-        class="rounded-full bg-accent-500 px-[34px] py-[18px] font-display text-base font-semibold text-forest-900 transition hover:bg-accent-600"
+        class="rounded-full bg-accent-500 px-[34px] py-[18px] font-display text-base font-semibold text-on-accent transition hover:bg-accent-600"
         >{{ c().instagram.bouton }}</a
       >
     </div>

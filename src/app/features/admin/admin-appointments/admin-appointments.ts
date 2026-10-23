@@ -20,7 +20,14 @@ type DateMode = 'ALL' | 'TODAY' | 'TOMORROW' | 'WEEK' | 'CUSTOM';
 type SortOption = 'date-asc' | 'date-desc' | 'created-desc';
 
 const PAGE_SIZE = 20;
-const EMPTY_COUNTS: AppointmentCountsDto = { all: 0, confirmed: 0, cancelled: 0, completed: 0, noShow: 0, pastDue: 0 };
+const EMPTY_COUNTS: AppointmentCountsDto = {
+  all: 0,
+  confirmed: 0,
+  cancelled: 0,
+  completed: 0,
+  noShow: 0,
+  pastDue: 0,
+};
 
 function toIsoDate(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -74,32 +81,35 @@ export class AdminAppointments implements OnInit {
 
   private readonly searchSubject = new Subject<string>();
 
-  readonly dateRange = computed<{ date: string | null; from: string | null; to: string | null }>(() => {
-    const mode = this.dateMode();
-    const today = new Date();
-    switch (mode) {
-      case 'TODAY':
-        return { date: toIsoDate(today), from: null, to: null };
-      case 'TOMORROW': {
-        const t = new Date(today);
-        t.setDate(t.getDate() + 1);
-        return { date: toIsoDate(t), from: null, to: null };
+  readonly dateRange = computed<{ date: string | null; from: string | null; to: string | null }>(
+    () => {
+      const mode = this.dateMode();
+      const today = new Date();
+      switch (mode) {
+        case 'TODAY':
+          return { date: toIsoDate(today), from: null, to: null };
+        case 'TOMORROW': {
+          const t = new Date(today);
+          t.setDate(t.getDate() + 1);
+          return { date: toIsoDate(t), from: null, to: null };
+        }
+        case 'WEEK': {
+          const start = mondayOf(today);
+          const end = new Date(start);
+          end.setDate(end.getDate() + 6);
+          return { date: null, from: toIsoDate(start), to: toIsoDate(end) };
+        }
+        case 'CUSTOM':
+          return { date: this.customDate(), from: null, to: null };
+        default:
+          return { date: null, from: null, to: null };
       }
-      case 'WEEK': {
-        const start = mondayOf(today);
-        const end = new Date(start);
-        end.setDate(end.getDate() + 6);
-        return { date: null, from: toIsoDate(start), to: toIsoDate(end) };
-      }
-      case 'CUSTOM':
-        return { date: this.customDate(), from: null, to: null };
-      default:
-        return { date: null, from: null, to: null };
-    }
-  });
+    },
+  );
 
   readonly hasActiveFilters = computed(
-    () => this.statusFilter() !== 'ALL' || this.dateMode() !== 'ALL' || this.searchTerm().length > 0,
+    () =>
+      this.statusFilter() !== 'ALL' || this.dateMode() !== 'ALL' || this.searchTerm().length > 0,
   );
 
   readonly emptyMessage = computed(() => {
@@ -204,7 +214,11 @@ export class AdminAppointments implements OnInit {
   }
 
   isOverdue(appointment: AppointmentDto): boolean {
-    if (appointment.status !== 'CONFIRMED' || !appointment.preferredDate || !appointment.preferredTime) {
+    if (
+      appointment.status !== 'CONFIRMED' ||
+      !appointment.preferredDate ||
+      !appointment.preferredTime
+    ) {
       return false;
     }
     return new Date(`${appointment.preferredDate}T${appointment.preferredTime}`) < new Date();
@@ -236,9 +250,11 @@ export class AdminAppointments implements OnInit {
 
   refreshCounts(): void {
     const { date, from, to } = this.dateRange();
-    this.appointmentService.getCounts({ date, from, to, search: this.searchTerm() || null }).subscribe({
-      next: (c) => this.counts.set(c),
-    });
+    this.appointmentService
+      .getCounts({ date, from, to, search: this.searchTerm() || null })
+      .subscribe({
+        next: (c) => this.counts.set(c),
+      });
   }
 
   refreshStats(): void {
@@ -311,7 +327,10 @@ export class AdminAppointments implements OnInit {
       return text;
     }
     const pattern = new RegExp(`(${escapeRegExp(term)})`, 'ig');
-    return text.replace(pattern, '<mark class="rounded bg-accent-100 px-0.5 text-inherit">$1</mark>');
+    return text.replace(
+      pattern,
+      '<mark class="rounded bg-accent-soft px-0.5 text-inherit">$1</mark>',
+    );
   }
 
   export(): void {

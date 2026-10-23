@@ -1,28 +1,156 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
 @import 'tailwindcss';
 
+/*
+ * Couleurs en deux familles.
+ *  - Constantes (@theme) : la marque et les surfaces toujours sombres (prune, pêche, orange).
+ *  - Sémantiques (@theme inline, variables --c-*) : fond, texte, bordures… qui changent avec le thème.
+ * Aucune couleur ne s'écrit en dur dans les pages : on utilise ces noms (bg-page, text-fg, border-line…).
+ * Le thème est posé par ThemeService sur <html data-theme="light|dark">.
+ */
 @theme {
-  /* Black Plum / Silk Cream */
-  --color-forest-900: #1f1226;
-  --color-forest-800: #2a1930;
-  --color-forest-700: #34203c;
+  --color-plum-950: #140b19;
+  --color-plum-900: #1f1226;
+  --color-plum-850: #241829;
+  --color-plum-800: #2a1930;
+  --color-plum-750: #201a25;
+  --color-plum-700: #34203c;
+  --color-plum-600: #5a3b63;
+  --color-plum-brown: #3a2418;
   --color-cream-50: #fbf5ee;
   --color-cream-100: #f1e4d6;
   --color-accent-100: #fbe3c4;
   --color-accent-500: #e0873f;
   --color-accent-600: #c7702a;
-  --color-accent-700: #9a5518;
-  --color-accent-800: #7a430f;
-  --color-ink-900: #241827;
-  --color-ink-600: #6b5f68;
-  --color-border-warm: #e8dace;
+  --color-plum-975: #1c131f;
+  --color-plum-725: #2d2035;
+  --color-accent-300: #f6ae6b;
+  --color-accent-550: #d07a33;
+  --color-success-bright: #2fb36d;
+  --color-violet-500: #8b5cf6;
+  --color-ice-100: #cfe0f5;
+  --color-ice-500: #5b9be0;
+  --color-mint-100: #bde8d2;
+  --color-mint-500: #3fb37f;
+  --color-danger-solid: #d9564b;
+  --color-info-solid: #3e6fa9;
+  --color-brown-solid: #a9673e;
+  --color-peach: #f1c99b;
+  --color-peach-soft: #f6d2ae;
+  --color-peach-pale: #ffe2be;
+  /* Texte posé sur une surface toujours sombre */
+  --color-on-plum: #f3eae0;
+  --color-on-plum-muted: #d8c9bb;
+  --color-on-plum-subtle: #b5a9b8;
+  /* Texte posé sur l'orange de la marque */
+  --color-on-accent: #1f1226;
 
   --font-display: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
 }
 
+:root {
+  color-scheme: light;
+  --c-page: #fbf5ee;
+  --c-sunken: #f1e4d6;
+  --c-surface: #ffffff;
+  --c-line: #e8dace;
+  --c-line-strong: #d9c8b8;
+  --c-fg: #1f1226;
+  --c-body: #4a3f49;
+  --c-muted: #6b5f68;
+  --c-subtle: #8a7e88;
+  --c-inverse: #1f1226;
+  --c-inverse-fg: #fbf5ee;
+  --c-accent-700: #9a5518;
+  --c-accent-800: #7a430f;
+  --c-accent-soft: #fbe3c4;
+  --c-accent-ink: #5a3410;
+  --c-danger: #b2453b;
+  --c-danger-soft: #fbe7e6;
+  --c-danger-line: #f0c4c0;
+  --c-danger-ink: #7a1f18;
+  --c-success: #2e7d46;
+  --c-success-solid: #178a48;
+  --c-success-soft: #eaf7f0;
+  --c-success-line: #bfe5d0;
+  --c-success-ink: #14532d;
+  --c-info: #2e5c8a;
+  --c-info-soft: #e3e9f1;
+  --c-brown: #8a4a2e;
+  --c-brown-soft: #f1e6e3;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --c-page: #150c1a;
+  --c-sunken: #1b1022;
+  --c-surface: #221529;
+  --c-line: #3a2946;
+  --c-line-strong: #4d3a5a;
+  --c-fg: #f6ede3;
+  --c-body: #d9ccd4;
+  --c-muted: #b3a5b0;
+  --c-subtle: #8e7f8c;
+  --c-inverse: #f6ede3;
+  --c-inverse-fg: #1f1226;
+  --c-accent-700: #f0a262;
+  --c-accent-800: #f6b87f;
+  --c-accent-soft: rgba(224, 135, 63, 0.18);
+  --c-accent-ink: #f6d2ae;
+  --c-danger: #f08a80;
+  --c-danger-soft: rgba(240, 138, 128, 0.14);
+  --c-danger-line: rgba(240, 138, 128, 0.4);
+  --c-danger-ink: #f6b3ac;
+  --c-success: #6fcf97;
+  --c-success-solid: #178a48;
+  --c-success-soft: rgba(111, 207, 151, 0.14);
+  --c-success-line: rgba(111, 207, 151, 0.38);
+  --c-success-ink: #a6e3c0;
+  --c-info: #8fb8e8;
+  --c-info-soft: rgba(143, 184, 232, 0.14);
+  --c-brown: #d9a07f;
+  --c-brown-soft: rgba(217, 160, 127, 0.14);
+}
+
+@theme inline {
+  --color-page: var(--c-page);
+  --color-sunken: var(--c-sunken);
+  --color-surface: var(--c-surface);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+  --color-fg: var(--c-fg);
+  --color-body: var(--c-body);
+  --color-muted: var(--c-muted);
+  --color-subtle: var(--c-subtle);
+  --color-inverse: var(--c-inverse);
+  --color-inverse-fg: var(--c-inverse-fg);
+  --color-accent-700: var(--c-accent-700);
+  --color-accent-800: var(--c-accent-800);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-accent-ink: var(--c-accent-ink);
+  --color-danger: var(--c-danger);
+  --color-danger-soft: var(--c-danger-soft);
+  --color-danger-line: var(--c-danger-line);
+  --color-danger-ink: var(--c-danger-ink);
+  --color-success: var(--c-success);
+  --color-success-solid: var(--c-success-solid);
+  --color-success-soft: var(--c-success-soft);
+  --color-success-line: var(--c-success-line);
+  --color-success-ink: var(--c-success-ink);
+  --color-info: var(--c-info);
+  --color-info-soft: var(--c-info-soft);
+  --color-brown: var(--c-brown);
+  --color-brown-soft: var(--c-brown-soft);
+}
+
+/* Variante « dark: » pour les rares cas où un élément doit changer de forme (logo, image) selon le thème. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
 body {
   font-family: var(--font-body);
+  background-color: var(--color-page);
+  color: var(--color-fg);
 }
 
 /*
@@ -31,7 +159,7 @@ body {
  * sur fond clair utilisent accent-700 (~5,3:1 sur crème) au lieu d'accent-600 (~3,4:1).
  */
 .bg-accent-500.text-white {
-  color: var(--color-forest-900);
+  color: var(--color-on-accent);
 }
 
 .text-accent-600 {
@@ -73,9 +201,9 @@ body {
 .skeleton {
   background-image: linear-gradient(
     100deg,
-    var(--color-cream-100) 32%,
-    #fffaf3 50%,
-    var(--color-cream-100) 68%
+    var(--color-sunken) 32%,
+    var(--color-surface) 50%,
+    var(--color-sunken) 68%
   );
   background-size: 250% 100%;
   animation: skeleton-shimmer 1.6s ease-in-out infinite;
@@ -84,9 +212,9 @@ body {
 .skeleton-dark {
   background-image: linear-gradient(
     100deg,
-    var(--color-forest-800) 32%,
-    #4a3153 50%,
-    var(--color-forest-800) 68%
+    var(--color-plum-800) 32%,
+    var(--color-plum-700) 50%,
+    var(--color-plum-800) 68%
   );
   background-size: 250% 100%;
   animation: skeleton-shimmer 1.6s ease-in-out infinite;
@@ -97,10 +225,10 @@ body {
   .skeleton-dark {
     animation: none;
     background-image: none;
-    background-color: var(--color-cream-100);
+    background-color: var(--color-sunken);
   }
   .skeleton-dark {
-    background-color: var(--color-forest-800);
+    background-color: var(--color-plum-800);
   }
 }
 

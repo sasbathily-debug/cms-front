@@ -8,11 +8,11 @@
   height: 10px;
   flex-shrink: 0;
   border-radius: 9999px;
-  background: #b5a9b8;
+  background: var(--color-subtle);
 }
 
 .open-dot-on {
-  background: #2fb36d;
+  background: var(--color-success-bright);
 }
 
 .open-dot-on::after {

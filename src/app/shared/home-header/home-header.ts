@@ -17,6 +17,7 @@ import {
 } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
+import { ThemeToggle } from '../theme-toggle/theme-toggle';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
 import { Spotlight } from '../spotlight';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup, preloadNavImages } from '../../core/site-nav';
@@ -39,7 +40,7 @@ const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', pati
  */
 @Component({
   selector: 'app-home-header',
-  imports: [RouterLink, MobileMenu, Spotlight],
+  imports: [RouterLink, MobileMenu, Spotlight, ThemeToggle],
   templateUrl: './home-header.html',
 })
 export class HomeHeader implements OnDestroy {
@@ -55,9 +56,9 @@ export class HomeHeader implements OnDestroy {
   readonly currentUrl = signal(this.router.url);
 
   readonly headerClass = computed(() => {
-    if (this.variant() === 'bar') return 'sticky top-0 z-50 border-b border-white/10 bg-forest-900';
+    if (this.variant() === 'bar') return 'sticky top-0 z-50 border-b border-white/10 bg-plum-900';
     return this.stuck()
-      ? 'header-reveal fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-forest-900'
+      ? 'header-reveal fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-plum-900'
       : 'absolute inset-x-0 top-0 z-50';
   });
   readonly innerClass = computed(
@@ -73,7 +74,7 @@ export class HomeHeader implements OnDestroy {
   );
   readonly ctaClass = computed(
     () =>
-      'flex items-center whitespace-nowrap rounded-[14px] bg-accent-500 px-6 font-display text-[15px] font-bold text-[#140B19] transition hover:bg-accent-600 ' +
+      'flex items-center whitespace-nowrap rounded-[14px] bg-accent-500 px-6 font-display text-[15px] font-bold text-on-accent transition hover:bg-accent-600 ' +
       (this.bar() ? 'h-[60px]' : 'h-[74px]'),
   );
   readonly panelClass = computed(

@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-cream-50 text-[#241827]">
+<div class="min-h-screen bg-page text-fg">
   <app-home-header variant="bar" />
 
   <div
@@ -6,7 +6,7 @@
   >
     <aside class="hidden lg:block">
       <div
-        class="sticky top-24 flex flex-col gap-[18px] rounded-3xl border border-border-warm bg-white p-[22px]"
+        class="sticky top-24 flex flex-col gap-[18px] rounded-3xl border border-line bg-surface p-[22px]"
       >
         <div class="flex items-center gap-3.5">
           @if (store.user()?.profilePictureUrl) {
@@ -17,15 +17,13 @@
             />
           } @else {
             <span
-              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent-100 font-display text-xl font-bold text-accent-700"
+              class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent-soft font-display text-xl font-bold text-accent-700"
               >{{ store.initials() }}</span
             >
           }
           <span class="flex min-w-0 flex-col gap-0.5">
-            <span class="truncate font-display text-lg font-bold text-forest-900">{{
-              fullName()
-            }}</span>
-            <span class="truncate text-[13px] text-ink-600">{{ store.user()?.email }}</span>
+            <span class="truncate font-display text-lg font-bold text-fg">{{ fullName() }}</span>
+            <span class="truncate text-[13px] text-muted">{{ store.user()?.email }}</span>
           </span>
         </div>
         <nav class="flex flex-col gap-1" aria-label="Espace patient">
@@ -35,9 +33,7 @@
               [fragment]="item.fragment"
               class="flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-[15px] font-medium transition"
               [class]="
-                item.active === active()
-                  ? 'bg-forest-900 text-white'
-                  : 'text-[#4A3F49] hover:bg-cream-100'
+                item.active === active() ? 'bg-inverse text-inverse-fg' : 'text-body hover:bg-sunken'
               "
             >
               <app-nav-icon [name]="item.icon" />
@@ -48,7 +44,7 @@
         <button
           type="button"
           (click)="logout()"
-          class="-mt-2 flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-left text-[15px] font-medium text-[#4A3F49] transition hover:bg-cream-100"
+          class="-mt-2 flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-left text-[15px] font-medium text-body transition hover:bg-sunken"
         >
           <svg
             width="20"
@@ -65,15 +61,15 @@
           </svg>
           Déconnexion
         </button>
-        <div class="flex flex-col gap-2.5 rounded-[18px] bg-cream-100 p-[18px]">
-          <span class="font-display text-base font-bold text-forest-900">Une question ?</span>
-          <span class="text-[13.5px] leading-relaxed text-[#4A3F49]"
-            >Appelez le <strong class="text-forest-900">{{ site.phone() }}</strong> du lundi au
+        <div class="flex flex-col gap-2.5 rounded-[18px] bg-sunken p-[18px]">
+          <span class="font-display text-base font-bold text-fg">Une question ?</span>
+          <span class="text-[13.5px] leading-relaxed text-body"
+            >Appelez le <strong class="text-fg">{{ site.phone() }}</strong> du lundi au
             samedi.</span
           >
           <a
             routerLink="/contact"
-            class="self-start rounded-full bg-forest-900 px-[18px] py-2.5 font-display text-sm font-semibold text-white"
+            class="self-start rounded-full bg-inverse px-[18px] py-2.5 font-display text-sm font-semibold text-inverse-fg"
             >Nous écrire</a
           >
         </div>
@@ -89,7 +85,7 @@
   <div class="hidden lg:block"><app-floating-actions /></div>
 
   <nav
-    class="fixed inset-x-0 bottom-0 z-30 flex items-start rounded-t-[22px] bg-forest-900 px-2 pb-[max(14px,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_30px_rgba(31,18,38,0.25)] lg:hidden"
+    class="fixed inset-x-0 bottom-0 z-30 flex items-start rounded-t-[22px] bg-plum-900 px-2 pb-[max(14px,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_30px_rgba(31,18,38,0.25)] lg:hidden"
     aria-label="Navigation de l'espace patient"
   >
     @for (tab of tabs; track tab.label) {
@@ -97,7 +93,7 @@
         [routerLink]="tab.route"
         [fragment]="tab.fragment"
         class="flex flex-1 flex-col items-center gap-1"
-        [class]="tab.active === active() ? 'text-accent-500' : 'text-[#B5A9B8]'"
+        [class]="tab.active === active() ? 'text-accent-500' : 'text-on-plum-subtle'"
       >
         <app-nav-icon [name]="tab.icon" [size]="24" [strokeWidth]="1.9" />
         <span class="text-[11px]" [class]="tab.active === active() ? 'font-bold' : 'font-medium'">{{

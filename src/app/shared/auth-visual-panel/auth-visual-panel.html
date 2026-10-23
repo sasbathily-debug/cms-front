@@ -23,12 +23,12 @@
     <h2 class="m-0 font-display text-[46px] font-bold leading-[1.05] tracking-[-0.03em]">
       Suivez votre santé, à votre rythme.
     </h2>
-    <p class="m-0 text-[17.5px] leading-[1.6] text-[#E8DACE]">
+    <p class="m-0 text-[17.5px] leading-[1.6] text-on-plum-muted">
       Votre espace patient réunit vos rendez-vous, vos rappels et vos documents, au même endroit.
     </p>
     <ul class="m-0 mt-1.5 flex list-none flex-col gap-3.5 p-0">
       @for (point of points; track point) {
-        <li class="flex items-center gap-3.5 text-[17px] text-[#F3EAE0]">
+        <li class="flex items-center gap-3.5 text-[17px] text-on-plum">
           <span
             class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-500"
           >
@@ -37,7 +37,7 @@
               height="14"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#1F1226"
+              stroke="var(--color-plum-900)"
               stroke-width="3.2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -52,7 +52,7 @@
     </ul>
   </div>
 
-  <span class="text-[14.5px] text-[#D8C9BB]"
+  <span class="text-[14.5px] text-on-plum-muted"
     >Besoin d'aide ? Appelez le <strong class="text-white">{{ site.phone() }}</strong></span
   >
 </div>

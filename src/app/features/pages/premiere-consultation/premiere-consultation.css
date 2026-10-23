@@ -5,7 +5,7 @@
   }
   6%,
   76% {
-    background: #e0873f;
+    background: var(--color-accent-500);
   }
   83%,
   100% {
@@ -43,7 +43,7 @@
     stroke-dashoffset: 0;
   }
   .ap-box {
-    background: #e0873f;
+    background: var(--color-accent-500);
   }
 }
 
@@ -58,24 +58,24 @@
 }
 .step-dot {
   border-color: rgba(255, 255, 255, 0.3);
-  background: #1f1226;
+  background: var(--color-plum-900);
   transition:
     border-color 0.4s,
     background-color 0.4s;
 }
 .step-on .step-num {
-  color: #f1c99b;
+  color: var(--color-peach);
 }
 .step-on .step-text {
   opacity: 1;
 }
 .step-on .step-dot {
-  border-color: #e0873f;
-  background: #e0873f;
+  border-color: var(--color-accent-500);
+  background: var(--color-accent-500);
 }
 @media (prefers-reduced-motion: reduce) {
   .step-num {
-    color: #f1c99b;
+    color: var(--color-peach);
     transition: none;
   }
   .step-text {
@@ -83,8 +83,8 @@
     transition: none;
   }
   .step-dot {
-    border-color: #e0873f;
-    background: #e0873f;
+    border-color: var(--color-accent-500);
+    background: var(--color-accent-500);
     transition: none;
   }
 }

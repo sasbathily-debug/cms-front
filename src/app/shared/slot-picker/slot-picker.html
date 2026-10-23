@@ -11,7 +11,7 @@
       }
     </div>
   } @else if (!hasSlots()) {
-    <p class="text-sm text-ink-600">
+    <p class="text-sm text-muted">
       Aucun créneau disponible pour le moment. Contactez le cabinet directement.
     </p>
   } @else {
@@ -21,7 +21,7 @@
         (click)="changeDayPage(-1)"
         [disabled]="!canGoBack()"
         aria-label="Jours précédents"
-        class="flex h-8 w-8 items-center justify-center rounded-full border border-border-warm text-forest-900 transition hover:border-forest-900 disabled:opacity-30"
+        class="flex h-8 w-8 items-center justify-center rounded-full border border-line text-fg transition hover:border-fg disabled:opacity-30"
       >
         ‹
       </button>
@@ -30,7 +30,7 @@
         (click)="changeDayPage(1)"
         [disabled]="!canGoForward()"
         aria-label="Jours suivants"
-        class="flex h-8 w-8 items-center justify-center rounded-full border border-border-warm text-forest-900 transition hover:border-forest-900 disabled:opacity-30"
+        class="flex h-8 w-8 items-center justify-center rounded-full border border-line text-fg transition hover:border-fg disabled:opacity-30"
       >
         ›
       </button>
@@ -43,8 +43,8 @@
           class="flex flex-col items-center gap-0.5 rounded-2xl border px-1 py-3.5 text-center transition"
           [class]="
             selectedDate() === chip.date
-              ? 'slot-selected border-forest-900 bg-forest-900 text-white'
-              : 'border-border-warm bg-white text-[#4A3F49] hover:border-forest-900'
+              ? 'slot-selected border-fg bg-inverse text-inverse-fg'
+              : 'border-line bg-surface text-body hover:border-fg'
           "
         >
           <span class="text-xs tracking-[0.04em] opacity-80">{{ chip.weekday }}</span>
@@ -54,7 +54,7 @@
     </div>
 
     @if (timesForSelectedDate().length === 0) {
-      <p class="text-sm text-ink-600">Aucun créneau ce jour-là.</p>
+      <p class="text-sm text-muted">Aucun créneau ce jour-là.</p>
     } @else {
       <div class="grid grid-cols-3 gap-2 sm:grid-cols-4">
         @for (time of timesForSelectedDate(); track selectedDate() + time; let i = $index) {
@@ -65,8 +65,8 @@
             class="slot-in rounded-[14px] border px-1 py-3 text-[14.5px] font-medium tabular-nums transition"
             [class]="
               selectedTime() === time
-                ? 'slot-selected border-forest-900 bg-forest-900 text-white'
-                : 'border-border-warm bg-white text-[#4A3F49] hover:border-forest-900'
+                ? 'slot-selected border-fg bg-inverse text-inverse-fg'
+                : 'border-line bg-surface text-body hover:border-fg'
             "
           >
             {{ formatTime(time) }}

@@ -3,7 +3,7 @@
     <div>
       <!-- Photo du haut -->
       <section
-        class="relative flex min-h-[680px] items-end overflow-hidden bg-[#140B19] sm:min-h-[780px] lg:min-h-[900px]"
+        class="relative flex min-h-[680px] items-end overflow-hidden bg-plum-950 sm:min-h-[780px] lg:min-h-[900px]"
       >
         <div class="absolute inset-y-0 right-0 z-0 w-[58%]">
           <img
@@ -22,13 +22,13 @@
             aria-hidden="true"
             style="
               background:
-                linear-gradient(90deg, #140b19 0%, rgba(20, 11, 25, 0) 40%),
+                linear-gradient(90deg, var(--color-plum-950) 0%, rgba(20, 11, 25, 0) 40%),
                 linear-gradient(
                   180deg,
                   rgba(20, 11, 25, 0.3) 0%,
                   rgba(20, 11, 25, 0) 22%,
                   rgba(20, 11, 25, 0) 62%,
-                  #140b19 100%
+                  var(--color-plum-950) 100%
                 );
             "
           ></div>
@@ -37,7 +37,7 @@
         <div
           class="relative z-[1] mx-auto flex w-full max-w-[1160px] flex-col gap-7 px-4 pb-[200px] pt-32 sm:px-6 lg:px-10 lg:pb-[236px] lg:pt-40"
         >
-          <span class="text-[13px] font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+          <span class="text-[13px] font-semibold tracking-[0.12em] text-peach">{{
             c().hero.kicker
           }}</span>
           <h1
@@ -55,13 +55,13 @@
               }
             }
           </h1>
-          <p class="m-0 max-w-[600px] text-lg leading-[1.6] text-[#E8DACE] sm:text-xl">
+          <p class="m-0 max-w-[600px] text-lg leading-[1.6] text-on-plum-muted sm:text-xl">
             {{ c().hero.sousTitre }}
           </p>
           <div class="mt-2 flex flex-wrap gap-3.5">
             <a
               routerLink="/rendez-vous"
-              class="rounded-full bg-accent-500 px-8 py-[18px] font-display text-base font-semibold text-[#140B19] transition hover:bg-accent-600 sm:px-[34px]"
+              class="rounded-full bg-accent-500 px-8 py-[18px] font-display text-base font-semibold text-on-accent transition hover:bg-accent-600 sm:px-[34px]"
               >{{ c().hero.boutonPrincipal }}</a
             >
             <a
@@ -81,24 +81,22 @@
           <div
             class="flex flex-wrap items-center justify-between gap-3 bg-accent-500 px-6 py-[13px] sm:px-9"
           >
-            <span
-              class="flex items-center gap-2.5 font-display text-[15px] font-bold text-forest-900"
-            >
-              <span aria-hidden="true" class="h-[9px] w-[9px] rounded-full bg-forest-900"></span>
+            <span class="flex items-center gap-2.5 font-display text-[15px] font-bold text-on-accent">
+              <span aria-hidden="true" class="h-[9px] w-[9px] rounded-full bg-plum-900"></span>
               @if (nextSlot(); as slot) {
                 Prochain créneau libre : {{ slot }}
               } @else {
                 {{ c().carte.sansCreneau }}
               }
             </span>
-            <span class="text-[13.5px] font-medium text-[#3A2418]">{{ c().carte.note }}</span>
+            <span class="text-[13.5px] font-medium text-plum-brown">{{ c().carte.note }}</span>
           </div>
           <div
-            class="grid items-center gap-8 bg-cream-50 px-6 py-8 sm:px-9 md:grid-cols-[1.1fr_1.2fr_1.2fr_auto]"
+            class="grid items-center gap-8 bg-page px-6 py-8 sm:px-9 md:grid-cols-[1.1fr_1.2fr_1.2fr_auto]"
           >
             <div class="flex flex-col gap-1.5">
               <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">HORAIRES</span>
-              <span class="text-[15.5px] leading-normal text-forest-900">
+              <span class="text-[15.5px] leading-normal text-fg">
                 @for (line of hours.homeLines(); track $index) {
                   {{ line }}<br />
                 }
@@ -108,22 +106,20 @@
               <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
                 >TÉLÉPHONE ET WHATSAPP</span
               >
-              <a
-                [href]="site.telHref()"
-                class="font-display text-[21px] font-bold text-forest-900"
-                >{{ site.phone() }}</a
-              >
-              <span class="break-all text-sm text-[#5B4F59]">{{ site.email() }}</span>
+              <a [href]="site.telHref()" class="font-display text-[21px] font-bold text-fg">{{
+                site.phone()
+              }}</a>
+              <span class="break-all text-sm text-muted">{{ site.email() }}</span>
             </div>
             <div class="flex flex-col gap-1.5">
               <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span>
-              <span class="text-[15.5px] leading-normal text-forest-900"
+              <span class="text-[15.5px] leading-normal text-fg"
                 >{{ site.street() }}<br />{{ site.address() }}</span
               >
             </div>
             <a
               routerLink="/rendez-vous"
-              class="whitespace-nowrap rounded-full bg-forest-900 px-[26px] py-[17px] text-center font-display text-[15px] font-semibold text-cream-50"
+              class="whitespace-nowrap rounded-full bg-inverse px-[26px] py-[17px] text-center font-display text-[15px] font-semibold text-inverse-fg"
               >{{ c().carte.bouton }}</a
             >
           </div>
@@ -146,12 +142,12 @@
 
         <!-- La doctoresse -->
         <section
-          class="rounded-t-[32px] bg-cream-50 px-4 py-20 text-[#241827] sm:px-6 lg:rounded-t-[48px] lg:px-10 lg:py-28"
+          class="rounded-t-[32px] bg-page px-4 py-20 text-fg sm:px-6 lg:rounded-t-[48px] lg:px-10 lg:py-28"
         >
           <div class="mx-auto flex max-w-[1160px] flex-wrap items-center gap-10 lg:gap-16">
             <div
               appInView
-              class="photo-life relative h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-[28px] bg-[#2a1930] sm:h-[560px] lg:rounded-[36px]"
+              class="photo-life relative h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-[28px] bg-plum-800 sm:h-[560px] lg:rounded-[36px]"
             >
               <img
                 [src]="c().doctoresse.photo | optimizedImage: 900"
@@ -171,16 +167,16 @@
                 c().doctoresse.kicker
               }}</span>
               <h2
-                class="m-0 font-display text-[2rem] font-bold leading-[1.12] text-forest-900 sm:text-[42px]"
+                class="m-0 font-display text-[2rem] font-bold leading-[1.12] text-fg sm:text-[42px]"
               >
                 {{ c().doctoresse.titre }}
               </h2>
-              <p class="m-0 text-[17px] leading-[1.75] text-[#4A3F49]">
+              <p class="m-0 text-[17px] leading-[1.75] text-body">
                 {{ c().doctoresse.texte }}
               </p>
               <ul class="m-0 flex list-none flex-col gap-3 p-0">
                 @for (point of c().doctoresse.points; track $index) {
-                  <li class="flex gap-3 text-base leading-[1.55] text-[#4A3F49]">
+                  <li class="flex gap-3 text-base leading-[1.55] text-body">
                     <span
                       aria-hidden="true"
                       class="mt-2 h-2 w-2 shrink-0 rounded-full bg-accent-500"
@@ -192,21 +188,19 @@
               <div class="grid gap-4 sm:grid-cols-2">
                 @for (stat of c().doctoresse.stats; track $index) {
                   <div
-                    class="flex flex-col gap-1 rounded-[20px] border border-border-warm bg-white p-[22px]"
+                    class="flex flex-col gap-1 rounded-[20px] border border-line bg-surface p-[22px]"
                   >
-                    <span class="font-display text-[34px] font-bold text-forest-900">{{
-                      stat.big
-                    }}</span>
-                    <span class="text-sm text-ink-600">{{ stat.small }}</span>
+                    <span class="font-display text-[34px] font-bold text-fg">{{ stat.big }}</span>
+                    <span class="text-sm text-muted">{{ stat.small }}</span>
                   </div>
                 }
               </div>
               @if (c().doctoresse.noteStats) {
-                <p class="m-0 text-[13px] text-ink-600">{{ c().doctoresse.noteStats }}</p>
+                <p class="m-0 text-[13px] text-muted">{{ c().doctoresse.noteStats }}</p>
               }
               <a
                 routerLink="/a-propos"
-                class="mt-1.5 self-start rounded-full bg-forest-900 px-7 py-[15px] font-display text-[15px] font-semibold text-white"
+                class="mt-1.5 self-start rounded-full bg-inverse px-7 py-[15px] font-display text-[15px] font-semibold text-inverse-fg"
                 >{{ c().doctoresse.lien }}</a
               >
             </div>
@@ -214,13 +208,13 @@
         </section>
 
         <!-- Parcours en trois temps : un bloc prune posé sur une bande crème -->
-        <div class="bg-cream-50 pb-24 pt-12">
+        <div class="bg-page pb-24 pt-12">
           <section
-            class="mx-3 rounded-[32px] bg-forest-900 px-4 py-20 sm:mx-6 sm:rounded-[48px] sm:px-10 lg:py-28"
+            class="mx-3 rounded-[32px] bg-plum-900 px-4 py-20 sm:mx-6 sm:rounded-[48px] sm:px-10 lg:py-28"
           >
             <div class="mx-auto flex max-w-[1160px] flex-col gap-14 lg:gap-16">
               <div class="flex max-w-[700px] flex-col gap-3.5">
-                <span class="text-xs font-semibold tracking-[0.12em] text-[#F1C99B]">{{
+                <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
                   c().parcours.kicker
                 }}</span>
                 <h2
@@ -237,12 +231,12 @@
                       [style.animation-delay]="0.48 + i * 3.12 + 's'"
                     ></span>
                     <span
-                      class="pc-num font-display text-[72px] font-bold leading-[0.9] text-[#F1C99B] lg:text-[96px]"
+                      class="pc-num font-display text-[72px] font-bold leading-[0.9] text-peach lg:text-[96px]"
                       [style.animation-delay]="0.48 + i * 3.12 + 's'"
                       >{{ e.n }}</span
                     >
                     <h3 class="m-0 font-display text-2xl font-bold text-white">{{ e.titre }}</h3>
-                    <p class="m-0 text-base leading-[1.7] text-[#E8DACE]">{{ e.texte }}</p>
+                    <p class="m-0 text-base leading-[1.7] text-on-plum-muted">{{ e.texte }}</p>
                   </div>
                 }
               </div>
@@ -251,11 +245,11 @@
         </div>
 
         <!-- Conseils -->
-        <section class="bg-cream-50 px-4 pb-20 text-[#241827] sm:px-6 lg:px-10 lg:pb-28">
+        <section class="bg-page px-4 pb-20 text-fg sm:px-6 lg:px-10 lg:pb-28">
           <div class="mx-auto flex max-w-[1160px] flex-col gap-10">
             <div class="flex flex-wrap items-end justify-between gap-6">
               <h2
-                class="m-0 max-w-[560px] font-display text-[2rem] font-bold leading-[1.12] text-forest-900 sm:text-[38px]"
+                class="m-0 max-w-[560px] font-display text-[2rem] font-bold leading-[1.12] text-fg sm:text-[38px]"
               >
                 {{ c().conseils.titre }}
               </h2>
@@ -269,7 +263,7 @@
               @for (a of articles(); track a.titre) {
                 <a
                   routerLink="/conseils-sante"
-                  class="flex flex-col overflow-hidden rounded-[22px] border border-border-warm bg-white text-[#241827] transition"
+                  class="flex flex-col overflow-hidden rounded-[22px] border border-line bg-surface text-fg transition"
                 >
                   <div
                     class="h-[180px] bg-cover bg-center"
@@ -281,7 +275,7 @@
                     <span class="text-xs font-semibold tracking-[0.08em] text-accent-800">{{
                       a.categorie
                     }}</span>
-                    <span class="font-display text-xl font-bold leading-snug text-forest-900">{{
+                    <span class="font-display text-xl font-bold leading-snug text-fg">{{
                       a.titre
                     }}</span>
                   </div>
@@ -292,35 +286,33 @@
         </section>
 
         <!-- Avis (emplacements à remplir avec de vrais témoignages) -->
-        <section class="bg-cream-100 px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
+        <section class="bg-sunken px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
           <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
             <h2
-              class="m-0 max-w-[640px] font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[44px]"
+              class="m-0 max-w-[640px] font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[44px]"
             >
               {{ c().avis.titre }}
             </h2>
             <div class="grid gap-5 md:grid-cols-3">
               @for (a of c().avis.items; track $index) {
-                <figure
-                  class="m-0 flex flex-col justify-between gap-7 rounded-[28px] bg-cream-50 p-9"
-                >
+                <figure class="m-0 flex flex-col justify-between gap-7 rounded-[28px] bg-page p-9">
                   <blockquote
-                    class="m-0 font-display text-[21px] font-medium leading-[1.45] text-forest-900"
+                    class="m-0 font-display text-[21px] font-medium leading-[1.45] text-fg"
                   >
                     {{ a.texte }}
                   </blockquote>
-                  <figcaption class="text-sm text-ink-600">{{ a.auteur }}</figcaption>
+                  <figcaption class="text-sm text-muted">{{ a.auteur }}</figcaption>
                 </figure>
               }
             </div>
             @if (c().avis.note) {
-              <p class="m-0 text-[13.5px] leading-relaxed text-[#5B4F59]">{{ c().avis.note }}</p>
+              <p class="m-0 text-[13.5px] leading-relaxed text-muted">{{ c().avis.note }}</p>
             }
           </div>
         </section>
 
         <!-- Nous trouver -->
-        <div class="bg-cream-50 pt-20 lg:pt-28">
+        <div class="bg-page pt-20 lg:pt-28">
           <section class="px-4 pb-20 sm:px-6 lg:px-10 lg:pb-28">
             <div
               class="mx-auto grid max-w-[1160px] gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
@@ -332,10 +324,10 @@
                 [src]="mapUrl"
               ></iframe>
               <div
-                class="flex flex-col gap-[22px] rounded-[28px] border border-border-warm bg-white p-7 text-[#241827] sm:p-10 lg:rounded-[32px]"
+                class="flex flex-col gap-[22px] rounded-[28px] border border-line bg-surface p-7 text-fg sm:p-10 lg:rounded-[32px]"
               >
                 <h2
-                  class="m-0 font-display text-[28px] font-bold leading-[1.15] tracking-[-0.02em] text-forest-900 sm:text-[32px]"
+                  class="m-0 font-display text-[28px] font-bold leading-[1.15] tracking-[-0.02em] text-fg sm:text-[32px]"
                 >
                   {{ c().trouver.titre }}
                 </h2>
@@ -347,13 +339,13 @@
                 </div>
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">REPÈRE</span
-                  ><span class="text-base leading-[1.55] text-[#4A3F49]">{{
+                  ><span class="text-base leading-[1.55] text-body">{{
                     site.landmark() || '[À côté de quel lieu connu, étage, entrée]'
                   }}</span>
                 </div>
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">OUVERT</span
-                  ><span class="text-base leading-[1.55] text-[#4A3F49]">{{
+                  ><span class="text-base leading-[1.55] text-body">{{
                     hours.homeLines().join(' · ')
                   }}</span>
                   <app-open-now />
@@ -361,12 +353,12 @@
                 <div class="mt-1 flex flex-wrap gap-3">
                   <a
                     routerLink="/infos-pratiques"
-                    class="rounded-full bg-forest-900 px-6 py-3.5 font-display text-[15px] font-semibold text-white"
+                    class="rounded-full bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
                     >Itinéraire</a
                   >
                   <a
                     [href]="site.telHref()"
-                    class="rounded-full border-[1.5px] border-forest-900 px-[22px] py-[13px] font-display text-[15px] font-semibold text-forest-900"
+                    class="rounded-full border-[1.5px] border-fg px-[22px] py-[13px] font-display text-[15px] font-semibold text-fg"
                     >Appeler</a
                   >
                 </div>
@@ -376,43 +368,43 @@
         </div>
 
         <!-- Questions fréquentes -->
-        <section class="bg-cream-100 px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
+        <section class="bg-sunken px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
           <div class="mx-auto flex max-w-[1160px] flex-wrap gap-10 lg:gap-16">
             <div class="flex min-w-0 flex-[0_1_380px] flex-col gap-4">
               <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
                 c().faq.kicker
               }}</span>
               <h2
-                class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-forest-900 sm:text-[40px]"
+                class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[40px]"
               >
                 {{ c().faq.titre }}
               </h2>
-              <p class="m-0 text-base leading-[1.65] text-[#4A3F49]">
+              <p class="m-0 text-base leading-[1.65] text-body">
                 {{ c().faq.intro }}
               </p>
             </div>
             <div
-              class="flex min-w-0 flex-[1_1_540px] flex-col rounded-[28px] bg-cream-50 px-6 py-2 sm:px-9"
+              class="flex min-w-0 flex-[1_1_540px] flex-col rounded-[28px] bg-page px-6 py-2 sm:px-9"
             >
               @for (item of faq(); track item.question; let i = $index) {
-                <div class="flex flex-col gap-3 border-b border-border-warm py-6 last:border-b-0">
+                <div class="flex flex-col gap-3 border-b border-line py-6 last:border-b-0">
                   <button
                     type="button"
                     (click)="toggleFaq(i)"
                     [attr.aria-expanded]="item.open"
                     class="flex w-full items-center justify-between gap-4 text-left"
                   >
-                    <h3 class="m-0 font-display text-[19px] font-semibold text-forest-900">
+                    <h3 class="m-0 font-display text-[19px] font-semibold text-fg">
                       {{ item.question }}
                     </h3>
                     <span
                       aria-hidden="true"
-                      class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-forest-900 text-xl leading-none text-white"
+                      class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-inverse text-xl leading-none text-inverse-fg"
                       >{{ item.open ? '–' : '+' }}</span
                     >
                   </button>
                   @if (item.open) {
-                    <p class="m-0 text-[15.5px] leading-[1.7] text-[#5B4F59]">{{ item.answer }}</p>
+                    <p class="m-0 text-[15.5px] leading-[1.7] text-muted">{{ item.answer }}</p>
                   }
                 </div>
               }
@@ -432,13 +424,13 @@
             >
               {{ c().appel.titre }}
             </h2>
-            <p class="m-0 text-[17px] leading-[1.65] text-[#E8DACE]">
+            <p class="m-0 text-[17px] leading-[1.65] text-on-plum-muted">
               {{ c().appel.texte }}
             </p>
           </div>
           <a
             routerLink="/rendez-vous"
-            class="rounded-full bg-accent-500 px-9 py-[18px] font-display text-base font-semibold text-[#140B19] transition hover:bg-accent-600"
+            class="rounded-full bg-accent-500 px-9 py-[18px] font-display text-base font-semibold text-on-accent transition hover:bg-accent-600"
             >{{ c().appel.bouton }}</a
           >
         </div>
