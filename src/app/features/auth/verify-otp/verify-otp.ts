@@ -36,11 +36,6 @@ export class VerifyOtp implements OnInit {
     this.phone.set(this.route.snapshot.queryParamMap.get('phone') ?? '');
   }
 
-  /** Ce qui s'affiche sous le titre : le numéro saisi, ou l'e-mail à défaut. */
-  recipient(): string {
-    return this.phone() ? `+221 ${this.phone()}` : this.email();
-  }
-
   private setDigits(next: string[]): void {
     this.digits.set(next);
     this.form.controls.otp.setValue(next.join(''));
