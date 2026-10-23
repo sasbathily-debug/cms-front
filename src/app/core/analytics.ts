@@ -48,6 +48,7 @@ export function isTrackable(path: string): boolean {
 /**
  * Mesure d'audience Google Analytics 4, avec le consentement du visiteur.
  *  - Sans identifiant dans l'environnement : rien ne se passe, aucun bandeau.
+ *  - Hors du vrai site (préversion, développement) : le bandeau s'affiche pour pouvoir le voir, Google n'est jamais appelé.
  *  - Rien n'est chargé chez Google tant que le visiteur n'a pas accepté ; s'il refuse, rien ne l'est jamais.
  *  - Nous n'envoyons ni nom, ni e-mail, ni téléphone, ni donnée de santé : seulement le chemin des pages publiques
  *    (sans paramètres) et deux événements sans détail. Google pose toutefois son propre identifiant dans un cookie,
@@ -58,6 +59,8 @@ export function isTrackable(path: string): boolean {
 export class Analytics {
   private readonly router = inject(Router);
   private readonly id = environment.analyticsId;
+  /** Vrai seulement sur le vrai site : sur une préversion, le bandeau s'affiche mais Google n'est jamais appelé. */
+  private readonly live = environment.analyticsHosts.includes(window.location.hostname);
 
   readonly enabled = !!this.id;
   readonly consent = signal<Consent>(readConsent());
@@ -130,7 +133,7 @@ export class Analytics {
   }
 
   private load(): void {
-    if (this.loaded || !this.enabled) return;
+    if (this.loaded || !this.enabled || !this.live) return;
     this.loaded = true;
     window.dataLayer = window.dataLayer ?? [];
     // Google attend l'objet « arguments » lui-même, pas un tableau.

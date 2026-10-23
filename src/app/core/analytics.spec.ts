@@ -22,6 +22,7 @@ const ID = 'G-TEST123456';
 function setup(analyticsId: string, stored: Record<string, string> = {}) {
   Object.defineProperty(window, 'localStorage', { value: fakeStorage(stored), configurable: true });
   environment.analyticsId = analyticsId;
+  environment.analyticsHosts = [window.location.hostname];
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({ providers: [provideRouter([{ path: '**', children: [] }])] });
   return TestBed.inject(Analytics);
@@ -37,6 +38,7 @@ describe('Analytics', () => {
   });
   afterEach(() => {
     environment.analyticsId = '';
+    environment.analyticsHosts = [];
   });
 
   it("ne fait rien et n'affiche aucun bandeau sans identifiant", () => {
@@ -75,6 +77,20 @@ describe('Analytics', () => {
     expect((window as unknown as Record<string, unknown>)[`ga-disable-${ID}`]).toBe(true);
     analytics.track('rendez_vous_reserve');
     expect(window.gtag).toBeUndefined();
+  });
+
+  it("n'appelle jamais Google hors du vrai site, même après acceptation", () => {
+    const analytics = setup(ID);
+    environment.analyticsHosts = ['draissatoumamadou.com'];
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ providers: [provideRouter([{ path: '**', children: [] }])] });
+    const preview = TestBed.inject(Analytics);
+    preview.start();
+    expect(preview.asking()).toBe(true);
+    preview.accept();
+    expect(googleScripts().length).toBe(0);
+    expect(window.gtag).toBeUndefined();
+    expect(analytics).toBeTruthy();
   });
 
   it('reprend un accord déjà donné sans reposer la question', () => {

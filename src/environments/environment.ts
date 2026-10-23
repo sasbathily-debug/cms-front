@@ -7,7 +7,9 @@ export const environment = {
    * Identifiant de mesure Google Analytics 4 (« G-XXXXXXXXXX »). Vide : aucune mesure, aucun bandeau de cookies.
    * Rien n'est chargé chez Google avant que le visiteur accepte, et jamais sur l'admin ni l'espace patient.
    */
-  analyticsId: '',
+  analyticsId: 'G-02FER20LBB',
+  /** Google ne reçoit rien depuis une autre adresse (préversions Vercel, essais) : les chiffres ne comptent que le vrai site. */
+  analyticsHosts: ['draissatoumamadou.com', 'www.draissatoumamadou.com'],
   /** Tant que le contenu n'est pas validé : montre les textes d'exemple si l'admin n'a rien publié. À passer à false au lancement. */
   sampleContent: true,
 };
