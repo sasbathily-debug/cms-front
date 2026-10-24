@@ -601,37 +601,24 @@ button[class*='rounded-full']:not(:disabled):active {
   }
 }
 
-/* Panneau des cookies : il glisse depuis le bord de l'écran (le bas sur téléphone, la gauche sur ordinateur). */
+/* Barre des cookies : elle monte depuis le bas de l'écran. */
 @keyframes cookie-slide-up {
   from {
-    transform: translateY(100%);
+    opacity: 0;
+    transform: translate(-50%, 24px);
   }
   to {
-    transform: translateY(0);
+    opacity: 1;
+    transform: translate(-50%, 0);
   }
 }
 
-@keyframes cookie-slide-in {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-.cookie-panel {
-  animation: cookie-slide-up 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (min-width: 640px) {
-  .cookie-panel {
-    animation-name: cookie-slide-in;
-  }
+.cookie-bar {
+  animation: cookie-slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cookie-panel {
+  .cookie-bar {
     animation: none;
   }
 }
