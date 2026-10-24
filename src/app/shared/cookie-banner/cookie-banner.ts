@@ -1,4 +1,11 @@
-import { AfterViewChecked, Component, ElementRef, inject, viewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  OnDestroy,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { Analytics } from '../../core/analytics';
 
 /**
@@ -50,19 +57,53 @@ import { Analytics } from '../../core/analytics';
     }
   `,
 })
-export class CookieBanner implements AfterViewChecked {
+export class CookieBanner implements AfterViewChecked, OnDestroy {
   protected readonly analytics = inject(Analytics);
   private readonly dialog = viewChild<ElementRef<HTMLElement>>('dialog');
   private focused = false;
+  private observer: ResizeObserver | null = null;
+  private observed: HTMLElement | null = null;
 
   /** À l'ouverture, le focus va sur la barre : un lecteur d'écran la lit tout de suite et le clavier y reste. */
   ngAfterViewChecked(): void {
-    const dialog = this.dialog()?.nativeElement;
+    const dialog = this.dialog()?.nativeElement ?? null;
     if (dialog && !this.focused) {
       this.focused = true;
       dialog.focus();
     } else if (!dialog) {
       this.focused = false;
     }
+    this.followHeight(dialog);
+  }
+
+  ngOnDestroy(): void {
+    this.followHeight(null);
+  }
+
+  /**
+   * Sur ordinateur, la bulle de chat, le bouton WhatsApp et le bouton d'appel se posent au-dessus de la barre tant
+   * qu'elle est affichée : sa hauteur est publiée dans `--cookie-offset` (0 sur téléphone, où la barre les recouvre).
+   */
+  private followHeight(dialog: HTMLElement | null): void {
+    if (dialog === this.observed) return;
+    this.observer?.disconnect();
+    this.observed = dialog;
+    const root = document.documentElement;
+    if (!dialog || typeof ResizeObserver === 'undefined') {
+      this.observer = null;
+      root.style.removeProperty('--cookie-offset');
+      return;
+    }
+    const publish = () => {
+      const wide = window.matchMedia?.('(min-width: 640px)').matches ?? true;
+      // hauteur de la barre + sa marge basse (24 px) + un petit espace
+      root.style.setProperty(
+        '--cookie-offset',
+        wide ? `${dialog.offsetHeight + 24 + 12}px` : '0px',
+      );
+    };
+    this.observer = new ResizeObserver(publish);
+    this.observer.observe(dialog);
+    publish();
   }
 }

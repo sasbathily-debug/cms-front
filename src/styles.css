@@ -622,3 +622,37 @@ button[class*='rounded-full']:not(:disabled):active {
     animation: none;
   }
 }
+
+/*
+ * Éléments flottants (bulle de chat, WhatsApp, appel) : ils montent au-dessus de la barre des cookies tant qu'elle
+ * est affichée, mais seulement quand ils la chevaucheraient. La barre fait 1040 px au plus et reste centrée :
+ * à droite elle gêne la bulle sous ~1460 px de large, à gauche le bouton d'appel sous ~1270 px.
+ * `translate` se combine avec les animations qui utilisent `transform`.
+ */
+.cookie-lift,
+.cookie-lift-left {
+  transition: translate 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 640px) and (max-width: 1459px) {
+  .cookie-lift {
+    translate: 0 calc(var(--cookie-offset, 0px) * -1);
+  }
+
+  .chat-panel.cookie-lift {
+    max-height: calc(100dvh - 1.5rem - var(--cookie-offset, 0px));
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1270px) {
+  .cookie-lift-left {
+    translate: 0 calc(var(--cookie-offset, 0px) * -1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie-lift,
+  .cookie-lift-left {
+    transition: none;
+  }
+}
