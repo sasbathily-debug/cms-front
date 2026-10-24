@@ -44,7 +44,10 @@ describe('PwaUpdate', () => {
     return service;
   }
 
+  beforeEach(() => vi.useFakeTimers({ toFake: ['Date'] }));
+
   afterEach(() => {
+    vi.useRealTimers();
     vi.unstubAllGlobals();
     document.body.innerHTML = '';
     sw.checkForUpdate.mockClear();
@@ -59,9 +62,11 @@ describe('PwaUpdate', () => {
 
   it('applique une version prête au changement de page suivant, sans rien demander', async () => {
     const service = setup();
+    vi.setSystemTime(Date.now() + 5 * 60_000); // le visiteur lit depuis un moment : pas de rechargement immédiat
     versionUpdates.next({ type: 'VERSION_READY' });
     expect(service.ready()).toBe(true);
     expect(service.prompt()).toBe(false);
+    expect(applyThen).not.toHaveBeenCalled();
 
     await TestBed.inject(Router).navigateByUrl('/contact');
     expect(applyThen).toHaveBeenCalledTimes(1);
@@ -78,6 +83,39 @@ describe('PwaUpdate', () => {
 
     await TestBed.inject(Router).navigateByUrl('/contact');
     expect(applyThen).not.toHaveBeenCalled();
+  });
+
+  it("applique tout de suite une version qui arrive juste après l'ouverture", () => {
+    setup();
+    versionUpdates.next({ type: 'VERSION_READY' });
+    expect(applyThen).toHaveBeenCalledTimes(1);
+  });
+
+  it("applique aussi tout de suite une version qui arrive juste après le retour sur l'application", () => {
+    const service = setup();
+    vi.setSystemTime(Date.now() + 10 * 60_000);
+    document.dispatchEvent(new Event('visibilitychange'));
+    versionUpdates.next({ type: 'VERSION_READY' });
+    expect(service.ready()).toBe(true);
+    expect(applyThen).toHaveBeenCalledTimes(1);
+  });
+
+  it('ne recharge pas si le visiteur a saisi du texte : il propose « Actualiser »', () => {
+    const service = setup();
+    document.dispatchEvent(new Event('input'));
+    versionUpdates.next({ type: 'VERSION_READY' });
+    expect(applyThen).not.toHaveBeenCalled();
+    expect(service.prompt()).toBe(true);
+  });
+
+  it('ne recharge pas pendant que le chat est ouvert', () => {
+    const panel = document.createElement('aside');
+    panel.className = 'chat-panel';
+    document.body.appendChild(panel);
+    const service = setup();
+    versionUpdates.next({ type: 'VERSION_READY' });
+    expect(applyThen).not.toHaveBeenCalled();
+    expect(service.prompt()).toBe(true);
   });
 
   it("n'applique rien tant qu'aucune version n'est prête", async () => {
