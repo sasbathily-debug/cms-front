@@ -13,6 +13,8 @@ import {
   withRouterConfig,
 } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideServiceWorker } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { routes } from './app.routes';
 import { SiteTitleStrategy } from './core/site-title';
@@ -48,6 +50,11 @@ export const appConfig: ApplicationConfig = {
       withPreloading(IdlePreload),
     ),
     { provide: TitleStrategy, useClass: SiteTitleStrategy },
+    // Application installable et pages publiques en cache. Actif seulement dans la version publiée, pas en développement.
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(Auth);

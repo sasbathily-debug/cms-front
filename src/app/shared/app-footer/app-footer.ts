@@ -7,10 +7,11 @@ import { PIED_DE_PAGE } from '../../core/page-content/defs/pied-de-page';
 import { OpeningHours } from '../../core/services/opening-hours';
 import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
+import { InstallButton } from '../install-button/install-button';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, OpenNow],
+  imports: [RouterLink, OpenNow, InstallButton],
   styleUrl: './app-footer.css',
   templateUrl: './app-footer.html',
 })

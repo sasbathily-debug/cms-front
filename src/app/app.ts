@@ -7,9 +7,11 @@ import { PageContent } from './core/services/page-content';
 import { Analytics } from './core/analytics';
 import { ChatWidget } from './shared/chat-widget/chat-widget';
 import { CookieBanner } from './shared/cookie-banner/cookie-banner';
+import { UpdateToast } from './shared/update-toast/update-toast';
+import { PwaUpdate } from './core/pwa-update';
 
 @Component({
-  imports: [RouterOutlet, ChatWidget, CookieBanner],
+  imports: [RouterOutlet, ChatWidget, CookieBanner, UpdateToast],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
@@ -22,6 +24,7 @@ export class App {
     inject(Reveal);
     inject(Theme);
     inject(Analytics).start();
+    inject(PwaUpdate).start();
     this.prefetchPageTexts();
   }
 
