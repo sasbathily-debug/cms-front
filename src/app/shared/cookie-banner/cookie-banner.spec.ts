@@ -23,33 +23,33 @@ describe('CookieBanner', () => {
   const find = (root: HTMLElement, label: RegExp) =>
     [...root.querySelectorAll('button')].find((b) => label.test(b.textContent ?? ''));
 
-  it("affiche l'essentiel sans rien à déplier", () => {
-    const root = render();
-    const text = root.textContent ?? '';
-    expect(text).toContain('Nécessaires');
+  it('dit en peu de mots ce qui est mesuré et ce qui ne part jamais', () => {
+    const text = render().textContent ?? '';
     expect(text).toContain('Google Analytics');
-    expect(text).toContain("Nous n'envoyons ni nom");
-    expect(text).toContain('2 mois');
+    expect(text).toContain(
+      "Nous n'envoyons à Google ni vos coordonnées ni aucune information de santé",
+    );
     expect(text).toContain('Gérer les cookies');
-    expect(find(root, /En savoir plus/)).toBeUndefined();
   });
 
-  it("est un panneau de dialogue nommé, collé au bord de l'écran, qui ne bloque pas la page", () => {
+  it('est une barre large posée en bas, sans voile sur la page', () => {
     const root = render();
-    const dialog = root.querySelector('[role=dialog]')!;
-    expect(dialog.getAttribute('aria-labelledby')).toBe('cookie-title');
-    expect(dialog.getAttribute('aria-modal')).toBeNull();
-    expect(dialog.className).toContain('cookie-panel');
-    expect(dialog.className).toContain('sm:left-6');
-    expect(root.querySelector('.backdrop-blur-\\[3px\\]')).toBeNull();
+    const bar = root.querySelector('[role=dialog]')!;
+    expect(bar.className).toContain('cookie-bar');
+    expect(bar.className).toContain('max-w-[1040px]');
+    expect(bar.getAttribute('aria-modal')).toBeNull();
+    expect(root.querySelector('.fixed.inset-0')).toBeNull();
   });
 
-  it('propose « Refuser » et « Accepter » avec le même poids', () => {
+  it("propose « j'accepte » et « je refuse » avec la même forme et le même poids", () => {
     const root = render();
-    const refuse = find(root, /^\s*Refuser\s*$/)!;
-    const accept = find(root, /Accepter les cookies/)!;
-    expect(refuse.className).toContain('flex-1');
-    expect(accept.className).toContain('flex-1');
+    const accept = find(root, /j'accepte/i)!;
+    const refuse = find(root, /je refuse/i)!;
+    for (const b of [accept, refuse]) {
+      expect(b.className).toContain('px-9');
+      expect(b.className).toContain('py-3.5');
+      expect(b.className).toContain('rounded-full');
+    }
   });
 
   it('ne montre rien quand il ne faut pas poser la question', () => {
@@ -59,9 +59,9 @@ describe('CookieBanner', () => {
 
   it('transmet le choix du visiteur', () => {
     const root = render();
-    find(root, /Accepter les cookies/)!.click();
+    find(root, /j'accepte/i)!.click();
     expect(analytics.accept).toHaveBeenCalledTimes(1);
-    find(root, /^\s*Refuser\s*$/)!.click();
+    find(root, /je refuse/i)!.click();
     expect(analytics.refuse).toHaveBeenCalledTimes(1);
   });
 });

@@ -2,9 +2,8 @@ import { AfterViewChecked, Component, ElementRef, inject, viewChild } from '@ang
 import { Analytics } from '../../core/analytics';
 
 /**
- * Petit panneau de consentement, posé avec un peu de marge sur le côté gauche, qui glisse depuis le bord de l'écran (depuis le bas sur téléphone).
- * L'essentiel est lisible sans rien déplier : ce qui est toujours actif, ce que mesure Google Analytics, ce qui
- * n'est jamais envoyé. « Refuser » pèse autant qu'« Accepter ». Il ne bloque pas la page.
+ * Barre de consentement : large, centrée en bas de l'écran, sans voile sur la page, un texte court et deux gros
+ * boutons de même poids. Elle ne bloque pas la lecture du site.
  */
 @Component({
   selector: 'app-cookie-banner',
@@ -13,87 +12,40 @@ import { Analytics } from '../../core/analytics';
       <aside
         #dialog
         role="dialog"
-        aria-labelledby="cookie-title"
-        aria-describedby="cookie-intro"
+        aria-labelledby="cookie-text"
         tabindex="-1"
-        class="cookie-panel fixed inset-x-3 bottom-3 z-[80] flex max-h-[85vh] flex-col overflow-hidden rounded-[22px] border border-line bg-surface text-fg shadow-[0_18px_50px_rgba(0,0,0,0.3)] outline-none sm:inset-x-auto sm:bottom-6 sm:left-6 sm:w-[370px]"
+        class="cookie-bar fixed bottom-3 left-1/2 z-[80] w-[calc(100%-1.5rem)] max-w-[1040px] -translate-x-1/2 rounded-[10px] border border-white/15 bg-plum-950 px-5 py-6 text-cream-50 shadow-[0_18px_60px_rgba(0,0,0,0.45)] outline-none sm:bottom-6 sm:px-12 sm:py-8"
       >
-        <div class="flex min-h-0 flex-col gap-3 overflow-y-auto px-5 pb-1 pt-5">
-          <div class="flex items-center gap-3">
-            <span
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-700"
-              aria-hidden="true"
-            >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M21 12.5A9 9 0 1 1 11.5 3a4 4 0 0 0 4.5 4.5 3.5 3.5 0 0 0 5 5z" />
-                <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none" />
-                <circle cx="14.5" cy="15" r="0.9" fill="currentColor" stroke="none" />
-                <circle cx="8.5" cy="15.5" r="0.9" fill="currentColor" stroke="none" />
-              </svg>
-            </span>
-            <h2 id="cookie-title" class="m-0 font-display text-[1.1rem] font-bold leading-tight">
-              Vos données, vos choix
-            </h2>
-          </div>
+        <p
+          id="cookie-text"
+          class="m-0 max-w-[930px] text-[14px] leading-[1.6] text-on-plum sm:text-[15px]"
+        >
+          Ce site utilise des cookies nécessaires à son fonctionnement et, avec votre accord, Google
+          Analytics pour compter les visites. Nous n'envoyons à Google ni vos coordonnées ni aucune
+          information de santé. Acceptez-vous ces cookies ?
+        </p>
 
-          <p id="cookie-intro" class="m-0 text-[13.5px] leading-[1.55] text-body">
-            Les cookies nécessaires au site sont toujours actifs. Nous ne mesurons les visites
-            qu'avec votre accord.
-          </p>
-
-          <ul class="m-0 flex list-none flex-col gap-2.5 p-0">
-            <li class="flex flex-col gap-0.5 rounded-xl bg-sunken px-3.5 py-3">
-              <span class="text-[13px] font-bold text-fg">
-                Nécessaires
-                <span class="font-semibold text-success">· toujours actifs</span>
-              </span>
-              <span class="text-[12.5px] leading-[1.5] text-body">
-                Votre connexion, le thème clair ou sombre et ce choix. Aucun suivi.
-              </span>
-            </li>
-            <li class="flex flex-col gap-0.5 rounded-xl bg-sunken px-3.5 py-3">
-              <span class="text-[13px] font-bold text-fg">
-                Google Analytics
-                <span class="font-semibold text-accent-800">· avec votre accord</span>
-              </span>
-              <span class="text-[12.5px] leading-[1.5] text-body">
-                Compte les pages vues, la provenance et le type d'appareil (cookies _ga, 2 ans ;
-                données gardées 2 mois). Nous n'envoyons ni nom, ni e-mail, ni téléphone, ni donnée
-                de santé, et rien n'est mesuré dans l'espace patient.
-              </span>
-            </li>
-          </ul>
-
-          <p class="m-0 text-[12px] leading-[1.5] text-muted">
-            Modifiable à tout moment : « Gérer les cookies » en bas de page.
-          </p>
-        </div>
-
-        <div class="flex shrink-0 gap-2.5 px-5 pb-5 pt-3">
-          <button
-            type="button"
-            (click)="analytics.refuse()"
-            class="flex-1 cursor-pointer rounded-full border-[1.5px] border-fg bg-transparent px-3 py-2.5 font-display text-[13.5px] font-semibold text-fg transition hover:bg-sunken"
-          >
-            Refuser
-          </button>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
           <button
             type="button"
             (click)="analytics.accept()"
-            class="flex-1 cursor-pointer rounded-full border-[1.5px] border-fg bg-inverse px-3 py-2.5 font-display text-[13.5px] font-semibold text-inverse-fg transition hover:opacity-90"
+            class="cursor-pointer rounded-full border-[1.5px] border-cream-50 bg-cream-50 px-9 py-3.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-plum-900 transition hover:bg-white"
           >
-            Accepter les cookies
+            Oui, j'accepte
+          </button>
+          <button
+            type="button"
+            (click)="analytics.refuse()"
+            class="cursor-pointer rounded-full border-[1.5px] border-cream-50 bg-transparent px-9 py-3.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-cream-50 transition hover:bg-white/10"
+          >
+            Non, je refuse
           </button>
         </div>
+
+        <p class="m-0 mt-5 text-[13px] leading-[1.55] text-on-plum-subtle">
+          Vous pouvez modifier votre choix à tout moment avec « Gérer les cookies », en bas de
+          chaque page.
+        </p>
       </aside>
     }
   `,
@@ -103,7 +55,7 @@ export class CookieBanner implements AfterViewChecked {
   private readonly dialog = viewChild<ElementRef<HTMLElement>>('dialog');
   private focused = false;
 
-  /** À l'ouverture, le focus va sur le panneau : un lecteur d'écran le lit tout de suite et le clavier y reste. */
+  /** À l'ouverture, le focus va sur la barre : un lecteur d'écran la lit tout de suite et le clavier y reste. */
   ngAfterViewChecked(): void {
     const dialog = this.dialog()?.nativeElement;
     if (dialog && !this.focused) {
