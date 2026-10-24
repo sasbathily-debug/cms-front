@@ -2,6 +2,7 @@ import { Component, computed, inject, output, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../core/services/auth';
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
+import { InstallButton } from '../install-button/install-button';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup } from '../../core/site-nav';
 
 interface Tile {
@@ -18,7 +19,7 @@ const SIMPLE_SYMBOLS: Record<string, string> = { conseils: 'Cs', contact: 'Co' }
 /** Menu plein écran des téléphones : des tuiles qui se déplient, comme sur la maquette. */
 @Component({
   selector: 'app-mobile-menu',
-  imports: [RouterLink, ThemeToggle],
+  imports: [RouterLink, ThemeToggle, InstallButton],
   templateUrl: './mobile-menu.html',
 })
 export class MobileMenu {

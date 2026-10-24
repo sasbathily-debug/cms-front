@@ -26,6 +26,15 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/(ngsw-worker\\.js|ngsw\\.json|force-update\\.json|manifest\\.webmanifest)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
     }
   ]
 }
