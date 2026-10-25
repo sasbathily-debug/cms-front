@@ -444,7 +444,7 @@ export const MALADIES: Record<string, MaladieContent> = {
     crumb: 'Nutrition clinique',
     title: 'Nutrition clinique : manger pour se soigner et se sentir bien',
     lead: "La nutrition clinique utilise l'alimentation comme un outil de soin : adaptée à votre santé, à votre maladie éventuelle et à votre vie, sans régime miracle ni interdits inutiles.",
-    heroLabel: 'CE QUE COUVRE CETTE CONSULTATION',
+    heroLabel: 'CE QUE COUVRE CETTE PAGE',
     heroPoints: [
       'Un bilan de vos habitudes alimentaires',
       'Un plan adapté à votre santé, à votre budget et à votre culture',
