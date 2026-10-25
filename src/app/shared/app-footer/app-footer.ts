@@ -9,6 +9,13 @@ import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
 import { InstallButton } from '../install-button/install-button';
 
+/** Les trois liens du bas de page : reconnus par leur libellé, qui reste modifiable depuis l'admin. */
+const LEGAL_ROUTES: [RegExp, string][] = [
+  [/mentions/i, '/mentions-legales'],
+  [/confidentialit/i, '/politique-de-confidentialite'],
+  [/plan du site/i, '/plan-du-site'],
+];
+
 @Component({
   selector: 'app-footer',
   imports: [RouterLink, OpenNow, InstallButton],
@@ -36,15 +43,12 @@ export class AppFooter {
   protected readonly hours = inject(OpeningHours);
   protected readonly c = inject(PageContent).use(PIED_DE_PAGE);
 
-  /** « Mentions légales · Politique de confidentialité · Plan du site » : seule la politique a sa page pour l'instant. */
+  /** « Mentions légales · Politique de confidentialité · Plan du site » : chacun renvoie vers sa page. */
   protected readonly bottomLinks = computed(() =>
     this.c()
       .bas.liens.split('·')
       .map((label) => label.trim())
       .filter(Boolean)
-      .map((label) => ({
-        label,
-        route: /confidentialit/i.test(label) ? '/politique-de-confidentialite' : null,
-      })),
+      .map((label) => ({ label, route: LEGAL_ROUTES.find(([re]) => re.test(label))?.[1] ?? null })),
   );
 }
