@@ -100,6 +100,39 @@ describe('PwaUpdate', () => {
     expect(applyThen).toHaveBeenCalledTimes(1);
   });
 
+  it("cherche une nouvelle version à chaque changement de page, puis l'applique tout de suite si elle arrive", async () => {
+    setup();
+    vi.setSystemTime(Date.now() + 5 * 60_000); // l'application est ouverte depuis un moment
+    sw.checkForUpdate.mockClear();
+
+    await TestBed.inject(Router).navigateByUrl('/contact');
+    expect(sw.checkForUpdate).toHaveBeenCalledTimes(1);
+
+    versionUpdates.next({ type: 'VERSION_READY' });
+    expect(applyThen).toHaveBeenCalledTimes(1);
+  });
+
+  it("ne cherche pas plus d'une fois par minute, même en changeant vite de page", async () => {
+    setup();
+    vi.setSystemTime(Date.now() + 5 * 60_000);
+    sw.checkForUpdate.mockClear();
+
+    const router = TestBed.inject(Router);
+    await router.navigateByUrl('/contact');
+    await router.navigateByUrl('/faq');
+    await router.navigateByUrl('/a-propos');
+    expect(sw.checkForUpdate).toHaveBeenCalledTimes(1);
+  });
+
+  it("n'applique pas une version qui arrive longtemps après le dernier changement de page", async () => {
+    setup();
+    vi.setSystemTime(Date.now() + 5 * 60_000);
+    await TestBed.inject(Router).navigateByUrl('/contact');
+    vi.setSystemTime(Date.now() + 60_000); // le visiteur lit depuis une minute
+    versionUpdates.next({ type: 'VERSION_READY' });
+    expect(applyThen).not.toHaveBeenCalled();
+  });
+
   it('ne recharge pas si le visiteur a saisi du texte : il propose « Actualiser »', () => {
     const service = setup();
     document.dispatchEvent(new Event('input'));
