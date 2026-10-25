@@ -8,6 +8,7 @@ import { OpeningHours } from '../../core/services/opening-hours';
 import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
 import { InstallButton } from '../install-button/install-button';
+import { BackToTop } from '../back-to-top/back-to-top';
 
 /** Les trois liens du bas de page : reconnus par leur libellé, qui reste modifiable depuis l'admin. */
 const LEGAL_ROUTES: [RegExp, string][] = [
@@ -18,7 +19,7 @@ const LEGAL_ROUTES: [RegExp, string][] = [
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, OpenNow, InstallButton],
+  imports: [RouterLink, OpenNow, InstallButton, BackToTop],
   styleUrl: './app-footer.css',
   templateUrl: './app-footer.html',
 })
