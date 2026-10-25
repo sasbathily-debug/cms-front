@@ -23,16 +23,12 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { NextSlot } from '../../../core/services/next-slot';
 import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
-import { OssatureReveal } from '../../../shared/ossature-reveal/ossature-reveal';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { Specialties } from '../../../core/services/specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
-/** La photo pour laquelle le dessin au trait `dr-fall-trait.webp` a été tiré. */
-const DEFAULT_PORTRAIT = '/img/dr-fall-640.webp';
-
 @Component({
   selector: 'app-home-mobile',
   imports: [
@@ -45,7 +41,6 @@ const DEFAULT_PORTRAIT = '/img/dr-fall-640.webp';
     OptimizedImagePipe,
     SrcsetPipe,
     SlotTicket,
-    OssatureReveal,
   ],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
@@ -92,10 +87,6 @@ export class HomeMobile {
   );
 
   private readonly slots = inject(NextSlot);
-  /** Le dessin au trait est tiré de la photo d'origine : si la photo est remplacée dans l'admin, l'effet est retiré. */
-  readonly traitUrl = '/img/dr-fall-trait.webp';
-  readonly ossature = computed(() => this.c().hero.photoTelephone === DEFAULT_PORTRAIT);
-
   /** Un créneau est libre : l'étiquette s'affiche (voir NextSlot, tenu à jour tant que la page est ouverte). */
   readonly hasSlot = computed(() => this.slots.ticket() !== null);
 
