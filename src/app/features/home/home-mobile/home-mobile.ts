@@ -22,6 +22,7 @@ import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { NextSlot } from '../../../core/services/next-slot';
+import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { Specialties } from '../../../core/services/specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
@@ -39,6 +40,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     Parallax,
     OptimizedImagePipe,
     SrcsetPipe,
+    SlotTicket,
   ],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
@@ -85,11 +87,8 @@ export class HomeMobile {
   );
 
   private readonly slots = inject(NextSlot);
-  /** Le prochain créneau libre, tenu à jour tant que la page est ouverte (voir NextSlot). */
-  readonly slotLabel = computed(() => {
-    const slot = this.slots.next();
-    return slot ? `${this.slots.dayLabel(slot)} ${slot.time.slice(0, 2)}h` : null;
-  });
+  /** Un créneau est libre : l'étiquette s'affiche (voir NextSlot, tenu à jour tant que la page est ouverte). */
+  readonly hasSlot = computed(() => this.slots.ticket() !== null);
 
   constructor() {
     // La barre fixe de cette page porte déjà le bouton de chat : la bulle flottante se retire.

@@ -35,16 +35,15 @@
     <div
       class="relative z-[1] -mt-8 flex flex-col gap-4 rounded-t-[28px] bg-page px-5 pb-7 pt-6 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
     >
-      <span
-        class="inline-flex w-fit items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-[12.5px] font-semibold text-accent-800"
-      >
-        <span aria-hidden="true" class="h-2 w-2 shrink-0 rounded-full bg-accent-500"></span>
-        @if (slotLabel(); as slot) {
-          Créneau libre : {{ slot }}
-        } @else {
+      @if (hasSlot()) {
+        <app-slot-ticket />
+      } @else {
+        <span
+          class="inline-flex w-fit items-center rounded-full bg-accent-soft px-3 py-1.5 text-[12.5px] font-semibold text-accent-800"
+        >
           {{ c().carte.sansCreneau }}
-        }
-      </span>
+        </span>
+      }
       <h1
         class="m-0 font-display text-[34px] font-bold leading-[1.04] tracking-[-0.03em] text-fg [@media(max-height:720px)]:text-[29px]"
       >

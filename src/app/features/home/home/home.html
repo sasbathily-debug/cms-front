@@ -81,14 +81,15 @@
           <div
             class="flex flex-wrap items-center justify-between gap-3 bg-accent-500 px-6 py-[13px] sm:px-9"
           >
-            <span class="flex items-center gap-2.5 font-display text-[15px] font-bold text-on-accent">
-              <span aria-hidden="true" class="h-[9px] w-[9px] rounded-full bg-plum-900"></span>
-              @if (nextSlot(); as slot) {
-                Prochain créneau libre : {{ slot }}
-              } @else {
+            @if (hasSlot()) {
+              <div class="w-full max-w-[340px] [--ticket-fond:var(--color-accent-500)]">
+                <app-slot-ticket />
+              </div>
+            } @else {
+              <span class="font-display text-[15px] font-bold text-on-accent">
                 {{ c().carte.sansCreneau }}
-              }
-            </span>
+              </span>
+            }
             <span class="text-[13.5px] font-medium text-plum-brown">{{ c().carte.note }}</span>
           </div>
           <div
