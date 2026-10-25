@@ -13,9 +13,18 @@
     </a>
 
     <div class="hidden items-center gap-3 xl:flex">
-      <nav aria-label="Navigation principale" class="flex gap-2.5" (mouseleave)="leave()">
+      <nav
+        aria-label="Navigation principale"
+        class="flex gap-2.5"
+        (mouseenter)="cancelClose()"
+        (mouseleave)="scheduleClose()"
+      >
         @for (tile of tiles(); track tile.key) {
-          <div (mouseenter)="tile.group ? hover(tile.key) : leave()">
+          <div
+            (mouseenter)="
+              tile.group ? hover(tile.key, $any($event.currentTarget)) : scheduleClose()
+            "
+          >
             <a
               [routerLink]="tile.route"
               (pointerdown)="tilePointerDown($event, tile.key)"
@@ -28,85 +37,128 @@
               </span>
               <span [class]="labelClass()">{{ tile.label }}</span>
             </a>
-            @if (tile.group && openGroup() === tile.key) {
-              <div [class]="panelClass()">
+            @if (tile.group && seen().has(tile.key)) {
+              <div
+                [class]="panelClass()"
+                [class.is-open]="openGroup() === tile.key"
+                [attr.aria-hidden]="openGroup() !== tile.key"
+              >
                 <div
-                  class="flex gap-3 rounded-[24px] border border-line bg-surface p-3 shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
+                  class="relative rounded-[24px] border border-line bg-surface shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
                 >
-                  @if (tile.group.cards?.length) {
-                    <div class="flex w-[236px] shrink-0 flex-col gap-3">
-                      @for (card of tile.group.cards; track card.title) {
+                  <span
+                    aria-hidden="true"
+                    class="absolute -top-[7px] h-3.5 w-3.5 rotate-45 border-l border-t border-line bg-surface"
+                    [style.left.px]="notchX()"
+                  ></span>
+                  <div class="flex gap-3 p-3">
+                    <div
+                      appSlideHighlight
+                      class="relative grid min-w-0 flex-1 content-start gap-0.5"
+                      [class]="tile.group.links.length > 4 ? 'grid-cols-2' : 'grid-cols-1'"
+                    >
+                      <span
+                        data-hl
+                        aria-hidden="true"
+                        class="pointer-events-none absolute left-0 top-0 h-0 w-0 rounded-[14px] bg-page opacity-0 transition-[transform,width,height,opacity] duration-200 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none"
+                      ></span>
+                      @for (link of tile.group.links; track link.label) {
                         <a
-                          [routerLink]="card.route"
-                          appSpotlight
-                          class="group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-plum-900"
+                          [routerLink]="link.route"
+                          [style.--i]="$index + 1"
+                          class="nav-item group/link relative z-[1] flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-fg"
                         >
-                          <img
-                            [src]="card.image"
-                            alt=""
-                            loading="lazy"
-                            class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
+                          <span
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sunken font-display text-[15px] font-bold text-accent-700 transition-colors duration-200 group-hover/link:bg-accent-500 group-hover/link:text-on-accent group-focus-visible/link:bg-accent-500 group-focus-visible/link:text-on-accent"
+                            >{{ link.sym }}</span
+                          >
+                          <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+                            <span class="font-display text-[15px] font-semibold">{{
+                              link.label
+                            }}</span>
+                            @if (link.hint) {
+                              <span class="text-[13px] text-muted">{{ link.hint }}</span>
+                            }
+                          </span>
                           <span
                             aria-hidden="true"
-                            class="absolute inset-0 bg-gradient-to-t from-plum-950/80 via-plum-950/10 to-transparent"
-                          ></span>
-                          <span class="relative block w-full p-4">
-                            <span class="flex flex-col gap-0.5">
-                              <span
-                                class="font-display text-[17px] font-semibold leading-tight text-white"
-                                >{{ card.title }}</span
-                              >
-                              <span class="pr-11 text-[12.5px] leading-snug text-white/80">{{
-                                card.hint
-                              }}</span>
-                            </span>
-                            <span
-                              class="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-fg transition-transform duration-300 group-hover:translate-x-0.5"
-                            >
-                              <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2.2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true"
-                              >
-                                <path d="M5 12h14M13 6l6 6-6 6" />
-                              </svg>
-                            </span>
-                          </span>
+                            class="-translate-x-1.5 font-bold text-accent-800 opacity-0 transition duration-200 group-hover/link:translate-x-0 group-hover/link:opacity-100 group-focus-visible/link:translate-x-0 group-focus-visible/link:opacity-100 motion-reduce:transition-none"
+                            >→</span
+                          >
                         </a>
                       }
                     </div>
-                  }
-                  <div
-                    class="grid min-w-0 flex-1 content-start gap-0.5"
-                    [class]="tile.group.links.length > 4 ? 'grid-cols-2' : 'grid-cols-1'"
-                  >
-                    @for (link of tile.group.links; track link.label) {
-                      <a
-                        [routerLink]="link.route"
-                        class="flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-fg transition hover:bg-page"
-                      >
-                        <span
-                          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sunken font-display text-[15px] font-bold text-accent-700"
-                          >{{ link.sym }}</span
-                        >
-                        <span class="flex flex-col gap-0.5">
-                          <span class="font-display text-[15px] font-semibold">{{
-                            link.label
-                          }}</span>
-                          @if (link.hint) {
-                            <span class="text-[13px] text-muted">{{ link.hint }}</span>
-                          }
-                        </span>
-                      </a>
+                    @if (tile.group.cards?.length) {
+                      <div class="flex w-[210px] shrink-0 flex-col gap-3">
+                        @for (card of tile.group.cards; track card.title) {
+                          <a
+                            [routerLink]="card.route"
+                            appSpotlight
+                            [style.--i]="0"
+                            class="nav-item group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-plum-900"
+                          >
+                            <img
+                              [src]="card.image"
+                              alt=""
+                              loading="lazy"
+                              class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <span
+                              aria-hidden="true"
+                              class="absolute inset-0 bg-gradient-to-t from-plum-950/80 via-plum-950/10 to-transparent"
+                            ></span>
+                            <span class="relative block w-full p-4">
+                              <span class="flex flex-col gap-0.5">
+                                <span
+                                  class="font-display text-[17px] font-semibold leading-tight text-white"
+                                  >{{ card.title }}</span
+                                >
+                                <span class="pr-11 text-[12.5px] leading-snug text-white/80">{{
+                                  card.hint
+                                }}</span>
+                              </span>
+                              <span
+                                class="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-fg transition-transform duration-300 group-hover:translate-x-0.5"
+                              >
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  aria-hidden="true"
+                                >
+                                  <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                              </span>
+                            </span>
+                          </a>
+                        }
+                      </div>
                     }
                   </div>
+                  @if (tile.group.foot; as foot) {
+                    <div
+                      class="flex flex-wrap items-center justify-between gap-3 rounded-b-[24px] border-t border-line bg-page px-5 py-3"
+                    >
+                      <a
+                        [routerLink]="foot.route"
+                        class="font-display text-[14.5px] font-semibold text-accent-800 hover:underline"
+                        >{{ foot.label }} →</a
+                      >
+                      <div class="flex items-center gap-3">
+                        <div class="hidden w-[290px] has-[a]:block"><app-slot-ticket /></div>
+                        <a
+                          routerLink="/rendez-vous"
+                          class="rounded-xl bg-accent-500 px-[18px] py-3.5 font-display text-sm font-bold text-on-accent transition hover:bg-accent-600"
+                          >Prendre rendez-vous</a
+                        >
+                      </div>
+                    </div>
+                  }
                 </div>
               </div>
             }

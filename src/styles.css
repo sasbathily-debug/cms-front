@@ -656,3 +656,45 @@ button[class*='rounded-full']:not(:disabled):active {
     transition: none;
   }
 }
+
+/* Panneaux du menu (ordinateur) : entrée et sortie douces, éléments en cascade. */
+.nav-panel {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+  transform-origin: top center;
+  transition:
+    opacity 120ms ease-in,
+    transform 120ms ease-in,
+    visibility 0s linear 120ms;
+}
+.nav-panel.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    visibility 0s;
+}
+.nav-panel .nav-item {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.nav-panel.is-open .nav-item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 220ms ease-out,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 35ms + 40ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel,
+  .nav-panel.is-open,
+  .nav-panel .nav-item,
+  .nav-panel.is-open .nav-item {
+    transform: none;
+    transition: none;
+  }
+}

@@ -19,6 +19,8 @@ export interface NavGroup {
   route: string;
   links: NavLink[];
   allLabel?: string;
+  /** Lien au bas du panneau du menu sur ordinateur, à côté de l'étiquette du prochain créneau. */
+  foot?: { label: string; route: string };
   cards?: NavCard[];
 }
 
@@ -38,6 +40,7 @@ export const NAV_GROUPS: NavGroup[] = [
     route: '/specialites',
     links: SPECIALTY_LINKS,
     allLabel: 'Toutes les spécialités',
+    foot: { label: 'Toutes les spécialités', route: '/specialites' },
     cards: [
       {
         title: 'Nos spécialités',
@@ -51,6 +54,7 @@ export const NAV_GROUPS: NavGroup[] = [
     key: 'cabinet',
     label: 'Le cabinet',
     route: '/le-cabinet',
+    foot: { label: 'Nous contacter', route: '/contact' },
     cards: [
       {
         title: 'Le cabinet',
@@ -84,11 +88,12 @@ export const NAV_GROUPS: NavGroup[] = [
     key: 'patients',
     label: 'Patients',
     route: '/premiere-consultation',
+    foot: { label: 'Conseils santé', route: '/conseils-sante' },
     cards: [
       {
-        title: 'Prendre rendez-vous',
-        hint: 'Choisissez un créneau en ligne',
-        route: '/rendez-vous',
+        title: 'Votre première consultation',
+        hint: 'Bien préparer votre visite',
+        route: '/premiere-consultation',
         image: '/img/photo-2.jpg',
       },
     ],
