@@ -4,9 +4,11 @@ import {
   OnDestroy,
   afterNextRender,
   computed,
+  effect,
   inject,
   input,
   signal,
+  untracked,
 } from '@angular/core';
 import {
   NavigationCancel,
@@ -20,7 +22,12 @@ import { Auth } from '../../core/services/auth';
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
 import { Spotlight } from '../spotlight';
+import { SlideHighlight } from '../slide-highlight';
+import { SlotTicket } from '../slot-ticket/slot-ticket';
 import { NAV_GROUPS, NAV_SIMPLE, NavGroup, preloadNavImages } from '../../core/site-nav';
+
+/** Délai avant de refermer un panneau quand la souris quitte le menu. */
+const CLOSE_DELAY_MS = 150;
 
 interface Tile {
   key: string;
@@ -40,7 +47,7 @@ const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', pati
  */
 @Component({
   selector: 'app-home-header',
-  imports: [RouterLink, MobileMenu, Spotlight, ThemeToggle],
+  imports: [RouterLink, MobileMenu, Spotlight, ThemeToggle, SlideHighlight, SlotTicket],
   templateUrl: './home-header.html',
 })
 export class HomeHeader implements OnDestroy {
@@ -79,7 +86,7 @@ export class HomeHeader implements OnDestroy {
   );
   readonly panelClass = computed(
     () =>
-      'absolute left-1/2 top-full z-50 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 ' +
+      'nav-panel absolute left-1/2 top-full z-50 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 ' +
       (this.bar() ? '-mt-3 pt-3' : '-mt-7 pt-7'),
   );
 
@@ -88,7 +95,10 @@ export class HomeHeader implements OnDestroy {
     const state = this.isActive(tile)
       ? 'border-accent-500 bg-[rgba(20,11,25,0.85)]'
       : 'border-white/35 bg-[rgba(20,11,25,0.55)]';
-    return `flex flex-col justify-between rounded-xl border ${size} ${state} text-white backdrop-blur-sm transition hover:border-accent-500 hover:bg-[rgba(20,11,25,0.8)]`;
+    // Un panneau est ouvert : la tuile survolée monte d'un cran, les autres s'estompent.
+    const open = this.openGroup();
+    const reaction = open === null ? '' : open === tile.key ? '-translate-y-0.5' : 'opacity-60';
+    return `flex flex-col justify-between rounded-xl border ${size} ${state} ${reaction} text-white backdrop-blur-sm transition duration-200 motion-reduce:transform-none motion-reduce:transition-none hover:border-accent-500 hover:bg-[rgba(20,11,25,0.8)]`;
   }
 
   /** La tuile de la section où l'on se trouve. */
@@ -210,12 +220,48 @@ export class HomeHeader implements OnDestroy {
     this.navSub.unsubscribe();
   }
 
-  hover(key: string): void {
+  /** Panneaux déjà ouverts une fois : leur contenu (et ses photos) n'est créé qu'à la première ouverture, puis gardé pour la sortie douce. */
+  readonly seen = signal<ReadonlySet<string>>(new Set());
+  /** Position de l'encoche qui relie la tuile survolée au panneau, en pixels depuis le bord gauche du panneau. */
+  readonly notchX = signal(60);
+  private closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+  private readonly rememberOpened = effect(() => {
+    const key = this.openGroup();
+    if (key && !untracked(this.seen).has(key)) {
+      this.seen.update((set) => new Set(set).add(key));
+    }
+  });
+
+  hover(key: string, tile?: HTMLElement): void {
+    clearTimeout(this.closeTimer);
+    this.placeNotch(tile);
     this.openGroup.set(key);
   }
 
+  /** Refermeture après un court délai : on peut traverser l'espace entre la tuile et le panneau sans le perdre. */
+  scheduleClose(): void {
+    clearTimeout(this.closeTimer);
+    this.closeTimer = setTimeout(() => this.openGroup.set(null), CLOSE_DELAY_MS);
+  }
+
+  cancelClose(): void {
+    clearTimeout(this.closeTimer);
+  }
+
   leave(): void {
+    clearTimeout(this.closeTimer);
     this.openGroup.set(null);
+  }
+
+  /** Le panneau est centré dans la fenêtre : l'encoche pointe vers le centre de la tuile. */
+  private placeNotch(tile?: HTMLElement): void {
+    if (!tile) return;
+    const rect = tile.getBoundingClientRect();
+    const view = document.documentElement.clientWidth;
+    const width = Math.min(700, view - 48);
+    const left = (view - width) / 2;
+    this.notchX.set(Math.max(28, Math.min(width - 42, rect.left + rect.width / 2 - left - 7)));
   }
 
   private lastPointerType = 'mouse';
@@ -231,6 +277,7 @@ export class HomeHeader implements OnDestroy {
     const touch = this.lastPointerType === 'touch' || this.lastPointerType === 'pen';
     if (tile.group && touch && !this.tileWasOpen) {
       event.preventDefault();
+      this.placeNotch(event.currentTarget as HTMLElement);
       this.openGroup.set(tile.key);
       return;
     }
