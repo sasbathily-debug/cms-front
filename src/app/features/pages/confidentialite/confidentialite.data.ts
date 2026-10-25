@@ -1,19 +1,13 @@
+import { LegalSection } from '../../../shared/legal-page/legal-page';
+
+export type PolitiqueSection = LegalSection;
+
 /**
  * Texte provisoire de la politique de confidentialité, établi d'après ce que le site fait réellement
  * (comptes, rendez-vous, documents, formulaire de contact, assistant, cookies, prestataires).
  * Les passages entre crochets sont à confirmer par la doctoresse ; le texte entier est à faire relire,
  * idéalement par un juriste qui connaît la loi sénégalaise sur les données personnelles.
  */
-export interface PolitiqueSection {
-  id: string;
-  titre: string;
-  intro?: string[];
-  /** Lignes « nom : explication », présentées en tableau. */
-  lignes?: { nom: string; texte: string }[];
-  points?: string[];
-  fin?: string[];
-}
-
 export const POLITIQUE_MISE_A_JOUR = '25 octobre 2026';
 
 export const POLITIQUE_TITRE = 'Politique de confidentialité';

@@ -79,6 +79,21 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pages/maladie/maladie').then((m) => m.Maladie),
   },
   {
+    path: 'mentions-legales',
+    title: 'Mentions légales',
+    // Texte provisoire : retirer `noindex` (et l'ajouter au sitemap) une fois validé par la doctoresse.
+    data: { noindex: true },
+    loadComponent: () =>
+      import('./features/pages/mentions-legales/mentions-legales').then((m) => m.MentionsLegales),
+  },
+  {
+    path: 'plan-du-site',
+    data: { preload: true },
+    title: 'Plan du site',
+    loadComponent: () =>
+      import('./features/pages/plan-du-site/plan-du-site').then((m) => m.PlanDuSite),
+  },
+  {
     path: 'politique-de-confidentialite',
     title: 'Politique de confidentialité',
     // Texte provisoire : retirer `noindex` (et l'ajouter au sitemap) une fois validé par la doctoresse.
