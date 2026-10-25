@@ -33,7 +33,7 @@
     </div>
 
     <div
-      class="relative z-[1] -mt-8 flex flex-col gap-4 rounded-t-[28px] bg-page px-5 pb-7 pt-6 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
+      class="relative z-[1] -mt-8 flex flex-col gap-3 rounded-t-[28px] bg-page px-5 pb-5 pt-5 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
     >
       @if (hasSlot()) {
         <app-slot-ticket />
@@ -45,7 +45,7 @@
         </span>
       }
       <h1
-        class="m-0 font-display text-[34px] font-bold leading-[1.04] tracking-[-0.03em] text-fg [@media(max-height:720px)]:text-[29px]"
+        class="m-0 font-display text-[30px] font-bold leading-[1.04] tracking-[-0.03em] text-fg [@media(max-height:720px)]:text-[29px]"
       >
         @for (w of heroWords(); track $index) {
           @if (w.underlined) {
@@ -59,20 +59,20 @@
           }
         }
       </h1>
-      <p class="m-0 text-[15.5px] leading-[1.55] text-muted [@media(max-height:720px)]:hidden">
+      <p class="m-0 line-clamp-2 text-[15px] leading-[1.5] text-muted [@media(max-height:720px)]:hidden">
         {{ c().hero.introTelephone }}
       </p>
       <div class="flex items-center gap-3">
         <a
           #heroCta
           routerLink="/rendez-vous"
-          class="flex-1 rounded-full bg-accent-500 px-6 py-[17px] text-center font-display text-base font-bold text-on-accent"
+          class="flex-1 rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-base font-bold text-on-accent"
           >{{ c().hero.boutonPrincipal }}</a
         >
         <a
           [href]="site.telHref()"
           aria-label="Appeler le cabinet"
-          class="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-fg text-fg"
+          class="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full border-[1.5px] border-fg text-fg"
         >
           <svg
             width="22"
