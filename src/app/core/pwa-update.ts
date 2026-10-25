@@ -15,13 +15,14 @@ const CHECK_EVERY_MS = 10 * 60_000;
 const MIN_GAP_MS = 60_000;
 const FORCE_GUARD_KEY = 'force-update-at';
 const FORCE_GUARD_MS = 2 * 60_000;
-/** Une version qui arrive moins de 25 s après l'ouverture ou le retour sur l'application s'applique tout de suite. */
+/** Une version qui arrive moins de 25 s après l'ouverture, le retour ou un changement de page s'applique tout de suite. */
 const FRESH_WINDOW_MS = 25_000;
 
 /**
  * Tient l'application à jour sans rien demander au visiteur.
- *  - Elle cherche une nouvelle version à l'ouverture, au retour sur l'application et toutes les 10 minutes.
- *  - Une version qui arrive juste après l'ouverture ou le retour sur l'application s'applique tout de suite
+ *  - Elle cherche une nouvelle version à l'ouverture, au retour sur l'application, à chaque changement de page
+ *    (au plus une fois par minute) et toutes les 10 minutes.
+ *  - Une version qui arrive juste après l'ouverture, le retour ou un changement de page s'applique tout de suite
  *    (le visiteur n'a encore rien lu ni saisi). Sinon elle s'applique au prochain changement de page.
  *  - Si le visiteur a saisi quelque chose ou ouvert le chat, jamais de rechargement sous ses doigts :
  *    un petit message « Actualiser » s'affiche à la place.
@@ -41,6 +42,8 @@ export class PwaUpdate {
   private lastCheck = 0;
   /** Dernière ouverture ou dernier retour sur l'application. */
   private foregroundAt = Date.now();
+  /** Dernier changement de page : la recherche qu'il déclenche peut aboutir quelques secondes plus tard. */
+  private navigatedAt = 0;
   /** Le visiteur a saisi du texte depuis l'ouverture de la page. */
   private typed = false;
 
@@ -54,7 +57,7 @@ export class PwaUpdate {
         this.ready.set(true);
         if (this.isBusy()) {
           this.prompt.set(true);
-        } else if (Date.now() - this.foregroundAt < FRESH_WINDOW_MS) {
+        } else if (Date.now() - Math.max(this.foregroundAt, this.navigatedAt) < FRESH_WINDOW_MS) {
           void this.applyThen(() => window.location.reload());
         }
       });
@@ -66,6 +69,9 @@ export class PwaUpdate {
         void this.applyThen(() => window.location.assign(event.url));
       } else if (this.ready()) {
         this.prompt.set(true);
+      } else {
+        this.navigatedAt = Date.now();
+        void this.check();
       }
     });
 
