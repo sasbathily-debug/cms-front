@@ -149,13 +149,15 @@
                         class="font-display text-[14.5px] font-semibold text-accent-800 hover:underline"
                         >{{ foot.label }} →</a
                       >
-                      <div class="flex items-center gap-3">
-                        <div class="hidden w-[290px] has-[a]:block"><app-slot-ticket /></div>
-                        <a
-                          routerLink="/rendez-vous"
-                          class="rounded-xl bg-accent-500 px-[18px] py-3.5 font-display text-sm font-bold text-on-accent transition hover:bg-accent-600"
-                          >Prendre rendez-vous</a
-                        >
+                      <div class="[&>app-slot-ticket>a.border]:w-[290px]">
+                        <!-- L'étiquette du créneau tient lieu de bouton ; sans créneau libre, le bouton la remplace -->
+                        <app-slot-ticket>
+                          <a
+                            routerLink="/rendez-vous"
+                            class="block rounded-xl bg-accent-500 px-[18px] py-3.5 font-display text-sm font-bold text-on-accent transition hover:bg-accent-600"
+                            >Prendre rendez-vous</a
+                          >
+                        </app-slot-ticket>
                       </div>
                     </div>
                   }

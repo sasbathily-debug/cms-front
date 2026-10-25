@@ -4,7 +4,8 @@ import { NextSlot } from '../../core/services/next-slot';
 
 /**
  * Étiquette du prochain créneau libre : un ticket de rendez-vous à souche (le jour à gauche, une ligne en pointillés
- * entre deux encoches, la phrase à droite). Elle renvoie vers la réservation et ne s'affiche que s'il y a un créneau.
+ * entre deux encoches, la phrase à droite). Elle renvoie vers la réservation et ne s'affiche que s'il y a un créneau ;
+ * sinon, le contenu placé à l'intérieur de la balise (par exemple un bouton) s'affiche à sa place.
  * Les encoches prennent la couleur du fond qui l'entoure : `--ticket-fond` (la couleur de la page par défaut).
  */
 @Component({
@@ -14,7 +15,7 @@ import { NextSlot } from '../../core/services/next-slot';
     @if (slots.ticket(); as t) {
       <a
         routerLink="/rendez-vous"
-        class="relative flex w-full items-stretch overflow-hidden rounded-[14px] border border-line bg-surface no-underline"
+        class="relative flex w-full items-stretch overflow-hidden rounded-[14px] border border-line bg-surface no-underline transition-colors hover:border-accent-500"
       >
         <span
           class="flex w-16 shrink-0 flex-col items-center justify-center gap-0.5 bg-accent-soft py-2 font-display"
@@ -46,6 +47,8 @@ import { NextSlot } from '../../core/services/next-slot';
           <span aria-hidden="true" class="text-xl font-bold leading-none text-accent-800">→</span>
         </span>
       </a>
+    } @else {
+      <ng-content />
     }
   `,
 })
