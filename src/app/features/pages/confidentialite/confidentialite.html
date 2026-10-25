@@ -1,0 +1,140 @@
+<app-public-page>
+  <app-page-hero [crumbs]="crumbs" [title]="titre" [lead]="lead" />
+
+  <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
+    <div
+      class="mx-auto max-w-[1040px] overflow-hidden rounded-3xl border border-line bg-surface shadow-[0_36px_70px_rgba(31,18,38,0.3)]"
+    >
+      <div
+        class="flex flex-wrap items-center justify-between gap-2 bg-accent-500 px-6 py-3.5 sm:px-9"
+      >
+        <span class="font-display text-sm font-bold tracking-[0.09em] text-on-accent"
+          >L'ESSENTIEL EN 4 POINTS</span
+        >
+        <span class="text-[13.5px] font-medium text-plum-brown"
+          >Dernière mise à jour : {{ miseAJour }}</span
+        >
+      </div>
+      <ul class="m-0 grid list-none gap-x-8 gap-y-5 p-6 sm:p-9 md:grid-cols-2">
+        @for (point of enBref; track point) {
+          <li class="flex items-start gap-3 text-[15.5px] leading-[1.6] text-fg">
+            <span
+              aria-hidden="true"
+              class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-accent-500"
+            ></span
+            >{{ point }}
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="px-4 pb-24 pt-16 sm:px-6 lg:px-10 lg:pt-[72px]">
+    <div class="mx-auto flex max-w-[1160px] flex-wrap items-start gap-14">
+      <article class="flex min-w-0 flex-[1_1_640px] flex-col gap-14">
+        <div
+          class="rounded-[14px] bg-accent-soft px-[18px] py-3.5 text-sm leading-relaxed text-accent-ink"
+        >
+          Version provisoire : ce texte décrit ce que fait le site aujourd'hui. Il est à relire et à
+          compléter par la doctoresse (passages entre crochets) avant publication.
+        </div>
+
+        @for (section of sections; track section.id) {
+          <section [id]="section.id" class="flex scroll-mt-28 flex-col gap-[18px]">
+            <h2
+              class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[40px]"
+            >
+              {{ section.titre }}
+            </h2>
+            @for (p of section.intro; track p) {
+              <p class="m-0 text-[17px] leading-[1.75] text-body">{{ p }}</p>
+            }
+            @if (section.lignes) {
+              <div
+                class="flex flex-col overflow-hidden rounded-[18px] border border-line bg-surface"
+              >
+                @for (l of section.lignes; track l.nom) {
+                  <div
+                    class="grid gap-1.5 border-b border-line px-6 py-[18px] last:border-b-0 sm:grid-cols-[200px_minmax(0,1fr)] sm:gap-6"
+                  >
+                    <span class="font-display text-base font-semibold text-fg">{{ l.nom }}</span>
+                    <span class="text-[15px] leading-[1.6] text-muted">{{ l.texte }}</span>
+                  </div>
+                }
+              </div>
+            }
+            @if (section.points) {
+              <ul class="m-0 flex list-none flex-col gap-3 p-0">
+                @for (item of section.points; track item) {
+                  <li class="flex items-start gap-3 text-base leading-normal text-body">
+                    <span
+                      aria-hidden="true"
+                      class="mt-2 h-2 w-2 shrink-0 rounded-full bg-accent-500"
+                    ></span
+                    >{{ item }}
+                  </li>
+                }
+              </ul>
+            }
+            @for (p of section.fin; track p) {
+              <p class="m-0 text-base leading-[1.7] text-body">{{ p }}</p>
+            }
+          </section>
+        }
+
+        <section
+          id="contact"
+          class="flex scroll-mt-28 flex-col gap-3 rounded-[20px] border-2 border-accent-500 bg-surface px-7 py-7 sm:px-8"
+        >
+          <h2 class="m-0 font-display text-2xl font-bold text-fg">Nous contacter</h2>
+          <p class="m-0 text-base leading-[1.7] text-body">
+            Pour toute question sur vos données ou pour exercer vos droits :
+          </p>
+          <p class="m-0 text-base leading-[1.7] text-body">
+            Cabinet du Dr Aïssatou Mamadou Fall<br />
+            {{ site.street() }}, {{ site.address() }}, Sénégal<br />
+            Téléphone :
+            <a [href]="site.telHref()" class="font-semibold text-accent-800">{{ site.phone() }}</a
+            ><br />
+            E-mail :
+            <a [href]="'mailto:' + site.email()" class="font-semibold text-accent-800">{{
+              site.email()
+            }}</a>
+          </p>
+        </section>
+      </article>
+
+      <aside class="flex min-w-0 flex-[0_1_320px] flex-col gap-5 lg:sticky lg:top-28">
+        <div class="flex flex-col gap-3 rounded-[22px] border border-line bg-surface p-[26px]">
+          <h2 class="m-0 font-display text-lg font-bold text-fg">Sur cette page</h2>
+          @for (section of sections; track section.id) {
+            <button
+              type="button"
+              (click)="scrollTo(section.id)"
+              class="cursor-pointer text-left text-[15px] text-accent-800 hover:underline"
+            >
+              {{ section.titre }}
+            </button>
+          }
+          <button
+            type="button"
+            (click)="scrollTo('contact')"
+            class="cursor-pointer text-left text-[15px] text-accent-800 hover:underline"
+          >
+            Nous contacter
+          </button>
+        </div>
+        <div class="flex flex-col gap-2.5 rounded-[22px] bg-sunken p-[26px]">
+          <h2 class="m-0 font-display text-lg font-bold text-fg">Votre choix sur les cookies</h2>
+          <span class="text-[14.5px] leading-relaxed text-body"
+            >Vous pouvez changer d'avis à tout moment avec « Gérer les cookies », en bas de chaque
+            page.</span
+          >
+          <a routerLink="/contact" class="text-[14.5px] font-semibold text-accent-800"
+            >Écrire au cabinet</a
+          >
+        </div>
+      </aside>
+    </div>
+  </section>
+</app-public-page>

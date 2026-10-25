@@ -79,6 +79,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pages/maladie/maladie').then((m) => m.Maladie),
   },
   {
+    path: 'politique-de-confidentialite',
+    title: 'Politique de confidentialité',
+    // Texte provisoire : retirer `noindex` (et l'ajouter au sitemap) une fois validé par la doctoresse.
+    data: { noindex: true },
+    loadComponent: () =>
+      import('./features/pages/confidentialite/confidentialite').then((m) => m.Confidentialite),
+  },
+  {
     path: 'rendez-vous',
     data: { preload: true },
     title: 'Prendre rendez-vous',

@@ -35,4 +35,16 @@ export class AppFooter {
   ]);
   protected readonly hours = inject(OpeningHours);
   protected readonly c = inject(PageContent).use(PIED_DE_PAGE);
+
+  /** « Mentions légales · Politique de confidentialité · Plan du site » : seule la politique a sa page pour l'instant. */
+  protected readonly bottomLinks = computed(() =>
+    this.c()
+      .bas.liens.split('·')
+      .map((label) => label.trim())
+      .filter(Boolean)
+      .map((label) => ({
+        label,
+        route: /confidentialit/i.test(label) ? '/politique-de-confidentialite' : null,
+      })),
+  );
 }

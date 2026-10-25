@@ -6,6 +6,7 @@ import {
   inject,
   viewChild,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Analytics } from '../../core/analytics';
 
 /**
@@ -14,6 +15,7 @@ import { Analytics } from '../../core/analytics';
  */
 @Component({
   selector: 'app-cookie-banner',
+  imports: [RouterLink],
   template: `
     @if (analytics.asking()) {
       <aside
@@ -30,6 +32,11 @@ import { Analytics } from '../../core/analytics';
           Ce site utilise des cookies nécessaires à son fonctionnement et, avec votre accord, Google
           Analytics pour compter les visites. Nous n'envoyons à Google ni vos coordonnées ni aucune
           information de santé. Acceptez-vous ces cookies ?
+          <a
+            routerLink="/politique-de-confidentialite"
+            class="whitespace-nowrap text-cream-50 underline underline-offset-[3px]"
+            >En savoir plus</a
+          >
         </p>
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">

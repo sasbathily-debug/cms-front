@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
+import { provideRouter } from '@angular/router';
 import { Analytics } from '../../core/analytics';
 import { CookieBanner } from './cookie-banner';
 
@@ -11,7 +12,9 @@ describe('CookieBanner', () => {
     asking.set(true);
     analytics.accept.mockClear();
     analytics.refuse.mockClear();
-    TestBed.configureTestingModule({ providers: [{ provide: Analytics, useValue: analytics }] });
+    TestBed.configureTestingModule({
+      providers: [provideRouter([]), { provide: Analytics, useValue: analytics }],
+    });
   });
 
   function render() {
@@ -55,6 +58,13 @@ describe('CookieBanner', () => {
   it('ne montre rien quand il ne faut pas poser la question', () => {
     asking.set(false);
     expect(render().querySelector('[role=dialog]')).toBeNull();
+  });
+
+  it('renvoie vers la politique de confidentialité', () => {
+    const fixture = TestBed.createComponent(CookieBanner);
+    fixture.detectChanges();
+    const link = fixture.nativeElement.querySelector('a[href="/politique-de-confidentialite"]');
+    expect(link).not.toBeNull();
   });
 
   it('transmet le choix du visiteur', () => {

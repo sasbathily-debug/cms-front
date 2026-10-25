@@ -166,6 +166,17 @@
         >Azertica</a
       ></span
     >
-    <span class="text-[13px] text-on-plum-subtle">{{ c().bas.liens }}</span>
+    <span class="flex flex-wrap items-center gap-x-2 text-[13px] text-on-plum-subtle">
+      @for (link of bottomLinks(); track link.label; let last = $last) {
+        @if (link.route) {
+          <a [routerLink]="link.route" class="hover:text-white hover:underline">{{ link.label }}</a>
+        } @else {
+          <span>{{ link.label }}</span>
+        }
+        @if (!last) {
+          <span aria-hidden="true">·</span>
+        }
+      }
+    </span>
   </div>
 </footer>
