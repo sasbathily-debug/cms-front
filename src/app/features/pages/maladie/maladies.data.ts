@@ -5,7 +5,9 @@ export interface MaladieContent {
   crumb: string;
   title: string;
   lead: string;
-  heroArt: MaladieArtKind;
+  /** Illustration de l'en-tête ; sans elle, `heroPoints` s'affiche à la place. */
+  heroArt?: MaladieArtKind;
+  heroPoints?: string[];
   heroLabel: string;
   essentiel: { quoi: string; quand: string; suivi: string; urgence: string };
   definition: {
@@ -13,9 +15,9 @@ export interface MaladieContent {
     text: string;
     imageTitle: string;
     imageIntro: string;
-    cards: { art: MaladieArtKind; title: string; text: string }[];
+    cards: { art?: MaladieArtKind; title: string; text: string }[];
   };
-  signes: { items: string[]; outro: string };
+  signes: { title?: string; items: string[]; outro: string };
   priseEnCharge: { intro: string; examens: { nom: string; texte: string }[] };
   quotidien: { titre: string; texte: string }[];
   urgence: string;
@@ -435,5 +437,419 @@ export const MALADIES: Record<string, MaladieContent> = {
         'Vos analyses récentes, vos ordonnances, la liste de vos médicaments, votre poids de départ et, si possible, ce que vous mangez sur une journée type.',
     },
     cta: 'Avancer pas à pas, ensemble.',
+  },
+
+  'nutrition-clinique': {
+    slug: 'nutrition-clinique',
+    crumb: 'Nutrition clinique',
+    title: 'Nutrition clinique : manger pour se soigner et se sentir bien',
+    lead: "La nutrition clinique utilise l'alimentation comme un outil de soin : adaptée à votre santé, à votre maladie éventuelle et à votre vie, sans régime miracle ni interdits inutiles.",
+    heroLabel: 'CE QUE COUVRE CETTE CONSULTATION',
+    heroPoints: [
+      'Un bilan de vos habitudes alimentaires',
+      'Un plan adapté à votre santé, à votre budget et à votre culture',
+      'Un suivi du poids, de l’énergie et des analyses',
+      'Un accompagnement avant, pendant ou après une maladie',
+    ],
+    essentiel: {
+      quoi: 'Un accompagnement alimentaire médical : on part de votre situation (poids, maladie, grossesse, fatigue, analyses) pour construire un plan réaliste, avec des aliments que vous aimez et que vous trouvez facilement.',
+      quand:
+        "Un poids qui change sans raison, un diabète, un cholestérol ou une tension élevés, une fatigue qui dure, une grossesse, ou l'envie d'un avis médical clair plutôt que de conseils contradictoires.",
+      suivi:
+        'Un premier rendez-vous pour faire le point, un plan écrit et simple, puis des rendez-vous réguliers pour ajuster, avec des analyses si nécessaire. [Rythme à préciser]',
+      urgence:
+        "Vomissements ou diarrhée qui ne s'arrêtent pas, malaise, impossibilité de boire : n'attendez pas. Numéro d'urgence :",
+    },
+    definition: {
+      title: 'Ce que fait la nutrition clinique',
+      text: "Elle ne se résume pas à « faire un régime ». Le médecin regarde votre histoire, vos analyses, vos médicaments et votre quotidien, puis adapte l'alimentation pour soigner, prévenir ou soulager. [Périmètre exact de la consultation : à confirmer par la doctoresse]",
+      imageTitle: 'Quatre idées à retenir',
+      imageIntro: "Ce qui guide l'accompagnement, d'une personne à l'autre.",
+      cards: [
+        {
+          title: 'Pas de régime miracle',
+          text: "Les régimes très stricts font souvent reprendre ce qu'on a perdu. On cherche des changements que vous pouvez tenir longtemps. [À valider]",
+        },
+        {
+          title: 'Manger selon sa santé',
+          text: 'Diabète, cholestérol, tension, reins, digestion : chaque situation a ses repères, et ils ne sont pas les mêmes pour tout le monde.',
+        },
+        {
+          title: "Partir de ce que l'on mange déjà",
+          text: 'On part de vos repas habituels, de vos plats et des produits que vous trouvez ici, puis on ajuste les quantités et les préparations. [À adapter par la doctoresse]',
+        },
+        {
+          title: 'Un suivi qui évolue',
+          text: 'Le plan change avec vos résultats, votre énergie et votre vie : travail, voyages, Ramadan, grossesse. [À valider]',
+        },
+      ],
+    },
+    signes: {
+      title: 'Quand en parler',
+      items: [
+        'Une prise ou une perte de poids que vous ne comprenez pas',
+        'Une fatigue ou une baisse d’énergie qui dure',
+        'Des envies de sucre ou une faim difficiles à contrôler',
+        'Des analyses qui montrent un sucre, un cholestérol ou une tension trop élevés',
+        'Des troubles digestifs fréquents : ballonnements, constipation',
+        'Une grossesse, un allaitement ou un projet de bébé',
+        'Un appétit très faible, chez vous ou chez un proche âgé',
+        'L’envie de changer d’alimentation sans savoir par où commencer',
+      ],
+      outro:
+        "Si l'un de ces points vous concerne, un rendez-vous permet de faire le point simplement, sans jugement. [À compléter par le Dr Fall]",
+    },
+    priseEnCharge: {
+      intro:
+        'Voici, en général, ce qui peut être proposé. Le Dr Fall choisit ce qui est utile pour vous.',
+      examens: [
+        {
+          nom: 'Un échange sur votre alimentation',
+          texte:
+            "Vos repas habituels, vos horaires, votre budget, vos goûts, votre activité et votre sommeil : c'est la base du plan.",
+        },
+        {
+          nom: 'Poids, taille, tour de taille',
+          texte: "Des repères simples, mesurés au cabinet, pour suivre l'évolution dans le temps.",
+        },
+        {
+          nom: 'Un bilan sanguin si nécessaire',
+          texte:
+            "Sucre, cholestérol, fer, vitamines, selon votre situation. Il n'est pas systématique. [À préciser par la doctoresse]",
+        },
+        {
+          nom: 'Un plan écrit',
+          texte: 'Quelques repères clairs, adaptés à vos repas, que vous emportez chez vous.',
+        },
+      ],
+    },
+    quotidien: [
+      {
+        titre: 'Des repas à heures régulières',
+        texte:
+          'Sauter des repas pousse souvent à grignoter plus tard. Un rythme régulier aide, même simple. [À valider]',
+      },
+      {
+        titre: 'Boire de l’eau',
+        texte:
+          "L'eau reste la meilleure boisson. On réduit les boissons sucrées sans les interdire d'office. [À valider]",
+      },
+      {
+        titre: 'Une assiette variée',
+        texte:
+          "Légumes, protéines, céréales : on cherche l'équilibre à vos repas habituels plutôt que de supprimer des aliments. [À préciser]",
+      },
+      {
+        titre: 'Bouger un peu chaque jour',
+        texte:
+          "Marche, escaliers, activité que vous aimez : l'alimentation donne de meilleurs résultats avec un peu de mouvement. [À préciser]",
+      },
+    ],
+    urgence:
+      "Venez au cabinet ou contactez les urgences en cas de vomissements ou de diarrhée qui durent, de malaise, d'impossibilité de boire, de perte de poids très rapide ou de signes de déshydratation (bouche très sèche, urines rares, grande faiblesse). Numéro d'urgence :",
+    faqTitle: 'Questions fréquentes sur la nutrition',
+    faq: [
+      {
+        question: 'Faut-il supprimer certains aliments ?',
+        reponse:
+          'En général non. On ajuste plutôt les quantités et les habitudes. Une situation médicale peut demander des précautions, que le médecin vous explique. [Réponse à valider]',
+      },
+      {
+        question: 'Mon alimentation locale est-elle compatible ?',
+        reponse:
+          'Oui : on part de ce que vous mangez déjà et des produits que vous trouvez, sans vous imposer des aliments introuvables ou trop chers. [Réponse à valider]',
+      },
+      {
+        question: 'Combien de temps dure le suivi ?',
+        reponse: '[À confirmer par la doctoresse : durée et rythme habituels des rendez-vous.]',
+      },
+      {
+        question: 'Dois-je faire des analyses avant le rendez-vous ?',
+        reponse:
+          'Pas forcément. Apportez celles que vous avez déjà ; le médecin dira lesquelles sont utiles. [Réponse à valider]',
+      },
+    ],
+    aside: {
+      title: 'Un accompagnement alimentaire au cabinet',
+      apporter:
+        "Vos analyses récentes, la liste de vos médicaments et une idée de vos repas d'une journée type, même approximative.",
+    },
+    cta: 'Parlons de votre alimentation.',
+  },
+  'troubles-hormonaux': {
+    slug: 'troubles-hormonaux',
+    crumb: 'Troubles hormonaux',
+    title: 'Troubles hormonaux : comprendre ce qui se déséquilibre',
+    lead: "Les hormones sont des messagères qui règlent le cycle, la croissance, l'énergie, le poids ou le sommeil. Quand l'une d'elles se dérègle, le corps le fait savoir : un bilan permet de comprendre et, le plus souvent, de soulager.",
+    heroLabel: 'CE QUE COUVRE CETTE PAGE',
+    heroPoints: [
+      'Cycles irréguliers et syndrome des ovaires polykystiques',
+      'Puberté trop précoce ou trop tardive',
+      'Ménopause et changements de l’âge adulte',
+      'Hypophyse et surrénales',
+    ],
+    essentiel: {
+      quoi: "Un déséquilibre d'une ou plusieurs hormones, qui peut toucher le cycle, la croissance, le poids, l'énergie, la peau ou la tension. Il se repère par un bilan et se traite le plus souvent.",
+      quand:
+        'Des cycles irréguliers ou absents, une puberté qui surprend, des bouffées de chaleur, une fatigue ou une prise de poids inexpliquées, ou des difficultés à concevoir.',
+      suivi:
+        'Un examen et un bilan hormonal choisis selon votre situation, une explication claire des résultats, puis un traitement ou une surveillance adaptés. [À préciser]',
+      urgence:
+        "Douleur très forte dans le ventre, saignements très abondants, malaise important : n'attendez pas. Numéro d'urgence :",
+    },
+    definition: {
+      title: 'Les hormones, des messagères discrètes',
+      text: "Produites par des glandes (ovaires, thyroïde, hypophyse, surrénales...), les hormones circulent dans le sang et donnent des consignes aux organes. Un excès, un manque ou un mauvais rythme peut avoir des effets très variés, d'où l'importance d'un bilan précis. [Texte à valider par la doctoresse]",
+      imageTitle: 'Quatre situations fréquentes',
+      imageIntro: 'Quelques exemples de ce que le cabinet prend en charge.',
+      cards: [
+        {
+          title: 'Cycles et ovaires',
+          text: "Des règles irrégulières ou absentes, de l'acné, des poils en excès ou une prise de poids peuvent évoquer un syndrome des ovaires polykystiques. Cela se traite et se surveille. [À valider]",
+        },
+        {
+          title: 'Puberté et croissance',
+          text: "Une puberté très précoce ou très tardive, ou une croissance qui inquiète, justifie un avis : l'enfant ou l'adolescent est examiné avec ses parents. [À préciser : âges accueillis]",
+        },
+        {
+          title: 'Ménopause et âge adulte',
+          text: 'Bouffées de chaleur, sommeil perturbé, humeur changeante : la ménopause se vit différemment selon les femmes, et on peut souvent soulager. [À valider]',
+        },
+        {
+          title: 'Hypophyse et surrénales',
+          text: "Ces petites glandes dirigent d'autres hormones. Un dérèglement peut donner une grande fatigue, une tension élevée ou un poids qui change. Il se repère par un bilan. [À valider]",
+        },
+      ],
+    },
+    signes: {
+      items: [
+        'Des règles irrégulières, très espacées ou absentes',
+        'De l’acné persistante ou des poils en excès chez la femme',
+        'Une prise de poids rapide ou inexpliquée',
+        'Une fatigue importante qui ne s’explique pas',
+        'Des bouffées de chaleur ou un sommeil très perturbé',
+        'Des difficultés à avoir un bébé',
+        'Une puberté qui commence très tôt ou très tard',
+        'Une tension élevée ou des envies de boire et d’uriner inhabituelles',
+      ],
+      outro:
+        "Ces signes ont souvent plusieurs explications possibles, pas toujours hormonales. Un bilan permet de faire le tri sans s'inquiéter à l'avance. [À compléter par le Dr Fall]",
+    },
+    priseEnCharge: {
+      intro:
+        'La première consultation permet de comprendre votre histoire : cycles, croissance, poids, traitement éventuel. Selon votre situation, nous réalisons ou demandons les examens suivants :',
+      examens: [
+        {
+          nom: 'Histoire et examen',
+          texte:
+            "Vos symptômes, leur ancienneté, votre histoire familiale et un examen clinique : c'est ce qui oriente le reste.",
+        },
+        {
+          nom: 'Un bilan hormonal',
+          texte:
+            'Une prise de sang qui mesure certaines hormones, parfois à un moment précis du cycle. Le cabinet vous donne les consignes. [À préciser par la doctoresse]',
+        },
+        {
+          nom: 'Une échographie si nécessaire',
+          texte:
+            'Par exemple une échographie des ovaires ou de la thyroïde, demandée selon votre situation. [À préciser]',
+        },
+        {
+          nom: "D'autres examens, dans certains cas",
+          texte:
+            "Si le médecin soupçonne un problème de l'hypophyse ou des surrénales, il peut demander des examens complémentaires. [À préciser]",
+        },
+      ],
+    },
+    quotidien: [
+      {
+        titre: 'Noter ses cycles',
+        texte:
+          'Une simple note des dates de règles et des symptômes aide beaucoup le médecin à comprendre ce qui se passe. [À valider]',
+      },
+      {
+        titre: 'Un poids qui se stabilise',
+        texte:
+          "Perdre un peu de poids améliore souvent le cycle et l'énergie, à votre rythme et sans régime strict. [À valider]",
+      },
+      {
+        titre: 'Dormir et gérer le stress',
+        texte:
+          'Le sommeil et le stress agissent sur les hormones. Quelques habitudes simples peuvent aider. [À préciser]',
+      },
+      {
+        titre: 'Un suivi régulier',
+        texte:
+          "Selon la situation, des contrôles réguliers vérifient que l'équilibre se maintient. [Rythme à préciser]",
+      },
+    ],
+    urgence:
+      "Contactez immédiatement les urgences en cas de douleur très forte dans le ventre, de saignements très abondants, de malaise, de mal de tête brutal et violent, ou de douleur dans le ventre chez une femme qui pourrait être enceinte. Numéro d'urgence :",
+    faqTitle: 'Questions fréquentes sur les hormones',
+    faq: [
+      {
+        question: 'Mes règles sont irrégulières : est-ce grave ?',
+        reponse:
+          "Pas toujours, mais cela mérite un avis surtout si cela dure ou s'accompagne d'autres signes. Un bilan permet d'en trouver la cause. [Réponse à valider]",
+      },
+      {
+        question: "Un déséquilibre hormonal empêche-t-il d'avoir un enfant ?",
+        reponse:
+          'Il peut le rendre plus difficile, mais beaucoup de situations se traitent. Parlez-en au médecin, sans attendre trop longtemps. [Réponse à valider]',
+      },
+      {
+        question: 'Faut-il être à jeun pour le bilan ?',
+        reponse:
+          'Cela dépend des hormones dosées. Le cabinet vous donne les consignes avant la prise de sang. [À confirmer par la doctoresse]',
+      },
+      {
+        question: 'La ménopause se traite-t-elle ?',
+        reponse:
+          'Certains signes peuvent être soulagés. Les options dépendent de votre santé et de vos préférences, et se choisissent avec le médecin. [À valider par la doctoresse]',
+      },
+    ],
+    aside: {
+      title: 'Un suivi hormonal au cabinet',
+      apporter:
+        'Vos analyses et échographies déjà faites, vos ordonnances, la liste de vos médicaments, et si possible les dates de vos dernières règles.',
+    },
+    cta: 'Comprendre, puis soulager.',
+  },
+  cholesterol: {
+    slug: 'cholesterol',
+    crumb: 'Cholestérol et métabolisme',
+    title: 'Cholestérol et métabolisme : prévenir avant que ça se voie',
+    lead: "Un cholestérol trop élevé ne fait presque jamais mal : on le découvre par une prise de sang. Pourtant, avec le temps, il abîme les artères. Le repérer tôt permet d'agir simplement.",
+    heroLabel: 'CE QUE COUVRE CETTE PAGE',
+    heroPoints: [
+      'Cholestérol et autres graisses du sang',
+      'Tour de taille, sucre et tension : le syndrome métabolique',
+      'Prévention du cœur et des artères',
+      'Cholestérol élevé dans la famille',
+    ],
+    essentiel: {
+      quoi: "Un excès de certaines graisses dans le sang (cholestérol « LDL », triglycérides). Elles s'accumulent dans les artères, sans signe, et augmentent peu à peu le risque de problèmes de cœur ou de vaisseaux.",
+      quand:
+        'Un bilan sanguin qui montre un cholestérol élevé, des cas de cholestérol ou de problèmes de cœur dans la famille, un tour de taille qui augmente, un diabète, une tension élevée ou le tabac.',
+      suivi:
+        "Un bilan de départ, des conseils d'alimentation et de mouvement, parfois un traitement, puis des prises de sang de contrôle. [Rythme à préciser]",
+      urgence:
+        "Douleur dans la poitrine, essoufflement brutal, faiblesse d'un côté du corps, difficulté à parler : appelez sans attendre. Numéro d'urgence :",
+    },
+    definition: {
+      title: 'Le cholestérol, utile mais pas en excès',
+      text: "Le cholestérol est une graisse dont le corps a besoin. Le problème, c'est l'excès de la forme « LDL », qui se dépose dans les artères, et le manque de « HDL », qui aide à l'évacuer. Les triglycérides, autres graisses du sang, comptent aussi. [Texte à valider par la doctoresse]",
+      imageTitle: 'Quatre idées à retenir',
+      imageIntro: "Pour comprendre pourquoi on s'en occupe tôt.",
+      cards: [
+        {
+          title: 'On ne le sent pas',
+          text: "Un cholestérol élevé ne donne en général aucun symptôme : seule une prise de sang le montre. D'où l'intérêt d'un bilan. [À valider]",
+        },
+        {
+          title: 'Un risque qui se cumule',
+          text: "Cholestérol, sucre, tension, tabac et tour de taille s'additionnent. Agir sur plusieurs à la fois protège beaucoup mieux le cœur. [À valider]",
+        },
+        {
+          title: 'La famille compte',
+          text: 'Certaines personnes ont un cholestérol élevé dès le plus jeune âge, dans leur famille. Un avis spécialisé est alors utile. [À préciser]',
+        },
+        {
+          title: 'On peut agir',
+          text: "L'alimentation, le mouvement et, si besoin, un traitement permettent le plus souvent de baisser les chiffres. [À valider]",
+        },
+      ],
+    },
+    signes: {
+      title: 'Quand penser à faire un bilan',
+      items: [
+        'Du cholestérol, une crise cardiaque ou un AVC dans la famille',
+        'Un tour de taille qui augmente, surtout autour du ventre',
+        'Un diabète, ou un sucre un peu élevé',
+        'Une tension élevée',
+        'Le tabac',
+        'Un bilan déjà fait qui montre un cholestérol ou des triglycérides élevés',
+        'Des dépôts jaunâtres près des yeux ou sur les tendons (rare)',
+        'Plus de 40 ans, ou plus jeune si un autre risque est présent',
+      ],
+      outro:
+        "Dans la plupart des cas, aucun signe n'apparaît : c'est le bilan qui informe. N'attendez pas de vous sentir mal pour le faire. [À compléter par le Dr Fall]",
+    },
+    priseEnCharge: {
+      intro:
+        'La première consultation fait le point sur vos risques : famille, habitudes, traitement éventuel. Selon votre situation, nous réalisons ou demandons les examens suivants :',
+      examens: [
+        {
+          nom: 'Bilan des graisses du sang',
+          texte:
+            "Une prise de sang qui mesure le cholestérol (total, LDL, HDL) et les triglycérides. Le cabinet vous indique s'il faut être à jeun. [À préciser par la doctoresse]",
+        },
+        {
+          nom: 'Sucre dans le sang',
+          texte: 'La glycémie, car cholestérol et sucre vont souvent ensemble. [À préciser]',
+        },
+        {
+          nom: 'Tension et tour de taille',
+          texte: "Deux mesures simples, faites au cabinet, qui complètent l'image de votre risque.",
+        },
+        {
+          nom: "D'autres examens si nécessaire",
+          texte:
+            'Selon votre âge et vos antécédents, le médecin peut vous orienter vers des examens du cœur ou des artères. [À préciser]',
+        },
+      ],
+    },
+    quotidien: [
+      {
+        titre: 'Une alimentation moins grasse et plus riche en fibres',
+        texte:
+          'Moins de fritures et de graisses cuites, plus de légumes, de légumineuses et de poisson, adaptés à votre cuisine. [À valider]',
+      },
+      {
+        titre: 'Bouger régulièrement',
+        texte:
+          'Une marche rapide la plupart des jours aide déjà le cholestérol et le cœur. [Durée et fréquence à préciser]',
+      },
+      {
+        titre: 'Arrêter de fumer',
+        texte:
+          "C'est l'une des choses les plus utiles pour protéger les artères. Nous pouvons vous aider à y arriver. [À valider]",
+      },
+      {
+        titre: 'Un contrôle régulier',
+        texte:
+          'Des prises de sang de contrôle montrent si les chiffres baissent et si le plan marche. [Rythme à préciser]',
+      },
+    ],
+    urgence:
+      "Contactez immédiatement les urgences en cas de douleur ou de serrement dans la poitrine, d'essoufflement soudain, de faiblesse ou d'engourdissement d'un côté du corps, de bouche déformée ou de difficulté à parler. Numéro d'urgence :",
+    faqTitle: 'Questions fréquentes sur le cholestérol',
+    faq: [
+      {
+        question: 'Faut-il toujours un médicament ?',
+        reponse:
+          "Non. Selon le niveau et vos autres risques, l'alimentation et le mouvement peuvent suffire. Le médecin décide avec vous. [Réponse à valider]",
+      },
+      {
+        question: 'Dois-je être à jeun pour la prise de sang ?',
+        reponse: '[À confirmer par la doctoresse.]',
+      },
+      {
+        question: 'Mon cholestérol est élevé alors que je suis mince. Est-ce possible ?',
+        reponse:
+          "Oui. L'hérédité joue beaucoup, et on peut avoir un cholestérol élevé sans surpoids. Un avis médical est utile. [Réponse à valider]",
+      },
+      {
+        question: 'À partir de quel âge faut-il faire un bilan ?',
+        reponse:
+          'Cela dépend de vos risques. Le médecin vous le dira à la consultation. [À confirmer par la doctoresse]',
+      },
+    ],
+    aside: {
+      title: 'Une prévention du cœur au cabinet',
+      apporter:
+        'Vos analyses récentes (cholestérol, sucre), vos ordonnances, la liste de vos médicaments et ce que vous savez des maladies du cœur dans votre famille.',
+    },
+    cta: 'Protéger son cœur, dès maintenant.',
   },
 };

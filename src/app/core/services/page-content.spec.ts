@@ -143,6 +143,6 @@ describe('liste des pages de l’admin', () => {
   it('décrit toutes les pages avec un identifiant unique', () => {
     const slugs = ALL_PAGES.map((p) => p.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
-    expect(slugs.length).toBe(14);
+    expect(slugs.length).toBe(17);
   });
 });

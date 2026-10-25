@@ -1,7 +1,7 @@
 import { Field, PageDef } from '../fields';
 import { MALADIES, MaladieContent } from '../../../features/pages/maladie/maladies.data';
 
-/** Les champs sont les mêmes pour les trois pages maladies ; seules leurs illustrations (fixes) diffèrent. */
+/** Les champs sont les mêmes pour les trois pages maladies ; seules leurs illustrations (fixes, facultatives) diffèrent. */
 const FIELDS: Field[] = [
   {
     label: 'En-tête de la page',
@@ -152,10 +152,16 @@ function maladie(slug: string, title: string): PageDef<MaladieContent> {
 export const MALADIE_DIABETE = maladie('diabete', 'Page Diabète');
 export const MALADIE_THYROIDE = maladie('thyroide', 'Page Thyroïde');
 export const MALADIE_OBESITE = maladie('obesite', 'Page Obésité et surpoids');
+export const MALADIE_NUTRITION = maladie('nutrition-clinique', 'Page Nutrition clinique');
+export const MALADIE_HORMONES = maladie('troubles-hormonaux', 'Page Troubles hormonaux');
+export const MALADIE_CHOLESTEROL = maladie('cholesterol', 'Page Cholestérol et métabolisme');
 
 /** Les pages maladies par identifiant d'adresse (/specialites/:slug). */
 export const MALADIE_DEFS: Record<string, PageDef<MaladieContent>> = {
   diabete: MALADIE_DIABETE,
   thyroide: MALADIE_THYROIDE,
   obesite: MALADIE_OBESITE,
+  'nutrition-clinique': MALADIE_NUTRITION,
+  'troubles-hormonaux': MALADIE_HORMONES,
+  cholesterol: MALADIE_CHOLESTEROL,
 };
