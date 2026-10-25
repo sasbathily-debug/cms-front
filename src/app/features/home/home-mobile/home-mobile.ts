@@ -23,6 +23,7 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { NextSlot } from '../../../core/services/next-slot';
 import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
+import { MotsLumineux } from '../../../shared/mots-lumineux/mots-lumineux';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { Specialties } from '../../../core/services/specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
@@ -41,6 +42,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     OptimizedImagePipe,
     SrcsetPipe,
     SlotTicket,
+    MotsLumineux,
   ],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',
