@@ -12,7 +12,7 @@ import { MaladieContent } from './maladies.data';
 import { PageContent } from '../../../core/services/page-content';
 import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
 
-/** Page d'une maladie (diabète, thyroïde, obésité) : textes d'origine dans `maladies.data.ts`, modifiables depuis l'admin. */
+/** Page d'une maladie (diabète, thyroïde, obésité, nutrition, hormones, cholestérol) : textes d'origine dans `maladies.data.ts`, modifiables depuis l'admin. */
 @Component({
   selector: 'app-maladie',
   imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt, AnneauVerre],
@@ -37,6 +37,11 @@ export class Maladie {
 
   readonly content = computed<MaladieContent | null>(() => this.contents[this.slug()]?.() ?? null);
 
+  /** Les cartes ne portent pas toutes une illustration : la mention n'apparaît que s'il y en a. */
+  readonly avecIllustrations = computed(
+    () => this.content()?.definition.cards.some((card) => !!card.art) ?? false,
+  );
+
   readonly crumbs = computed(() => [
     { label: 'Accueil', route: '/' },
     { label: 'Spécialités', route: '/specialites' },
@@ -45,7 +50,7 @@ export class Maladie {
 
   readonly sommaire = computed(() => [
     { id: 'definition', label: this.content()?.definition.title ?? '' },
-    { id: 'signes', label: 'Les signes qui doivent alerter' },
+    { id: 'signes', label: this.content()?.signes.title ?? 'Les signes qui doivent alerter' },
     { id: 'prise-en-charge', label: 'La prise en charge' },
     { id: 'quotidien', label: 'Le suivi au quotidien' },
     { id: 'questions', label: 'Questions fréquentes' },

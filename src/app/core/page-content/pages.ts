@@ -10,7 +10,14 @@ import { CONSEILS_SANTE } from './defs/conseils-sante';
 import { SPECIALITES } from './defs/specialites';
 import { RENDEZ_VOUS } from './defs/rendez-vous';
 import { PIED_DE_PAGE } from './defs/pied-de-page';
-import { MALADIE_DIABETE, MALADIE_OBESITE, MALADIE_THYROIDE } from './defs/maladies';
+import {
+  MALADIE_CHOLESTEROL,
+  MALADIE_DIABETE,
+  MALADIE_HORMONES,
+  MALADIE_NUTRITION,
+  MALADIE_OBESITE,
+  MALADIE_THYROIDE,
+} from './defs/maladies';
 
 /**
  * Toutes les pages décrites, modifiables ou non. Une page ajoutée ici apparaît dans l'admin
@@ -28,6 +35,9 @@ export const ALL_PAGES = [
   MALADIE_DIABETE,
   MALADIE_THYROIDE,
   MALADIE_OBESITE,
+  MALADIE_NUTRITION,
+  MALADIE_HORMONES,
+  MALADIE_CHOLESTEROL,
   FAQ_PAGE,
   CONSEILS_SANTE,
   RENDEZ_VOUS,

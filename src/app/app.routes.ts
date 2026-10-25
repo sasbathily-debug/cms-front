@@ -7,6 +7,9 @@ const SPECIALTY_TITLES: Record<string, string> = {
   diabete: 'Diabète',
   thyroide: 'Thyroïde',
   obesite: 'Obésité et surpoids',
+  'nutrition-clinique': 'Nutrition clinique',
+  'troubles-hormonaux': 'Troubles hormonaux',
+  cholesterol: 'Cholestérol et métabolisme',
 };
 
 export const routes: Routes = [

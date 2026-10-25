@@ -11,7 +11,7 @@ export interface Specialty {
   homeText: string;
 }
 
-/** Les six spécialités du cabinet. Les pages dédiées existent pour le diabète, la thyroïde et l'obésité. */
+/** Les six spécialités du cabinet. Chacune a sa page dédiée. */
 export const SPECIALTIES: Specialty[] = [
   {
     key: 'di',
@@ -54,7 +54,7 @@ export const SPECIALTIES: Specialty[] = [
     n: '04',
     title: 'Nutrition clinique',
     organ: 'Tout le métabolisme, du cerveau au pancréas',
-    route: '/specialites',
+    route: '/specialites/nutrition-clinique',
     text: 'Un plan alimentaire adapté à votre maladie, votre âge et votre mode de vie.',
     signs: 'vous souhaitez adapter votre alimentation à une maladie ou à un traitement.',
     homeText: 'Un plan alimentaire adapté à votre maladie et à votre mode de vie.',
@@ -65,7 +65,7 @@ export const SPECIALTIES: Specialty[] = [
     n: '05',
     title: 'Troubles hormonaux',
     organ: "Les ovaires, les surrénales et l'hypophyse",
-    route: '/specialites',
+    route: '/specialites/troubles-hormonaux',
     text: 'Cycles irréguliers, syndrome des ovaires polykystiques, ménopause, puberté précoce ou tardive.',
     signs: 'des cycles irréguliers, une pilosité ou une prise de poids inexpliquées.',
     homeText: 'Cycles irréguliers, ovaires polykystiques, ménopause, puberté.',
@@ -76,7 +76,7 @@ export const SPECIALTIES: Specialty[] = [
     n: '06',
     title: 'Cholestérol et métabolisme',
     organ: 'Le foie et les surrénales',
-    route: '/specialites',
+    route: '/specialites/cholesterol',
     text: "Cholestérol, triglycérides, acide urique : comprendre un résultat d'analyse et agir en conséquence.",
     signs: 'un bilan sanguin montre des valeurs hors normes.',
     homeText: "Comprendre un résultat d'analyse et agir en conséquence.",

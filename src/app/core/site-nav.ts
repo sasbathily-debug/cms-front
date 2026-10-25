@@ -26,9 +26,9 @@ export const SPECIALTY_LINKS: NavLink[] = [
   { sym: 'Di', label: 'Diabète', route: '/specialites/diabete' },
   { sym: 'Th', label: 'Thyroïde', route: '/specialites/thyroide' },
   { sym: 'Ob', label: 'Obésité et nutrition', route: '/specialites/obesite' },
-  { sym: 'Nu', label: 'Nutrition clinique', route: '/specialites' },
-  { sym: 'Ho', label: 'Troubles hormonaux', route: '/specialites' },
-  { sym: 'Ch', label: 'Cholestérol', route: '/specialites' },
+  { sym: 'Nu', label: 'Nutrition clinique', route: '/specialites/nutrition-clinique' },
+  { sym: 'Ho', label: 'Troubles hormonaux', route: '/specialites/troubles-hormonaux' },
+  { sym: 'Ch', label: 'Cholestérol', route: '/specialites/cholesterol' },
 ];
 
 export const NAV_GROUPS: NavGroup[] = [
