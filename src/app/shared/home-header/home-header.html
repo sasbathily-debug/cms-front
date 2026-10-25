@@ -66,12 +66,13 @@
                         <a
                           [routerLink]="link.route"
                           [style.--i]="$index + 1"
-                          class="nav-item group/link relative z-[1] flex items-center gap-3.5 rounded-[14px] px-3 py-2.5 text-fg"
+                          class="nav-item group/link relative z-[1] flex items-center gap-3.5 rounded-[14px] px-3 py-2 text-fg"
                         >
-                          <span
-                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sunken font-display text-[15px] font-bold text-accent-700 transition-colors duration-200 group-hover/link:bg-accent-500 group-hover/link:text-on-accent group-focus-visible/link:bg-accent-500 group-focus-visible/link:text-on-accent"
-                            >{{ link.sym }}</span
-                          >
+                          <!-- Tuile d'élément, comme celles du menu : numéro, symbole, et une comète de lumière au survol -->
+                          <span class="el" aria-hidden="true">
+                            <span class="el-n">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+                            <span class="el-s">{{ link.sym }}</span>
+                          </span>
                           <span class="flex min-w-0 flex-1 flex-col gap-0.5">
                             <span class="font-display text-[15px] font-semibold">{{
                               link.label
