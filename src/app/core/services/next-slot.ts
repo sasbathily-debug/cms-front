@@ -14,6 +14,20 @@ function instant(slot: AvailableSlotDto): number {
   return Date.parse(`${slot.date}T${slot.time}Z`);
 }
 
+/** Ce que montre l'étiquette de l'accueil : le jour en abrégé, son numéro, et une phrase (« lundi à 9 h »). */
+export interface SlotTicket {
+  jour: string;
+  numero: string;
+  phrase: string;
+}
+
+/** « 09:00:00 » devient « 9 h », « 17:30:00 » devient « 17 h 30 ». */
+export function formatHeure(time: string): string {
+  const heures = Number(time.slice(0, 2));
+  const minutes = time.slice(3, 5);
+  return !minutes || minutes === '00' ? `${heures} h` : `${heures} h ${minutes}`;
+}
+
 /**
  * Le prochain créneau libre affiché sur l'accueil. Il reste juste tant que la page est ouverte : l'heure avance
  * toutes les 30 secondes (un créneau passé disparaît tout de suite) et la liste est relue au serveur toutes les
@@ -29,6 +43,21 @@ export class NextSlot {
 
   /** Le premier créneau qui n'est pas encore passé, ou null s'il n'y en a pas. */
   readonly next = computed(() => this.slots().find((slot) => instant(slot) > this.now()) ?? null);
+
+  /** Le prochain créneau sous la forme de l'étiquette de l'accueil, ou null s'il n'y en a pas. */
+  readonly ticket = computed<SlotTicket | null>(() => {
+    const slot = this.next();
+    if (!slot) return null;
+    const jour = new Intl.DateTimeFormat('fr-FR', { weekday: 'short', timeZone: 'UTC' })
+      .format(new Date(`${slot.date}T12:00:00Z`))
+      .replace('.', '')
+      .toUpperCase();
+    return {
+      jour,
+      numero: String(Number(slot.date.slice(8, 10))),
+      phrase: `${this.dayLabel(slot)} à ${formatHeure(slot.time)}`,
+    };
+  });
 
   constructor() {
     this.fetch();

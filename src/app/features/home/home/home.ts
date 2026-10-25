@@ -9,6 +9,7 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { NextSlot } from '../../../core/services/next-slot';
+import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
@@ -31,6 +32,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     Parallax,
     OptimizedImagePipe,
     SrcsetPipe,
+    SlotTicket,
   ],
   styleUrl: './home.css',
   templateUrl: './home.html',
@@ -55,11 +57,8 @@ export class Home {
   private readonly sanitizer = inject(DomSanitizer);
   protected readonly site = inject(SiteSettings);
 
-  /** Le prochain créneau libre, tenu à jour tant que la page est ouverte (voir NextSlot). */
-  readonly nextSlot = computed(() => {
-    const slot = this.slots.next();
-    return slot ? `${this.slots.dayLabel(slot)} ${slot.time.slice(0, 5).replace(':', 'h')}` : null;
-  });
+  /** Un créneau est libre : l'étiquette s'affiche (voir NextSlot, tenu à jour tant que la page est ouverte). */
+  readonly hasSlot = computed(() => this.slots.ticket() !== null);
   private readonly siteFaq = inject(SiteFaq);
   private readonly openFaq = signal<ReadonlySet<number>>(new Set([0]));
   readonly faq = computed(() =>
