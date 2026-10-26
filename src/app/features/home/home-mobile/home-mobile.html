@@ -228,28 +228,28 @@
             >Schéma simplifié, pas une carte anatomique.</span
           >
         </div>
-        <div class="flex flex-col gap-2.5">
+        <div class="flex flex-col">
           @for (r of rows(); track r.key) {
             <div
-              class="rowm flex flex-col gap-3 rounded-[18px] border border-white/15 bg-plum-900 px-4 py-3.5 text-white"
+              class="rowm flex flex-col gap-3 border border-transparent border-b-line px-1 py-4 text-fg"
               [class]="'row-' + r.key"
               tabindex="0"
             >
               <div class="flex items-center gap-3.5">
                 <span
-                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] bg-[rgba(241,201,155,0.16)] font-display text-base font-bold text-peach"
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] bg-sunken font-display text-base font-bold text-accent-700"
                   >{{ r.sym }}</span
                 >
                 <span class="flex-1 font-display text-lg font-bold">{{ r.title }}</span>
-                <span class="plus shrink-0 text-[26px] leading-none text-peach" aria-hidden="true"
+                <span
+                  class="plus shrink-0 text-[26px] leading-none text-accent-700"
+                  aria-hidden="true"
                   >+</span
                 >
               </div>
               <div class="more flex-col gap-2 pl-[58px]">
-                <span class="text-[14.5px] leading-[1.55] text-on-plum-muted">{{
-                  r.homeText
-                }}</span>
-                <span class="text-[12.5px] text-peach">{{ r.organ }}</span>
+                <span class="text-[14.5px] leading-[1.55] text-body">{{ r.homeText }}</span>
+                <span class="text-[12.5px] text-accent-700">{{ r.organ }}</span>
                 <a
                   [routerLink]="r.route"
                   class="mt-0.5 self-start rounded-full bg-accent-500 px-[18px] py-2.5 font-display text-sm font-bold text-on-accent"
@@ -269,7 +269,7 @@
 
     <!-- Parcours -->
     <section
-      class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-plum-900 px-5 pb-20 pt-24"
     >
       <div class="flex flex-col gap-2.5">
         <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
@@ -358,7 +358,7 @@
 
     <!-- Avis -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-plum-900 px-5 pb-20 pt-24"
     >
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
@@ -379,7 +379,7 @@
     </section>
 
     <!-- Nous trouver -->
-    <section class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-page px-5 pb-16 pt-20">
+    <section class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-page px-5 pb-20 pt-24">
       <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         {{ c().trouver.titre }}
       </h2>
@@ -436,33 +436,33 @@
 
     <!-- FAQ -->
     <section
-      class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-plum-900 px-5 pb-20 pt-24"
     >
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
         {{ c().faq.titre }}
       </h2>
-      <div class="flex flex-col rounded-[22px] bg-page px-[22px] py-1">
+      <div class="flex flex-col">
         @for (item of faq(); track item.question; let i = $index) {
-          <div class="flex flex-col gap-2.5 border-b border-line py-5 last:border-b-0">
+          <div class="flex flex-col gap-2.5 border-b border-white/15 py-6 last:border-b-0">
             <button
               type="button"
               (click)="toggleFaq(i)"
               [attr.aria-expanded]="item.open"
               class="flex w-full items-center justify-between gap-3 text-left"
             >
-              <h3 class="m-0 font-display text-[16.5px] font-semibold leading-snug text-fg">
+              <h3 class="m-0 font-display text-[17px] font-semibold leading-snug text-white">
                 {{ item.question }}
               </h3>
               <span
                 aria-hidden="true"
-                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-inverse text-lg leading-none text-inverse-fg"
+                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/12 text-lg leading-none text-peach"
                 >{{ item.open ? '–' : '+' }}</span
               >
             </button>
             @if (item.open) {
-              <p class="m-0 text-[15px] leading-[1.65] text-muted">{{ item.answer }}</p>
+              <p class="m-0 text-[15px] leading-[1.65] text-on-plum-muted">{{ item.answer }}</p>
             }
           </div>
         }
@@ -471,7 +471,7 @@
 
     <!-- Articles -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-16 pt-20"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-20 pt-24"
     >
       <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         {{ c().conseils.titreTelephone }}
@@ -479,7 +479,7 @@
       @for (a of articles(); track a.titre) {
         <a
           routerLink="/conseils-sante"
-          class="flex items-center gap-4 rounded-[20px] border border-line bg-surface p-3 text-fg"
+          class="flex items-center gap-4 border-b border-line py-4 text-fg"
         >
           <span
             class="h-[92px] w-[92px] shrink-0 rounded-[14px] bg-cover bg-center"
