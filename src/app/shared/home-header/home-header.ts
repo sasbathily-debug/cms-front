@@ -19,7 +19,6 @@ import {
 } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Auth } from '../../core/services/auth';
-import { ThemeToggle } from '../theme-toggle/theme-toggle';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
 import { Spotlight } from '../spotlight';
 import { SlideHighlight } from '../slide-highlight';
@@ -47,7 +46,7 @@ const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', pati
  */
 @Component({
   selector: 'app-home-header',
-  imports: [RouterLink, MobileMenu, Spotlight, ThemeToggle, SlideHighlight, SlotTicket],
+  imports: [RouterLink, MobileMenu, Spotlight, SlideHighlight, SlotTicket],
   templateUrl: './home-header.html',
 })
 export class HomeHeader implements OnDestroy {
