@@ -187,22 +187,18 @@ export const MALADIES: Record<string, MaladieContent> = {
         "Imaginez la thyroïde comme le thermostat du corps : trop bas, tout ralentit ; trop haut, tout s'emballe ; au bon réglage, on se sent bien. Les nodules, eux, sont des petites boules dans la glande.",
       cards: [
         {
-          art: 'thyroide-low',
           title: 'Hypothyroïdie',
           text: "La thyroïde produit trop peu : fatigue, frilosité, prise de poids, lenteur. C'est la forme la plus fréquente, souvent due à une maladie auto-immune. Un traitement quotidien rétablit l'équilibre.",
         },
         {
-          art: 'thyroide-ok',
           title: 'Au bon réglage',
           text: 'Les hormones sont en équilibre : énergie, poids et humeur stables.',
         },
         {
-          art: 'thyroide-high',
           title: 'Hyperthyroïdie',
           text: 'La thyroïde produit trop : cœur rapide, nervosité, amaigrissement, chaleur. Plusieurs causes sont possibles et le traitement dépend de la cause. [À préciser par la doctoresse]',
         },
         {
-          art: 'thyroide-nodule',
           title: 'Nodules et goitre',
           text: 'Une boule ou un gonflement du cou. La grande majorité des nodules sont bénins, mais un bilan est nécessaire pour le confirmer.',
         },
@@ -321,22 +317,18 @@ export const MALADIES: Record<string, MaladieContent> = {
         'Voici quatre des leviers sur lesquels nous travaillons ensemble. Chacun peut se régler, un à la fois.',
       cards: [
         {
-          art: 'obesite-balance',
           title: "Ce qu'on mange, ce qu'on dépense",
           text: "Une balance simple en apparence, mais qui dépend de la faim, de l'énergie du corps et du mode de vie. Nous cherchons un équilibre réaliste, sans interdits.",
         },
         {
-          art: 'obesite-sleep',
           title: 'Le sommeil et le stress',
           text: "Dormir peu et vivre sous pression poussent à grignoter et à stocker. Mieux dormir et mieux gérer le stress aide souvent autant que l'assiette. [À valider]",
         },
         {
-          art: 'obesite-hormones',
           title: 'Les hormones',
           text: "Des signaux de faim et de satiété règlent l'appétit. Une cause médicale (thyroïde, ovaires polykystiques, certains médicaments) peut aussi se cacher derrière une prise de poids. [À préciser]",
         },
         {
-          art: 'obesite-steps',
           title: 'Un palier à la fois',
           text: 'Perdre 5 à 10 % de son poids apporte déjà un vrai bénéfice pour la santé. Nous fixons de petits objectifs, puis nous les ajustons. [Chiffre à valider]',
         },

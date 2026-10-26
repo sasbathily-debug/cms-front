@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -9,6 +9,9 @@ import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { MaladieArt } from '../../../shared/maladie-art/maladie-art';
 import { TourDeTaille } from '../../../shared/tour-de-taille/tour-de-taille';
 import { SchemaInsuline } from '../../../shared/schema-insuline/schema-insuline';
+import { SchemaOnglets } from '../../../shared/schema-onglets/schema-onglets';
+import { SchemaThyroide } from '../../../shared/schema-thyroide/schema-thyroide';
+import { SchemaBalance } from '../../../shared/schema-balance/schema-balance';
 import { MaladieContent } from './maladies.data';
 import { PageContent } from '../../../core/services/page-content';
 import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
@@ -16,11 +19,25 @@ import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
 /** Page d'une maladie (diabète, thyroïde, obésité, nutrition, hormones, cholestérol) : textes d'origine dans `maladies.data.ts`, modifiables depuis l'admin. */
 @Component({
   selector: 'app-maladie',
-  imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt, TourDeTaille, SchemaInsuline],
+  imports: [
+    RouterLink,
+    PublicPage,
+    PageHero,
+    CtaBand,
+    MaladieArt,
+    TourDeTaille,
+    SchemaInsuline,
+    SchemaOnglets,
+    SchemaThyroide,
+    SchemaBalance,
+  ],
   templateUrl: './maladie.html',
 })
 export class Maladie {
   protected readonly site = inject(SiteSettings);
+  /** Situation choisie dans les schémas de la thyroïde et de l'obésité. */
+  protected readonly thyroEtat = signal(0);
+  protected readonly obeEtat = signal(0);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 

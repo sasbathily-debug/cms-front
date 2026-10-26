@@ -106,6 +106,33 @@
                     </p>
                   </div>
                 }
+              } @else if (c.slug === 'thyroide') {
+                <app-schema-onglets
+                  [libelles]="['Hypothyroïdie', 'Au bon réglage', 'Hyperthyroïdie', 'Nodules']"
+                  [cartes]="c.definition.cards"
+                  [(actif)]="thyroEtat"
+                >
+                  <app-schema-thyroide [etat]="thyroEtat()" />
+                  <span legende class="inline-flex items-center gap-2"
+                    >Le cadran : la vitesse à laquelle le corps fonctionne</span
+                  >
+                </app-schema-onglets>
+              } @else if (c.slug === 'obesite') {
+                <app-schema-onglets
+                  [libelles]="[
+                    'Manger et dépenser',
+                    'Sommeil et stress',
+                    'Hormones',
+                    'Un palier à la fois',
+                  ]"
+                  [cartes]="c.definition.cards"
+                  [(actif)]="obeEtat"
+                >
+                  <app-schema-balance [etat]="obeEtat()" />
+                  <span legende class="inline-flex items-center gap-2"
+                    >Chaque levier peut se régler, un à la fois</span
+                  >
+                </app-schema-onglets>
               } @else {
                 <div class="grid gap-4 md:grid-cols-2">
                   @for (card of c.definition.cards; track card.title) {
