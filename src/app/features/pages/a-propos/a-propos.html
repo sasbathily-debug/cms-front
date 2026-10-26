@@ -71,8 +71,10 @@
 
   <!-- En une phrase : la citation s'allume mot par mot pendant que le cadre reste collé -->
   <section class="relative -mt-8 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
-    <div data-reveal-scene class="relative h-[220svh]">
-      <div class="sticky top-0 flex h-[100svh] flex-col justify-center px-5 sm:px-8 lg:px-10">
+    <div data-reveal-scene class="relative h-[calc(max(72svh,34rem)+120svh)]">
+      <div
+        class="sticky top-[calc((100svh_-_max(72svh,34rem))/2)] flex h-[max(72svh,34rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
+      >
         <div class="mx-auto w-full max-w-[1040px]">
           <span
             class="mb-7 flex items-center gap-2.5 text-xs font-semibold tracking-[0.12em] text-peach"
@@ -108,7 +110,7 @@
     </div>
   </section>
 
-  <section class="bg-page px-4 pb-20 sm:px-6 lg:px-10 lg:pb-28">
+  <section class="bg-page px-4 pb-20 pt-20 sm:px-6 lg:px-10 lg:pb-28 lg:pt-28">
     <div
       class="mx-auto grid max-w-[1160px] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16"
     >
