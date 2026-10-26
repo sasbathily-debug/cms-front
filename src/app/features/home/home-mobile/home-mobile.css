@@ -169,7 +169,8 @@
   display: flex;
 }
 .rowm:focus-within {
-  background: var(--color-plum-700) !important;
+  border-radius: 16px;
+  background: var(--color-sunken) !important;
   border-color: var(--color-accent-500) !important;
   outline: none;
 }
