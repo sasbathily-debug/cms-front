@@ -281,20 +281,28 @@
           {{ c().parcours.titre }}
         </h2>
       </div>
-      @for (e of c().parcours.etapes; track $index; let i = $index) {
-        <div
-          class="pcm flex gap-[18px] border-t border-white/15 pt-6"
-          [style.animation-delay]="0.48 + i * 3.12 + 's'"
-        >
-          <span class="shrink-0 font-display text-[44px] font-bold leading-[0.95] text-peach">{{
-            e.n
-          }}</span>
-          <div class="flex flex-col gap-2">
-            <h3 class="m-0 font-display text-xl font-bold text-white">{{ e.titre }}</h3>
-            <p class="m-0 text-[15px] leading-[1.65] text-on-plum-muted">{{ e.texte }}</p>
+      <!-- Les étapes s'empilent comme des fiches de dossier : chacune se pose sur la précédente (sticky, sans script) -->
+      <div class="flex flex-col">
+        @for (e of c().parcours.etapes; track $index; let i = $index) {
+          <div
+            class="pile sticky mb-6 flex min-h-[30svh] flex-col gap-5 rounded-[26px] border border-white/15 p-6 shadow-[0_-14px_30px_rgba(10,5,14,0.45)]"
+            [style.top]="'calc(88px + ' + i * 60 + 'px)'"
+            [style.background]="fiches[i]"
+          >
+            <div class="flex items-baseline gap-3.5">
+              <span class="font-display text-[34px] font-bold leading-none text-peach">{{
+                e.n
+              }}</span>
+              <h3 class="m-0 font-display text-[22px] font-bold leading-tight text-white">
+                {{ e.titre }}
+              </h3>
+            </div>
+            <p class="m-0 text-[16px] leading-[1.7] text-on-plum-muted">{{ e.texte }}</p>
           </div>
-        </div>
-      }
+        }
+        <!-- Espace où la pile reste en place avant de repartir (le sticky se borne au contenu du parent, pas à son padding) -->
+        <div aria-hidden="true" class="h-[34svh]"></div>
+      </div>
     </section>
 
     <!-- La doctoresse -->
