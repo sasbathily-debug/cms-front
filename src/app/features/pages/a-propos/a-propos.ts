@@ -8,10 +8,20 @@ import { PublicPage } from '../../../shared/public-page/public-page';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
+import { MotsLumineux } from '../../../shared/mots-lumineux/mots-lumineux';
 
 @Component({
   selector: 'app-a-propos',
-  imports: [RouterLink, PublicPage, CtaBand, Parallax, InView, OptimizedImagePipe, SrcsetPipe],
+  imports: [
+    RouterLink,
+    PublicPage,
+    CtaBand,
+    Parallax,
+    InView,
+    OptimizedImagePipe,
+    SrcsetPipe,
+    MotsLumineux,
+  ],
   templateUrl: './a-propos.html',
 })
 export class APropos {

@@ -34,16 +34,6 @@
             <p class="m-0 text-[17px] leading-[1.6] text-body sm:text-[19px]">
               {{ c().hero.intro }}
             </p>
-            <blockquote
-              class="m-0 mt-1 border-l-[3px] border-accent-500 pl-5 font-display text-[19px] leading-[1.45] text-fg"
-            >
-              {{ c().hero.citation }}
-              @if (c().hero.citationNote) {
-                <span class="mt-2 block font-body text-[13px] text-muted">{{
-                  c().hero.citationNote
-                }}</span>
-              }
-            </blockquote>
             <div class="mt-1 flex flex-wrap gap-3">
               <a
                 routerLink="/rendez-vous"
@@ -78,6 +68,45 @@
       </div>
     </section>
   </div>
+
+  <!-- En une phrase : la citation s'allume mot par mot pendant que le cadre reste collé -->
+  <section class="relative -mt-8 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
+    <div data-reveal-scene class="relative h-[220svh]">
+      <div class="sticky top-0 flex h-[100svh] flex-col justify-center px-5 sm:px-8 lg:px-10">
+        <div class="mx-auto w-full max-w-[1040px]">
+          <span
+            class="mb-7 flex items-center gap-2.5 text-xs font-semibold tracking-[0.12em] text-peach"
+          >
+            <i aria-hidden="true" class="block h-[9px] w-[9px] rounded-full bg-accent-500"></i>
+            EN UNE PHRASE
+          </span>
+          <p
+            class="m-0 font-display text-[clamp(2rem,6.4vw,4.5rem)] font-medium leading-[1.12] tracking-[-0.03em] text-white"
+          >
+            <app-mots-lumineux [texte]="c().hero.citation" />
+          </p>
+          <div class="mots-cta mt-10 flex items-center gap-4">
+            <img
+              [src]="c().hero.portrait | optimizedImage: 160"
+              [alt]="c().hero.portraitAlt"
+              width="56"
+              height="56"
+              class="h-14 w-14 shrink-0 rounded-full border-2 border-accent-500 bg-plum-800 object-cover object-[50%_28%]"
+            />
+            <div class="flex flex-col gap-0.5">
+              <span class="font-display text-base font-semibold text-white">{{
+                c().hero.nom
+              }}</span>
+              <span class="text-[13.5px] text-on-plum-muted">{{ c().hero.tagline }}</span>
+              @if (c().hero.citationNote) {
+                <span class="text-[12.5px] text-on-plum-subtle">{{ c().hero.citationNote }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="bg-page px-4 pb-20 sm:px-6 lg:px-10 lg:pb-28">
     <div
