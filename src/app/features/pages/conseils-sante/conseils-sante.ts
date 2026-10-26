@@ -1,4 +1,5 @@
 import { RouterLink } from '@angular/router';
+import { Parallax } from '../../../shared/parallax';
 import { Component, computed, inject, signal } from '@angular/core';
 import { PageContent } from '../../../core/services/page-content';
 import { CONSEILS_SANTE } from '../../../core/page-content/defs/conseils-sante';
@@ -11,7 +12,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
   selector: 'app-conseils-sante',
-  imports: [RouterLink, PublicPage, CtaBand, Spotlight, OptimizedImagePipe, SrcsetPipe],
+  imports: [RouterLink, PublicPage, CtaBand, Spotlight, OptimizedImagePipe, SrcsetPipe, Parallax],
   templateUrl: './conseils-sante.html',
 })
 export class ConseilsSante {

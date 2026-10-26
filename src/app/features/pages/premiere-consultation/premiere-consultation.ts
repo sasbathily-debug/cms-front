@@ -1,3 +1,4 @@
+import { Parallax } from '../../../shared/parallax';
 import {
   Component,
   DestroyRef,
@@ -19,7 +20,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
   selector: 'app-premiere-consultation',
-  imports: [RouterLink, InView, PublicPage, CtaBand, OptimizedImagePipe, SrcsetPipe],
+  imports: [RouterLink, InView, PublicPage, CtaBand, OptimizedImagePipe, SrcsetPipe, Parallax],
   styleUrl: './premiere-consultation.css',
   templateUrl: './premiere-consultation.html',
 })
