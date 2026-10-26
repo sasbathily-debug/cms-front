@@ -26,9 +26,9 @@
         height="1080"
         fetchpriority="high"
         class="hero-portrait absolute inset-x-0 bottom-0 top-14 h-[calc(100%-3.5rem)] w-full object-cover object-top"
-        [appParallax]="0.28"
+        [appParallax]="0.1"
         parallaxMode="top"
-        [parallaxMax]="160"
+        [parallaxMax]="50"
       />
     </div>
 
@@ -59,7 +59,9 @@
           }
         }
       </h1>
-      <p class="m-0 line-clamp-2 text-[15px] leading-[1.5] text-muted [@media(max-height:720px)]:hidden">
+      <p
+        class="m-0 line-clamp-2 text-[15px] leading-[1.5] text-muted [@media(max-height:720px)]:hidden"
+      >
         {{ c().hero.introTelephone }}
       </p>
       <div class="flex items-center gap-3">
@@ -498,7 +500,9 @@
   <!-- Appel final -->
   <section class="bg-page px-2 pb-2">
     <div class="flex flex-col gap-[18px] rounded-[32px] bg-accent-500 px-6 py-11">
-      <h2 class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-on-accent">
+      <h2
+        class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-on-accent"
+      >
         {{ c().appel.titreTelephone }}
       </h2>
       <p class="m-0 text-base leading-[1.6] text-on-accent">
