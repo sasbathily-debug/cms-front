@@ -87,6 +87,9 @@ export class HomeMobile {
   );
 
   private readonly slots = inject(NextSlot);
+  /** Teinte de chaque fiche du parcours : de plus en plus claire, pour qu'on voie la pile se former. */
+  protected readonly fiches = ['#2a1930', '#33203a', '#3d2845'];
+
   /** Un créneau est libre : l'étiquette s'affiche (voir NextSlot, tenu à jour tant que la page est ouverte). */
   readonly hasSlot = computed(() => this.slots.ticket() !== null);
 
