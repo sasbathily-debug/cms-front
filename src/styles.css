@@ -815,3 +815,23 @@ button[class*='rounded-full']:not(:disabled):active {
     transition: none;
   }
 }
+
+/* Changement de page : fondu court ; le menu et les boutons flottants restent en place d'une page à l'autre. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: ease-out;
+}
+::view-transition-old(root) {
+  animation-duration: 0.16s;
+}
+app-home-header header {
+  view-transition-name: site-header;
+}
+app-floating-actions {
+  view-transition-name: site-floating;
+}
+::view-transition-group(site-header),
+::view-transition-group(site-floating) {
+  animation-duration: 0.22s;
+}

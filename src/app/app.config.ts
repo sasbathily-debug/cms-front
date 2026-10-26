@@ -11,6 +11,7 @@ import {
   withNavigationErrorHandler,
   withPreloading,
   withRouterConfig,
+  withViewTransitions,
 } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
@@ -48,6 +49,14 @@ export const appConfig: ApplicationConfig = {
       withNavigationErrorHandler(reloadOnStaleChunk),
       // Les pages publiques se chargent en tâche de fond : le clic suivant est immédiat.
       withPreloading(IdlePreload),
+      // Changement de page en fondu (fonction du navigateur) ; ignoré si le visiteur a demandé moins d'animations.
+      withViewTransitions({
+        skipInitialTransition: true,
+        onViewTransitionCreated: ({ transition }) => {
+          if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)
+            transition.skipTransition();
+        },
+      }),
     ),
     { provide: TitleStrategy, useClass: SiteTitleStrategy },
     // Application installable et pages publiques en cache. Actif seulement dans la version publiée, pas en développement.
