@@ -9,7 +9,6 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { NextSlot } from '../../../core/services/next-slot';
-import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
@@ -32,7 +31,6 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     Parallax,
     OptimizedImagePipe,
     SrcsetPipe,
-    SlotTicket,
   ],
   styleUrl: './home.css',
   templateUrl: './home.html',
@@ -59,6 +57,8 @@ export class Home {
 
   /** Un créneau est libre : l'étiquette s'affiche (voir NextSlot, tenu à jour tant que la page est ouverte). */
   readonly hasSlot = computed(() => this.slots.ticket() !== null);
+  /** Le prochain créneau (jour, numéro, phrase) pour la carte de rendez-vous du bandeau. */
+  protected readonly slotTicket = this.slots.ticket;
   private readonly siteFaq = inject(SiteFaq);
   private readonly openFaq = signal<ReadonlySet<number>>(new Set([0]));
   readonly faq = computed(() =>
