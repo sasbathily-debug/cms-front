@@ -11,6 +11,10 @@ const defaults = {
     photo: '/img/dr-fall-sourire-640.webp',
     photoAlt: 'Le Dr Aissatou Mamadou Fall vous accueille, sourire aux lèvres',
   },
+  phrase: {
+    kicker: 'EN UNE PHRASE',
+    texte: 'Venir voir un spécialiste peut impressionner. Ici, on prend le temps.',
+  },
   deroule: {
     kicker: 'DÉROULEMENT',
     titre: 'Quatre temps, du rendez-vous à la sortie',
@@ -100,6 +104,20 @@ export const PREMIERE_CONSULTATION: PageDef<PremiereConsultationContent> = {
           key: 'photoAlt',
           label: 'Description du portrait (pour les malvoyants)',
           type: 'text',
+        },
+      ],
+    },
+    {
+      key: 'phrase',
+      label: 'Phrase qui s’allume (avant le déroulement)',
+      type: 'group',
+      fields: [
+        { key: 'kicker', label: 'Petit titre', type: 'text' },
+        {
+          key: 'texte',
+          label: 'Phrase',
+          type: 'textarea',
+          hint: 'Une phrase courte et forte : ses mots s’allument un à un pendant la lecture.',
         },
       ],
     },

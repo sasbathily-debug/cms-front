@@ -52,9 +52,30 @@
     </div>
   </section>
 
-  <section
-    class="relative -mt-12 rounded-t-[32px] bg-plum-900 px-4 py-20 sm:px-6 sm:py-28 lg:rounded-t-[48px] lg:px-10"
-  >
+  <!-- En une phrase : les mots s'allument pendant que le cadre reste collé -->
+  <section class="relative -mt-12 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
+    <div data-reveal-scene class="relative h-[calc(max(64svh,30rem)+70svh)]">
+      <div
+        class="sticky top-[calc((100svh_-_max(64svh,30rem))/2)] flex h-[max(64svh,30rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
+      >
+        <div class="mx-auto w-full max-w-[1040px]">
+          <span
+            class="mb-7 flex items-center gap-2.5 text-xs font-semibold tracking-[0.12em] text-peach"
+          >
+            <i aria-hidden="true" class="block h-[9px] w-[9px] rounded-full bg-accent-500"></i>
+            {{ c().phrase.kicker }}
+          </span>
+          <p
+            class="m-0 font-display text-[clamp(2rem,6.2vw,4.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-white"
+          >
+            <app-mots-lumineux [texte]="c().phrase.texte" />
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative -mt-[18svh] bg-plum-900 px-4 pb-20 pt-4 sm:px-6 sm:pb-28 lg:px-10">
     <div class="mx-auto flex max-w-[1160px] flex-col gap-14">
       <div class="flex max-w-[700px] flex-col gap-3.5">
         <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
