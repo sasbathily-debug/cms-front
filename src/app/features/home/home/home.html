@@ -53,7 +53,7 @@
 
         <!-- La carte de rendez-vous : la seule invitation à réserver du premier écran -->
         <div
-          class="absolute bottom-[216px] right-[5%] z-[3] hidden w-[340px] -rotate-[2.2deg] rounded-md bg-cream-50 px-[26px] pb-[22px] pt-6 text-fg shadow-[0_30px_60px_rgba(0,0,0,0.55)] lg:block"
+          class="carte-pose absolute bottom-[216px] right-[5%] z-[3] hidden w-[340px] -rotate-[2.2deg] rounded-md bg-cream-50 px-[26px] pb-[22px] pt-6 text-fg shadow-[0_30px_60px_rgba(0,0,0,0.55)] lg:block"
         >
           <span
             aria-hidden="true"
@@ -96,7 +96,7 @@
             <svg
               viewBox="0 0 1320 34"
               preserveAspectRatio="none"
-              class="pointer-events-none absolute left-6 top-0 h-[34px] w-[calc(100%-48px)] lg:left-[60px] lg:w-[calc(100%-120px)]"
+              class="ecg-trace pointer-events-none absolute left-6 top-0 h-[34px] w-[calc(100%-48px)] lg:left-[60px] lg:w-[calc(100%-120px)]"
               aria-hidden="true"
             >
               <path
@@ -109,8 +109,8 @@
                 vector-effect="non-scaling-stroke"
               />
             </svg>
-            <app-open-now variant="bande" />
-            <div class="flex flex-col gap-1.5">
+            <app-open-now variant="bande" class="bande-item" style="--r: 0" />
+            <div class="bande-item flex flex-col gap-1.5" style="--r: 1">
               <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">HORAIRES</span>
               <span class="text-[15.5px] leading-normal text-on-plum">
                 @for (line of hours.homeLines(); track $index) {
@@ -118,7 +118,7 @@
                 }
               </span>
             </div>
-            <div class="flex min-w-0 flex-col gap-1.5">
+            <div class="bande-item flex min-w-0 flex-col gap-1.5" style="--r: 2">
               <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach"
                 >TÉLÉPHONE ET WHATSAPP</span
               >
@@ -128,7 +128,7 @@
                 >{{ site.phone() }}</a
               >
             </div>
-            <div class="flex flex-col gap-1.5">
+            <div class="bande-item flex flex-col gap-1.5" style="--r: 3">
               <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">ADRESSE</span>
               <span class="text-[15.5px] leading-normal text-on-plum"
                 >{{ site.street() }}<br />{{ site.address() }}</span
