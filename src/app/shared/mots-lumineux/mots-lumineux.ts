@@ -95,7 +95,9 @@ export class MotsLumineux {
     const stage = scene.firstElementChild as HTMLElement | null;
     const total = scene.offsetHeight - (stage?.offsetHeight ?? window.innerHeight);
     if (total <= 0) return 1;
-    return Math.max(0, Math.min(1, -scene.getBoundingClientRect().top / total));
+    // Le cadre se colle à `top` px du haut de la fenêtre : la progression part de 0 à ce moment-là.
+    const stick = stage ? parseFloat(getComputedStyle(stage).top) || 0 : 0;
+    return Math.max(0, Math.min(1, (stick - scene.getBoundingClientRect().top) / total));
   }
 
   private paint(p: number): void {
