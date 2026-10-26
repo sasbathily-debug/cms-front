@@ -857,3 +857,26 @@ app-floating-actions {
     transition: none;
   }
 }
+
+/* Titre dont les lignes se lèvent une à une (voir TitreLignes). Rien n'est caché tant que le titre n'a pas été découpé. */
+.lignes-pretes .ligne {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.1em;
+  margin-block: -0.1em;
+}
+.lignes-pretes .ligne-in {
+  display: block;
+  white-space: nowrap;
+  transform: translateY(115%);
+}
+.lignes-pretes.lignes-visibles .ligne-in {
+  transform: none;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lignes-pretes .ligne-in {
+    transform: none;
+    transition: none;
+  }
+}

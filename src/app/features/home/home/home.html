@@ -168,10 +168,9 @@
                 c().doctoresse.kicker
               }}</span>
               <h2
+                [appTitreLignes]="c().doctoresse.titre"
                 class="m-0 font-display text-[2rem] font-bold leading-[1.12] text-fg sm:text-[42px]"
-              >
-                {{ c().doctoresse.titre }}
-              </h2>
+              ></h2>
               <p class="m-0 text-[17px] leading-[1.75] text-body">
                 {{ c().doctoresse.texte }}
               </p>
@@ -219,10 +218,9 @@
                   c().parcours.kicker
                 }}</span>
                 <h2
+                  [appTitreLignes]="c().parcours.titre"
                   class="m-0 font-display text-[2.1rem] font-bold leading-[1.08] tracking-[-0.025em] text-white sm:text-5xl"
-                >
-                  {{ c().parcours.titre }}
-                </h2>
+                ></h2>
               </div>
               <div class="grid gap-10 md:grid-cols-3 md:gap-0">
                 @for (e of c().parcours.etapes; track $index; let i = $index) {
@@ -250,10 +248,9 @@
           <div class="mx-auto flex max-w-[1160px] flex-col gap-10">
             <div class="flex flex-wrap items-end justify-between gap-6">
               <h2
+                [appTitreLignes]="c().conseils.titre"
                 class="m-0 max-w-[560px] font-display text-[2rem] font-bold leading-[1.12] text-fg sm:text-[38px]"
-              >
-                {{ c().conseils.titre }}
-              </h2>
+              ></h2>
               <a
                 routerLink="/conseils-sante"
                 class="text-[15px] font-semibold text-accent-800 hover:underline"
@@ -290,10 +287,9 @@
         <section class="bg-sunken px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
           <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
             <h2
+              [appTitreLignes]="c().avis.titre"
               class="m-0 max-w-[640px] font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[44px]"
-            >
-              {{ c().avis.titre }}
-            </h2>
+            ></h2>
             <div class="grid gap-5 md:grid-cols-3">
               @for (a of c().avis.items; track $index) {
                 <figure class="m-0 flex flex-col justify-between gap-7 rounded-[28px] bg-page p-9">
@@ -328,10 +324,9 @@
                 class="flex flex-col gap-[22px] rounded-[28px] border border-line bg-surface p-7 text-fg sm:p-10 lg:rounded-[32px]"
               >
                 <h2
+                  [appTitreLignes]="c().trouver.titre"
                   class="m-0 font-display text-[28px] font-bold leading-[1.15] tracking-[-0.02em] text-fg sm:text-[32px]"
-                >
-                  {{ c().trouver.titre }}
-                </h2>
+                ></h2>
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span
                   ><span class="text-[17px] leading-[1.55]"
@@ -376,10 +371,9 @@
                 c().faq.kicker
               }}</span>
               <h2
+                [appTitreLignes]="c().faq.titre"
                 class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[40px]"
-              >
-                {{ c().faq.titre }}
-              </h2>
+              ></h2>
               <p class="m-0 text-base leading-[1.65] text-body">
                 {{ c().faq.intro }}
               </p>
@@ -421,10 +415,9 @@
         >
           <div class="flex max-w-[640px] flex-col gap-3.5">
             <h2
+              [appTitreLignes]="c().appel.titre"
               class="m-0 font-display text-[2rem] font-bold leading-[1.12] text-white sm:text-[42px]"
-            >
-              {{ c().appel.titre }}
-            </h2>
+            ></h2>
             <p class="m-0 text-[17px] leading-[1.65] text-on-plum-muted">
               {{ c().appel.texte }}
             </p>
