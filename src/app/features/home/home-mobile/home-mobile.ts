@@ -22,6 +22,7 @@ import { OpenNow } from '../../../shared/open-now/open-now';
 import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { NextSlot } from '../../../core/services/next-slot';
+import { TitreLignes } from '../../../shared/titre-lignes';
 import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { Specialties } from '../../../core/services/specialties';
@@ -41,6 +42,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     OptimizedImagePipe,
     SrcsetPipe,
     SlotTicket,
+    TitreLignes,
   ],
   styleUrl: './home-mobile.css',
   templateUrl: './home-mobile.html',

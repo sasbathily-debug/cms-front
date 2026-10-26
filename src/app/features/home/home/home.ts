@@ -9,6 +9,7 @@ import { OrangeThread } from '../../../shared/orange-thread/orange-thread';
 import { Parallax } from '../../../shared/parallax';
 import { HomeMobile } from '../home-mobile/home-mobile';
 import { NextSlot } from '../../../core/services/next-slot';
+import { TitreLignes } from '../../../shared/titre-lignes';
 import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SiteArticles } from '../../../core/services/site-articles';
@@ -33,6 +34,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     OptimizedImagePipe,
     SrcsetPipe,
     SlotTicket,
+    TitreLignes,
   ],
   styleUrl: './home.css',
   templateUrl: './home.html',

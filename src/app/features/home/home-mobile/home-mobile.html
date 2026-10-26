@@ -187,10 +187,9 @@
             c().specialites.kicker
           }}</span>
           <h2
+            [appTitreLignes]="c().specialites.titre"
             class="m-0 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-fg"
-          >
-            {{ c().specialites.titre }}
-          </h2>
+          ></h2>
           <p class="m-0 text-[15.5px] leading-[1.6] text-body">
             {{ c().specialites.introTelephone }}
           </p>
@@ -276,10 +275,9 @@
           c().parcours.kicker
         }}</span>
         <h2
+          [appTitreLignes]="c().parcours.titre"
           class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
-        >
-          {{ c().parcours.titre }}
-        </h2>
+        ></h2>
       </div>
       <!-- Les étapes s'empilent comme des fiches de dossier : chacune se pose sur la précédente (sticky, sans script) -->
       <div class="flex flex-col">
@@ -361,10 +359,9 @@
       class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
     >
       <h2
+        [appTitreLignes]="c().avis.titre"
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
-      >
-        {{ c().avis.titre }}
-      </h2>
+      ></h2>
       @for (a of c().avis.items; track $index) {
         <figure class="m-0 flex flex-col gap-[18px] rounded-[22px] bg-page p-[26px]">
           <blockquote class="m-0 font-display text-lg font-medium leading-[1.45] text-fg">
@@ -380,9 +377,10 @@
 
     <!-- Nous trouver -->
     <section class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-page px-5 pb-16 pt-20">
-      <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
-        {{ c().trouver.titre }}
-      </h2>
+      <h2
+        [appTitreLignes]="c().trouver.titre"
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg"
+      ></h2>
       <iframe
         title="Plan d'accès au cabinet"
         class="h-[220px] w-full rounded-3xl border-0"
@@ -439,10 +437,9 @@
       class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-20"
     >
       <h2
+        [appTitreLignes]="c().faq.titre"
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
-      >
-        {{ c().faq.titre }}
-      </h2>
+      ></h2>
       <div class="flex flex-col rounded-[22px] bg-page px-[22px] py-1">
         @for (item of faq(); track item.question; let i = $index) {
           <div class="flex flex-col gap-2.5 border-b border-line py-5 last:border-b-0">
@@ -473,9 +470,10 @@
     <section
       class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-16 pt-20"
     >
-      <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
-        {{ c().conseils.titreTelephone }}
-      </h2>
+      <h2
+        [appTitreLignes]="c().conseils.titreTelephone"
+        class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg"
+      ></h2>
       @for (a of articles(); track a.titre) {
         <a
           routerLink="/conseils-sante"
@@ -509,10 +507,9 @@
   <section class="bg-page px-2 pb-2">
     <div class="flex flex-col gap-[18px] rounded-[32px] bg-accent-500 px-6 py-11">
       <h2
+        [appTitreLignes]="c().appel.titreTelephone"
         class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-on-accent"
-      >
-        {{ c().appel.titreTelephone }}
-      </h2>
+      ></h2>
       <p class="m-0 text-base leading-[1.6] text-on-accent">
         En ligne en trois minutes, ou au {{ site.phone() }}.
       </p>
