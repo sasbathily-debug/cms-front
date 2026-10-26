@@ -82,18 +82,31 @@ export function statusAt(date: Date, days: OpeningHourDto[] = DEFAULT_DAYS): Sta
   styleUrl: './open-now.css',
   template: `
     @if (status(); as s) {
-      <span
-        class="inline-flex items-center gap-2 text-[13.5px] font-semibold"
-        [class]="tone() === 'dark' ? 'text-on-plum' : 'text-fg'"
-      >
-        <span class="open-dot" [class.open-dot-on]="s.open" aria-hidden="true"></span>
-        <span>{{ s.text }}</span>
-      </span>
+      @if (variant() === 'bande') {
+        <span class="flex flex-col gap-1.5">
+          <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">{{
+            s.text.split(' · ')[0].toUpperCase()
+          }}</span>
+          <span class="font-display text-[21px] font-medium leading-tight text-white">{{
+            s.text.split(' · ').slice(1).join(' · ')
+          }}</span>
+        </span>
+      } @else {
+        <span
+          class="inline-flex items-center gap-2 text-[13.5px] font-semibold"
+          [class]="tone() === 'dark' ? 'text-on-plum' : 'text-fg'"
+        >
+          <span class="open-dot" [class.open-dot-on]="s.open" aria-hidden="true"></span>
+          <span>{{ s.text }}</span>
+        </span>
+      }
     }
   `,
 })
 export class OpenNow {
   readonly tone = input<'light' | 'dark'>('light');
+  /** « bande » : deux lignes (Ouvert / jusqu'à 17h30) sans pastille, pour la bande du bas du bandeau d'accueil. */
+  readonly variant = input<'pastille' | 'bande'>('pastille');
   private readonly hours = inject(OpeningHours);
   protected readonly status = signal<Status | null>(null);
   /** Heure de la dernière mise à jour ; `null` tant que la page n'est pas affichée dans le navigateur. */
