@@ -835,3 +835,25 @@ app-floating-actions {
 ::view-transition-group(site-floating) {
   animation-duration: 0.22s;
 }
+
+/* Photo dévoilée : un rideau se retire une seule fois quand elle arrive à l'écran (clip-path, sans calcul au défilement).
+   Le rideau est posé sur l'image (ou son cadre intérieur), pas sur l'élément observé : un élément entièrement rogné
+   ne serait jamais vu comme « à l'écran » par le navigateur. */
+.devoile:not(.inview) > img,
+.devoile:not(.inview) > div {
+  clip-path: inset(0 0 100% 0);
+}
+.devoile.inview > img,
+.devoile.inview > div {
+  clip-path: inset(0);
+  transition: clip-path 0.95s cubic-bezier(0.77, 0, 0.18, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .devoile:not(.inview) > img,
+  .devoile:not(.inview) > div,
+  .devoile.inview > img,
+  .devoile.inview > div {
+    clip-path: none;
+    transition: none;
+  }
+}
