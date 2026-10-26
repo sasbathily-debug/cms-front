@@ -56,22 +56,18 @@ export const MALADIES: Record<string, MaladieContent> = {
         "Imaginez l'insuline comme une clé. Elle ouvre la porte des cellules pour que le sucre du sang y entre et serve d'énergie.",
       cards: [
         {
-          art: 'diabete-ok',
           title: 'Quand tout va bien',
           text: "La clé tourne, la porte s'ouvre, le sucre entre dans la cellule.",
         },
         {
-          art: 'diabete-type1',
           title: 'Type 1 : il manque la clé',
           text: "Le corps ne produit presque plus d'insuline : la porte reste fermée, le sucre s'accumule dans le sang. Il apparaît souvent chez l'enfant ou le jeune adulte et demande un traitement par insuline.",
         },
         {
-          art: 'diabete-type2',
           title: 'Type 2 : la clé tourne mal',
           text: "L'insuline est là, mais elle agit mal : la porte s'ouvre à peine. C'est le plus fréquent, favorisé par l'âge, le surpoids, le manque d'activité physique et l'hérédité. Il demande un traitement et un mode de vie adaptés.",
         },
         {
-          art: 'diabete-gest',
           title: 'Diabète gestationnel',
           text: "Il apparaît pendant la grossesse, comme un type 2 temporaire, et impose un suivi rapproché pour protéger la mère et l'enfant.",
         },
