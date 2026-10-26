@@ -790,28 +790,3 @@ button[class*='rounded-full']:not(:disabled):active {
     transform: none;
   }
 }
-
-/* Phrase dont les mots s'allument au défilement (voir MotsLumineux) : les boutons de la scène apparaissent à la fin. */
-[data-mots-actif] .mot {
-  display: inline-block;
-  white-space: pre;
-  --l: 0;
-  color: rgb(
-    calc(90 + 165 * var(--l)) calc(80 + 175 * var(--l)) calc(98 + 157 * var(--l))
-  );
-}
-[data-mots-actif]:not(.mots-fini) .mots-cta {
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-}
-.mots-cta {
-  transition:
-    opacity 0.5s,
-    transform 0.5s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .mots-cta {
-    transition: none;
-  }
-}
