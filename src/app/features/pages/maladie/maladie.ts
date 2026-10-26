@@ -8,6 +8,7 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { MaladieArt } from '../../../shared/maladie-art/maladie-art';
 import { TourDeTaille } from '../../../shared/tour-de-taille/tour-de-taille';
+import { SchemaInsuline } from '../../../shared/schema-insuline/schema-insuline';
 import { MaladieContent } from './maladies.data';
 import { PageContent } from '../../../core/services/page-content';
 import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
@@ -15,7 +16,7 @@ import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
 /** Page d'une maladie (diabète, thyroïde, obésité, nutrition, hormones, cholestérol) : textes d'origine dans `maladies.data.ts`, modifiables depuis l'admin. */
 @Component({
   selector: 'app-maladie',
-  imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt, TourDeTaille],
+  imports: [RouterLink, PublicPage, PageHero, CtaBand, MaladieArt, TourDeTaille, SchemaInsuline],
   templateUrl: './maladie.html',
 })
 export class Maladie {

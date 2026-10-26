@@ -2,10 +2,6 @@ import { Component, input } from '@angular/core';
 
 export type MaladieArtKind =
   | 'diabete-hero'
-  | 'diabete-ok'
-  | 'diabete-type1'
-  | 'diabete-type2'
-  | 'diabete-gest'
   | 'thyroide-hero'
   | 'thyroide-low'
   | 'thyroide-ok'
