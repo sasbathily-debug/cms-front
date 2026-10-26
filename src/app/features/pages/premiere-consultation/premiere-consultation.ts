@@ -1,4 +1,5 @@
 import { Parallax } from '../../../shared/parallax';
+import { MotsLumineux } from '../../../shared/mots-lumineux/mots-lumineux';
 import {
   Component,
   DestroyRef,
@@ -20,7 +21,16 @@ import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
   selector: 'app-premiere-consultation',
-  imports: [RouterLink, InView, PublicPage, CtaBand, OptimizedImagePipe, SrcsetPipe, Parallax],
+  imports: [
+    RouterLink,
+    InView,
+    PublicPage,
+    CtaBand,
+    OptimizedImagePipe,
+    SrcsetPipe,
+    Parallax,
+    MotsLumineux,
+  ],
   styleUrl: './premiere-consultation.css',
   templateUrl: './premiere-consultation.html',
 })
