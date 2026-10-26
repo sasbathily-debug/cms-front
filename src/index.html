@@ -11,17 +11,14 @@
     />
     <meta name="theme-color" content="#1f1226" />
     <script>
-      // Pose le thème avant le premier affichage pour éviter un éclair clair sur un écran sombre.
+      // Le site est en clair : pose le thème avant le premier affichage (aucun éclair).
       (function () {
-        var root = document.documentElement;
+        document.documentElement.setAttribute('data-theme', 'light');
         try {
-          // Clair par défaut ; le sombre seulement si le visiteur l'a choisi.
-          var dark = localStorage.getItem('theme') === 'dark';
-          root.setAttribute('data-theme', dark ? 'dark' : 'light');
-          if (dark)
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#150c1a');
+          // Plus de bouton pour changer : on efface un ancien choix « sombre » pour que personne n'y reste bloqué.
+          localStorage.removeItem('theme');
         } catch (e) {
-          root.setAttribute('data-theme', 'light');
+          // stockage indisponible : rien à effacer
         }
       })();
     </script>

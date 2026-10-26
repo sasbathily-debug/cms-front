@@ -44,11 +44,12 @@ describe('Theme', () => {
     expect(window.localStorage.getItem('theme')).toBe('light');
   });
 
-  it('reprend le choix mémorisé à la visite suivante', () => {
+  it("ignore et efface un ancien choix « sombre » : le bouton n'existe plus, personne ne reste bloqué", () => {
     useStorage(fakeStorage({ theme: 'dark' }));
     const theme = TestBed.inject(Theme);
-    expect(theme.current()).toBe('dark');
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(theme.current()).toBe('light');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(window.localStorage.getItem('theme')).toBeNull();
   });
 
   it("reste clair même si l'appareil est réglé en sombre", () => {

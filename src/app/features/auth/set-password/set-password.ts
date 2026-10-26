@@ -1,4 +1,3 @@
-import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 import { AuthSteps } from '../../../shared/auth-steps/auth-steps';
 import { Component, computed, inject, signal } from '@angular/core';
 import {
@@ -21,7 +20,7 @@ function passwordsMatchValidator(control: AbstractControl): ValidationErrors | n
 }
 
 @Component({
-  imports: [ThemeToggle, ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
+  imports: [ReactiveFormsModule, RouterLink, AuthVisualPanel, AuthSteps],
   selector: 'app-set-password',
   styleUrl: './set-password.css',
   templateUrl: './set-password.html',

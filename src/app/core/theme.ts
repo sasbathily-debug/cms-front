@@ -6,19 +6,10 @@ export type ThemeName = 'light' | 'dark';
 const STORAGE_KEY = 'theme';
 const THEME_COLOR: Record<ThemeName, string> = { light: '#1f1226', dark: '#150c1a' };
 
-/** Le stockage peut être indisponible (navigation privée) : le thème marche alors sans mémoire. */
-function readStored(): ThemeName | null {
-  try {
-    const value = window.localStorage.getItem(STORAGE_KEY);
-    return value === 'light' || value === 'dark' ? value : null;
-  } catch {
-    return null;
-  }
-}
-
 /**
- * Thème clair ou sombre. Le site s'ouvre en clair (le design validé) quel que soit le réglage de l'appareil ;
- * le sombre n'apparaît que si le visiteur le choisit, et son choix est alors gardé sur cet appareil.
+ * Thème clair ou sombre. Le site est en clair (le design validé) quel que soit le réglage de l'appareil.
+ * Le bouton de bascule a été retiré (le thème sombre reste prêt dans les couleurs du site mais n'est plus proposé) :
+ * un ancien choix « sombre » mémorisé sur un appareil est donc effacé, pour que personne ne reste bloqué dedans.
  * Le thème s'applique en posant `data-theme` sur <html> (le script de index.html le fait avant le
  * premier affichage, sans flash).
  * Pour suivre le réglage de l'appareil plutôt que le clair, lire `prefers-color-scheme` ici et dans index.html.
@@ -26,12 +17,17 @@ function readStored(): ThemeName | null {
 @Service()
 export class Theme {
   private readonly document = inject(DOCUMENT);
-  private readonly chosen = signal<ThemeName>(readStored() ?? 'light');
+  private readonly chosen = signal<ThemeName>('light');
 
   readonly current = this.chosen.asReadonly();
   readonly isDark = computed(() => this.chosen() === 'dark');
 
   constructor() {
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // stockage indisponible : rien à effacer
+    }
     this.apply();
   }
 
