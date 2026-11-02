@@ -10,11 +10,11 @@ const defaults = {
   },
   auteur: {
     kicker: 'ÉCRIT PAR LA DOCTORESSE',
-    nom: 'Dr Aissatou Mamadou Fall',
+    nom: 'Dr Aïssatou Mamadou Fall',
     texte: 'Médecin endocrinologue et nutritionniste à Dakar.',
     lien: 'Découvrir son parcours →',
     photo: '/img/dr-fall-conference-640.webp',
-    photoAlt: "Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique",
+    photoAlt: "Le Dr Aïssatou Mamadou Fall, micro à la main, lors d'une intervention publique",
   },
   alaune: {
     kicker: 'À LA UNE · GUIDE PDF · 35 PAGES',

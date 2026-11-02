@@ -1,5 +1,6 @@
 <app-public-page>
   <app-page-hero [crumbs]="crumbs" [title]="c().hero.titre" [lead]="c().hero.intro">
+    @if (c().hero.photoCabinet || c().hero.photoAccueil || c().hero.photoSalle) {
     <div
       aside
       class="relative mx-auto h-[300px] w-full max-w-[520px] sm:h-[330px]"
@@ -13,12 +14,6 @@
             : null
         "
       >
-        @if (!c().hero.photoCabinet) {
-          <span
-            class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
-            >PHOTO : cabinet de consultation [à fournir]</span
-          >
-        }
       </div>
       <div
         class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-3 sm:h-[160px] bg-cover bg-center"
@@ -28,12 +23,6 @@
             : null
         "
       >
-        @if (!c().hero.photoAccueil) {
-          <span
-            class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
-            >PHOTO : accueil [à fournir]</span
-          >
-        }
       </div>
       <div
         class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-3 sm:h-[130px] bg-cover bg-center"
@@ -41,14 +30,9 @@
           c().hero.photoSalle ? 'url(' + (c().hero.photoSalle | optimizedImage: 800) + ')' : null
         "
       >
-        @if (!c().hero.photoSalle) {
-          <span
-            class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-xs tracking-[0.05em] text-white"
-            >PHOTO : salle d'attente [à fournir]</span
-          >
-        }
       </div>
     </div>
+    }
   </app-page-hero>
 
   <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
@@ -166,12 +150,10 @@
               </div>
             } @else {
               <div
-                class="flex h-[200px] items-end rounded-[18px] bg-sunken p-3"
+                class="flex h-[200px] items-center justify-center rounded-[18px] bg-sunken font-display text-[72px] font-bold text-accent-700"
+                aria-hidden="true"
               >
-                <span
-                  class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-[11.5px] tracking-[0.05em] text-white"
-                  >PHOTO : à fournir</span
-                >
+                {{ m.nom.charAt(0) }}
               </div>
             }
             <div class="flex flex-col gap-1">

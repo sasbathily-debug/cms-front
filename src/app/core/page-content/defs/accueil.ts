@@ -8,14 +8,14 @@ const defaults = {
     sousTitre:
       "Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer, et un suivi que vous pouvez gérer en ligne.",
     introTelephone:
-      "Endocrinologue à Sacré-Cœur, Dakar. Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer.",
+      "Endocrinologue à la Cité Keur Gorgui, Dakar. Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer.",
     boutonPrincipal: 'Prendre rendez-vous',
     boutonSecondaire: 'Ma première consultation',
     lienTelephone: 'Ma première visite →',
     photo: '/img/dr-fall.webp',
     photoTelephone: '/img/dr-fall-640.webp',
     photoAlt:
-      'Le Dr Aissatou Mamadou Fall, endocrinologue et nutritionniste, en blouse blanche, les bras croisés',
+      'Le Dr Aïssatou Mamadou Fall, endocrinologue et nutritionniste, en blouse blanche, les bras croisés',
   },
   carte: {
     sansCreneau: 'Réservez votre créneau en ligne',
@@ -40,7 +40,7 @@ const defaults = {
     kicker: 'LA DOCTORESSE',
     titre: "Une consultation qui prend le temps d'expliquer",
     texte:
-      "Le Dr Aissatou Mamadou Fall est médecin endocrinologue et nutritionniste à Dakar. Elle accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal. [Parcours et années d'expérience à confirmer.]",
+      "Le Dr Aïssatou Mamadou Fall est médecin endocrinologue et nutritionniste à Dakar. Elle accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal. [Parcours et années d'expérience à confirmer.]",
     points: [
       'Des explications avec des mots simples, autant de fois que nécessaire',
       'Un plan écrit, adapté à votre alimentation et à votre quotidien',
@@ -52,11 +52,11 @@ const defaults = {
       { big: '[Diplôme]', small: '[Université, pays]' },
       { big: '[Société]', small: '[Affiliation professionnelle]' },
     ],
-    noteStats: "Les chiffres entre crochets seront fournis par la doctoresse, rien n'est inventé.",
+    noteStats: '',
     lien: 'Découvrir son parcours',
     photo: '/img/dr-fall-sourire-640.webp',
-    photoAlt: 'Portrait souriant du Dr Aissatou Mamadou Fall',
-    titreTelephone: 'Dr Aissatou Mamadou Fall',
+    photoAlt: 'Portrait souriant du Dr Aïssatou Mamadou Fall',
+    titreTelephone: 'Dr Aïssatou Mamadou Fall',
     texteTelephone:
       "Médecin endocrinologue et nutritionniste. [Une phrase sur son parcours : formation, années d'exercice.]",
   },
@@ -108,7 +108,7 @@ const defaults = {
     note: "Emplacement des avis : à remplir avec de vrais témoignages, recueillis avec l'accord écrit des patients.",
   },
   trouver: {
-    titre: 'Nous trouver à Sacré-Cœur',
+    titre: 'Nous trouver à la Cité Keur Gorgui',
   },
   faq: {
     kicker: 'QUESTIONS FRÉQUENTES',

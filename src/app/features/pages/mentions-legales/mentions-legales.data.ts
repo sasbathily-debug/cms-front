@@ -25,7 +25,7 @@ export const MENTIONS: LegalSection[] = [
     lignes: [
       {
         nom: 'Éditeur',
-        texte: 'Cabinet du Dr Aïssatou Mamadou Fall, Sacré-Cœur 3, Dakar (Sénégal).',
+        texte: 'Cabinet du Dr Aïssatou Mamadou Fall, Cité Keur Gorgui, Dakar (Sénégal).',
       },
       {
         nom: 'Profession',

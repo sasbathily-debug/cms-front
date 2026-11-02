@@ -55,7 +55,7 @@
           <span class="flex flex-col gap-1">
             <span class="font-display text-[22px] font-bold text-fg">{{ nextWhen() }}</span>
             <span class="text-[14.5px] leading-normal text-body"
-              >{{ appt.reason }}, au cabinet de Sacré-Cœur</span
+              >{{ appt.reason }}, au cabinet</span
             >
             <span class="flex items-center gap-2 text-[13px] font-semibold text-accent-800">
               <span class="h-[9px] w-[9px] animate-pulse rounded-full bg-accent-500"></span
@@ -433,7 +433,7 @@
       <span class="flex flex-col gap-0.5"
         ><span class="text-xs font-semibold tracking-[0.1em] text-peach">ADRESSE</span
         ><span class="font-display text-[17px] font-bold leading-snug"
-          >{{ site.street() }}, {{ site.address() }}</span
+          >{{ site.addressLine() }}</span
         ></span
       >
     </div>

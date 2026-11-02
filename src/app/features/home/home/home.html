@@ -79,7 +79,9 @@
           <a
             routerLink="/rendez-vous"
             class="btn-arrow block rounded-full bg-accent-500 px-4 py-3.5 text-center font-display text-base font-bold text-on-accent transition hover:bg-accent-600"
-            ><span class="btn-label">{{ slotTicket() ? 'Réserver ce créneau' : c().carte.bouton }}</span></a
+            ><span class="btn-label">{{
+              slotTicket() ? 'Réserver ce créneau' : c().carte.bouton
+            }}</span></a
           >
           <a
             routerLink="/premiere-consultation"
@@ -130,8 +132,11 @@
             </div>
             <div class="bande-item flex flex-col gap-1.5" style="--r: 3">
               <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">ADRESSE</span>
-              <span class="text-[15.5px] leading-normal text-on-plum"
-                >{{ site.street() }}<br />{{ site.address() }}</span
+              <span class="text-[15.5px] leading-normal text-on-plum">
+                @if (site.street()) {
+                  {{ site.street() }}<br />
+                }
+                {{ site.address() }}</span
               >
             </div>
           </div>
@@ -345,16 +350,20 @@
                 </h2>
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">ADRESSE</span
-                  ><span class="text-[17px] leading-[1.55]"
-                    >{{ site.street() }}<br />{{ site.address() }}</span
+                  ><span class="text-[17px] leading-[1.55]">
+                    @if (site.street()) {
+                      {{ site.street() }}<br />
+                    }
+                    {{ site.address() }}</span
                   >
                 </div>
-                <div class="flex flex-col gap-1.5">
-                  <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">REPÈRE</span
-                  ><span class="text-base leading-[1.55] text-body">{{
-                    site.landmark() || '[À côté de quel lieu connu, étage, entrée]'
-                  }}</span>
-                </div>
+                @if (site.landmark()) {
+                  <div class="flex flex-col gap-1.5">
+                    <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
+                      >REPÈRE</span
+                    ><span class="text-base leading-[1.55] text-body">{{ site.landmark() }}</span>
+                  </div>
+                }
                 <div class="flex flex-col gap-1.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">OUVERT</span
                   ><span class="text-base leading-[1.55] text-body">{{

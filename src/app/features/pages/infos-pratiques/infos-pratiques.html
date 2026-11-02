@@ -22,10 +22,15 @@
           <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
             c().cartes.adresseLabel
           }}</span>
-          <span class="font-display text-[22px] font-bold leading-snug">{{ site.street() }}</span>
+          <span class="font-display text-[22px] font-bold leading-snug">{{
+            site.street() || site.address()
+          }}</span>
           <span class="text-[15px] leading-relaxed text-on-plum-muted"
-            >{{ site.address() }}. {{ site.landmark() || '[Repère connu à côté du cabinet]' }}</span
-          >
+            >{{ site.street() ? site.address() : 'Dakar, Sénégal' }}
+            @if (site.landmark()) {
+              . {{ site.landmark() }}
+            }
+          </span>
         </span>
       </div>
       <div

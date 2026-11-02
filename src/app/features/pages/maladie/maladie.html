@@ -34,9 +34,6 @@
           <span class="font-display text-sm font-bold tracking-[0.09em] text-on-accent"
             >L'ESSENTIEL EN 30 SECONDES</span
           >
-          <span class="text-[13.5px] font-medium text-plum-brown"
-            >Texte d'exemple, à valider par la doctoresse</span
-          >
         </div>
         <div class="grid gap-8 px-6 py-8 sm:px-9 md:grid-cols-3">
           <div class="flex flex-col gap-2">
@@ -61,7 +58,7 @@
         >
           <span class="text-[14.5px] leading-normal text-accent-ink">
             <strong class="text-fg">Urgence :</strong> {{ c.essentiel.urgence }}
-            <span class="text-muted">{{ site.emergencyNumber() || '[Numéro à confirmer]' }}</span>
+            <span class="text-muted">{{ site.emergencyNumber() }}</span>
           </span>
           <a
             routerLink="/rendez-vous"
@@ -75,12 +72,6 @@
     <section class="px-4 pb-24 pt-16 sm:px-6 lg:px-10 lg:pt-[72px]">
       <div class="mx-auto flex max-w-[1160px] flex-wrap items-start gap-14">
         <article class="flex min-w-0 flex-[1_1_640px] flex-col gap-14">
-          <div
-            class="rounded-[14px] bg-accent-soft px-[18px] py-3.5 text-sm leading-relaxed text-accent-ink"
-          >
-            Exemple de contenu : ce texte est une base générale à faire relire, corriger et
-            compléter par le Dr Fall avant toute publication.
-          </div>
 
           <section id="definition" class="flex scroll-mt-28 flex-col gap-[18px]">
             <h2
@@ -169,7 +160,7 @@
                     <p class="m-0 text-[14.5px] leading-[1.65] text-on-plum-muted">
                       L'IMC ne dit pas tout : l'endroit où se loge la graisse compte aussi. Le tour
                       de taille se mesure à mi-distance entre les dernières côtes et le haut des
-                      hanches. [À valider par le Dr Fall]
+                      hanches.
                     </p>
                     <span class="text-[12.5px] text-on-plum-subtle"
                       >Schéma simplifié, pas une carte anatomique.</span
@@ -333,10 +324,7 @@
             </h2>
             <p class="m-0 text-base leading-[1.7] text-body">
               {{ c.urgence }}
-              <strong class="text-fg">{{
-                site.emergencyNumber() ||
-                  "[Numéro d'urgence ou structure à contacter : à confirmer par la doctoresse]"
-              }}</strong>
+              <strong class="text-fg">{{ site.emergencyNumber() }}</strong>
             </p>
           </section>
 

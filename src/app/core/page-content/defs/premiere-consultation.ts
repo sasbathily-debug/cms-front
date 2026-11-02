@@ -9,7 +9,7 @@ const defaults = {
       'Venir voir un spécialiste peut impressionner. Voici, étape par étape, comment se passe une première consultation, pour que vous arriviez sereinement.',
     bouton: 'Prendre rendez-vous',
     photo: '/img/dr-fall-sourire-640.webp',
-    photoAlt: 'Le Dr Aissatou Mamadou Fall vous accueille, sourire aux lèvres',
+    photoAlt: 'Le Dr Aïssatou Mamadou Fall vous accueille, sourire aux lèvres',
   },
   phrase: {
     kicker: 'EN UNE PHRASE',

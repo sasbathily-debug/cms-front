@@ -560,7 +560,7 @@ export const MALADIES: Record<string, MaladieContent> = {
           inclusTitre: 'L’accompagnement comprend :',
           inclus: [
             'Tout le contenu de la consultation nutritionnelle',
-            'Un entretien individuel de 30 minutes avec le Dr Aissatou Mamadou Fall',
+            'Un entretien individuel de 30 minutes avec le Dr Aïssatou Mamadou Fall',
             'Une analyse personnalisée de votre situation, de vos objectifs et de vos résultats',
             'Un document récapitulatif personnalisé',
             '2 semaines de menus complets, adaptés à vos besoins et à votre quotidien',

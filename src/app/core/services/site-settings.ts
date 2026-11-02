@@ -5,8 +5,9 @@ import { SiteSettingsDto } from '../models/site-content.models';
 export const FALLBACK_PHONE = '+221 77 226 39 06';
 
 /** Adresse et horaires de la maquette (la doctoresse doit les confirmer). */
-export const ADDRESS_STREET = '[Rue et numéro]';
-export const ADDRESS_CITY = 'Sacré-Cœur 3, Dakar';
+/** Tant que la rue n'est pas saisie dans l'admin, on n'affiche que le quartier. */
+export const ADDRESS_STREET = '';
+export const ADDRESS_CITY = 'Cité Keur Gorgui';
 /** Charge les réglages du site une seule fois et les partage entre les pages. */
 @Service()
 export class SiteSettings {
@@ -21,9 +22,14 @@ export class SiteSettings {
   /** Rue et numéro, saisis dans l'admin ; un texte à compléter sert de repli. */
   readonly street = computed(() => this.settings()?.addressStreet?.trim() || ADDRESS_STREET);
   /** Repère pour trouver le cabinet, saisi dans l'admin ; vide s'il n'est pas renseigné. */
+  /** « rue, quartier » ou seulement le quartier tant que la rue n'est pas saisie. */
+  readonly addressLine = computed(() => [this.street(), this.address()].filter(Boolean).join(', '));
   readonly landmark = computed(() => this.settings()?.landmark?.trim() || '');
   /** Numéro d'urgence saisi dans l'admin ; vide s'il n'est pas renseigné. */
-  readonly emergencyNumber = computed(() => this.settings()?.emergencyNumber?.trim() || '');
+  /** Le numéro d'urgence des réglages ; à défaut, le SAMU national (1515), validé par la doctoresse. */
+  readonly emergencyNumber = computed(
+    () => this.settings()?.emergencyNumber?.trim() || 'SAMU 1515',
+  );
   readonly telHref = computed(() => 'tel:' + this.phone().replace(/[^+\d]/g, ''));
   readonly whatsappHref = computed(() => {
     const raw = this.settings()?.whatsappNumber || this.phone();

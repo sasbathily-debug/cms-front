@@ -5,7 +5,7 @@ const defaults = {
   hero: {
     kicker: 'À PROPOS',
     tagline: 'Endocrinologie · Diabétologie · Nutrition',
-    nom: 'Dr Aissatou Mamadou Fall',
+    nom: 'Dr Aïssatou Mamadou Fall',
     intro:
       "Médecin endocrinologue et nutritionniste à Dakar. J'accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal.",
     citation: "« Mieux comprendre sa maladie, c'est déjà commencer à la maîtriser. »",
@@ -14,7 +14,7 @@ const defaults = {
     boutonSecondaire: 'Mes spécialités',
     banniere: '/img/photo-1.jpg',
     portrait: '/img/dr-fall-sourire-640.webp',
-    portraitAlt: 'Portrait souriant du Dr Aissatou Mamadou Fall',
+    portraitAlt: 'Portrait souriant du Dr Aïssatou Mamadou Fall',
   },
   histoire: {
     kicker: 'MON HISTOIRE',
@@ -47,7 +47,7 @@ const defaults = {
       {
         periode: 'Depuis [année]',
         titre: "Cabinet d'endocrinologie et de nutrition",
-        lieu: 'Sacré-Cœur, Dakar',
+        lieu: 'Cité Keur Gorgui, Dakar',
       },
     ],
   },
@@ -85,7 +85,7 @@ const defaults = {
     texte:
       "Lors d'une intervention [événement et date à préciser]. [Autres interventions, congrès, articles : à renseigner si la doctoresse en a.]",
     photo: '/img/dr-fall-conference-640.webp',
-    photoAlt: "Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique",
+    photoAlt: "Le Dr Aïssatou Mamadou Fall, micro à la main, lors d'une intervention publique",
   },
   appel: {
     titre: "Envie d'en parler ? Prenons rendez-vous.",

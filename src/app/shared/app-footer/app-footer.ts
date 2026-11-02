@@ -38,10 +38,9 @@ export class AppFooter {
   ];
   readonly mapsUrl = 'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125';
 
-  protected readonly addressLines = computed(() => [
-    this.site.street(),
-    `${this.site.address()}, Sénégal`,
-  ]);
+  protected readonly addressLines = computed(() =>
+    [this.site.street(), `${this.site.address()}, Sénégal`].filter(Boolean),
+  );
   protected readonly hours = inject(OpeningHours);
   protected readonly c = inject(PageContent).use(PIED_DE_PAGE);
 

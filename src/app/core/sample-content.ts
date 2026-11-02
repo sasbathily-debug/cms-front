@@ -86,6 +86,6 @@ export const SAMPLE_HOME_FAQ: FaqEntry[] = [
   {
     question: "Que faire en cas d'urgence ?",
     answer:
-      'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches. [Numéro à indiquer.]',
+      'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches ou appelez le SAMU au 1515.',
   },
 ];
