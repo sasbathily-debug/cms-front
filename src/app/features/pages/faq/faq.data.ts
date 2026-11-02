@@ -64,11 +64,12 @@ export const FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "Quel est le prix d'une consultation ?",
-        answer: '[Tarif de la première consultation et du suivi, à indiquer par la doctoresse.]',
+        answer:
+          'La première consultation est à 20\u00a0000\u00a0FCFA. La consultation nutritionnelle (30 minutes) est à 35\u00a0000\u00a0FCFA, et l’accompagnement nutritionnel d’un mois à 90\u00a0000\u00a0FCFA.',
       },
       {
         question: 'Quels moyens de paiement acceptez-vous ?',
-        answer: '[Espèces, Wave, Orange Money… à préciser.]',
+        answer: 'Espèces, Wave et Orange Money.',
       },
       {
         question: 'Travaillez-vous avec des assurances ou des mutuelles ?',

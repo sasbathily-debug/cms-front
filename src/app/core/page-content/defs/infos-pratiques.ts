@@ -21,12 +21,11 @@ const defaults = {
     titre: 'Tarifs et paiement',
     lignes: [
       { acte: 'Première consultation', prix: '20\u00a0000\u00a0FCFA' },
-      { acte: 'Consultation de suivi', prix: '[tarif] FCFA' },
       { acte: 'Consultation nutritionnelle (30 min)', prix: '35\u00a0000\u00a0FCFA' },
       { acte: 'Accompagnement nutritionnel (1 mois)', prix: '90\u00a0000\u00a0FCFA' },
-      { acte: 'Paiement', prix: '[espèces, Wave, Orange Money…]' },
+      { acte: 'Paiement', prix: 'Espèces, Wave, Orange Money' },
     ],
-    note: 'Tarif de la consultation de suivi à confirmer par la doctoresse.',
+    note: '',
   },
   blocs: [
     {
