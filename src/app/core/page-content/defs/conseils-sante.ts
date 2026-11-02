@@ -17,12 +17,13 @@ const defaults = {
     photoAlt: "Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique",
   },
   alaune: {
-    kicker: 'À LA UNE · RAMADAN · 6 MIN',
-    titre: 'Ramadan et diabète : bien se préparer',
+    kicker: 'À LA UNE · GUIDE PDF · 35 PAGES',
+    titre: 'Guide pratique de l’alimentation du diabétique',
     texte:
-      'Peut-on jeûner ? Comment adapter son traitement et son alimentation ? Les questions à poser à votre médecin avant le premier jour.',
-    lien: "Lire l'article",
-    photo: '/img/photo-2.jpg',
+      'L’index glycémique, la pyramide alimentaire, les groupes d’aliments, des conseils pour le quotidien et des idées de menus complets sur 3 jours.',
+    lien: 'Télécharger le guide (PDF)',
+    fichier: '/guides/guide-alimentation-diabetique.pdf',
+    photo: '/img/guide-diabetique-couverture.webp',
   },
   instagram: {
     titre: 'Suivez le cabinet sur Instagram',
@@ -70,14 +71,15 @@ export const CONSEILS_SANTE: PageDef<ConseilsSanteContent> = {
     },
     {
       key: 'alaune',
-      label: 'Article à la une (encadré)',
+      label: 'À la une : le guide à télécharger (encadré)',
       type: 'group',
       fields: [
         { key: 'kicker', label: 'Petit titre', type: 'text' },
         { key: 'titre', label: 'Titre', type: 'text' },
         { key: 'texte', label: 'Texte', type: 'textarea' },
-        { key: 'lien', label: 'Texte du lien', type: 'text' },
-        { key: 'photo', label: 'Photo', type: 'image' },
+        { key: 'lien', label: 'Texte du bouton', type: 'text' },
+        { key: 'fichier', label: 'Adresse du fichier PDF', type: 'text' },
+        { key: 'photo', label: 'Couverture', type: 'image' },
       ],
     },
     {

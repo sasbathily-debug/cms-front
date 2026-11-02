@@ -70,6 +70,9 @@ export class Maladie {
     { id: 'definition', label: this.content()?.definition.title ?? '' },
     { id: 'signes', label: this.content()?.signes.title ?? 'Les signes qui doivent alerter' },
     { id: 'prise-en-charge', label: 'La prise en charge' },
+    ...(this.content()?.offres
+      ? [{ id: 'tarifs', label: this.content()?.offres?.title ?? '' }]
+      : []),
     { id: 'quotidien', label: 'Le suivi au quotidien' },
     { id: 'questions', label: 'Questions fréquentes' },
   ]);
