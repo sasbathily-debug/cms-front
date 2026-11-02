@@ -486,6 +486,57 @@ router-outlet + * {
     filter: brightness(1.05);
   }
 }
+/*
+ * Flèche qui sort au survol des boutons-liens (classe btn-arrow) : le texte glisse vers la gauche et la flèche
+ * apparaît à sa place, à droite. La taille du bouton ne change jamais (un bouton qui bouge sous le pointeur
+ * fait perdre le clic) : le texte et la flèche se partagent la marge du bouton.
+ * Pas de survol sur téléphone : la flèche apparaît seulement avec une souris ou au clavier (focus).
+ */
+.btn-arrow {
+  position: relative;
+}
+.btn-arrow .btn-label {
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+}
+.btn-arrow::after {
+  content: '→';
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  transform: translate(-14px, -50%);
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .btn-arrow:hover .btn-label {
+    transform: translateX(-13px);
+  }
+  .btn-arrow:hover::after {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+.btn-arrow:focus-visible .btn-label {
+  transform: translateX(-13px);
+}
+.btn-arrow:focus-visible::after {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-arrow .btn-label,
+  .btn-arrow::after {
+    transition: none;
+  }
+}
+
 a[class*='rounded-full']:not(.fixed):active,
 button[class*='rounded-full']:not(:disabled):active {
   filter: brightness(0.92);

@@ -37,13 +37,13 @@
             <div class="mt-1 flex flex-wrap gap-3">
               <a
                 routerLink="/rendez-vous"
-                class="rounded-full bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
-                >{{ c().hero.boutonPrincipal }}</a
+                class="btn-arrow rounded-full bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+                ><span class="btn-label">{{ c().hero.boutonPrincipal }}</span></a
               >
               <a
                 routerLink="/specialites"
-                class="rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
-                >{{ c().hero.boutonSecondaire }}</a
+                class="btn-arrow rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
+                ><span class="btn-label">{{ c().hero.boutonSecondaire }}</span></a
               >
             </div>
           </div>
@@ -186,7 +186,7 @@
       <div class="grid gap-5 md:grid-cols-3">
         @for (v of c().valeurs.items; track $index) {
           <div
-            class="flex min-h-[260px] flex-col justify-between gap-10 rounded-[26px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] p-[30px] text-white md:min-h-[300px]"
+            class="flex min-h-[260px] flex-col justify-between gap-10 rounded-[26px] border border-peach/40 bg-plum-900 p-[30px] text-white md:min-h-[300px]"
           >
             <span class="font-display text-[72px] font-bold leading-none text-peach">{{
               v.sym

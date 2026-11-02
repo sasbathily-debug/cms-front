@@ -78,8 +78,8 @@
           <div class="my-[13px] h-px bg-line"></div>
           <a
             routerLink="/rendez-vous"
-            class="block rounded-full bg-accent-500 px-4 py-3.5 text-center font-display text-base font-bold text-on-accent transition hover:bg-accent-600"
-            >{{ slotTicket() ? 'Réserver ce créneau' : c().carte.bouton }}</a
+            class="btn-arrow block rounded-full bg-accent-500 px-4 py-3.5 text-center font-display text-base font-bold text-on-accent transition hover:bg-accent-600"
+            ><span class="btn-label">{{ slotTicket() ? 'Réserver ce créneau' : c().carte.bouton }}</span></a
           >
           <a
             routerLink="/premiere-consultation"
@@ -212,8 +212,8 @@
               }
               <a
                 routerLink="/a-propos"
-                class="mt-1.5 self-start rounded-full bg-inverse px-7 py-[15px] font-display text-[15px] font-semibold text-inverse-fg"
-                >{{ c().doctoresse.lien }}</a
+                class="btn-arrow mt-1.5 self-start rounded-full bg-inverse px-7 py-[15px] font-display text-[15px] font-semibold text-inverse-fg"
+                ><span class="btn-label">{{ c().doctoresse.lien }}</span></a
               >
             </div>
           </div>
@@ -365,13 +365,13 @@
                 <div class="mt-1 flex flex-wrap gap-3">
                   <a
                     routerLink="/infos-pratiques"
-                    class="rounded-full bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
-                    >Itinéraire</a
+                    class="btn-arrow rounded-full bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
+                    ><span class="btn-label">Itinéraire</span></a
                   >
                   <a
                     [href]="site.telHref()"
-                    class="rounded-full border-[1.5px] border-fg px-[22px] py-[13px] font-display text-[15px] font-semibold text-fg"
-                    >Appeler</a
+                    class="btn-arrow rounded-full border-[1.5px] border-fg px-[22px] py-[13px] font-display text-[15px] font-semibold text-fg"
+                    ><span class="btn-label">Appeler</span></a
                   >
                 </div>
               </div>
@@ -428,7 +428,7 @@
       <!-- Bandeau final (sur fond prune) -->
       <section class="px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
         <div
-          class="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-8 rounded-[28px] border border-[rgba(241,201,155,0.5)] bg-[linear-gradient(120deg,rgba(224,135,63,0.18),rgba(255,255,255,0.02))] p-8 sm:rounded-[36px] sm:p-16"
+          class="mx-auto flex max-w-[1160px] flex-wrap items-center justify-between gap-8 rounded-[28px] border border-[rgba(241,201,155,0.5)] bg-[rgba(224,135,63,0.12)] p-8 sm:rounded-[36px] sm:p-16"
         >
           <div class="flex max-w-[640px] flex-col gap-3.5">
             <h2
@@ -442,8 +442,8 @@
           </div>
           <a
             routerLink="/rendez-vous"
-            class="rounded-full bg-accent-500 px-9 py-[18px] font-display text-base font-semibold text-on-accent transition hover:bg-accent-600"
-            >{{ c().appel.bouton }}</a
+            class="btn-arrow rounded-full bg-accent-500 px-9 py-[18px] font-display text-base font-semibold text-on-accent transition hover:bg-accent-600"
+            ><span class="btn-label">{{ c().appel.bouton }}</span></a
           >
         </div>
       </section>

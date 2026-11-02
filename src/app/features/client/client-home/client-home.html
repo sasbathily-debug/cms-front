@@ -1,7 +1,7 @@
 <app-patient-shell active="dashboard">
   <!-- Bandeau de bienvenue -->
   <div
-    class="grid grid-cols-1 items-center gap-8 rounded-[28px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] px-6 py-8 sm:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]"
+    class="grid grid-cols-1 items-center gap-8 rounded-[28px] border border-peach/40 bg-plum-900 px-6 py-8 sm:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]"
   >
     <div class="flex flex-col gap-3.5">
       <span class="text-xs font-semibold tracking-[0.12em] text-peach">TABLEAU DE BORD</span>
@@ -20,13 +20,13 @@
       <div class="mt-1.5 flex flex-wrap gap-3">
         <a
           routerLink="/rendez-vous"
-          class="rounded-full bg-accent-500 px-6 py-[15px] font-display text-[15px] font-bold text-on-accent transition hover:bg-accent-600"
-          >Nouveau rendez-vous</a
+          class="btn-arrow rounded-full bg-accent-500 px-6 py-[15px] font-display text-[15px] font-bold text-on-accent transition hover:bg-accent-600"
+          ><span class="btn-label">Nouveau rendez-vous</span></a
         >
         <a
           routerLink="/contact"
-          class="rounded-full border-[1.5px] border-white/60 px-[22px] py-3.5 font-display text-[15px] font-semibold text-white"
-          >Contacter le cabinet</a
+          class="btn-arrow rounded-full border-[1.5px] border-white/60 px-[22px] py-3.5 font-display text-[15px] font-semibold text-white"
+          ><span class="btn-label">Contacter le cabinet</span></a
         >
       </div>
     </div>
@@ -68,8 +68,8 @@
             [href]="mapsUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-full border-[1.5px] border-fg px-[18px] py-2.5 font-display text-sm font-semibold text-fg"
-            ><app-nav-icon name="pin" [size]="16" />Itinéraire</a
+            class="btn-arrow flex items-center gap-2 rounded-full border-[1.5px] border-fg px-[18px] py-2.5 font-display text-sm font-semibold text-fg"
+            ><app-nav-icon name="pin" [size]="16" /><span class="btn-label">Itinéraire</span></a
           >
           <button
             type="button"
@@ -91,8 +91,8 @@
         >
         <a
           routerLink="/rendez-vous"
-          class="self-start rounded-full bg-inverse px-[22px] py-3 font-display text-sm font-semibold text-inverse-fg"
-          >Réserver un créneau</a
+          class="btn-arrow self-start rounded-full bg-inverse px-[22px] py-3 font-display text-sm font-semibold text-inverse-fg"
+          ><span class="btn-label">Réserver un créneau</span></a
         >
       </div>
     }
@@ -425,7 +425,7 @@
   <!-- Informations pratiques -->
   <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
     <div
-      class="flex items-center gap-[18px] rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-[26px] py-[22px] text-white"
+      class="flex items-center gap-[18px] rounded-3xl border border-peach/40 bg-plum-900 px-[26px] py-[22px] text-white"
     >
       <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-peach"
         >Ad</span
@@ -438,7 +438,7 @@
       >
     </div>
     <div
-      class="flex items-center gap-[18px] rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-[26px] py-[22px] text-white"
+      class="flex items-center gap-[18px] rounded-3xl border border-peach/40 bg-plum-900 px-[26px] py-[22px] text-white"
     >
       <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-peach"
         >Té</span
@@ -453,7 +453,7 @@
       >
     </div>
     <div
-      class="flex items-center gap-[18px] rounded-3xl bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_75%)] px-[26px] py-[22px] text-white"
+      class="flex items-center gap-[18px] rounded-3xl border border-peach/40 bg-plum-900 px-[26px] py-[22px] text-white"
     >
       <span class="w-[54px] shrink-0 font-display text-[38px] font-bold leading-none text-peach"
         >Ho</span

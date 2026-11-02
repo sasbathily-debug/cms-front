@@ -155,8 +155,8 @@
                         <app-slot-ticket>
                           <a
                             routerLink="/rendez-vous"
-                            class="block rounded-xl bg-accent-500 px-[18px] py-3.5 font-display text-sm font-bold text-on-accent transition hover:bg-accent-600"
-                            >Prendre rendez-vous</a
+                            class="btn-arrow block rounded-xl bg-accent-500 px-[18px] py-3.5 font-display text-sm font-bold text-on-accent transition hover:bg-accent-600"
+                            ><span class="btn-label">Prendre rendez-vous</span></a
                           >
                         </app-slot-ticket>
                       </div>
@@ -168,7 +168,7 @@
           </div>
         }
       </nav>
-      <a routerLink="/rendez-vous" [class]="ctaClass()">Prendre rendez-vous</a>
+      <a routerLink="/rendez-vous" class="btn-arrow" [class]="ctaClass()"><span class="btn-label">Prendre rendez-vous</span></a>
     </div>
 
     <button

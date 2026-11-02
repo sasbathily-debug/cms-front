@@ -33,7 +33,7 @@
             [href]="site.whatsappHref()"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-2.5 rounded-full bg-success-solid px-6 py-[18px] font-display text-[17px] font-semibold text-white sm:px-[30px]"
+            class="btn-arrow flex items-center gap-2.5 rounded-full bg-success-solid px-6 py-[18px] font-display text-[17px] font-semibold text-white sm:px-[30px]"
           >
             <svg
               width="22"
@@ -47,14 +47,14 @@
               aria-hidden="true"
             >
               <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" />
-            </svg>
+            </svg><span class="btn-label">
             Écrire sur WhatsApp
-          </a>
+          </span></a>
         }
         <a
           routerLink="/rendez-vous"
-          class="flex items-center rounded-full bg-accent-500 px-6 py-[18px] font-display text-[17px] font-bold text-on-accent sm:px-[30px]"
-          >Prendre rendez-vous</a
+          class="btn-arrow flex items-center rounded-full bg-accent-500 px-6 py-[18px] font-display text-[17px] font-bold text-on-accent sm:px-[30px]"
+          ><span class="btn-label">Prendre rendez-vous</span></a
         >
       </div>
     </div>
