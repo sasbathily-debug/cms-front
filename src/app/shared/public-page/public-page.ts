@@ -9,7 +9,7 @@ import { FloatingActions } from '../floating-actions/floating-actions';
   imports: [HomeHeader, AppFooter, FloatingActions],
   template: `
     <div
-      class="min-h-screen font-body"
+      class="min-h-svh font-body"
       [class]="tileHeader() ? 'bg-plum-950 text-on-plum' : 'bg-page text-fg'"
     >
       @if (!tileHeader()) {

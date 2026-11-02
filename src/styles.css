@@ -154,6 +154,48 @@ body {
 }
 
 /*
+ * Confort sur téléphone.
+ *  - Pas de flash gris au toucher : chaque élément cliquable a son propre retour à l'appui (voir plus bas).
+ *  - touch-action: manipulation : un double toucher sur un bouton ne zoome plus la page.
+ *  - Le texte d'un bouton ne se sélectionne pas à l'appui long (le texte courant, lui, reste sélectionnable).
+ *  - Sous 16 px, Safari sur iPhone zoome dans le champ qu'on touche et ne dézoome pas : les champs passent à 16 px
+ *    sur les écrans tactiles uniquement (les champs déjà plus grands gardent leur taille).
+ */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+a,
+button,
+[role='button'],
+summary {
+  touch-action: manipulation;
+}
+button,
+[role='button'] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+@media (pointer: coarse) {
+  :is(input, textarea, select):not(
+      [class*='text-base'],
+      [class*='text-lg'],
+      [class*='text-xl'],
+      [class*='text-[2']
+    ) {
+    font-size: 16px;
+  }
+}
+
+/* Menu plein écran ouvert : la page derrière ne défile plus. */
+@media (max-width: 1279px) {
+  html.menu-ouvert {
+    overflow: hidden;
+  }
+}
+
+/*
  * Contrastes (WCAG AA). Le blanc sur l'orange accent-500 donne ~2,7:1 : on garde l'orange
  * de la marque et on passe le texte posé dessus en prune foncé (~6,3:1). Les textes orange
  * sur fond clair utilisent accent-700 (~5,3:1 sur crème) au lieu d'accent-600 (~3,4:1).
@@ -256,21 +298,28 @@ body {
   }
 }
 
+/* Halo du bouton d'appel : un disque orange derrière le bouton qui grossit et s'estompe.
+   Seuls transform et opacité bougent (l'ancien halo animait une ombre, repeinte à chaque image sur toutes les pages). */
 @keyframes call-halo {
   0%,
   100% {
-    box-shadow:
-      0 0 0 8px rgba(224, 135, 63, 0.28),
-      0 18px 36px rgba(0, 0, 0, 0.35);
+    transform: scale(1.25);
+    opacity: 0.28;
   }
   50% {
-    box-shadow:
-      0 0 0 18px rgba(224, 135, 63, 0.06),
-      0 18px 36px rgba(0, 0, 0, 0.35);
+    transform: scale(1.56);
+    opacity: 0.06;
   }
 }
 
-.call-btn {
+.call-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-accent-500);
+  pointer-events: none;
   animation: call-halo 3s ease-in-out infinite;
 }
 .call-ico {
@@ -279,7 +328,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .call-btn,
+  .call-btn::before {
+    display: none;
+  }
   .call-ico {
     animation: none;
   }
@@ -438,6 +489,11 @@ router-outlet + * {
 a[class*='rounded-full']:not(.fixed):active,
 button[class*='rounded-full']:not(:disabled):active {
   filter: brightness(0.92);
+}
+/* Cartes, tuiles et boutons à coins arrondis : retour dès l'appui, sans bouger l'élément (même raison que ci-dessus). */
+a[class*='rounded-']:not([class*='rounded-full']):not(.fixed):active,
+button[class*='rounded-']:not([class*='rounded-full']):not(:disabled):active {
+  opacity: 0.82;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -828,8 +884,13 @@ button[class*='rounded-full']:not(:disabled):active {
 app-home-header header {
   view-transition-name: site-header;
 }
+/* `view-transition-name` fait de cet élément un bloc d'empilement : sans z-index propre, les boutons d'appel et
+   WhatsApp passaient sous toute section en `z-10` (ex. la recherche de la FAQ). 40 = leur niveau d'origine :
+   sous l'en-tête (50), le chat (50) et la barre des cookies (80). */
 app-floating-actions {
   view-transition-name: site-floating;
+  position: relative;
+  z-index: 40;
 }
 ::view-transition-group(site-header),
 ::view-transition-group(site-floating) {
