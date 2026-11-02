@@ -25,18 +25,18 @@ import { PublicPage } from '../../../shared/public-page/public-page';
           <div class="flex flex-wrap gap-3">
             <a
               routerLink="/"
-              class="rounded-full bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-on-accent"
-              >Retour à l'accueil</a
+              class="btn-arrow rounded-full bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-on-accent"
+              ><span class="btn-label">Retour à l'accueil</span></a
             >
             <a
               routerLink="/rendez-vous"
-              class="rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
-              >Prendre rendez-vous</a
+              class="btn-arrow rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
+              ><span class="btn-label">Prendre rendez-vous</span></a
             >
             <a
               routerLink="/contact"
-              class="rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
-              >Nous contacter</a
+              class="btn-arrow rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
+              ><span class="btn-label">Nous contacter</span></a
             >
           </div>
         </div>

@@ -2,7 +2,7 @@
   <section class="bg-page px-3 pb-24 pt-8 sm:px-6 sm:pt-10">
     <div class="mx-auto flex max-w-[1232px] flex-wrap items-stretch gap-5">
       <div
-        class="flex min-w-0 flex-[1_1_420px] flex-col justify-between gap-10 rounded-[32px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] px-6 py-10 text-white sm:rounded-[40px] sm:px-12 sm:py-14"
+        class="flex min-w-0 flex-[1_1_420px] flex-col justify-between gap-10 rounded-[32px] border border-peach/40 bg-plum-900 px-6 py-10 text-white sm:rounded-[40px] sm:px-12 sm:py-14"
       >
         <div class="flex flex-col gap-[26px]">
           <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
@@ -37,16 +37,16 @@
           <div class="flex flex-wrap gap-3">
             <a
               [href]="site.telHref()"
-              class="rounded-full bg-accent-500 px-6 py-3 font-display text-[15px] font-semibold text-on-accent"
-              >Appeler</a
+              class="btn-arrow rounded-full bg-accent-500 px-6 py-3 font-display text-[15px] font-semibold text-on-accent"
+              ><span class="btn-label">Appeler</span></a
             >
             @if (site.whatsappHref()) {
               <a
                 [href]="site.whatsappHref()"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="rounded-full bg-success-solid px-6 py-3 font-display text-[15px] font-semibold text-white"
-                >Écrire sur WhatsApp</a
+                class="btn-arrow rounded-full bg-success-solid px-6 py-3 font-display text-[15px] font-semibold text-white"
+                ><span class="btn-label">Écrire sur WhatsApp</span></a
               >
             }
           </div>
@@ -84,14 +84,14 @@
               <a
                 routerLink="/login"
                 [queryParams]="{ returnUrl: '/rendez-vous' }"
-                class="rounded-full bg-accent-500 px-7 py-3.5 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
-                >Connexion</a
+                class="btn-arrow rounded-full bg-accent-500 px-7 py-3.5 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+                ><span class="btn-label">Connexion</span></a
               >
               <a
                 routerLink="/register"
                 [queryParams]="{ returnUrl: '/rendez-vous' }"
-                class="rounded-full border-[1.5px] border-fg px-7 py-3.5 font-display text-[15px] font-semibold text-fg"
-                >Créer un compte</a
+                class="btn-arrow rounded-full border-[1.5px] border-fg px-7 py-3.5 font-display text-[15px] font-semibold text-fg"
+                ><span class="btn-label">Créer un compte</span></a
               >
             </div>
           </div>
@@ -183,10 +183,10 @@
             <button
               type="submit"
               [disabled]="submitting()"
-              class="rounded-full bg-accent-500 px-7 py-[18px] text-center font-display text-[17px] font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
-            >
+              class="btn-arrow rounded-full bg-accent-500 px-7 py-[18px] text-center font-display text-[17px] font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
+            ><span class="btn-label">
               {{ submitting() ? 'Confirmation…' : c().formulaire.bouton }}
-            </button>
+            </span></button>
             <p class="m-0 text-center text-[13px] leading-relaxed text-muted">
               {{ c().formulaire.note }}
             </p>
@@ -227,8 +227,8 @@
             <div class="flex flex-wrap gap-3">
               <a
                 routerLink="/client"
-                class="rounded-full bg-inverse px-7 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
-                >Voir mon espace</a
+                class="btn-arrow rounded-full bg-inverse px-7 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
+                ><span class="btn-label">Voir mon espace</span></a
               >
               <button
                 type="button"

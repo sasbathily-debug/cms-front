@@ -6,7 +6,7 @@
       aria-hidden="true"
     >
       <div
-        class="cb-t1 absolute left-0 top-0 flex h-[200px] w-[62%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-4 sm:h-[220px] bg-cover bg-center"
+        class="cb-t1 absolute left-0 top-0 flex h-[200px] w-[62%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-4 sm:h-[220px] bg-cover bg-center"
         [style.background-image]="
           c().hero.photoCabinet
             ? 'url(' + (c().hero.photoCabinet | optimizedImage: 800) + ')'
@@ -21,7 +21,7 @@
         }
       </div>
       <div
-        class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-3 sm:h-[160px] bg-cover bg-center"
+        class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-3 sm:h-[160px] bg-cover bg-center"
         [style.background-image]="
           c().hero.photoAccueil
             ? 'url(' + (c().hero.photoAccueil | optimizedImage: 800) + ')'
@@ -36,7 +36,7 @@
         }
       </div>
       <div
-        class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-[28px] border border-white/15 bg-[linear-gradient(160deg,#3A2418_0%,#2A1930_100%)] p-3 sm:h-[130px] bg-cover bg-center"
+        class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-3 sm:h-[130px] bg-cover bg-center"
         [style.background-image]="
           c().hero.photoSalle ? 'url(' + (c().hero.photoSalle | optimizedImage: 800) + ')' : null
         "
@@ -81,8 +81,8 @@
         <span class="text-[14.5px] leading-normal text-accent-ink">{{ c().enBref.pied }}</span>
         <a
           routerLink="/infos-pratiques"
-          class="whitespace-nowrap rounded-full bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
-          >{{ c().enBref.bouton }}</a
+          class="btn-arrow whitespace-nowrap rounded-full bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
+          ><span class="btn-label">{{ c().enBref.bouton }}</span></a
         >
       </div>
     </div>
@@ -128,7 +128,7 @@
       <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         @for (l of c().lieux.items; track $index) {
           <div
-            class="flex min-h-[200px] flex-col justify-start gap-[30px] rounded-[26px] bg-[linear-gradient(160deg,#3A2418_0%,#1F1226_70%)] p-7 text-white sm:min-h-[220px]"
+            class="flex min-h-[200px] flex-col justify-start gap-[30px] rounded-[26px] border border-peach/40 bg-plum-900 p-7 text-white sm:min-h-[220px]"
           >
             <span class="font-display text-[52px] font-bold leading-none text-peach">{{
               l.sym
@@ -166,7 +166,7 @@
               </div>
             } @else {
               <div
-                class="flex h-[200px] items-end rounded-[18px] bg-[linear-gradient(160deg,var(--color-sunken),var(--color-line-strong))] p-3"
+                class="flex h-[200px] items-end rounded-[18px] bg-sunken p-3"
               >
                 <span
                   class="rounded-lg bg-[rgba(31,18,38,0.75)] px-2.5 py-1.5 text-[11.5px] tracking-[0.05em] text-white"
