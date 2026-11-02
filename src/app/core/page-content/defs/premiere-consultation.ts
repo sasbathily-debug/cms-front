@@ -63,11 +63,11 @@ const defaults = {
   tarifs: {
     titre: 'Durée et tarif',
     lignes: [
-      { label: 'Première consultation', valeur: '[durée] min · [tarif] FCFA' },
+      { label: 'Première consultation', valeur: '[durée] min · 20\u00a0000\u00a0FCFA' },
       { label: 'Consultation de suivi', valeur: '[durée] min · [tarif] FCFA' },
       { label: 'Paiement', valeur: '[espèces, Wave, Orange Money…]' },
     ],
-    note: 'Tarifs à confirmer par la doctoresse.',
+    note: 'Durées et tarif du suivi à confirmer par la doctoresse.',
   },
   report: {
     titre: 'Besoin de reporter ?',
