@@ -6,7 +6,7 @@ import { Seat } from './doodle-footer.logic';
 // jamais construit à partir d'une donnée venue de l'extérieur.
 
 export type CrewKind = 'pomme' | 'goutte' | 'thyroide' | 'coeur';
-export type DoodleKind = 'goutte' | 'pomme' | 'coeur' | 'etoile' | 'eclat';
+export type DoodleKind = 'goutte' | 'pomme' | 'coeur' | 'etoile' | 'eclat' | 'interro';
 
 export interface Eye {
   x: number;
@@ -133,6 +133,14 @@ export const CREW: CrewMember[] = [
   { kind: 'coeur', letter: 6, seat: 'top', offset: -0.05, name: 'Le cœur', says: 'On prend soin de vous, ici.' },
 ];
 
+/** Les personnages de la page 404 : ils se sont perdus sur les chiffres. */
+export const CREW_404: CrewMember[] = [
+  { kind: 'pomme', letter: 0, seat: 'front', offset: -0.78, name: 'La pomme', says: 'Cette page n’existe pas… ou plus.' },
+  { kind: 'coeur', letter: 0, seat: 'top', offset: 0.1, name: 'Le cœur', says: 'On a cherché partout !' },
+  { kind: 'goutte', letter: 1, seat: 'top', offset: 0, name: 'La goutte', says: 'Je crois qu’on s’est perdus…' },
+  { kind: 'thyroide', letter: 2, seat: 'behind', offset: 0.12, name: 'La thyroïde', says: 'Essayez l’accueil ?' },
+];
+
 /** Les petits dessins qui tombent, dans la palette du site (ciel, pêche, orange, menthe), dans une boîte de 32 unités centrée. */
 export const DOODLES: Record<DoodleKind, string> = {
   goutte:
@@ -143,8 +151,12 @@ export const DOODLES: Record<DoodleKind, string> = {
     '<path fill="#e0873f" d="M0 11 C-6 6 -13 1 -13 -5 C-13 -10 -8 -13 -4 -11 C-2 -10 -1 -8 0 -6 C1 -8 2 -10 4 -11 C8 -13 13 -10 13 -5 C13 1 6 6 0 11 Z"/>',
   etoile:
     '<path fill="#ffe2be" d="M0 -13 L3.6 -4.4 L13 -4 L5.8 2.2 L8.2 12 L0 6.6 L-8.2 12 L-5.8 2.2 L-13 -4 L-3.6 -4.4 Z"/>',
+  interro:
+    '<path fill="none" stroke-width="2.6" d="M-5 -7 C-5 -15 6 -15 6 -7 C6 -1 0 -2 0 4"/><circle class="dcf-dot" cx="0" cy="10" r="1.6"/>',
   eclat:
     '<path fill="#cfe0f5" d="M0 -13 C1 -4 4 -1 13 0 C4 1 1 4 0 13 C-1 4 -4 1 -13 0 C-4 -1 -1 -4 0 -13 Z"/>',
 };
 
 export const DOODLE_KINDS: DoodleKind[] = ['goutte', 'pomme', 'coeur', 'etoile', 'goutte', 'pomme', 'eclat', 'coeur'];
+
+export const DOODLE_KINDS_404: DoodleKind[] = ['interro', 'goutte', 'pomme', 'interro', 'coeur', 'etoile', 'interro', 'goutte', 'pomme'];
