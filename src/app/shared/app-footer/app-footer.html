@@ -128,6 +128,15 @@
       </div>
     </div>
 
+    <!-- Le mot « DR FALL » et ses personnages : chargé seulement quand on approche du bas de la page. -->
+    @defer (on viewport; prefetch on idle) {
+      <app-doodle-footer />
+    } @placeholder {
+      <div style="padding-top: clamp(24px, 4vw, 48px)">
+        <div style="aspect-ratio: 895 / 328"></div>
+      </div>
+    }
+
     <div class="flex flex-wrap items-end justify-between gap-10">
       <p class="m-0 max-w-[460px] whitespace-pre-line text-sm leading-[1.7] text-on-plum-subtle">
         {{ c().mentions.texte }}

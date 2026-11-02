@@ -1,0 +1,416 @@
+/* Le mot animé du pied de page (voir doodle-footer.ts). Sans encapsulation : les dessins des personnages sont injectés
+   en SVG et leurs classes (n, k, a…) doivent s'appliquer ; tout est donc préfixé « dcf ». */
+.dcf {
+  --dcf-bg: var(--color-plum-900, #1f1226);
+  --dcf-ink: var(--color-on-plum, #f3eae0);
+  --dcf-accent: var(--color-accent-500, #e0873f);
+  --dcf-peach: var(--color-peach, #f1c99b);
+  position: relative;
+  display: block;
+  padding-top: clamp(24px, 4vw, 48px);
+  color: var(--dcf-ink);
+}
+.dcf svg {
+  max-width: none;
+  overflow: visible;
+}
+.dcf-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.dcf-stage {
+  position: relative;
+  z-index: 1;
+}
+.dcf-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.dcf-svg text {
+  fill: var(--dcf-ink);
+}
+.dcf-art {
+  fill: var(--dcf-bg);
+  stroke: var(--dcf-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.dcf-art .n {
+  fill: none;
+}
+.dcf-art .k {
+  fill: var(--dcf-ink);
+}
+.dcf-art .a {
+  fill: var(--dcf-accent);
+}
+.dcf-art .thin {
+  stroke-width: 1.5;
+}
+.dcf-art .thick {
+  stroke-width: 3.4;
+}
+.dcf-art .dcf-glint {
+  fill: var(--dcf-bg);
+  stroke: none;
+}
+.dcf-art .dcf-shadow {
+  fill: var(--dcf-ink);
+  stroke: none;
+  opacity: 0.14;
+}
+.dcf-ground path {
+  fill: none;
+  stroke: var(--dcf-ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.dcf-ground .dcf-tufts {
+  stroke-width: 1.8;
+}
+.dcf-pebble {
+  fill: var(--dcf-bg);
+  stroke: var(--dcf-ink);
+  stroke-width: 1.6;
+}
+.dcf-dust {
+  fill: none;
+  stroke: var(--dcf-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0;
+}
+.dcf-hit {
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+  outline: none;
+}
+.dcf-hit:focus-visible {
+  stroke: var(--dcf-ink);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 6;
+}
+.dcf-glyph {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@media (hover: hover) {
+  .dcf-glyph:hover {
+    animation: dcf-jiggle 0.6s cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+}
+.dcf-art.dcf-bob {
+  animation: dcf-bob 3.2s ease-in-out infinite;
+}
+.dcf-hopper {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.dcf-hopper.is-hop {
+  animation: dcf-hop 0.62s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.dcf-arrive {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.dcf-bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.dcf-bubble {
+  position: absolute;
+  transform: translate(-50%, -100%) rotate(-2deg);
+  transform-origin: 50% 100%;
+  margin-top: -4px;
+  padding: 7px 12px;
+  border: 2px solid var(--dcf-ink);
+  border-radius: 16px;
+  background: var(--dcf-bg);
+  color: var(--dcf-ink);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 var(--dcf-accent);
+  animation: dcf-bubble 0.32s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+.dcf-bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  background: var(--dcf-bg);
+  border-right: 2px solid var(--dcf-ink);
+  border-bottom: 2px solid var(--dcf-ink);
+  transform: translateX(-50%) rotate(45deg) skew(8deg, 8deg);
+}
+.dcf-bubble.is-left {
+  transform: translate(-88%, -100%) rotate(2deg);
+  transform-origin: 88% 100%;
+}
+.dcf-bubble.is-left::after {
+  left: 88%;
+}
+
+.dcf-doodles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.dcf-doodle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  touch-action: manipulation;
+}
+.dcf-doodle-in {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.dcf-doodle svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke: var(--dcf-ink);
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Déroulé : caché jusqu'à l'arrivée à l'écran, puis chaque pièce joue à son tour (--d). */
+.dcf[data-play='0'] .dcf-letter,
+.dcf[data-play='0'] .dcf-arrive,
+.dcf[data-play='0'] .dcf-fade,
+.dcf[data-play='0'] .dcf-doodle-in {
+  opacity: 0;
+}
+.dcf[data-play='0'] .dcf-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.dcf-letter {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.dcf[data-play='1'] .dcf-letter {
+  animation: dcf-stamp 0.62s cubic-bezier(0.2, 0.8, 0.25, 1.15) var(--d) both;
+}
+.dcf[data-play='1'] .dcf-dust {
+  animation: dcf-dust 0.5s ease-out calc(var(--d) + 0.22s) both;
+}
+.dcf[data-play='1'] .dcf-draw {
+  stroke-dasharray: 1;
+  animation: dcf-draw 1.1s cubic-bezier(0.6, 0, 0.3, 1) var(--d) both;
+}
+.dcf[data-play='1'] .dcf-fade {
+  animation: dcf-fade 0.6s ease-out var(--d) both;
+}
+.dcf[data-play='1'] .dcf-arrive-front {
+  animation: dcf-rise-up 0.75s cubic-bezier(0.3, 1.5, 0.5, 1) var(--d) both;
+}
+.dcf[data-play='1'] .dcf-arrive-top {
+  animation: dcf-plop 0.8s cubic-bezier(0.3, 0.9, 0.4, 1) var(--d) both;
+}
+.dcf[data-play='1'] .dcf-arrive-behind {
+  animation: dcf-peek 0.9s cubic-bezier(0.3, 1.4, 0.5, 1) var(--d) both;
+}
+.dcf[data-play='1'] .dcf-doodle-in {
+  animation: dcf-fade 0.6s ease-out var(--d) both;
+}
+@keyframes dcf-stamp {
+  0% {
+    opacity: 0;
+    transform: translateY(-34%) scale(1.28) rotate(var(--r));
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(2%) scale(0.95, 1.05) rotate(0deg);
+  }
+  75% {
+    transform: translateY(0) scale(1.04, 0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dcf-dust {
+  0% {
+    opacity: 0;
+    stroke-dasharray: 0 40;
+  }
+  30% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    stroke-dasharray: 14 40;
+    stroke-dashoffset: -16;
+  }
+}
+@keyframes dcf-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dcf-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dcf-rise-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30%) scale(0.7, 0.3);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(-8%) scale(0.92, 1.12);
+  }
+  70% {
+    transform: translateY(0) scale(1.08, 0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dcf-plop {
+  0% {
+    opacity: 0;
+    transform: translateY(-90%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1.1, 0.86);
+  }
+  68% {
+    transform: translateY(-10%) scale(0.96, 1.04);
+  }
+  84% {
+    transform: translateY(0) scale(1.03, 0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dcf-peek {
+  0% {
+    opacity: 0;
+    transform: translateY(55%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6%);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dcf-jiggle {
+  0% {
+    transform: none;
+  }
+  25% {
+    transform: rotate(-4deg) scale(1.03, 0.97);
+  }
+  50% {
+    transform: rotate(3deg) translateY(-3%);
+  }
+  75% {
+    transform: rotate(-1.5deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes dcf-hop {
+  0% {
+    transform: none;
+  }
+  18% {
+    transform: scale(1.12, 0.84);
+  }
+  45% {
+    transform: translateY(-28%) scale(0.94, 1.08);
+  }
+  72% {
+    transform: translateY(0) scale(1.1, 0.88);
+  }
+  86% {
+    transform: scale(0.97, 1.03);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes dcf-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes dcf-bubble {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@media (max-width: 480px) {
+  .dcf-bubble {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dcf *,
+  .dcf *::before,
+  .dcf *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .dcf .dcf-letter,
+  .dcf .dcf-arrive,
+  .dcf .dcf-fade,
+  .dcf .dcf-doodle-in {
+    opacity: 1 !important;
+  }
+  .dcf .dcf-draw {
+    stroke-dashoffset: 0 !important;
+  }
+  .dcf .dcf-dust {
+    opacity: 0 !important;
+  }
+}
