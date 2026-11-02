@@ -10,6 +10,11 @@
   padding-top: clamp(24px, 4vw, 48px);
   color: var(--dcf-ink);
 }
+/* Sur une page claire (404) : encre prune sur fond crème. */
+.dcf.dcf-light {
+  --dcf-bg: var(--color-page, #fbf5ee);
+  --dcf-ink: var(--color-plum-900, #1f1226);
+}
 .dcf svg {
   max-width: none;
   overflow: visible;
@@ -186,6 +191,10 @@
   display: block;
   width: 100%;
   height: 100%;
+}
+.dcf-doodle .dcf-dot {
+  fill: var(--dcf-ink);
+  stroke: none;
 }
 .dcf-doodle svg {
   display: block;
