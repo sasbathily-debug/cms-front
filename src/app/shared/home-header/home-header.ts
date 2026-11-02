@@ -113,6 +113,14 @@ export class HomeHeader implements OnDestroy {
   readonly mobileOpen = signal(false);
   readonly mobileGroup = signal<string | null>(null);
 
+  /** Menu plein écran ouvert : la page derrière ne défile plus (voir `html.menu-ouvert` dans styles.css). */
+  private readonly lockPage = effect(() => {
+    document.documentElement.classList.toggle('menu-ouvert', this.mobileOpen());
+  });
+  private readonly unlockOnDestroy = this.destroyRef.onDestroy(() =>
+    document.documentElement.classList.remove('menu-ouvert'),
+  );
+
   readonly spaceLink = computed(() => {
     if (!this.auth.isAuthenticated()) {
       return '/login';

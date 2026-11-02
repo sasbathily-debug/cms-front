@@ -1,4 +1,4 @@
-<div class="flex min-h-screen bg-page">
+<div class="flex min-h-svh bg-page">
   <ng-template #navLinks>
     <nav class="flex flex-col gap-1" aria-label="Espace professionnel">
       @for (group of groups; track group.title; let first = $first) {
@@ -125,7 +125,7 @@
 
       @if (mobileMenuOpen()) {
         <div
-          class="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-white/10 bg-plum-900 p-4"
+          class="max-h-[calc(100svh-4.5rem)] overflow-y-auto border-t border-white/10 bg-plum-900 p-4"
         >
           <ng-container [ngTemplateOutlet]="navLinks" />
           <div class="mt-4 flex flex-col gap-2.5 border-t border-white/10 pt-4">
