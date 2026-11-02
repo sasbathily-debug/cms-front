@@ -77,7 +77,7 @@ export const SAMPLE_HOME_FAQ: FaqEntry[] = [
   },
   {
     question: 'Quels moyens de paiement acceptez-vous ?',
-    answer: '[Espèces, Wave, Orange Money, assurances : à confirmer.]',
+    answer: 'Espèces, Wave et Orange Money.',
   },
   {
     question: 'Comment annuler ou déplacer un rendez-vous ?',
