@@ -1,0 +1,149 @@
+<h2 class="dcf-sr">{{ wordmark() }}</h2>
+<div class="dcf-stage">
+  <svg
+    class="dcf-svg"
+    [attr.viewBox]="viewBox()"
+    role="group"
+    [attr.aria-label]="wordmark() + ' : faites connaissance avec les personnages'"
+  >
+    <defs>
+      <pattern id="dcf-hatch" width="4.6" height="4.6" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+        <line x1="0" y1="0" x2="0" y2="4.6" style="stroke: var(--dcf-ink)" stroke-width="1.25" />
+      </pattern>
+      <filter id="dcf-ink" x="-4%" y="-6%" width="108%" height="112%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="11" result="edge" />
+        <feDisplacementMap in="SourceGraphic" in2="edge" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.32" numOctaves="2" seed="4" result="streak" />
+        <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -16 4.9" result="streakA" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="1" seed="9" result="speck" />
+        <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -24 6.2" result="speckA" />
+        <feComposite in="streakA" in2="speckA" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="holes" />
+        <feComposite in="rough" in2="holes" operator="out" />
+      </filter>
+    </defs>
+
+    <g class="dcf-ground">
+      <path class="dcf-draw" pathLength="1" [attr.d]="ground().d" [style.--d]="tl().ground + 'ms'" />
+      <path class="dcf-tufts dcf-fade" [attr.d]="ground().tufts" [style.--d]="tl().ground + 500 + 'ms'" />
+      @for (pb of ground().pebbles; track $index) {
+        <ellipse
+          class="dcf-pebble dcf-fade"
+          [attr.cx]="pb.x"
+          [attr.cy]="pb.y"
+          [attr.rx]="pb.rx"
+          [attr.ry]="pb.ry"
+          [style.--d]="tl().ground + 600 + 'ms'"
+        />
+      }
+    </g>
+
+    @for (p of behind(); track p.i) {
+      <ng-container *ngTemplateOutlet="crew; context: { p: p, front: false }" />
+    }
+
+    @for (l of letters(); track l.i) {
+      <g class="dcf-letter" [style.--d]="l.delay + 'ms'" [style.--r]="l.tilt">
+        <g class="dcf-glyph">
+          <text
+            [attr.x]="l.x"
+            y="0"
+            [attr.font-size]="200"
+            font-weight="700"
+            style="font-family: Outfit, sans-serif"
+            filter="url(#dcf-ink)"
+          >
+            {{ l.c }}
+          </text>
+        </g>
+        <path class="dcf-dust" [attr.d]="l.dust" />
+      </g>
+    }
+
+    @for (p of behind(); track p.i) {
+      <ng-container *ngTemplateOutlet="crew; context: { p: p, front: true }" />
+    }
+    @for (p of others(); track p.i) {
+      <ng-container *ngTemplateOutlet="crew; context: { p: p, front: false }" />
+    }
+
+    @for (p of placed(); track p.i) {
+      <rect
+        class="dcf-hit"
+        [attr.x]="p.hit.x"
+        [attr.y]="p.hit.y"
+        [attr.width]="p.hit.w"
+        [attr.height]="p.hit.h"
+        rx="12"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="p.m.name + ' : ' + p.m.says"
+        (click)="poke(p.i)"
+        (keydown.enter)="$event.preventDefault(); poke(p.i)"
+        (keydown.space)="$event.preventDefault(); poke(p.i)"
+      />
+    }
+
+    <ng-template #crew let-p="p" let-front="front">
+      <g [attr.transform]="p.transform">
+        <g [class]="'dcf-arrive dcf-arrive-' + p.seat" [style.--d]="tl().member(p.i) + 'ms'">
+          <g class="dcf-hopper" [class.is-hop]="hopping() === p.i">
+            <g [class]="'dcf-art ' + (p.art.idle ?? '')" [style.animation-delay.s]="-p.i * 0.9">
+              @if (front) {
+                @if (p.front) {
+                  <g [innerHTML]="p.front"></g>
+                }
+              } @else {
+                <g [innerHTML]="p.body"></g>
+                @for (eye of p.art.eyes; track $index) {
+                  <g class="dcf-blink" [attr.data-c]="p.i" [attr.data-e]="$index">
+                    @if (eye.r > 0) {
+                      <circle [attr.cx]="eye.x" [attr.cy]="eye.y" [attr.r]="eye.r" />
+                    }
+                    <g class="dcf-pupil" [attr.data-c]="p.i" [attr.data-e]="$index">
+                      <circle class="k" [attr.cx]="eye.x" [attr.cy]="eye.y" [attr.r]="eye.pupil" />
+                      <circle
+                        class="dcf-glint"
+                        [attr.cx]="eye.x + eye.pupil * 0.35"
+                        [attr.cy]="eye.y - eye.pupil * 0.4"
+                        [attr.r]="eye.pupil * 0.32"
+                      />
+                    </g>
+                  </g>
+                }
+              }
+            </g>
+          </g>
+        </g>
+      </g>
+    </ng-template>
+  </svg>
+
+  <div class="dcf-bubbles" aria-live="polite">
+    @for (p of placed(); track p.i) {
+      @if (talking() === p.i) {
+        @let b = bubble(p);
+        <div class="dcf-bubble" [class.is-left]="b.leftSide" [style.left]="b.left" [style.top]="b.top">
+          {{ p.m.says }}
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<div class="dcf-doodles" aria-hidden="true">
+  @for (d of doodleList(); track d.k) {
+    <div
+      #doodle
+      class="dcf-doodle"
+      [style.width.px]="d.size"
+      [style.height.px]="d.size"
+      [style.margin-left.px]="-d.size / 2"
+      [style.margin-top.px]="-d.size / 2"
+      (pointerdown)="pop(d.k)"
+    >
+      <span class="dcf-doodle-in" [style.--d]="d.delay + 'ms'">
+        <svg viewBox="-16 -16 32 32" [innerHTML]="doodleArt[d.kind]"></svg>
+      </span>
+    </div>
+  }
+</div>
