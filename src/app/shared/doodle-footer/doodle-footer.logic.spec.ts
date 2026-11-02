@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ART, CREW } from './doodle-footer.art';
+import { ART, CREW, CREW_404, DOODLES, DOODLE_KINDS, DOODLE_KINDS_404 } from './doodle-footer.art';
 import {
   Floater,
   clamp,
@@ -62,7 +62,7 @@ describe('doodle-footer / places des personnages', () => {
   });
 
   it('chaque personnage a un dessin et des yeux dont la pupille tient dans le blanc', () => {
-    for (const m of CREW) {
+    for (const m of [...CREW, ...CREW_404]) {
       const art = ART[m.kind];
       expect(art, m.kind).toBeTruthy();
       expect(art.body.length).toBeGreaterThan(50);
@@ -74,7 +74,15 @@ describe('doodle-footer / places des personnages', () => {
 
   it('aucune phrase ne donne de conseil médical (mots interdits)', () => {
     const interdits = /(traitement|médicament|dose|guérir|diagnostic|insuline)/i;
-    for (const m of CREW) expect(m.says).not.toMatch(interdits);
+    for (const m of [...CREW, ...CREW_404]) expect(m.says).not.toMatch(interdits);
+  });
+
+  it('les petits dessins demandés existent tous', () => {
+    for (const k of [...DOODLE_KINDS, ...DOODLE_KINDS_404]) expect(DOODLES[k], k).toBeTruthy();
+  });
+
+  it('les personnages de la 404 se posent sur les trois chiffres', () => {
+    for (const m of CREW_404) expect(m.letter).toBeLessThanOrEqual(2);
   });
 });
 

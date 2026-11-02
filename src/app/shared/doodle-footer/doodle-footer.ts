@@ -12,7 +12,7 @@ import {
   viewChildren,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ART, Art, CREW, CrewKind, CrewMember, DOODLES, DOODLE_KINDS } from './doodle-footer.art';
+import { ART, Art, CREW, CrewKind, CrewMember, DOODLES, DOODLE_KINDS, DoodleKind } from './doodle-footer.art';
 import {
   Floater,
   Seat,
@@ -102,6 +102,7 @@ const measure = (word: string): Metrics | null => {
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'dcf',
+    '[class.dcf-light]': 'tone() === "light"',
     '[attr.data-play]': 'play() ? "1" : "0"',
     '(pointermove)': 'track($event)',
     '(pointerdown)': 'track($event)',
@@ -110,6 +111,21 @@ const measure = (word: string): Metrics | null => {
 })
 export class DoodleFooter {
   readonly wordmark = input('DR FALL');
+  /** Les personnages et les petits dessins (par défaut ceux du pied de page). */
+  readonly crew = input<CrewMember[]>(CREW);
+  readonly doodleKinds = input<DoodleKind[]>(DOODLE_KINDS);
+  /** Nombre de petits dessins sur ordinateur (6 au plus sur téléphone). */
+  readonly doodles = input(10);
+  /** `dark` : encre claire sur fond prune (pied de page) ; `light` : encre prune sur fond crème (page). */
+  readonly tone = input<'dark' | 'light'>('dark');
+  /** Les yeux suivent le curseur sur toute la page, pas seulement au-dessus de la scène. */
+  readonly followPage = input(false);
+  /** Texte lu par les lecteurs d'écran pour la scène. */
+  readonly label = input('faites connaissance avec les personnages');
+
+  private static nextId = 0;
+  /** Identifiant propre à cette scène : le pied de page et la page 404 peuvent être affichés ensemble. */
+  protected readonly uid = `dcf${DoodleFooter.nextId++}`;
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
@@ -120,8 +136,8 @@ export class DoodleFooter {
     (Object.keys(ART) as CrewKind[]).map((k) => [
       k,
       {
-        body: this.sanitizer.bypassSecurityTrustHtml(ART[k].body),
-        front: ART[k].front ? this.sanitizer.bypassSecurityTrustHtml(ART[k].front as string) : null,
+        body: this.sanitizer.bypassSecurityTrustHtml(this.scoped(ART[k].body)),
+        front: ART[k].front ? this.sanitizer.bypassSecurityTrustHtml(this.scoped(ART[k].front as string)) : null,
       },
     ]),
   ) as Record<CrewKind, { body: SafeHtml; front: SafeHtml | null }>;
@@ -129,15 +145,23 @@ export class DoodleFooter {
     Object.entries(DOODLES).map(([k, v]) => [k, this.sanitizer.bypassSecurityTrustHtml(v)]),
   ) as Record<string, SafeHtml>;
 
+  /** Les dessins référencent la trame de hachures par son identifiant : on lui donne celui de cette scène. */
+  private scoped(markup: string): string {
+    return markup.replace(/dcf-hatch/g, `${this.uid}-hatch`);
+  }
+
   protected readonly play = signal(false);
   protected readonly talking = signal(-1);
   protected readonly hopping = signal(-1);
 
-  private readonly metrics = signal<Metrics>(estimate(this.wordmark()));
+  private readonly metrics = signal<Metrics>(this.initialMetrics());
   private readonly small = typeof matchMedia !== 'undefined' && matchMedia('(max-width: 700px)').matches;
   private readonly reduced =
     typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  private readonly doodleCount = this.small ? 6 : 10;
+
+  private get doodleCount(): number {
+    return this.small ? Math.min(6, this.doodles()) : this.doodles();
+  }
 
   private readonly chars = computed(() => Array.from(this.wordmark().toUpperCase()));
   private readonly layout = computed(() => layoutWord(this.metrics().advances, TRACKING, FONT_SIZE));
@@ -146,7 +170,7 @@ export class DoodleFooter {
     const cap = this.metrics().cap;
     const layout = this.layout();
     const count = this.chars().length;
-    return CREW.map((m, i) => {
+    return this.crew().map((m, i) => {
       const art = ART[m.kind];
       const li = clamp(m.letter, 0, count - 1);
       const scale = (cap / 144) * art.k;
@@ -251,7 +275,7 @@ export class DoodleFooter {
   protected readonly doodleList = computed(() =>
     Array.from({ length: this.doodleCount }, (_, k) => ({
       k,
-      kind: DOODLE_KINDS[k % DOODLE_KINDS.length],
+      kind: this.doodleKinds()[k % this.doodleKinds().length],
       size: 22 + hash(k * 4.7) * 14,
       delay: this.tl().doodles + k * 70,
     })),
@@ -277,6 +301,20 @@ export class DoodleFooter {
   constructor() {
     afterNextRender(() => this.start());
     this.destroyRef.onDestroy(() => window.clearTimeout(this.talkTimer));
+  }
+
+  /** Si la police est déjà là (navigation interne), on mesure tout de suite : pas de saut de mise en page ensuite. */
+  private initialMetrics(): Metrics {
+    const word = this.wordmark().toUpperCase();
+    try {
+      if (typeof document !== 'undefined' && document.fonts?.check(`${FONT_WEIGHT} ${FONT_SIZE}px Outfit`)) {
+        const m = measure(word);
+        if (m) return m;
+      }
+    } catch {
+      // pas de mesure possible : on garde l'estimation
+    }
+    return estimate(word);
   }
 
   protected track(event: PointerEvent): void {
@@ -336,6 +374,18 @@ export class DoodleFooter {
     remeasure();
 
     this.layoutDoodles(true);
+    if (this.followPage()) {
+      const move = (e: PointerEvent) => this.track(e);
+      const leave = () => (this.sim.inside = false);
+      document.addEventListener('pointermove', move, { passive: true });
+      document.addEventListener('pointerdown', move, { passive: true });
+      document.documentElement.addEventListener('pointerleave', leave);
+      this.destroyRef.onDestroy(() => {
+        document.removeEventListener('pointermove', move);
+        document.removeEventListener('pointerdown', move);
+        document.documentElement.removeEventListener('pointerleave', leave);
+      });
+    }
     if (typeof ResizeObserver !== 'undefined') {
       const ro = new ResizeObserver(() => this.layoutDoodles(false));
       ro.observe(el);
