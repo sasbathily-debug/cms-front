@@ -40,4 +40,20 @@ describe('pages de spécialités', () => {
       expect(slugs).toContain(route.replace('/specialites/', ''));
     }
   });
+
+  it('la page nutrition affiche les deux formules avec leurs tarifs officiels', () => {
+    const offres = MALADIES['nutrition-clinique'].offres;
+    expect(offres?.items.map((o) => o.nom)).toEqual([
+      'Consultation nutritionnelle',
+      'Accompagnement nutritionnel',
+    ]);
+    expect(offres?.items.map((o) => o.prix.replace(/\u00a0/g, ' '))).toEqual([
+      '35 000 FCFA',
+      '90 000 FCFA',
+    ]);
+    for (const o of offres?.items ?? []) {
+      expect(o.paragraphes.length).toBeGreaterThan(0);
+      expect(o.inclus.length).toBeGreaterThan(0);
+    }
+  });
 });

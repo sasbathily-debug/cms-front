@@ -219,6 +219,93 @@
             </div>
           </section>
 
+          @if (c.offres; as offres) {
+            <section id="tarifs" class="flex scroll-mt-28 flex-col gap-[18px]">
+              <h2
+                class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[40px]"
+              >
+                {{ offres.title }}
+              </h2>
+              <p class="m-0 text-[17px] leading-[1.75] text-body">{{ offres.intro }}</p>
+              <div class="flex flex-col gap-5">
+                @for (o of offres.items; track o.nom; let dark = $last) {
+                  <article
+                    class="flex flex-col gap-6 rounded-[24px] p-7 sm:p-9"
+                    [class]="
+                      dark ? 'bg-plum-900 text-white' : 'border border-line bg-surface text-fg'
+                    "
+                  >
+                    <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                      <div class="flex flex-col gap-2">
+                        <span
+                          class="text-xs font-semibold tracking-[0.1em]"
+                          [class]="dark ? 'text-peach' : 'text-accent-700'"
+                          >{{ o.kicker }}</span
+                        >
+                        <h3
+                          class="m-0 font-display text-[1.65rem] font-bold leading-[1.1] tracking-[-0.02em] sm:text-[1.9rem]"
+                        >
+                          {{ o.nom }}
+                        </h3>
+                      </div>
+                      <span
+                        class="whitespace-nowrap font-display text-[2rem] font-bold leading-none tracking-[-0.02em] sm:text-[2.4rem]"
+                        [class]="dark ? 'text-peach' : 'text-fg'"
+                        >{{ o.prix }}</span
+                      >
+                    </header>
+                    <div class="flex flex-col gap-3">
+                      @for (p of o.paragraphes; track $index) {
+                        <p
+                          class="m-0 text-base leading-[1.7]"
+                          [class]="dark ? 'text-on-plum-muted' : 'text-body'"
+                        >
+                          {{ p }}
+                        </p>
+                      }
+                    </div>
+                    <div class="flex flex-col gap-3.5">
+                      <span class="font-display text-[15px] font-semibold">{{
+                        o.inclusTitre
+                      }}</span>
+                      <ul class="m-0 flex list-none flex-col gap-3 p-0">
+                        @for (item of o.inclus; track $index) {
+                          <li
+                            class="flex items-start gap-3 text-[15.5px] leading-snug"
+                            [class]="dark ? 'text-on-plum' : 'text-body'"
+                          >
+                            <span
+                              aria-hidden="true"
+                              class="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-accent-500"
+                            ></span
+                            >{{ item }}
+                          </li>
+                        }
+                      </ul>
+                    </div>
+                    @if (o.ideal) {
+                      <p
+                        class="m-0 rounded-[16px] bg-sunken px-5 py-4 text-[15px] leading-[1.65] text-body"
+                      >
+                        {{ o.ideal }}
+                      </p>
+                    }
+                    <a
+                      routerLink="/rendez-vous"
+                      class="self-start rounded-full px-7 py-3.5 text-center font-display text-[15px] font-semibold transition"
+                      [class]="
+                        dark
+                          ? 'bg-accent-500 text-on-accent hover:bg-accent-600'
+                          : 'bg-inverse text-inverse-fg'
+                      "
+                      >{{ o.bouton }}</a
+                    >
+                  </article>
+                }
+              </div>
+            </section>
+          }
+
           <section id="quotidien" class="flex scroll-mt-28 flex-col gap-[18px]">
             <h2
               class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[40px]"

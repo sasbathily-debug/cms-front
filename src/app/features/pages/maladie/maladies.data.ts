@@ -1,5 +1,18 @@
 import { MaladieArtKind } from '../../../shared/maladie-art/maladie-art';
 
+/** Une formule payante (consultation, accompagnement) avec son tarif officiel. */
+export interface OffreContent {
+  /** Petit titre en capitales : le type de formule et sa durée. */
+  kicker: string;
+  nom: string;
+  prix: string;
+  paragraphes: string[];
+  inclusTitre: string;
+  inclus: string[];
+  ideal?: string;
+  bouton: string;
+}
+
 export interface MaladieContent {
   slug: string;
   crumb: string;
@@ -19,6 +32,8 @@ export interface MaladieContent {
   };
   signes: { title?: string; items: string[]; outro: string };
   priseEnCharge: { intro: string; examens: { nom: string; texte: string }[] };
+  /** Tarifs des formules proposées (facultatif) : une section « Tarifs » s'ajoute à la page. */
+  offres?: { title: string; intro: string; items: OffreContent[] };
   quotidien: { titre: string; texte: string }[];
   urgence: string;
   faqTitle: string;
@@ -511,6 +526,50 @@ export const MALADIES: Record<string, MaladieContent> = {
         },
       ],
     },
+    offres: {
+      title: 'Les tarifs',
+      intro: 'Deux formules, selon ce dont vous avez besoin.',
+      items: [
+        {
+          kicker: 'CONSULTATION · 30 MIN',
+          nom: 'Consultation nutritionnelle',
+          prix: '35\u00a0000\u00a0FCFA',
+          paragraphes: [
+            'Un entretien individuel de 30 minutes pour faire le point sur votre alimentation, vos objectifs et votre situation de santé.',
+            'Au cours de cette consultation, le Dr Fall vous expliquera les principes essentiels d’une alimentation saine et équilibrée, en adaptant ses conseils à vos besoins et, lorsque disponibles, à vos résultats biologiques.',
+          ],
+          inclusTitre: 'La consultation comprend :',
+          inclus: [
+            'L’analyse de votre situation et de vos objectifs',
+            'L’interprétation des résultats d’examens pertinents',
+            'Des conseils nutritionnels personnalisés',
+            'Les réponses à vos questions',
+            'Un document récapitulatif personnalisé à conserver après la consultation',
+          ],
+          ideal:
+            'Idéal pour celles et ceux qui souhaitent comprendre les bases et repartir avec des repères concrets pour améliorer leur alimentation au quotidien.',
+          bouton: 'Réserver une consultation',
+        },
+        {
+          kicker: 'ACCOMPAGNEMENT · 1 MOIS',
+          nom: 'Accompagnement nutritionnel',
+          prix: '90\u00a0000\u00a0FCFA',
+          paragraphes: [
+            'Un accompagnement plus personnalisé pour vous aider à passer de la théorie à la pratique et intégrer progressivement de nouvelles habitudes alimentaires dans votre quotidien.',
+          ],
+          inclusTitre: 'L’accompagnement comprend :',
+          inclus: [
+            'Tout le contenu de la consultation nutritionnelle',
+            'Un entretien individuel de 30 minutes avec le Dr Aissatou Mamadou Fall',
+            'Une analyse personnalisée de votre situation, de vos objectifs et de vos résultats',
+            'Un document récapitulatif personnalisé',
+            '2 semaines de menus complets, adaptés à vos besoins et à votre quotidien',
+            'Un suivi sur 1 mois pour vous accompagner dans la mise en place des recommandations et ajuster les conseils si nécessaire',
+          ],
+          bouton: 'Demander un accompagnement',
+        },
+      ],
+    },
     quotidien: [
       {
         titre: 'Des repas à heures régulières',
@@ -549,7 +608,8 @@ export const MALADIES: Record<string, MaladieContent> = {
       },
       {
         question: 'Combien de temps dure le suivi ?',
-        reponse: '[À confirmer par la doctoresse : durée et rythme habituels des rendez-vous.]',
+        reponse:
+          'La consultation nutritionnelle est un entretien individuel de 30 minutes. L’accompagnement nutritionnel dure 1 mois : il comprend un suivi pour vous aider à mettre en place les recommandations et ajuster les conseils si nécessaire.',
       },
       {
         question: 'Dois-je faire des analyses avant le rendez-vous ?',
