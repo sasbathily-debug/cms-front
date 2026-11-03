@@ -55,14 +55,22 @@
               "
             >
               <span class="flex items-start justify-between">
-                <span class="font-display text-[40px] font-bold leading-none text-peach">{{
-                  tile.sym
-                }}</span>
+                @if (tile.sym) {
+                  <span class="font-display text-[40px] font-bold leading-none text-peach">{{
+                    tile.sym
+                  }}</span>
+                } @else {
+                  <span class="font-display text-[22px] font-bold leading-tight text-white">{{
+                    tile.label
+                  }}</span>
+                }
                 <span class="text-[22px] leading-none text-peach" aria-hidden="true">{{
                   mobileGroup() === tile.key ? '−' : '+'
                 }}</span>
               </span>
-              <span class="text-[15px] font-medium text-white">{{ tile.label }}</span>
+              @if (tile.sym) {
+                <span class="text-[15px] font-medium text-white">{{ tile.label }}</span>
+              }
             </button>
           } @else {
             <a
@@ -70,12 +78,20 @@
               class="flex h-[112px] flex-col justify-between rounded-[18px] border border-white/25 bg-plum-850 px-[18px] py-4"
             >
               <span class="flex items-start justify-between">
-                <span class="font-display text-[40px] font-bold leading-none text-peach">{{
-                  tile.sym
-                }}</span>
+                @if (tile.sym) {
+                  <span class="font-display text-[40px] font-bold leading-none text-peach">{{
+                    tile.sym
+                  }}</span>
+                } @else {
+                  <span class="font-display text-[22px] font-bold leading-tight text-white">{{
+                    tile.label
+                  }}</span>
+                }
                 <span class="text-[22px] leading-none text-peach" aria-hidden="true">→</span>
               </span>
-              <span class="text-[15px] font-medium text-white">{{ tile.label }}</span>
+              @if (tile.sym) {
+                <span class="text-[15px] font-medium text-white">{{ tile.label }}</span>
+              }
             </a>
           }
         }

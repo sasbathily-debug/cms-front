@@ -12,8 +12,8 @@ interface Tile {
   group?: NavGroup;
 }
 
-const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', patients: 'Pa' };
-const SIMPLE_SYMBOLS: Record<string, string> = { conseils: 'Cs', contact: 'Co' };
+/** Seule la tuile des spécialités garde son symbole à deux lettres ; les autres portent leur nom. */
+const SYMBOLS: Record<string, string> = { specialites: 'Sp' };
 
 /** Menu plein écran des téléphones : des tuiles qui se déplient, comme sur la maquette. */
 @Component({
@@ -38,18 +38,18 @@ export class MobileMenu {
   readonly tiles = computed<Tile[]>(() => [
     ...NAV_GROUPS.map((group) => ({
       key: group.key,
-      sym: SYMBOLS[group.key] ?? group.label.slice(0, 2),
+      sym: SYMBOLS[group.key] ?? '',
       label: group.label,
       route: group.route,
       group,
     })),
     ...NAV_SIMPLE.map((link) => ({
       key: link.key,
-      sym: SIMPLE_SYMBOLS[link.key] ?? link.label.slice(0, 2),
+      sym: '',
       label: link.label,
       route: link.route,
     })),
-    { key: 'espace', sym: 'Me', label: 'Mon espace', route: this.spaceLink() },
+    { key: 'espace', sym: '', label: 'Mon espace', route: this.spaceLink() },
   ]);
 
   /** Les tuiles s'affichent deux par deux ; le panneau s'ouvre sous la rangée de la tuile touchée. */

@@ -35,7 +35,7 @@
                 <span [class]="symClass()">{{ tile.sym }}</span>
                 <span class="text-[11px] text-on-plum-muted">{{ tile.count }}</span>
               </span>
-              <span [class]="labelClass()">{{ tile.label }}</span>
+              <span [class]="labelClass(tile)">{{ tile.label }}</span>
             </a>
             @if (tile.group && seen().has(tile.key)) {
               <div
@@ -70,8 +70,12 @@
                         >
                           <!-- Tuile d'élément, comme celles du menu : numéro, symbole, et une comète de lumière au survol -->
                           <span class="el" aria-hidden="true">
-                            <span class="el-n">{{ ($index + 1).toString().padStart(2, '0') }}</span>
-                            <span class="el-s">{{ link.sym }}</span>
+                            @if (tile.key === 'specialites') {
+                              <span class="el-n">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+                              <span class="el-s">{{ link.sym }}</span>
+                            } @else {
+                              <span class="el-s el-s-num">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+                            }
                           </span>
                           <span class="flex min-w-0 flex-1 flex-col gap-0.5">
                             <span class="font-display text-[15px] font-semibold">{{

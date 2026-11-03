@@ -37,7 +37,8 @@ interface Tile {
   group?: NavGroup;
 }
 
-const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', patients: 'Pa' };
+/** Seule la tuile des spécialités garde son symbole à deux lettres : ailleurs, des codes comme « Lc » ou « Me » ne disent rien au visiteur. */
+const SYMBOLS: Record<string, string> = { specialites: 'Sp' };
 
 /**
  * En-tête à tuiles (comme un tableau périodique), commun à toutes les pages publiques.
@@ -75,9 +76,13 @@ export class HomeHeader implements OnDestroy {
   readonly symClass = computed(
     () => 'font-display font-bold leading-none ' + (this.bar() ? 'text-[18px]' : 'text-[22px]'),
   );
-  readonly labelClass = computed(
-    () => (this.bar() ? 'whitespace-nowrap text-[11px]' : 'text-[12.5px]') + ' font-medium',
-  );
+  /** Une tuile sans symbole porte son nom en grand ; avec un symbole, le nom reste en légende. */
+  labelClass(tile: Tile): string {
+    if (!tile.sym) {
+      return 'font-display font-bold leading-[1.1] ' + (this.bar() ? 'text-[13px]' : 'text-[15px]');
+    }
+    return (this.bar() ? 'whitespace-nowrap text-[11px]' : 'text-[12.5px]') + ' font-medium';
+  }
   readonly ctaClass = computed(
     () =>
       'flex items-center whitespace-nowrap rounded-[14px] bg-accent-500 px-6 font-display text-[15px] font-bold text-on-accent transition hover:bg-accent-600 ' +
@@ -131,15 +136,15 @@ export class HomeHeader implements OnDestroy {
   readonly tiles = computed<Tile[]>(() => [
     ...NAV_GROUPS.map((group) => ({
       key: group.key,
-      sym: SYMBOLS[group.key] ?? group.label.slice(0, 2),
+      sym: SYMBOLS[group.key] ?? '',
       count: String(group.links.length),
       label: group.label + ' ▾',
       route: group.route,
       group,
     })),
-    { key: 'conseils', sym: 'Cs', count: '', label: 'Conseils santé', route: '/conseils-sante' },
-    { key: 'contact', sym: 'Co', count: '', label: 'Contact', route: '/contact' },
-    { key: 'espace', sym: 'Me', count: '', label: 'Mon espace', route: this.spaceLink() },
+    { key: 'conseils', sym: '', count: '', label: 'Conseils santé', route: '/conseils-sante' },
+    { key: 'contact', sym: '', count: '', label: 'Contact', route: '/contact' },
+    { key: 'espace', sym: '', count: '', label: 'Mon espace', route: this.spaceLink() },
   ]);
 
   readonly simpleLinks = NAV_SIMPLE;
