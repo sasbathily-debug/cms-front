@@ -48,6 +48,57 @@
             );
           "
         ></div>
+        <!-- Tampon du cabinet, posé de travers sur la photo -->
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 160 160"
+          class="absolute bottom-4 right-4 h-[132px] w-[132px] -rotate-[12deg] text-cream-50 drop-shadow-[0_2px_6px_rgba(20,11,25,0.45)] sm:bottom-6 sm:right-6 sm:h-[156px] sm:w-[156px]"
+          fill="none"
+          stroke="currentColor"
+        >
+          <defs>
+            <path id="tampon-cercle" d="M80 80 m-54 0 a54 54 0 1 1 108 0 a54 54 0 1 1 -108 0" />
+          </defs>
+          <circle cx="80" cy="80" r="76" stroke-width="3" />
+          <circle cx="80" cy="80" r="39" stroke-width="1.5" />
+          <text
+            class="font-display"
+            fill="currentColor"
+            stroke="none"
+            font-size="13.5"
+            font-weight="700"
+            letter-spacing="1.4"
+          >
+            <textPath href="#tampon-cercle" textLength="330" lengthAdjust="spacing">
+              CABINET MÉDICAL · DR AÏSSATOU FALL ·
+            </textPath>
+          </text>
+          <text
+            class="font-display"
+            x="80"
+            y="76"
+            text-anchor="middle"
+            fill="currentColor"
+            stroke="none"
+            font-size="19"
+            font-weight="800"
+          >
+            DR FALL
+          </text>
+          <text
+            class="font-display"
+            x="80"
+            y="95"
+            text-anchor="middle"
+            fill="currentColor"
+            stroke="none"
+            font-size="10.5"
+            font-weight="600"
+            letter-spacing="2"
+          >
+            DAKAR
+          </text>
+        </svg>
       </div>
     </div>
   </section>
@@ -121,7 +172,7 @@
     class="rounded-t-none bg-page px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:rounded-t-none lg:px-10 lg:pb-24"
   >
     <div class="mx-auto grid max-w-[1160px] gap-5 md:grid-cols-2">
-      <div class="flex flex-col gap-[22px] rounded-none border border-line bg-surface p-7 sm:p-11">
+      <div class="flex flex-col gap-[22px] rounded-sm border border-line bg-surface p-7 sm:p-11">
         <h2
           class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-fg sm:text-[34px]"
         >
@@ -154,7 +205,7 @@
         </ul>
       </div>
       <div
-        class="flex flex-col justify-between gap-[22px] rounded-none border border-peach/40 bg-plum-900 p-7 text-white sm:p-11"
+        class="flex flex-col justify-between gap-[22px] rounded-sm border border-peach/40 bg-plum-900 p-7 text-white sm:p-11"
       >
         <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] sm:text-[34px]">
           {{ c().tarifs.titre }}

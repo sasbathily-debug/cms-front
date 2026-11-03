@@ -181,7 +181,7 @@
     <a
       routerLink="/rendez-vous"
       (click)="closed.emit()"
-      class="flex min-h-14 flex-col items-center justify-center rounded-none bg-accent-500 text-on-accent"
+      class="flex min-h-14 flex-col items-center justify-center rounded-[10px] bg-accent-500 text-on-accent"
       ><strong class="font-display text-[17px] font-semibold">Prendre rendez-vous</strong>
       @if (slot.ticket(); as t) {
         <span class="text-xs text-plum-900">Prochain créneau · {{ t.phrase }}</span>
