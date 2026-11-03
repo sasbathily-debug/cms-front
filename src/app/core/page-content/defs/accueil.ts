@@ -38,7 +38,7 @@ const defaults = {
       "Touchez un motif : pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume.",
   },
   doctoresse: {
-    kicker: 'LA DOCTORESSE',
+    kicker: 'VOTRE ENDOCRINOLOGUE À DAKAR',
     titre: "Une consultation qui prend le temps d'expliquer",
     texte:
       "Le Dr Aïssatou Mamadou Fall est médecin endocrinologue et nutritionniste à Dakar. Elle accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal. [Parcours et années d'expérience à confirmer.]",
@@ -55,6 +55,9 @@ const defaults = {
     ],
     noteStats: '',
     lien: 'Découvrir son parcours',
+    boutonRdv: 'Prendre rendez-vous avec elle',
+    nom: 'Dr Aïssatou Mamadou Fall',
+    legende: 'Endocrinologue · Nutritionniste',
     photo: '/img/dr-fall-sourire-640.webp',
     photoAlt: 'Portrait souriant du Dr Aïssatou Mamadou Fall',
     titreTelephone: 'Dr Aïssatou Mamadou Fall',
@@ -242,7 +245,10 @@ export const ACCUEIL: PageDef<AccueilContent> = {
           type: 'text',
           hint: 'Laissez vide pour ne rien afficher. Ne saisissez que des chiffres exacts.',
         },
-        { key: 'lien', label: 'Texte du lien (ordinateur)', type: 'text' },
+        { key: 'boutonRdv', label: 'Texte du bouton de rendez-vous (ordinateur)', type: 'text' },
+        { key: 'lien', label: 'Texte du lien vers son parcours (ordinateur)', type: 'text' },
+        { key: 'nom', label: 'Nom écrit sur le portrait (ordinateur)', type: 'text' },
+        { key: 'legende', label: 'Spécialité écrite sur le portrait (ordinateur)', type: 'text' },
         { key: 'photo', label: 'Portrait (ordinateur et téléphone)', type: 'image' },
         {
           key: 'photoAlt',
