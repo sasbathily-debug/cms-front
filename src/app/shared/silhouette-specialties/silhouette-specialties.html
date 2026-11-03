@@ -1,49 +1,15 @@
 <div
-  class="sil-grid mx-auto grid max-w-[1160px] items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12"
+  class="mx-auto grid max-w-[1160px] gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:grid-rows-[auto_auto_1fr]"
 >
-  <div
-    class="sil-wrap relative flex min-h-[460px] items-center justify-center rounded-[32px] border border-peach/40 bg-plum-900 py-8 sm:min-h-[600px]"
-    [class.border]="variant() === 'dark'"
-    [class.border-white/15]="variant() === 'dark'"
-  >
-    <div class="relative w-[260px] sm:w-[300px]">
-      <img
-        src="/img/silhouette.png"
-        alt="Silhouette assise du logo du cabinet, avec les glandes endocrines repérées"
-        class="block h-auto w-full opacity-90"
-      />
-      <div class="gl g-hy r" style="left: 50%; top: 18%">
-        <span class="dot"></span><span class="line"></span><span class="lab">Hypophyse</span>
-      </div>
-      <div class="gl g-th l" style="left: 50%; top: 34%">
-        <span class="dot"></span><span class="line"></span><span class="lab">Thyroïde</span>
-      </div>
-      <div class="gl g-fo r" style="left: 59%; top: 45%">
-        <span class="dot"></span><span class="line"></span><span class="lab">Foie</span>
-      </div>
-      <div class="gl g-pa l" style="left: 50%; top: 52%">
-        <span class="dot"></span><span class="line"></span><span class="lab">Pancréas</span>
-      </div>
-      <div class="gl g-su r" style="left: 50%; top: 60%">
-        <span class="dot"></span><span class="line"></span><span class="lab">Surrénales</span>
-      </div>
-      <div class="gl g-ov l" style="left: 50%; top: 68%">
-        <span class="dot"></span><span class="line"></span
-        ><span class="lab">Ovaires et testicules</span>
-      </div>
-    </div>
-    <span class="absolute bottom-[18px] left-6 text-[13px] text-on-plum-subtle"
-      >Schéma simplifié, pas une carte anatomique.</span
-    >
-  </div>
-  <div class="flex flex-col gap-[22px]">
+  <!-- Titre -->
+  <div class="flex flex-col gap-[18px] lg:col-start-2 lg:row-start-1">
     <span
       class="text-xs font-semibold tracking-[0.12em]"
       [class]="variant() === 'dark' ? 'text-peach' : 'text-accent-700'"
       >{{ eyebrow() }}</span
     >
     <h2
-      class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] sm:text-[44px]"
+      class="m-0 font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.025em] sm:text-[40px]"
       [class]="variant() === 'dark' ? 'text-white' : 'text-fg'"
     >
       {{ title() }}
@@ -54,54 +20,139 @@
     >
       {{ intro() }}
     </p>
-    <div class="mt-1 flex flex-col gap-2.5">
-      @for (row of rows(); track row.key) {
-        <a
-          [routerLink]="row.route"
-          [class]="
-            'row row-' +
-            row.key +
-            (variant() === 'dark'
-              ? ' row-dark border-white/15 bg-white/[0.06] px-5 py-4 text-white'
-              : ' border-line bg-page px-[18px] py-3.5 text-fg')
-          "
-          appSpotlight
-          class="relative flex items-center gap-4 rounded-[18px] border"
-        >
-          <span
-            class="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] font-display text-[17px] font-bold text-peach"
-            [class]="variant() === 'dark' ? 'bg-[rgba(241,201,155,0.16)]' : 'bg-plum-900'"
-            >{{ row.sym }}</span
-          >
-          <span class="flex min-w-0 flex-1 flex-col gap-1">
-            <span
-              class="font-display font-bold"
-              [class]="variant() === 'dark' ? 'text-[19px]' : 'text-lg'"
-              >{{ row.title }}</span
-            >
-            @if (variant() === 'dark') {
-              <span class="text-[14.5px] leading-[1.55] text-on-plum-muted">{{
-                row.homeText
-              }}</span>
-              @if (row.organ) {
-                <span class="text-[13px] tracking-[0.02em] text-peach">{{ row.organ }}</span>
-              }
-            } @else if (row.organ) {
-              <span class="text-sm text-muted">{{ row.organ }}</span>
-            }
-          </span>
-          @if (variant() === 'dark') {
-            <span aria-hidden="true" class="shrink-0 text-[22px] text-peach">→</span>
-          }
-        </a>
+  </div>
+
+  <!-- La silhouette, qui occupe toute la hauteur du bloc -->
+  <div
+    class="relative flex flex-col items-center gap-8 rounded-[32px] border bg-plum-900 px-4 pb-12 pt-10 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:px-8"
+    [class]="variant() === 'dark' ? 'border-white/15' : 'border-peach/40'"
+  >
+    <div
+      class="relative w-full max-w-[600px]"
+      role="img"
+      aria-label="Silhouette assise du logo du cabinet, avec l'hypophyse, la thyroïde, le pancréas et les ovaires ou testicules repérés"
+    >
+      <div class="mx-auto w-[46%] sm:w-[60%]">
+        <img
+          src="/img/silhouette.png"
+          alt=""
+          width="328"
+          height="373"
+          class="block h-auto w-full opacity-90"
+        />
+      </div>
+      @for (o of organs; track o.id) {
+        <div class="org" [class.on]="isLit(o.id)" [attr.data-side]="o.side" [style.top.%]="o.y">
+          <span class="org-line"></span>
+          <span class="org-line-on"></span>
+          <span class="org-dot"></span>
+          <span class="org-lab">{{ o.label }}</span>
+        </div>
       }
     </div>
-    @if (variant() === 'dark') {
-      <a
-        routerLink="/specialites"
-        class="mt-1.5 self-start text-[15px] font-semibold text-peach hover:underline"
-        >Toutes les spécialités →</a
+    <!-- Téléphone : « Je viens pour… » en pastilles -->
+    <div class="flex w-full max-w-[600px] flex-col gap-3 lg:hidden">
+      <span class="text-sm font-semibold text-peach">Je viens pour…</span>
+      <div class="flex flex-wrap gap-2">
+        @for (it of intents(); track it.key) {
+          <button
+            type="button"
+            (click)="select(it.key)"
+            [attr.aria-pressed]="activeKey() === it.key"
+            class="min-h-11 rounded-full border px-4 text-[15px] font-semibold"
+            [class]="
+              activeKey() === it.key
+                ? 'border-accent-500 bg-accent-500 text-on-accent'
+                : 'border-white/35 text-white'
+            "
+          >
+            {{ it.verbe }}
+          </button>
+        }
+      </div>
+    </div>
+    <!-- Le détail du motif choisi -->
+    @if (active(); as it) {
+      <div
+        class="flex w-full max-w-[600px] flex-col gap-4 rounded-[22px] border border-white/15 bg-white/[0.06] p-6 text-white lg:p-7"
+        aria-live="polite"
       >
+        <div class="flex items-baseline justify-between gap-4">
+          <span class="font-display text-[24px] font-semibold tracking-[-0.02em]">{{
+            it.specialty.title
+          }}</span>
+        </div>
+        <p class="m-0 text-[15px] leading-[1.55] text-on-plum-muted">{{ it.specialty.text }}</p>
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs font-semibold tracking-[0.1em] text-peach"
+            >VOUS POUVEZ CONSULTER SI</span
+          >
+          <p class="m-0 text-[15px] leading-[1.55] text-white">{{ it.specialty.signs }}</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <a
+            routerLink="/rendez-vous"
+            [queryParams]="it.query"
+            class="btn-arrow rounded-xl bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
+            ><span class="btn-label">Réserver pour ce motif</span></a
+          >
+          <a
+            [routerLink]="it.specialty.route"
+            class="rounded-xl border border-white/35 px-5 py-3 font-display text-[15px] font-semibold text-white hover:border-white"
+            >Lire la page</a
+          >
+        </div>
+      </div>
+    }
+    <span class="absolute bottom-4 left-6 text-[13px] text-on-plum-subtle"
+      >Schéma simplifié, pas une carte anatomique.</span
+    >
+  </div>
+
+  <!-- Ordinateur : « Je viens pour… » en lignes -->
+  <div class="hidden flex-col lg:col-start-2 lg:row-start-2 lg:flex lg:self-start">
+    <span
+      class="mb-2 text-sm font-semibold"
+      [class]="variant() === 'dark' ? 'text-peach' : 'text-accent-800'"
+      >Je viens pour…</span
+    >
+    @for (it of intents(); track it.key) {
+      <a
+        [routerLink]="it.specialty.route"
+        (mouseenter)="select(it.key)"
+        (focus)="select(it.key)"
+        class="group flex items-center gap-4 border-b py-2.5 font-display text-[30px] font-medium leading-[1.15] tracking-[-0.03em] transition-colors"
+        [class]="
+          (variant() === 'dark' ? 'border-white/15 ' : 'border-line ') +
+          (activeKey() === it.key
+            ? variant() === 'dark'
+              ? 'text-white'
+              : 'text-fg'
+            : variant() === 'dark'
+              ? 'text-on-plum-subtle'
+              : 'text-muted')
+        "
+      >
+        <span
+          aria-hidden="true"
+          class="h-2.5 w-2.5 shrink-0 rounded-full"
+          [class]="activeKey() === it.key ? 'bg-accent-500' : 'bg-transparent'"
+        ></span>
+        <span class="flex-1">{{ it.verbe }}</span>
+        <span
+          aria-hidden="true"
+          class="text-[22px] transition-opacity"
+          [class]="activeKey() === it.key ? 'opacity-100' : 'opacity-0'"
+          >→</span
+        >
+      </a>
     }
   </div>
+
+  <a
+    routerLink="/specialites"
+    class="text-[15px] font-semibold hover:underline lg:col-start-2 lg:row-start-3 lg:self-start"
+    [class]="variant() === 'dark' ? 'text-peach' : 'text-accent-800'"
+    >Toutes les spécialités →</a
+  >
 </div>

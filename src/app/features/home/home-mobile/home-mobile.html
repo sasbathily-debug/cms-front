@@ -194,94 +194,13 @@
       >
     </section>
 
-    <!-- Spécialités : silhouette + liste (on touche une ligne pour allumer l'organe) -->
+    <!-- Spécialités : silhouette et « Je viens pour… » (on touche un motif pour allumer l'organe) -->
     <section class="relative -mt-8 rounded-t-[32px] bg-page px-5 pb-[72px] pt-14">
-      <div class="sil-grid flex flex-col gap-[22px]">
-        <div class="flex flex-col gap-2">
-          <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">{{
-            c().specialites.kicker
-          }}</span>
-          <h2
-            class="m-0 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-fg"
-          >
-            {{ c().specialites.titre }}
-          </h2>
-          <p class="m-0 text-[15.5px] leading-[1.6] text-body">
-            {{ c().specialites.introTelephone }}
-          </p>
-        </div>
-        <div
-          class="sil-wrap relative flex h-[380px] items-center justify-center rounded-[28px] border border-peach/40 bg-plum-900"
-        >
-          <div class="relative w-[230px]">
-            <img
-              src="/img/silhouette.png"
-              alt="Silhouette assise du logo du cabinet, avec les glandes endocrines repérées"
-              class="block h-auto w-full opacity-90"
-            />
-            <div class="gl g-hy r" style="left: 50%; top: 18%">
-              <span class="dot"></span><span class="line"></span><span class="lab">Hypophyse</span>
-            </div>
-            <div class="gl g-th l" style="left: 50%; top: 34%">
-              <span class="dot"></span><span class="line"></span><span class="lab">Thyroïde</span>
-            </div>
-            <div class="gl g-fo r" style="left: 59%; top: 45%">
-              <span class="dot"></span><span class="line"></span><span class="lab">Foie</span>
-            </div>
-            <div class="gl g-pa l" style="left: 50%; top: 52%">
-              <span class="dot"></span><span class="line"></span><span class="lab">Pancréas</span>
-            </div>
-            <div class="gl g-su r" style="left: 50%; top: 60%">
-              <span class="dot"></span><span class="line"></span><span class="lab">Surrénales</span>
-            </div>
-            <div class="gl g-ov l" style="left: 50%; top: 68%">
-              <span class="dot"></span><span class="line"></span
-              ><span class="lab">Ovaires, testicules</span>
-            </div>
-          </div>
-          <span class="absolute bottom-3.5 left-[18px] text-xs text-on-plum-subtle"
-            >Schéma simplifié, pas une carte anatomique.</span
-          >
-        </div>
-        <div class="flex flex-col">
-          @for (r of rows(); track r.key) {
-            <div
-              class="rowm flex flex-col gap-3 border border-transparent border-b-line px-1 py-4 text-fg"
-              [class]="'row-' + r.key"
-              tabindex="0"
-            >
-              <div class="flex items-center gap-3.5">
-                <span
-                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px] bg-sunken font-display text-base font-bold text-accent-700"
-                  >{{ r.sym }}</span
-                >
-                <span class="flex-1 font-display text-lg font-bold">{{ r.title }}</span>
-                <span
-                  class="plus shrink-0 text-[26px] leading-none text-accent-700"
-                  aria-hidden="true"
-                  >+</span
-                >
-              </div>
-              <div class="more flex-col gap-2 pl-[58px]">
-                <span class="text-[14.5px] leading-[1.55] text-body">{{ r.homeText }}</span>
-                @if (r.organ) {
-                  <span class="text-[13px] text-accent-700">{{ r.organ }}</span>
-                }
-                <a
-                  [routerLink]="r.route"
-                  class="btn-arrow mt-0.5 self-start rounded-full bg-accent-500 px-[18px] py-2.5 font-display text-sm font-bold text-on-accent"
-                  ><span class="btn-label">Lire la page</span></a
-                >
-              </div>
-            </div>
-          }
-          <a
-            routerLink="/specialites"
-            class="pt-2 text-center text-[15px] font-semibold text-accent-800"
-            >Toutes les spécialités</a
-          >
-        </div>
-      </div>
+      <app-silhouette-specialties
+        [eyebrow]="c().specialites.kicker"
+        [title]="c().specialites.titre"
+        [intro]="c().specialites.introTelephone"
+      />
     </section>
 
     <!-- Parcours -->

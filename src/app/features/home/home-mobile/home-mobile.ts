@@ -22,7 +22,7 @@ import { Parallax } from '../../../shared/parallax';
 import { NextSlot } from '../../../core/services/next-slot';
 import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
-import { Specialties } from '../../../core/services/specialties';
+import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 
@@ -30,6 +30,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
 @Component({
   selector: 'app-home-mobile',
   imports: [
+    SilhouetteSpecialties,
     RouterLink,
     InView,
     OpenNow,
@@ -57,7 +58,6 @@ export class HomeMobile {
   readonly faq = computed(() =>
     this.siteFaq.homeItems().map((item, i) => ({ ...item, open: this.openFaq().has(i) })),
   );
-  readonly rows = inject(Specialties).list;
 
   protected readonly c = inject(PageContent).use(ACCUEIL);
   readonly heroWords = computed(() =>

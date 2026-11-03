@@ -33,8 +33,8 @@ const defaults = {
     kicker: 'SPÉCIALITÉS',
     titre: 'Ce que je prends en charge',
     intro:
-      "Passez la souris sur une spécialité pour lire son résumé. Pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume sur la silhouette.",
-    introTelephone: "Touchez une spécialité pour lire son résumé et ouvrir sa page.",
+      "Passez la souris sur un motif, ou laissez le schéma tourner : pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume.",
+    introTelephone: "Touchez un motif : pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume.",
   },
   doctoresse: {
     kicker: 'LA DOCTORESSE',
