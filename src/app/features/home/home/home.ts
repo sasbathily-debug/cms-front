@@ -16,6 +16,7 @@ import { OpeningHours } from '../../../core/services/opening-hours';
 import { PageContent } from '../../../core/services/page-content';
 import { ACCUEIL } from '../../../core/page-content/defs/accueil';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { ChiffrePipe } from '../../../shared/chiffre.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 
 @Component({
@@ -30,6 +31,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     HomeMobile,
     Parallax,
     OptimizedImagePipe,
+    ChiffrePipe,
     SrcsetPipe,
   ],
   styleUrl: './home.css',

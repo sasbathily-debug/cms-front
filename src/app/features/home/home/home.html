@@ -163,7 +163,7 @@
           <div class="mx-auto flex max-w-[1160px] flex-wrap items-center gap-10 lg:gap-16">
             <div
               appInView
-              class="photo-life devoile relative h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-none bg-plum-800 sm:h-[560px] lg:rounded-none"
+              class="photo-life devoile relative aspect-[4/5] w-full min-w-0 flex-[1_1_420px] overflow-hidden rounded-none bg-plum-800 lg:max-w-[520px]"
             >
               <img
                 [src]="c().doctoresse.photo | optimizedImage: 900"
@@ -177,6 +177,16 @@
                 [appParallax]="0.08"
                 [parallaxMax]="40"
               />
+              <div
+                class="absolute inset-x-0 bottom-0 flex flex-col gap-1 bg-gradient-to-t from-plum-900/90 via-plum-900/55 to-transparent px-6 pb-6 pt-16"
+              >
+                <span class="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{{
+                  c().doctoresse.nom
+                }}</span>
+                <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
+                  c().doctoresse.legende
+                }}</span>
+              </div>
             </div>
             <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-[22px]">
               <span class="text-xs font-semibold tracking-[0.12em] text-accent-700">{{
@@ -201,12 +211,12 @@
                   </li>
                 }
               </ul>
-              <div class="grid gap-4 sm:grid-cols-2">
+              <div class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
                 @for (stat of c().doctoresse.stats; track $index) {
-                  <div
-                    class="flex flex-col gap-1 rounded-[10px] border border-line bg-surface p-[22px]"
-                  >
-                    <span class="font-display text-[34px] font-bold text-fg">{{ stat.big }}</span>
+                  <div class="flex flex-col gap-1 border-t border-line pt-4">
+                    <span class="font-display text-[34px] font-bold leading-none text-fg">{{
+                      stat.big | chiffre
+                    }}</span>
                     <span class="text-sm text-muted">{{ stat.small }}</span>
                   </div>
                 }
@@ -214,11 +224,18 @@
               @if (c().doctoresse.noteStats) {
                 <p class="m-0 text-[13px] text-muted">{{ c().doctoresse.noteStats }}</p>
               }
-              <a
-                routerLink="/a-propos"
-                class="btn-arrow mt-1.5 self-start rounded-md bg-inverse px-7 py-[15px] font-display text-[15px] font-semibold text-inverse-fg"
-                ><span class="btn-label">{{ c().doctoresse.lien }}</span></a
-              >
+              <div class="mt-1.5 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <a
+                  routerLink="/rendez-vous"
+                  class="btn-arrow rounded-md bg-accent-500 px-7 py-[15px] font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+                  ><span class="btn-label">{{ c().doctoresse.boutonRdv }}</span></a
+                >
+                <a
+                  routerLink="/a-propos"
+                  class="font-display text-[15px] font-semibold text-fg underline decoration-accent-500 decoration-2 underline-offset-[6px] hover:text-accent-700"
+                  >{{ c().doctoresse.lien }} →</a
+                >
+              </div>
             </div>
           </div>
         </section>
