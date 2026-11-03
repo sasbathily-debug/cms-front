@@ -778,3 +778,8 @@ app-floating-actions {
     transition: none;
   }
 }
+
+/* Le plan Google intégré : adouci pour rester dans la palette du site (la carte par défaut est très colorée). */
+.map-calm {
+  filter: grayscale(0.85) sepia(0.28) contrast(0.96) brightness(1.02);
+}
