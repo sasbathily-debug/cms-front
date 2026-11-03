@@ -26,7 +26,7 @@ import { Component, input, model } from '@angular/core';
         }
       </div>
       <ng-content />
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[12.5px] text-on-plum-subtle">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-on-plum-subtle">
         <ng-content select="[legende]" />
         <span class="ml-auto">Schéma simplifié, pour comprendre le principe.</span>
       </div>

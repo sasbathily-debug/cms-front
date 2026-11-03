@@ -175,7 +175,7 @@ const OPACITE = [0.28, 0.6, 0.95, 0.6];
       </g>
     </svg>
     <div
-      class="relative -mt-1 grid grid-cols-[1fr_1.35fr] gap-2 text-[10px] font-semibold tracking-[0.05em] sm:text-[12px] sm:tracking-[0.12em] text-on-plum-subtle"
+      class="relative -mt-1 grid grid-cols-[1fr_1.35fr] gap-2 text-xs font-semibold tracking-[0.05em] sm:text-[13px] sm:tracking-[0.12em] text-on-plum-subtle"
       aria-hidden="true"
     >
       <span class="pl-[8%]">THYROÏDE</span>

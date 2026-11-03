@@ -18,12 +18,12 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         question: 'Comment prendre rendez-vous ?',
         answer:
-          "En ligne : créez votre compte avec votre numéro de téléphone, confirmez le code reçu par SMS, puis choisissez votre créneau. Vous pouvez aussi appeler le cabinet pendant les horaires d'ouverture.",
+          "En ligne : choisissez votre créneau, laissez votre nom et votre téléphone, c'est tout. Avec une adresse e-mail, vous recevez la confirmation et le rappel de la veille. Vous pouvez aussi appeler le cabinet pendant les horaires d'ouverture.",
       },
       {
         question: 'Dois-je créer un compte pour réserver ?',
         answer:
-          'Oui, la réservation en ligne passe par un compte. Il se crée en une minute et vous permet de retrouver vos rendez-vous et vos documents.',
+          'Non. Un compte reste possible, après le rendez-vous, pour retrouver vos rendez-vous et vos documents au même endroit.',
       },
       {
         question: 'Comment annuler ou déplacer un rendez-vous ?',

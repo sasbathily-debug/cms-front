@@ -60,7 +60,7 @@
             class="absolute -top-[13px] left-1/2 h-7 w-24 -translate-x-1/2 rotate-[2.5deg] bg-accent-500/60"
           ></span>
           <span
-            class="font-display text-[11.5px] font-semibold tracking-[0.14em] text-accent-ink"
+            class="font-display text-xs font-semibold tracking-[0.14em] text-accent-ink"
             >{{ slotTicket() ? 'PROCHAIN CRÉNEAU LIBRE' : 'RENDEZ-VOUS EN LIGNE' }}</span
           >
           @if (slotTicket(); as t) {
@@ -113,7 +113,7 @@
             </svg>
             <app-open-now variant="bande" class="bande-item" style="--r: 0" />
             <div class="bande-item flex flex-col gap-1.5" style="--r: 1">
-              <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">HORAIRES</span>
+              <span class="text-xs font-semibold tracking-[0.2em] text-peach">HORAIRES</span>
               <span class="text-[15.5px] leading-normal text-on-plum">
                 @for (line of hours.homeLines(); track $index) {
                   {{ line }}<br />
@@ -121,7 +121,7 @@
               </span>
             </div>
             <div class="bande-item flex min-w-0 flex-col gap-1.5" style="--r: 2">
-              <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach"
+              <span class="text-xs font-semibold tracking-[0.2em] text-peach"
                 >TÉLÉPHONE ET WHATSAPP</span
               >
               <a
@@ -131,7 +131,7 @@
               >
             </div>
             <div class="bande-item flex flex-col gap-1.5" style="--r: 3">
-              <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">ADRESSE</span>
+              <span class="text-xs font-semibold tracking-[0.2em] text-peach">ADRESSE</span>
               <span class="text-[15.5px] leading-normal text-on-plum">
                 @if (site.street()) {
                   {{ site.street() }}<br />

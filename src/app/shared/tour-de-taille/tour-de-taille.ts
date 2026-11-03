@@ -69,16 +69,16 @@ import { Component } from '@angular/core';
       </svg>
       <figcaption class="contents">
         <span
-          class="absolute right-[79.1%] top-[calc(172/340*100%-0.6em)] text-right text-[12.5px] leading-tight text-on-plum"
+          class="absolute right-[79.1%] top-[calc(172/340*100%-0.6em)] text-right text-[13px] leading-tight text-on-plum"
           >Dernières côtes</span
         >
         <span
-          class="absolute right-[79.1%] top-[calc(236/340*100%-0.6em)] text-right text-[12.5px] leading-tight text-on-plum"
+          class="absolute right-[79.1%] top-[calc(236/340*100%-0.6em)] text-right text-[13px] leading-tight text-on-plum"
           >Haut des hanches</span
         >
         <span class="absolute left-[68.2%] top-[calc(204/340*100%-1.05em)] w-[31.8%] leading-tight">
-          <span class="block text-[12.5px] font-semibold text-peach">On mesure ici</span>
-          <span class="block text-[11.5px] text-on-plum-subtle">à mi-distance</span>
+          <span class="block text-[13px] font-semibold text-peach">On mesure ici</span>
+          <span class="block text-xs text-on-plum-subtle">à mi-distance</span>
         </span>
       </figcaption>
     </figure>

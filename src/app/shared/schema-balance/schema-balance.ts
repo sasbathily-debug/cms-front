@@ -105,7 +105,7 @@ const DEPENSE = [3, 3, 2, 3];
       </g>
     </svg>
     <div
-      class="relative -mt-1 flex justify-between px-[8%] text-[10px] font-semibold tracking-[0.05em] sm:text-[12px] sm:tracking-[0.12em] text-on-plum-subtle"
+      class="relative -mt-1 flex justify-between px-[8%] text-xs font-semibold tracking-[0.05em] sm:text-[13px] sm:tracking-[0.12em] text-on-plum-subtle"
       aria-hidden="true"
     >
       <span>CE QU'ON MANGE</span><span>CE QU'ON DÉPENSE</span>

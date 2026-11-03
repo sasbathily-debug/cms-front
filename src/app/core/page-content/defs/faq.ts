@@ -10,7 +10,7 @@ const defaults = {
   bulles: [
     {
       q: 'Dois-je créer un compte pour réserver ?',
-      a: 'Oui, en une minute avec votre numéro de téléphone.',
+      a: 'Non. Votre nom et votre téléphone suffisent.',
     },
     { q: 'Que dois-je apporter ?', a: 'Vos analyses récentes et la liste de vos médicaments.' },
     {

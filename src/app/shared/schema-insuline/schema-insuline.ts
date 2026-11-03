@@ -132,7 +132,7 @@ const DEPARTS: [number, number][] = [
       </div>
 
       <div
-        class="relative -mb-2 h-4 text-[12px] font-semibold tracking-[0.14em] text-on-plum-subtle"
+        class="relative -mb-2 h-4 text-[13px] font-semibold tracking-[0.14em] text-on-plum-subtle"
         aria-hidden="true"
       >
         <span class="absolute" style="left: 4.7%">SANG</span>
@@ -219,7 +219,7 @@ const DEPARTS: [number, number][] = [
         }
       </svg>
 
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[12.5px] text-on-plum-subtle">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-on-plum-subtle">
         <span class="inline-flex items-center gap-2"
           ><svg width="14" height="14" viewBox="-8 -8 16 16" aria-hidden="true">
             <use href="#sucre" fill="var(--color-accent-500)" /></svg

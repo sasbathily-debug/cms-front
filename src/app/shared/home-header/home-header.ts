@@ -81,7 +81,7 @@ export class HomeHeader implements OnDestroy {
     if (!tile.sym) {
       return 'font-display font-bold leading-[1.1] ' + (this.bar() ? 'text-[13px]' : 'text-[15px]');
     }
-    return (this.bar() ? 'whitespace-nowrap text-[11px]' : 'text-[12.5px]') + ' font-medium';
+    return (this.bar() ? 'whitespace-nowrap text-xs' : 'text-[13px]') + ' font-medium';
   }
   readonly ctaClass = computed(
     () =>
