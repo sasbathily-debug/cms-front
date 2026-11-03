@@ -57,6 +57,41 @@
         class="flex min-w-0 flex-[1_1_560px] flex-col gap-[26px] rounded-[32px] border border-line bg-surface px-5 py-8 sm:rounded-[40px] sm:p-12"
       >
         @if (!submitted()) {
+          @if (dernier()) {
+            <div class="flex flex-col gap-3 rounded-[22px] border border-line bg-sunken p-5">
+              <span class="text-xs font-semibold tracking-[0.1em] text-accent-800"
+                >VOTRE PROCHAIN RENDEZ-VOUS</span
+              >
+              <span class="font-display text-[22px] font-bold leading-tight text-fg">{{
+                dernierLabel()
+              }}</span>
+              <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[15px] font-semibold">
+                <button
+                  type="button"
+                  (click)="addLastToCalendar()"
+                  class="text-accent-800 underline underline-offset-4"
+                >
+                  Ajouter à mon calendrier
+                </button>
+                @if (messageDernier()) {
+                  <a
+                    [href]="messageDernier()"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-accent-800 underline underline-offset-4"
+                    >Déplacer ou annuler</a
+                  >
+                }
+                <button
+                  type="button"
+                  (click)="forgetLast()"
+                  class="font-normal text-muted underline underline-offset-4"
+                >
+                  Masquer
+                </button>
+              </div>
+            </div>
+          }
           <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
             <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-fg">
               {{ c().formulaire.titre }}
@@ -295,6 +330,27 @@
                 Prendre un autre rendez-vous
               </button>
             </div>
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[15px] font-semibold">
+              <button
+                type="button"
+                (click)="addConfirmedToCalendar()"
+                class="text-accent-800 underline underline-offset-4"
+              >
+                Ajouter à mon calendrier
+              </button>
+              @if (messageConfirme()) {
+                <a
+                  [href]="messageConfirme()"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-accent-800 underline underline-offset-4"
+                  >Déplacer ou annuler</a
+                >
+              }
+            </div>
+            <p class="m-0 max-w-[460px] text-[13.5px] leading-relaxed text-muted">
+              Pour déplacer ou annuler, écrivez au cabinet ou appelez le {{ site.phone() }}.
+            </p>
             @if (guestBooking()) {
               <p class="m-0 max-w-[460px] text-[13.5px] leading-relaxed text-muted">
                 Envie de retrouver votre historique ?

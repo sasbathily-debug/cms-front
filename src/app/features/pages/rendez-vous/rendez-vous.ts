@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { Analytics } from '../../../core/analytics';
+import { icsFile } from '../../../core/calendar';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
@@ -13,6 +14,27 @@ import { PageContent } from '../../../core/services/page-content';
 import { RENDEZ_VOUS } from '../../../core/page-content/defs/rendez-vous';
 import { OpeningHours } from '../../../core/services/opening-hours';
 import { SiteSettings } from '../../../core/services/site-settings';
+
+/** Le dernier rendez-vous pris sur cet appareil : seulement la date, l'heure et le motif (rien de personnel). */
+interface DernierRdv {
+  date: string;
+  time: string;
+  reason: string;
+}
+
+const CLE_DERNIER_RDV = 'rdv-dernier';
+
+function lireDernierRdv(): DernierRdv | null {
+  try {
+    const brut = localStorage.getItem(CLE_DERNIER_RDV);
+    if (!brut) return null;
+    const rdv = JSON.parse(brut) as DernierRdv;
+    // Un rendez-vous passé n'a plus besoin d'être rappelé.
+    return rdv?.date && rdv.date >= new Date().toISOString().slice(0, 10) ? rdv : null;
+  } catch {
+    return null;
+  }
+}
 
 const MOTIFS = ['Première consultation', 'Suivi', "Résultats d'analyses", 'Nutrition', 'Autre'];
 
@@ -59,6 +81,59 @@ export class RendezVous implements OnInit {
   /** Le rendez-vous a été pris sans compte ; `guestVerified` dit si l'e-mail a été confirmé par le code. */
   readonly guestBooking = signal(false);
   readonly guestVerified = signal(false);
+
+  /** Le dernier rendez-vous pris depuis cet appareil, tant qu'il n'est pas passé. */
+  readonly dernier = signal<DernierRdv | null>(lireDernierRdv());
+  readonly dernierLabel = computed(() => {
+    const d = this.dernier();
+    return d ? formatSlot(d.date, d.time) : '';
+  });
+
+  /** « Déplacer ou annuler » : un message WhatsApp prérempli au cabinet (le numéro est aussi donné à côté). */
+  protected messageLink(label: string): string {
+    const base = this.site.whatsappHref();
+    if (!base || !label) return '';
+    const text = `Bonjour, je souhaite déplacer ou annuler mon rendez-vous du ${label}.`;
+    return `${base}${base.includes('?') ? '&' : '?'}text=${encodeURIComponent(text)}`;
+  }
+  readonly messageConfirme = computed(() => this.messageLink(this.confirmedLabel()));
+  readonly messageDernier = computed(() => this.messageLink(this.dernierLabel()));
+
+  /** Télécharge un fichier .ics : l'agenda du téléphone propose alors d'ajouter le rendez-vous. */
+  protected addToCalendar(date: string, time: string): void {
+    const fichier = icsFile({
+      date,
+      time,
+      title: 'Rendez-vous, Dr Aïssatou Mamadou Fall',
+      location: this.site.addressLine() ? `${this.site.addressLine()}, Dakar` : 'Dakar',
+      description: `Pour déplacer ou annuler : ${this.site.phone()}`,
+    });
+    const url = URL.createObjectURL(new Blob([fichier], { type: 'text/calendar;charset=utf-8' }));
+    const lien = document.createElement('a');
+    lien.href = url;
+    lien.download = 'rendez-vous.ics';
+    lien.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  protected addLastToCalendar(): void {
+    const d = this.dernier();
+    if (d) this.addToCalendar(d.date, d.time);
+  }
+
+  protected addConfirmedToCalendar(): void {
+    const v = this.form.getRawValue();
+    if (v.preferredDate && v.preferredTime) this.addToCalendar(v.preferredDate, v.preferredTime);
+  }
+
+  forgetLast(): void {
+    try {
+      localStorage.removeItem(CLE_DERNIER_RDV);
+    } catch {
+      // Navigation privée : rien à effacer.
+    }
+    this.dernier.set(null);
+  }
 
   /** Le message WhatsApp qui prévient le cabinet du rendez-vous qu'on vient de prendre. */
   readonly whatsappConfirm = computed(() => {
@@ -222,6 +297,17 @@ export class RendezVous implements OnInit {
       next: () => {
         this.submitting.set(false);
         this.confirmedLabel.set(formatSlot(v.preferredDate!, v.preferredTime!));
+        const rdv: DernierRdv = {
+          date: v.preferredDate!,
+          time: v.preferredTime!,
+          reason: v.reason ?? '',
+        };
+        try {
+          localStorage.setItem(CLE_DERNIER_RDV, JSON.stringify(rdv));
+        } catch {
+          // Navigation privée : le rappel dans le navigateur n'est qu'un confort.
+        }
+        this.dernier.set(rdv);
         this.guestBooking.set(guest);
         this.guestVerified.set(verified);
         this.submitted.set(true);

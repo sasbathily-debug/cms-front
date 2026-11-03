@@ -72,7 +72,7 @@ describe('rendez-vous sans compte', () => {
     expect(c.errorMessage()).toContain('6 chiffres');
   });
 
-  it("sans e-mail : réserve directement, marqué non vérifié", () => {
+  it('sans e-mail : réserve directement, marqué non vérifié', () => {
     const c = composant();
     c.submit();
     expect(appointments.requestGuestCode).not.toHaveBeenCalled();
@@ -84,7 +84,7 @@ describe('rendez-vous sans compte', () => {
     expect(c.guestVerified()).toBe(false);
   });
 
-  it("créneau déjà pris (409) : vide le créneau et revient au formulaire", () => {
+  it('créneau déjà pris (409) : vide le créneau et revient au formulaire', () => {
     appointments.createGuest.mockReturnValueOnce(
       throwError(() => ({ status: 409, error: { message: 'Créneau indisponible' } })),
     );
@@ -122,5 +122,44 @@ describe('rendez-vous sans compte', () => {
     const c = composant(false, { motif: 'Inconnu' });
     c.ngOnInit();
     expect(c.form.value.reason).toBe('Première consultation');
+  });
+
+  /** Un stockage de remplacement : l'environnement de test n'a pas de vrai `localStorage`. */
+  function faussStockage(): Map<string, string> {
+    const memoire = new Map<string, string>();
+    vi.stubGlobal('localStorage', {
+      getItem: (k: string) => memoire.get(k) ?? null,
+      setItem: (k: string, v: string) => void memoire.set(k, v),
+      removeItem: (k: string) => void memoire.delete(k),
+    });
+    return memoire;
+  }
+
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("garde la date et l'heure du rendez-vous pris, rien de personnel", () => {
+    faussStockage();
+    const c = composant();
+    c.submit();
+    const gardé = JSON.parse(localStorage.getItem('rdv-dernier') ?? 'null');
+    expect(gardé).toEqual({
+      date: '2030-01-07',
+      time: '09:00:00',
+      reason: 'Première consultation',
+    });
+    expect(c.dernier()?.date).toBe('2030-01-07');
+    expect(localStorage.getItem('rdv-dernier')).not.toContain('Awa');
+    c.forgetLast();
+    expect(c.dernier()).toBeNull();
+    expect(localStorage.getItem('rdv-dernier')).toBeNull();
+  });
+
+  it('ignore un rendez-vous gardé qui est déjà passé', () => {
+    faussStockage();
+    localStorage.setItem(
+      'rdv-dernier',
+      JSON.stringify({ date: '2020-01-01', time: '09:00:00', reason: 'Autre' }),
+    );
+    expect(composant().dernier()).toBeNull();
   });
 });
