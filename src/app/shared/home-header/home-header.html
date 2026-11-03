@@ -1,6 +1,6 @@
 <header [class]="headerClass()" (keydown.escape)="closeAll()" (mouseleave)="scheduleClose()">
   <div
-    class="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-6 xl:h-[84px] xl:px-10"
+    class="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-6 xl:h-[84px] xl:px-10 xl:pt-2"
   >
     <a
       routerLink="/"
@@ -22,7 +22,7 @@
     <!-- Ordinateur : les onglets, et le panneau qui s'ouvre sous eux (placé juste après dans la page pour la navigation au clavier) -->
     <nav
       aria-label="Navigation principale"
-      class="hidden self-stretch xl:flex xl:items-end xl:gap-1.5"
+      class="hidden self-stretch xl:flex xl:gap-1.5"
       (mouseenter)="cancelClose()"
     >
       @for (tab of tabs; track tab.key) {

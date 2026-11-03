@@ -131,12 +131,11 @@ export class HomeHeader {
 
   tabClass(key: TabKey): string {
     const open = this.openTab() === key;
-    const size = this.bar() ? 'h-[56px] xl:h-[62px]' : 'h-[62px]';
     const state = open
       ? 'bg-page text-fg'
       : 'text-cream-50 hover:bg-white/10' +
         (this.isCurrent(key) ? ' shadow-[inset_0_-3px_0_var(--color-accent-500)]' : '');
-    return `flex ${size} items-center rounded-t-2xl px-6 font-display text-lg font-medium tracking-[-0.01em] transition-colors duration-200 motion-reduce:transition-none ${state}`;
+    return `flex h-full items-center rounded-t-2xl px-6 font-display text-lg font-medium tracking-[-0.01em] transition-colors duration-200 motion-reduce:transition-none ${state}`;
   }
 
   setIntent(key: string): void {
