@@ -71,6 +71,12 @@ const FIELDS: Field[] = [
         fields: [
           { key: 'nom', label: 'Nom de l’examen', type: 'text' },
           { key: 'texte', label: 'Explication', type: 'textarea' },
+          {
+            key: 'rythme',
+            label: 'Fréquence (facultatif)',
+            type: 'text',
+            hint: 'Par exemple « En général tous les 3 mois ». Laissez vide pour ne rien afficher.',
+          },
         ],
       },
     ],

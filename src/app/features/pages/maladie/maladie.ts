@@ -36,6 +36,11 @@ import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
 export class Maladie {
   protected readonly site = inject(SiteSettings);
 
+  /** Vrai si au moins un examen a une fréquence : on précise alors que le rythme se décide en consultation. */
+  protected avecRythme(c: { priseEnCharge: { examens: { rythme?: string }[] } }): boolean {
+    return c.priseEnCharge.examens.some((e) => !!e.rythme);
+  }
+
   /** Le texte d'urgence cite parfois déjà le numéro : on ne le répète pas dans la même phrase. */
   protected citeLeNumero(texte: string): boolean {
     const chiffres = this.site.emergencyNumber().replace(/\D/g, '');
