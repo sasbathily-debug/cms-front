@@ -13,7 +13,6 @@ const defaults = {
     preuve: "Autrice du Guide pratique de l'alimentation du diabétique",
     boutonPrincipal: 'Prendre rendez-vous',
     boutonSecondaire: 'Mes spécialités',
-    banniere: '/img/photo-1.jpg',
     portrait: '/img/dr-fall-sourire-640.webp',
     portraitAlt: 'Portrait souriant du Dr Aïssatou Mamadou Fall',
   },
@@ -125,12 +124,6 @@ export const A_PROPOS: PageDef<AProposContent> = {
         },
         { key: 'boutonPrincipal', label: 'Texte du bouton orange', type: 'text' },
         { key: 'boutonSecondaire', label: 'Texte du bouton contour', type: 'text' },
-        {
-          key: 'banniere',
-          label: 'Photo de fond en haut de page',
-          type: 'image',
-          hint: 'Format conseillé : large (paysage).',
-        },
         { key: 'portrait', label: 'Portrait', type: 'image' },
         {
           key: 'portraitAlt',
