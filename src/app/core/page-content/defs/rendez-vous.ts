@@ -13,18 +13,18 @@ const defaults = {
       titre: 'Choisissez',
       texte: 'un motif, un jour et une heure parmi les créneaux libres.',
     },
-    { n: '2', titre: 'Vérifiez', texte: 'vos coordonnées, déjà remplies depuis votre compte.' },
+    { n: '2', titre: 'Laissez', texte: 'votre nom et votre téléphone. Pas besoin de compte.' },
     {
       n: '3',
       titre: 'Confirmez',
-      texte: 'et recevez votre confirmation. Un rappel vous est envoyé avant le rendez-vous.',
+      texte: 'et recevez votre confirmation. Avec une adresse e-mail, un rappel vous est envoyé la veille.',
     },
   ],
   aide: { titre: 'Vous préférez nous écrire ou appeler ?' },
-  connexion: {
-    titre: 'Connectez-vous pour réserver',
+  sansCompte: {
+    titre: 'Pas besoin de compte',
     texte:
-      "Un compte nous permet de suivre votre demande, de vous prévenir par e-mail à chaque étape et de retrouver l'historique de vos rendez-vous. Il se crée en une minute.",
+      "Laissez votre nom et votre téléphone. Avec une adresse e-mail, vous recevez la confirmation et le rappel de la veille, et un code vérifie que l'adresse est bien la vôtre. Un compte reste possible après le rendez-vous, pour retrouver votre historique.",
   },
   formulaire: {
     titre: 'Votre rendez-vous',
@@ -83,8 +83,8 @@ export const RENDEZ_VOUS: PageDef<RendezVousContent> = {
       ],
     },
     {
-      key: 'connexion',
-      label: 'Visiteur non connecté',
+      key: 'sansCompte',
+      label: 'Encadré « pas besoin de compte »',
       type: 'group',
       fields: [
         { key: 'titre', label: 'Titre', type: 'text' },

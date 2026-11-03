@@ -52,13 +52,30 @@ export class RendezVous implements OnInit {
   readonly submitted = signal(false);
   readonly confirmedLabel = signal('');
   readonly errorMessage = signal<string | null>(null);
+  /** Sans compte et avec une adresse e-mail : le code a été envoyé, on attend qu'il soit saisi. */
+  readonly awaitingCode = signal(false);
+  readonly resent = signal(false);
+  /** Le rendez-vous a été pris sans compte ; `guestVerified` dit si l'e-mail a été confirmé par le code. */
+  readonly guestBooking = signal(false);
+  readonly guestVerified = signal(false);
+
+  /** Le message WhatsApp qui prévient le cabinet du rendez-vous qu'on vient de prendre. */
+  readonly whatsappConfirm = computed(() => {
+    const base = this.site.whatsappHref();
+    if (!base) return '';
+    const v = this.form.getRawValue();
+    const text = `Bonjour, c'est ${v.fullName}. Je viens de prendre rendez-vous : ${this.confirmedLabel()}. Merci de me confirmer.`;
+    return `${base}${base.includes('?') ? '&' : '?'}text=${encodeURIComponent(text)}`;
+  });
 
   protected readonly c = inject(PageContent).use(RENDEZ_VOUS);
 
   readonly form = this.fb.group({
     fullName: ['', Validators.required],
     phone: ['', Validators.required],
-    email: [''],
+    email: ['', Validators.email],
+    code: [''],
+    website: [''],
     reason: [MOTIFS[0], Validators.required],
     preferredDate: [''],
     preferredTime: [''],
@@ -108,45 +125,120 @@ export class RendezVous implements OnInit {
     const v = this.form.getRawValue();
     if (this.form.invalid || !v.preferredDate || !v.preferredTime) {
       this.form.markAllAsTouched();
-      this.errorMessage.set('Merci de choisir un créneau et de compléter les champs obligatoires.');
+      this.errorMessage.set(
+        this.form.controls.email.invalid
+          ? "L'adresse e-mail ne semble pas valide."
+          : 'Merci de choisir un créneau et de compléter les champs obligatoires.',
+      );
+      return;
+    }
+    this.errorMessage.set(null);
+
+    if (this.isAuthenticated()) {
+      this.book(false, true, () =>
+        this.appointmentService.create({
+          fullName: v.fullName!,
+          phone: v.phone!,
+          email: v.email || undefined,
+          reason: v.reason!,
+          preferredDate: v.preferredDate!,
+          preferredTime: v.preferredTime!,
+          message: v.message || undefined,
+        }),
+      );
       return;
     }
 
-    this.submitting.set(true);
-    this.errorMessage.set(null);
-
-    this.appointmentService
-      .create({
+    // Sans compte. Avec une adresse e-mail : un code la vérifie ; sans adresse : le cabinet confirmera lui-même.
+    if (v.email && !this.awaitingCode()) {
+      this.sendCode();
+      return;
+    }
+    if (v.email && !/^\d{6}$/.test((v.code ?? '').trim())) {
+      this.errorMessage.set('Le code a 6 chiffres. Vérifiez votre boîte de réception.');
+      return;
+    }
+    this.book(true, !!v.email, () =>
+      this.appointmentService.createGuest({
         fullName: v.fullName!,
         phone: v.phone!,
         email: v.email || undefined,
         reason: v.reason!,
-        preferredDate: v.preferredDate,
-        preferredTime: v.preferredTime,
+        preferredDate: v.preferredDate!,
+        preferredTime: v.preferredTime!,
         message: v.message || undefined,
-      })
-      .subscribe({
-        next: () => {
-          this.submitting.set(false);
-          this.confirmedLabel.set(formatSlot(v.preferredDate!, v.preferredTime!));
-          this.submitted.set(true);
-          this.analytics.track('rendez_vous_reserve');
-        },
-        error: (err) => {
-          this.submitting.set(false);
-          this.errorMessage.set(
-            err.error?.message || 'Une erreur est survenue, veuillez réessayer.',
-          );
-          if (err.status === 409) {
-            this.form.patchValue({ preferredDate: '', preferredTime: '' });
-            this.refreshSlots();
-          }
-        },
-      });
+        code: v.email ? (v.code ?? '').trim() : undefined,
+        website: v.website ?? '',
+      }),
+    );
+  }
+
+  /** Envoie (ou renvoie) le code à l'adresse e-mail saisie. */
+  sendCode(resend = false): void {
+    const v = this.form.getRawValue();
+    this.submitting.set(true);
+    this.errorMessage.set(null);
+    this.appointmentService.requestGuestCode(v.email!, v.fullName!, v.website ?? '').subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.awaitingCode.set(true);
+        this.resent.set(resend);
+      },
+      error: (err) => {
+        this.submitting.set(false);
+        this.errorMessage.set(
+          err.status === 429
+            ? err.error?.message || 'Trop de demandes. Réessayez dans quelques minutes.'
+            : "Le code n'a pas pu être envoyé. Vérifiez l'adresse e-mail ou écrivez-nous sur WhatsApp.",
+        );
+      },
+    });
+  }
+
+  /** Revient aux champs pour corriger l'adresse e-mail ou le numéro avant de redemander un code. */
+  editDetails(): void {
+    this.awaitingCode.set(false);
+    this.form.patchValue({ code: '' });
+    this.errorMessage.set(null);
+  }
+
+  private book(
+    guest: boolean,
+    verified: boolean,
+    request: () => ReturnType<AppointmentService['create']>,
+  ): void {
+    const v = this.form.getRawValue();
+    this.submitting.set(true);
+    request().subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.confirmedLabel.set(formatSlot(v.preferredDate!, v.preferredTime!));
+        this.guestBooking.set(guest);
+        this.guestVerified.set(verified);
+        this.submitted.set(true);
+        this.analytics.track(guest ? 'rendez_vous_reserve_sans_compte' : 'rendez_vous_reserve');
+      },
+      error: (err) => {
+        this.submitting.set(false);
+        this.errorMessage.set(
+          err.status === 429
+            ? err.error?.message ||
+                'Trop de demandes. Réessayez plus tard ou écrivez-nous sur WhatsApp.'
+            : err.error?.message || 'Une erreur est survenue, veuillez réessayer.',
+        );
+        if (err.status === 409) {
+          this.form.patchValue({ preferredDate: '', preferredTime: '' });
+          this.awaitingCode.set(false);
+          this.refreshSlots();
+        }
+      },
+    });
   }
 
   reset(): void {
     this.submitted.set(false);
+    this.awaitingCode.set(false);
+    this.form.patchValue({ code: '' });
     this.form.patchValue({ preferredDate: '', preferredTime: '', message: '' });
     this.refreshSlots();
   }

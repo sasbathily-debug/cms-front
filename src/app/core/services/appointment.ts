@@ -15,6 +15,12 @@ export interface AppointmentRequest {
   message?: string;
 }
 
+/** Rendez-vous sans compte : `code` est celui reçu par e-mail (exigé quand une adresse est donnée) ; `website` est un champ piège pour les robots. */
+export interface GuestAppointmentRequest extends AppointmentRequest {
+  code?: string;
+  website?: string;
+}
+
 export interface AppointmentFilter {
   status?: AppointmentStatus | null;
   date?: string | null;
@@ -45,6 +51,16 @@ export class AppointmentService {
 
   create(request: AppointmentRequest): Observable<AppointmentDto> {
     return this.http.post<AppointmentDto>(`${environment.apiUrl}/appointments`, request);
+  }
+
+  /** Envoie à l'adresse e-mail du patient le code qui confirme un rendez-vous pris sans compte. */
+  requestGuestCode(email: string, fullName: string, website = ''): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/appointments/guest/code`, { email, fullName, website });
+  }
+
+  /** Réserve un créneau sans compte (nom et téléphone suffisent ; l'e-mail demande le code reçu). */
+  createGuest(request: GuestAppointmentRequest): Observable<AppointmentDto> {
+    return this.http.post<AppointmentDto>(`${environment.apiUrl}/appointments/guest`, request);
   }
 
   findMine(page = 0, size = 20): Observable<Page<AppointmentDto>> {

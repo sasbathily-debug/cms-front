@@ -11,6 +11,8 @@ export interface AppointmentDto {
   message: string | null;
   userId: string | null;
   status: AppointmentStatus;
+  /** Faux pour un rendez-vous pris sans compte et sans e-mail confirmé par code : le cabinet confirme alors lui-même. */
+  contactVerified?: boolean;
   createdAt: string;
 }
 
