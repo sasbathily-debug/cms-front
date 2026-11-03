@@ -21,37 +21,39 @@
           >
         </div>
       </div>
-      <div
-        appInView
-        class="photo-life relative h-[380px] w-full min-w-0 overflow-hidden rounded-none bg-plum-800 sm:h-[460px] lg:h-[520px] lg:w-auto lg:flex-[0_1_420px]"
-      >
-        <img
-          [src]="c().hero.photo | optimizedImage: 900"
-          [attr.srcset]="c().hero.photo | srcset"
-          sizes="(max-width: 1023px) 92vw, 540px"
-          [alt]="c().hero.photoAlt"
-          width="1024"
-          height="793"
-          fetchpriority="high"
-          class="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-[50%_30%]"
-          [appParallax]="0.08"
-          [parallaxMax]="20"
-        />
+      <div class="relative w-full min-w-0 lg:w-auto lg:flex-[0_1_420px]">
         <div
-          aria-hidden="true"
-          class="absolute inset-0"
-          style="
-            background: linear-gradient(
-              180deg,
-              rgba(31, 18, 38, 0) 60%,
-              rgba(31, 18, 38, 0.45) 100%
-            );
-          "
-        ></div>
+          appInView
+          class="photo-life relative h-[380px] w-full overflow-hidden rounded-none bg-plum-800 sm:h-[460px] lg:h-[520px]"
+        >
+          <img
+            [src]="c().hero.photo | optimizedImage: 900"
+            [attr.srcset]="c().hero.photo | srcset"
+            sizes="(max-width: 1023px) 92vw, 540px"
+            [alt]="c().hero.photoAlt"
+            width="1024"
+            height="793"
+            fetchpriority="high"
+            class="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-[50%_30%]"
+            [appParallax]="0.08"
+            [parallaxMax]="20"
+          />
+          <div
+            aria-hidden="true"
+            class="absolute inset-0"
+            style="
+              background: linear-gradient(
+                180deg,
+                rgba(31, 18, 38, 0) 60%,
+                rgba(31, 18, 38, 0.45) 100%
+              );
+            "
+          ></div>
+        </div>
         <!-- Carte du cabinet, posée de travers sur la photo -->
         <div
           aria-hidden="true"
-          class="absolute bottom-7 left-5 flex -rotate-[30deg] flex-col gap-1 rounded-none border-2 border-plum-900 bg-cream-50 px-4 py-3 shadow-[0_10px_24px_rgba(20,11,25,0.4)] sm:bottom-10 sm:left-7 sm:px-5 sm:py-3.5"
+          class="absolute left-1 -bottom-2 flex -rotate-[30deg] flex-col gap-1 rounded-none border-2 border-plum-900 bg-cream-50 px-4 py-3 shadow-[0_10px_24px_rgba(20,11,25,0.4)] sm:-left-4 sm:bottom-8 sm:px-5 sm:py-3.5"
         >
           <span class="text-[10px] font-bold tracking-[0.16em] text-accent-700 sm:text-[11px]"
             >CABINET MÉDICAL</span
