@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { Analytics } from '../../../core/analytics';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { SlotPicker } from '../../../shared/slot-picker/slot-picker';
 import { AppointmentService } from '../../../core/services/appointment';
@@ -40,6 +40,7 @@ export class RendezVous implements OnInit {
   private readonly availabilityService = inject(AvailabilityService);
   private readonly currentUserStore = inject(CurrentUserStore);
   private readonly auth = inject(Auth);
+  private readonly route = inject(ActivatedRoute);
   protected readonly site = inject(SiteSettings);
   protected readonly openingHours = inject(OpeningHours);
 
@@ -97,6 +98,14 @@ export class RendezVous implements OnInit {
 
   ngOnInit(): void {
     this.refreshSlots();
+    // Venu du menu « Je viens pour… » : le motif et le sujet sont déjà remplis.
+    const params = this.route.snapshot.queryParamMap;
+    const motif = params.get('motif');
+    if (motif && MOTIFS.includes(motif)) this.form.patchValue({ reason: motif });
+    const sujet = params.get('sujet')?.trim().slice(0, 80);
+    if (sujet && !this.form.value.message) {
+      this.form.patchValue({ message: `Je viens pour : ${sujet}.` });
+    }
   }
 
   private refreshSlots(): void {

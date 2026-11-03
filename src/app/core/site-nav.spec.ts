@@ -1,19 +1,15 @@
-import { NAV_GROUPS } from './site-nav';
+import { SPECIALTIES } from './specialties';
+import { INTENTS, bookingQuery } from './site-nav';
 
-describe('menu du site', () => {
-  it('chaque panneau a un lien au bas et au moins une carte', () => {
-    for (const group of NAV_GROUPS) {
-      expect(group.foot?.label, group.key).toBeTruthy();
-      expect(group.foot?.route.startsWith('/'), group.key).toBe(true);
-      expect(group.cards?.length, group.key).toBeGreaterThan(0);
-    }
+describe('menu « Je viens pour… »', () => {
+  it('formule chaque spécialité du site, dans le même ordre', () => {
+    expect(INTENTS.map((i) => i.key)).toEqual(SPECIALTIES.map((s) => s.key));
   });
 
-  it("n'a pas de carte qui fait doublon avec le bouton « Prendre rendez-vous » du bas du panneau", () => {
-    for (const group of NAV_GROUPS) {
-      for (const card of group.cards ?? []) {
-        expect(card.route, `${group.key} / ${card.title}`).not.toBe('/rendez-vous');
-      }
-    }
+  it('préremplit le motif quand il existe dans le formulaire, et toujours le sujet', () => {
+    const nutrition = INTENTS.find((i) => i.key === 'nu')!;
+    expect(bookingQuery(nutrition)).toEqual({ motif: 'Nutrition', sujet: 'mon alimentation' });
+    const diabete = INTENTS.find((i) => i.key === 'di')!;
+    expect(bookingQuery(diabete)).toEqual({ sujet: 'mon diabète' });
   });
 });

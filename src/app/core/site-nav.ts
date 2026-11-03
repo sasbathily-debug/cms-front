@@ -5,25 +5,6 @@ export interface NavLink {
   hint?: string;
 }
 
-/** Carte photo affichée à côté de la liste dans le sous-menu (photos de la maquette, à remplacer par celles validées). */
-export interface NavCard {
-  title: string;
-  hint: string;
-  route: string;
-  image: string;
-}
-
-export interface NavGroup {
-  key: string;
-  label: string;
-  route: string;
-  links: NavLink[];
-  allLabel?: string;
-  /** Lien au bas du panneau du menu sur ordinateur, à côté de l'étiquette du prochain créneau. */
-  foot?: { label: string; route: string };
-  cards?: NavCard[];
-}
-
 export const SPECIALTY_LINKS: NavLink[] = [
   { sym: 'Di', label: 'Diabète', route: '/specialites/diabete' },
   { sym: 'Th', label: 'Thyroïde', route: '/specialites/thyroide' },
@@ -33,101 +14,27 @@ export const SPECIALTY_LINKS: NavLink[] = [
   { sym: 'Ch', label: 'Cholestérol', route: '/specialites/cholesterol' },
 ];
 
-export const NAV_GROUPS: NavGroup[] = [
-  {
-    key: 'specialites',
-    label: 'Spécialités',
-    route: '/specialites',
-    links: SPECIALTY_LINKS,
-    allLabel: 'Toutes les spécialités',
-    foot: { label: 'Toutes les spécialités', route: '/specialites' },
-    cards: [
-      {
-        title: 'Nos spécialités',
-        hint: 'Diabète, thyroïde, poids…',
-        route: '/specialites',
-        image: '/img/photo-3.jpg',
-      },
-    ],
-  },
-  {
-    key: 'cabinet',
-    label: 'Le cabinet',
-    route: '/le-cabinet',
-    foot: { label: 'Nous contacter', route: '/contact' },
-    cards: [
-      {
-        title: 'Le cabinet',
-        hint: 'Le lieu et ceux qui vous accueillent',
-        route: '/le-cabinet',
-        image: '/img/photo-1.jpg',
-      },
-    ],
-    links: [
-      {
-        sym: 'Ap',
-        label: 'À propos',
-        route: '/a-propos',
-        hint: 'Parcours et valeurs de la doctoresse',
-      },
-      {
-        sym: 'Éq',
-        label: "L'équipe",
-        route: '/le-cabinet',
-        hint: 'Les personnes qui vous accueillent',
-      },
-      {
-        sym: 'In',
-        label: 'Infos pratiques et accès',
-        route: '/infos-pratiques',
-        hint: 'Adresse, horaires, plan',
-      },
-    ],
-  },
-  {
-    key: 'patients',
-    label: 'Patients',
-    route: '/premiere-consultation',
-    foot: { label: 'Conseils santé', route: '/conseils-sante' },
-    cards: [
-      {
-        title: 'Votre première consultation',
-        hint: 'Bien préparer votre visite',
-        route: '/premiere-consultation',
-        image: '/img/photo-2.jpg',
-      },
-    ],
-    links: [
-      {
-        sym: 'Pv',
-        label: 'Première visite',
-        route: '/premiere-consultation',
-        hint: 'Déroulé et documents à apporter',
-      },
-      {
-        sym: 'Ta',
-        label: 'Tarifs et assurances',
-        route: '/infos-pratiques',
-        hint: 'Prix et modes de paiement',
-      },
-      { sym: 'Fq', label: 'Questions fréquentes', route: '/faq', hint: 'Les réponses courtes' },
-      { sym: 'Me', label: 'Mon espace', route: '/client', hint: 'Rendez-vous et documents' },
-    ],
-  },
+/**
+ * « Je viens pour… » : chaque spécialité du menu est formulée à la première personne, comme le dirait un patient.
+ * `motif` préremplit le motif de la réservation quand il existe tel quel dans le formulaire.
+ */
+export interface Intent {
+  /** Clé de la spécialité (voir `SPECIALTIES`). */
+  key: string;
+  verbe: string;
+  motif?: string;
+}
+
+export const INTENTS: Intent[] = [
+  { key: 'di', verbe: 'mon diabète' },
+  { key: 'th', verbe: 'ma thyroïde' },
+  { key: 'ob', verbe: 'mon poids' },
+  { key: 'nu', verbe: 'mon alimentation', motif: 'Nutrition' },
+  { key: 'ho', verbe: 'mes cycles, mes hormones' },
+  { key: 'ch', verbe: 'un résultat d’analyse', motif: "Résultats d'analyses" },
 ];
 
-export const NAV_SIMPLE: { key: string; label: string; route: string }[] = [
-  { key: 'conseils', label: 'Conseils santé', route: '/conseils-sante' },
-  { key: 'contact', label: 'Contact', route: '/contact' },
-];
-
-/** Charge en douce les photos des sous-menus quand le navigateur est au repos, pour qu'elles soient là à la première ouverture. */
-export function preloadNavImages(): void {
-  const preload = (): void => {
-    for (const group of NAV_GROUPS) {
-      for (const card of group.cards ?? []) new Image().src = card.image;
-    }
-  };
-  if ('requestIdleCallback' in window) requestIdleCallback(preload);
-  else setTimeout(preload, 1500);
+/** Adresse de la réservation préremplie pour une spécialité. */
+export function bookingQuery(intent: Intent): Record<string, string> {
+  return intent.motif ? { motif: intent.motif, sujet: intent.verbe } : { sujet: intent.verbe };
 }

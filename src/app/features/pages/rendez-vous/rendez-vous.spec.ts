@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { vi } from 'vitest';
 import { Analytics } from '../../../core/analytics';
@@ -15,10 +15,14 @@ describe('rendez-vous sans compte', () => {
     requestGuestCode: vi.fn(() => of(void 0)),
   };
 
-  function composant(authenticated = false) {
+  function composant(authenticated = false, query: Record<string, string> = {}) {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParamMap: convertToParamMap(query) } },
+        },
         { provide: AppointmentService, useValue: appointments },
         { provide: AvailabilityService, useValue: { getAvailableSlots: () => of([]) } },
         { provide: Auth, useValue: { isAuthenticated: () => authenticated } },
@@ -105,5 +109,18 @@ describe('rendez-vous sans compte', () => {
     c.submit();
     expect(appointments.requestGuestCode).not.toHaveBeenCalled();
     expect(c.errorMessage()).toContain('e-mail');
+  });
+
+  it('venu du menu « Je viens pour… » : motif et sujet sont préremplis', () => {
+    const c = composant(false, { motif: 'Nutrition', sujet: 'mon alimentation' });
+    c.ngOnInit();
+    expect(c.form.value.reason).toBe('Nutrition');
+    expect(c.form.value.message).toBe('Je viens pour : mon alimentation.');
+  });
+
+  it('ignore un motif qui ne figure pas dans le formulaire', () => {
+    const c = composant(false, { motif: 'Inconnu' });
+    c.ngOnInit();
+    expect(c.form.value.reason).toBe('Première consultation');
   });
 });

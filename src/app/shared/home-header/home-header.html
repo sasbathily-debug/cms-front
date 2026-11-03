@@ -1,6 +1,13 @@
-<header [class]="headerClass()" (keydown.escape)="closeAll()">
-  <div [class]="innerClass()">
-    <a routerLink="/" class="flex shrink-0 items-center gap-3 text-white" (click)="closeAll()">
+<header [class]="headerClass()" (keydown.escape)="closeAll()" (mouseleave)="scheduleClose()">
+  <div
+    class="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-6 xl:h-[84px] xl:px-10"
+  >
+    <a
+      routerLink="/"
+      class="flex shrink-0 items-center gap-3 text-white"
+      (click)="closeAll()"
+      (mouseenter)="scheduleClose()"
+    >
       <span
         class="pulse-logo flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] bg-accent-500"
       >
@@ -12,177 +19,340 @@
       </span>
     </a>
 
-    <div class="hidden items-center gap-3 xl:flex">
-      <nav
-        aria-label="Navigation principale"
-        class="flex gap-2.5"
+    <!-- Ordinateur : les onglets, et le panneau qui s'ouvre sous eux (placé juste après dans la page pour la navigation au clavier) -->
+    <nav
+      aria-label="Navigation principale"
+      class="hidden self-stretch xl:flex xl:items-end xl:gap-1.5"
+      (mouseenter)="cancelClose()"
+    >
+      @for (tab of tabs; track tab.key) {
+        <button
+          type="button"
+          [class]="tabClass(tab.key)"
+          [attr.aria-expanded]="openTab() === tab.key"
+          aria-controls="menu-panneau"
+          (mouseenter)="hover(tab.key)"
+          (pointerdown)="tabPointerDown($event)"
+          (click)="tabClick(tab.key)"
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </nav>
+
+    @if (openTab(); as tab) {
+      <div
+        id="menu-panneau"
+        class="absolute left-1/2 top-full z-50 hidden w-[min(1232px,calc(100vw-48px))] -translate-x-1/2 overflow-hidden rounded-b-[28px] bg-page text-fg shadow-[0_40px_80px_-30px_rgba(0,0,0,0.5)] xl:block"
         (mouseenter)="cancelClose()"
-        (mouseleave)="scheduleClose()"
       >
-        @for (tile of tiles(); track tile.key) {
-          <div
-            (mouseenter)="
-              tile.group ? hover(tile.key, $any($event.currentTarget)) : scheduleClose()
-            "
-          >
-            <a
-              [routerLink]="tile.route"
-              (pointerdown)="tilePointerDown($event, tile.key)"
-              (click)="tileClick($event, tile)"
-              [class]="tileClass(tile)"
-            >
-              <span class="flex items-start justify-between">
-                <span [class]="symClass()">{{ tile.sym }}</span>
-                <span class="text-xs text-on-plum-muted">{{ tile.count }}</span>
-              </span>
-              <span [class]="labelClass(tile)">{{ tile.label }}</span>
-            </a>
-            @if (tile.group && seen().has(tile.key)) {
-              <div
-                [class]="panelClass()"
-                [class.is-open]="openGroup() === tile.key"
-                [attr.aria-hidden]="openGroup() !== tile.key"
-              >
-                <div
-                  class="relative rounded-[24px] border border-line bg-surface shadow-[0_28px_60px_rgba(31,18,38,0.35)]"
+        @switch (tab) {
+          @case ('specialites') {
+            <div class="grid grid-cols-[1.2fr_1.1fr_0.6fr] gap-12 px-14 pb-10 pt-12">
+              <div class="flex flex-col" (mouseleave)="cancelClose()">
+                <span class="mb-2.5 text-sm font-semibold text-accent-800">Je viens pour…</span>
+                @for (it of intents(); track it.key) {
+                  <a
+                    [routerLink]="it.specialty!.route"
+                    (mouseenter)="setIntent(it.key)"
+                    (focus)="setIntent(it.key)"
+                    class="group flex items-center gap-4 border-b border-line py-2 font-display text-[30px] font-medium leading-[1.15] tracking-[-0.03em] transition-colors"
+                    [class]="intentKey() === it.key ? 'text-fg' : 'text-muted'"
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="h-2.5 w-2.5 shrink-0 rounded-full"
+                      [class]="intentKey() === it.key ? 'bg-accent-500' : 'bg-transparent'"
+                    ></span>
+                    <span class="flex-1">{{ it.verbe }}</span>
+                    <span
+                      aria-hidden="true"
+                      class="text-[22px] transition-opacity"
+                      [class]="intentKey() === it.key ? 'opacity-100' : 'opacity-0'"
+                      >→</span
+                    >
+                  </a>
+                }
+              </div>
+              @if (intent(); as it) {
+                <div class="flex flex-col gap-5 rounded-[22px] bg-plum-900 p-[30px] text-white">
+                  <div class="flex items-baseline justify-between gap-4">
+                    <span class="font-display text-[26px] font-semibold tracking-[-0.02em]">{{
+                      it.specialty!.title
+                    }}</span>
+                  </div>
+                  <p class="m-0 text-[15px] leading-[1.55] text-on-plum-muted">
+                    {{ it.specialty!.text }}
+                  </p>
+                  <div class="flex flex-col gap-2">
+                    <span class="text-xs font-semibold tracking-[0.1em] text-peach"
+                      >VOUS POUVEZ CONSULTER SI</span
+                    >
+                    <p class="m-0 text-[15px] leading-[1.55] text-white">
+                      {{ it.specialty!.signs }}
+                    </p>
+                  </div>
+                  <div class="mt-auto flex flex-wrap gap-2.5">
+                    <a
+                      routerLink="/rendez-vous"
+                      [queryParams]="it.query"
+                      class="btn-arrow rounded-xl bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
+                      ><span class="btn-label">Réserver pour ce motif</span></a
+                    >
+                    <a
+                      [routerLink]="it.specialty!.route"
+                      class="rounded-xl border border-white/35 px-5 py-3 font-display text-[15px] font-semibold text-white hover:border-white"
+                      >Lire la page</a
+                    >
+                  </div>
+                </div>
+              }
+              <div class="flex flex-col gap-[18px] pt-[34px]">
+                <h3 class="m-0 font-display text-xl font-semibold">Vous hésitez ?</h3>
+                <p class="m-0 text-[15px] leading-[1.55] text-body">
+                  Décrivez votre situation sur WhatsApp : le cabinet vous dit si une consultation
+                  est adaptée.
+                </p>
+                @if (site.whatsappHref()) {
+                  <a
+                    [href]="site.whatsappHref()"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[15px] font-semibold text-accent-800 hover:underline"
+                    >Écrire au cabinet →</a
+                  >
+                }
+                <span class="h-px bg-line"></span>
+                <a
+                  routerLink="/specialites"
+                  class="text-[15px] font-semibold text-accent-800 hover:underline"
+                  >Toutes les spécialités →</a
                 >
+              </div>
+            </div>
+          }
+          @case ('cabinet') {
+            <div class="grid grid-cols-3 gap-12 px-14 pb-10 pt-12">
+              <div class="flex flex-col gap-3.5">
+                <span class="text-sm font-semibold text-accent-800">Où nous trouver</span>
+                <span
+                  class="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.03em]"
+                  >{{ site.addressLine() }}<br />Dakar</span
+                >
+                @if (site.landmark()) {
+                  <span class="text-[15px] leading-[1.6] text-body">{{ site.landmark() }}</span>
+                }
+                <span class="flex items-center gap-2.5 text-[15px] font-semibold">
                   <span
                     aria-hidden="true"
-                    class="absolute -top-[7px] h-3.5 w-3.5 rotate-45 border-l border-t border-line bg-surface"
-                    [style.left.px]="notchX()"
+                    class="h-[9px] w-[9px] rounded-full"
+                    [class]="status().open ? 'bg-success-solid' : 'bg-subtle'"
                   ></span>
-                  <div class="flex gap-3 p-3">
-                    <div
-                      appSlideHighlight
-                      class="relative grid min-w-0 flex-1 content-start gap-0.5"
-                      [class]="tile.group.links.length > 4 ? 'grid-cols-2' : 'grid-cols-1'"
-                    >
-                      <span
-                        data-hl
-                        aria-hidden="true"
-                        class="pointer-events-none absolute left-0 top-0 h-0 w-0 rounded-[14px] bg-page opacity-0 transition-[transform,width,height,opacity] duration-200 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none"
-                      ></span>
-                      @for (link of tile.group.links; track link.label) {
-                        <a
-                          [routerLink]="link.route"
-                          [style.--i]="$index + 1"
-                          class="nav-item group/link relative z-[1] flex items-center gap-3.5 rounded-[14px] px-3 py-2 text-fg"
-                        >
-                          <!-- Tuile d'élément, comme celles du menu : numéro, symbole, et une comète de lumière au survol -->
-                          <span class="el" aria-hidden="true">
-                            @if (tile.key === 'specialites') {
-                              <span class="el-n">{{ ($index + 1).toString().padStart(2, '0') }}</span>
-                              <span class="el-s">{{ link.sym }}</span>
-                            } @else {
-                              <span class="el-s el-s-num">{{ ($index + 1).toString().padStart(2, '0') }}</span>
-                            }
-                          </span>
-                          <span class="flex min-w-0 flex-1 flex-col gap-0.5">
-                            <span class="font-display text-[15px] font-semibold">{{
-                              link.label
-                            }}</span>
-                            @if (link.hint) {
-                              <span class="text-[13px] text-muted">{{ link.hint }}</span>
-                            }
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            class="-translate-x-1.5 font-bold text-accent-800 opacity-0 transition duration-200 group-hover/link:translate-x-0 group-hover/link:opacity-100 group-focus-visible/link:translate-x-0 group-focus-visible/link:opacity-100 motion-reduce:transition-none"
-                            >→</span
-                          >
-                        </a>
-                      }
-                    </div>
-                    @if (tile.group.cards?.length) {
-                      <div class="flex w-[210px] shrink-0 flex-col gap-3">
-                        @for (card of tile.group.cards; track card.title) {
-                          <a
-                            [routerLink]="card.route"
-                            appSpotlight
-                            [style.--i]="0"
-                            class="nav-item group relative flex min-h-[230px] flex-1 items-end overflow-hidden rounded-[18px] bg-plum-900"
-                          >
-                            <img
-                              [src]="card.image"
-                              alt=""
-                              loading="lazy"
-                              class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            />
-                            <span
-                              aria-hidden="true"
-                              class="absolute inset-0 bg-gradient-to-t from-plum-950/80 via-plum-950/10 to-transparent"
-                            ></span>
-                            <span class="relative block w-full p-4">
-                              <span class="flex flex-col gap-0.5">
-                                <span
-                                  class="font-display text-[17px] font-semibold leading-tight text-white"
-                                  >{{ card.title }}</span
-                                >
-                                <span class="pr-11 text-[13px] leading-snug text-white/80">{{
-                                  card.hint
-                                }}</span>
-                              </span>
-                              <span
-                                class="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-surface text-fg transition-transform duration-300 group-hover:translate-x-0.5"
-                              >
-                                <svg
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.2"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                                >
-                                  <path d="M5 12h14M13 6l6 6-6 6" />
-                                </svg>
-                              </span>
-                            </span>
-                          </a>
-                        }
-                      </div>
-                    }
-                  </div>
-                  @if (tile.group.foot; as foot) {
-                    <div
-                      class="flex flex-wrap items-center justify-between gap-3 rounded-b-[24px] border-t border-line bg-page px-5 py-3"
-                    >
-                      <a
-                        [routerLink]="foot.route"
-                        class="font-display text-[14.5px] font-semibold text-accent-800 hover:underline"
-                        >{{ foot.label }} →</a
-                      >
-                      <div class="[&>app-slot-ticket>a.border]:w-[290px]">
-                        <!-- L'étiquette du créneau tient lieu de bouton ; sans créneau libre, le bouton la remplace -->
-                        <app-slot-ticket>
-                          <a
-                            routerLink="/rendez-vous"
-                            class="btn-arrow block rounded-xl bg-accent-500 px-[18px] py-3.5 font-display text-sm font-bold text-on-accent transition hover:bg-accent-600"
-                            ><span class="btn-label">Prendre rendez-vous</span></a
-                          >
-                        </app-slot-ticket>
-                      </div>
-                    </div>
+                  {{ status().text }}
+                </span>
+                <span class="text-[15px] leading-[1.6] text-body">
+                  @for (line of hours.homeLines(); track line) {
+                    {{ line }}<br />
                   }
+                </span>
+                <div class="mt-1.5 flex flex-wrap gap-2.5">
+                  <a
+                    href="https://www.google.com/maps?q=14.71259593963623,-17.46856689453125"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-xl bg-inverse px-5 py-3 font-display text-[15px] font-semibold text-inverse-fg"
+                    >Itinéraire</a
+                  >
+                  <a
+                    routerLink="/le-cabinet"
+                    class="rounded-xl border border-fg px-5 py-3 font-display text-[15px] font-semibold text-fg"
+                    >Visiter le cabinet</a
+                  >
                 </div>
               </div>
+              <div class="flex flex-col gap-3.5">
+                <span class="text-sm font-semibold text-accent-800">Ce que ça coûte</span>
+                @for (t of tarifs(); track $index) {
+                  <div class="flex justify-between gap-4 border-b border-line py-2.5 text-[15px]">
+                    <span>{{ t.acte }}</span>
+                    <strong class="text-right">{{ t.prix }}</strong>
+                  </div>
+                }
+                <a
+                  routerLink="/infos-pratiques"
+                  class="mt-1.5 text-[15px] font-semibold text-accent-800 hover:underline"
+                  >Assurances et mutuelles →</a
+                >
+              </div>
+              <div class="flex flex-col gap-3.5">
+                <span class="text-sm font-semibold text-accent-800">Le cabinet</span>
+                <a
+                  routerLink="/a-propos"
+                  class="border-b border-line pb-3 font-display text-xl font-medium hover:text-accent-800"
+                  >La doctoresse et son parcours</a
+                >
+                <a
+                  routerLink="/le-cabinet"
+                  class="border-b border-line pb-3 font-display text-xl font-medium hover:text-accent-800"
+                  >L'équipe qui vous accueille</a
+                >
+                <a
+                  routerLink="/infos-pratiques"
+                  class="border-b border-line pb-3 font-display text-xl font-medium hover:text-accent-800"
+                  >Infos pratiques et accès</a
+                >
+                <a
+                  routerLink="/contact"
+                  class="font-display text-xl font-medium hover:text-accent-800"
+                  >Nous contacter</a
+                >
+              </div>
+            </div>
+          }
+          @case ('visite') {
+            <div class="grid grid-cols-[2.2fr_0.8fr] gap-12 px-14 pb-10 pt-12">
+              <div>
+                <h3 class="m-0 mb-[22px] font-display text-[32px] font-semibold tracking-[-0.03em]">
+                  {{ visite().deroule.titre }}
+                </h3>
+                <ol class="m-0 grid list-none grid-cols-4 gap-3.5 p-0">
+                  @for (e of visite().deroule.items; track $index) {
+                    <li
+                      class="flex min-h-[200px] flex-col gap-2.5 rounded-[18px] bg-sunken p-[22px]"
+                    >
+                      <small class="text-xs font-semibold tracking-[0.06em] text-accent-800"
+                        >{{ e.n }} · {{ e.moment }}</small
+                      >
+                      <b class="font-display text-xl font-semibold leading-[1.15]">{{ e.titre }}</b>
+                      <p class="m-0 text-sm leading-[1.5] text-body">{{ e.texte }}</p>
+                    </li>
+                  }
+                </ol>
+              </div>
+              <div class="flex flex-col gap-4">
+                <span class="text-sm font-semibold text-accent-800">Pour préparer</span>
+                <a
+                  routerLink="/premiere-consultation"
+                  class="border-b border-line pb-3 font-display text-xl font-medium hover:text-accent-800"
+                  >Ce qu'il faut apporter</a
+                >
+                <a
+                  routerLink="/faq"
+                  class="border-b border-line pb-3 font-display text-xl font-medium hover:text-accent-800"
+                  >Questions fréquentes</a
+                >
+                <a
+                  routerLink="/infos-pratiques"
+                  class="border-b border-line pb-3 font-display text-xl font-medium hover:text-accent-800"
+                  >Tarifs et assurances</a
+                >
+                <a
+                  [routerLink]="spaceLink()"
+                  class="font-display text-xl font-medium hover:text-accent-800"
+                  >Mon espace patient</a
+                >
+              </div>
+            </div>
+          }
+          @case ('conseils') {
+            <div class="grid grid-cols-[1.2fr_1fr] gap-12 px-14 pb-10 pt-12">
+              <div
+                class="grid grid-cols-[200px_1fr] gap-7 rounded-[22px] bg-plum-900 p-7 text-white"
+              >
+                <img
+                  [src]="conseils().alaune.photo"
+                  alt=""
+                  loading="lazy"
+                  class="h-[260px] w-full rounded-xl bg-plum-800 object-cover"
+                />
+                <div class="flex flex-col gap-3.5">
+                  <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
+                    conseils().alaune.kicker
+                  }}</span>
+                  <h3
+                    class="m-0 font-display text-[28px] font-semibold leading-[1.1] tracking-[-0.02em]"
+                  >
+                    {{ conseils().alaune.titre }}
+                  </h3>
+                  <p class="m-0 text-[15px] leading-[1.55] text-on-plum-muted">
+                    {{ conseils().alaune.texte }}
+                  </p>
+                  <a
+                    [href]="conseils().alaune.fichier"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-arrow mt-auto self-start rounded-xl bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
+                    ><span class="btn-label">Télécharger le guide</span></a
+                  >
+                </div>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <span class="mb-2 text-sm font-semibold text-accent-800">Derniers articles</span>
+                @for (a of articles(); track a.title) {
+                  <a
+                    routerLink="/conseils-sante"
+                    class="flex flex-col gap-1 border-b border-line py-3.5 hover:text-accent-800"
+                  >
+                    <small class="text-xs font-semibold tracking-[0.08em] text-accent-800">{{
+                      a.category.toUpperCase()
+                    }}</small>
+                    <span class="font-display text-[21px] font-medium">{{ a.title }}</span>
+                  </a>
+                }
+                <a
+                  routerLink="/conseils-sante"
+                  class="mt-3.5 text-[15px] font-semibold text-accent-800 hover:underline"
+                  >Tous les conseils →</a
+                >
+              </div>
+            </div>
+          }
+        }
+        <div
+          class="flex items-center justify-between gap-6 border-t border-line px-14 py-[18px] text-sm text-body"
+        >
+          <span class="flex items-center gap-7">
+            <span
+              >Une question ? <strong class="text-fg">{{ site.phone() }}</strong></span
+            >
+            @if (site.whatsappHref()) {
+              <a
+                [href]="site.whatsappHref()"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-semibold text-accent-800 hover:underline"
+                >WhatsApp</a
+              >
             }
-          </div>
-        }
-      </nav>
-      <span class="flex items-center gap-5 pl-2 pr-1">
-        @for (l of sideLinks(); track l.label) {
-          <a
-            [routerLink]="l.route"
-            class="whitespace-nowrap text-[14.5px] font-semibold text-white underline-offset-[6px] hover:underline"
-            [class.underline]="isSideActive(l.route)"
-            >{{ l.label }}</a
+          </span>
+          <span
+            >Urgence médicale : appelez le
+            <strong class="text-fg">{{ site.emergencyNumber() }}</strong
+            >, ne passez pas par le site.</span
           >
+        </div>
+      </div>
+    }
+
+    <div class="hidden items-center gap-5 xl:flex" (mouseenter)="scheduleClose()">
+      <a
+        routerLink="/contact"
+        class="whitespace-nowrap text-[15px] font-medium text-cream-50 hover:text-white hover:underline hover:underline-offset-[6px]"
+        >Contact</a
+      >
+      <a
+        [routerLink]="spaceLink()"
+        class="whitespace-nowrap text-[15px] font-medium text-cream-50 hover:text-white hover:underline hover:underline-offset-[6px]"
+        >Mon espace</a
+      >
+      <a
+        routerLink="/rendez-vous"
+        class="flex flex-col justify-center gap-0.5 rounded-[14px] bg-accent-500 px-[22px] py-2.5 text-on-accent transition hover:bg-accent-600"
+        ><strong class="font-display text-base font-semibold">Prendre rendez-vous</strong>
+        @if (slot.ticket(); as t) {
+          <span class="text-xs font-medium text-plum-900">Prochain créneau · {{ t.phrase }}</span>
         }
-      </span>
-      <a routerLink="/rendez-vous" class="btn-arrow" [class]="ctaClass()"><span class="btn-label">Prendre rendez-vous</span></a>
+      </a>
     </div>
 
     <button
@@ -224,3 +394,11 @@
     <app-mobile-menu (closed)="closeAll()" />
   }
 </header>
+
+@if (openTab()) {
+  <div
+    class="fixed inset-0 z-40 hidden bg-[rgba(18,9,22,0.62)] xl:block"
+    aria-hidden="true"
+    (click)="closeAll()"
+  ></div>
+}
