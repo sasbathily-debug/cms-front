@@ -68,7 +68,7 @@ const defaults = {
         n: '01',
         titre: 'Vous réservez en ligne',
         texte:
-          'Créez votre compte en une minute, puis choisissez un créneau libre. Confirmation immédiate, rappel la veille.',
+          'Choisissez un créneau libre et laissez votre nom et votre téléphone. Pas besoin de compte. Rappel la veille par e-mail.',
       },
       {
         n: '02',

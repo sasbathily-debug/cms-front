@@ -4,7 +4,7 @@ import { PageDef } from '../fields';
 const defaults = {
   mentions: {
     texte:
-      "Dr Aïssatou Mamadou Fall, médecin endocrinologue, diabétologue et nutritionniste.\nInscrite à l'Ordre des médecins du Sénégal, n° [numéro d'inscription].\n[Mention légale et autorisation d'exercer, à confirmer.]",
+      "Dr Aïssatou Mamadou Fall, médecin endocrinologue, diabétologue et nutritionniste.\n[Inscrite à l'Ordre des médecins du Sénégal, n° à renseigner.]\n[Mention légale et autorisation d'exercer, à confirmer.]",
   },
   bas: {
     copyright: 'Dr Aïssatou Mamadou Fall. Tous droits réservés.',

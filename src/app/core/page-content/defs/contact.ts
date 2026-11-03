@@ -27,7 +27,7 @@ const defaults = {
       {
         titre: 'Prendre rendez-vous',
         texte:
-          'Créez votre compte en une minute et choisissez votre créneau. La confirmation est immédiate.',
+          'Choisissez votre créneau et laissez votre nom et votre téléphone. Pas besoin de compte.',
         lien: 'Réserver en ligne',
       },
       {
