@@ -4,21 +4,19 @@ import { PageDef } from '../fields';
 const defaults = {
   hero: {
     kicker: 'INFOS PRATIQUES',
-    titre: 'Venir au cabinet, nous joindre, régler sa consultation',
+    titre: "Tout ce qu'il faut savoir avant de pousser la porte.",
+    intro: 'On vous attend. Voici comment venir, quand venir, et ce que coûte une consultation.',
   },
-  cartes: {
-    adresseLabel: 'ADRESSE',
-    telephoneLabel: 'TÉLÉPHONE ET WHATSAPP',
-    telephoneNote: "Réponse pendant les horaires d'ouverture.",
-    emailLabel: 'E-MAIL',
-    emailNote: 'Pour une question hors urgence.',
+  acces: {
+    titre: 'Où nous trouver',
+    bouton: 'Itinéraire',
   },
   horaires: {
-    titre: "Horaires d'ouverture",
+    titre: 'Quand venir',
     bouton: 'Prendre rendez-vous',
   },
   tarifs: {
-    titre: 'Tarifs et paiement',
+    titre: 'Ce que coûte une consultation',
     lignes: [
       { acte: 'Première consultation', prix: '20\u00a0000\u00a0FCFA' },
       { acte: 'Consultation nutritionnelle (30 min)', prix: '35\u00a0000\u00a0FCFA' },
@@ -43,7 +41,8 @@ const defaults = {
     },
   ],
   appel: {
-    titre: 'Une question avant de venir ?',
+    titre: 'Vous hésitez encore\u00a0? Écrivez-nous.',
+    texte: "Nous répondons pendant les horaires d'ouverture.",
     boutonSecondaire: 'Écrire sur WhatsApp',
   },
 };
@@ -63,23 +62,21 @@ export const INFOS_PRATIQUES: PageDef<InfosPratiquesContent> = {
       fields: [
         { key: 'kicker', label: 'Petit titre', type: 'text' },
         { key: 'titre', label: 'Titre', type: 'text' },
+        { key: 'intro', label: 'Phrase sous le titre', type: 'textarea' },
       ],
     },
     {
-      key: 'cartes',
-      label: 'Les trois cartes sombres',
+      key: 'acces',
+      label: 'Plan et adresse',
       type: 'group',
       fields: [
         {
-          key: 'adresseLabel',
-          label: 'Petit titre de la carte adresse',
+          key: 'titre',
+          label: 'Titre',
           type: 'text',
           hint: 'L’adresse et le repère se saisissent dans les Réglages du site.',
         },
-        { key: 'telephoneLabel', label: 'Petit titre de la carte téléphone', type: 'text' },
-        { key: 'telephoneNote', label: 'Phrase sous le numéro', type: 'text' },
-        { key: 'emailLabel', label: 'Petit titre de la carte e-mail', type: 'text' },
-        { key: 'emailNote', label: 'Phrase sous l’adresse e-mail', type: 'text' },
+        { key: 'bouton', label: 'Texte du bouton d’itinéraire', type: 'text' },
       ],
     },
     {
@@ -138,6 +135,7 @@ export const INFOS_PRATIQUES: PageDef<InfosPratiquesContent> = {
       type: 'group',
       fields: [
         { key: 'titre', label: 'Phrase', type: 'text' },
+        { key: 'texte', label: 'Phrase sous le titre', type: 'text' },
         { key: 'boutonSecondaire', label: 'Texte du bouton WhatsApp', type: 'text' },
       ],
     },

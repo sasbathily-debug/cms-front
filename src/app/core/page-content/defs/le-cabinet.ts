@@ -5,21 +5,21 @@ const defaults = {
   hero: {
     titre: 'Un cabinet calme, pensé pour prendre le temps.',
     intro:
-      "Endocrinologie et nutrition à Sacré-Cœur 3, Dakar. Ici, chaque consultation commence par l'écoute, dans un lieu simple et accueillant.",
+      "Endocrinologie et nutrition à la Cité Keur Gorgui, Dakar. Ici, chaque consultation commence par l'écoute, dans un lieu simple et accueillant.",
     photoCabinet: '',
     photoAccueil: '',
     photoSalle: '',
   },
   enBref: {
     kicker: 'LE CABINET EN BREF',
-    note: "Texte d'exemple, à valider par la doctoresse",
+    note: '',
     items: [
       {
         label: 'LA SPÉCIALITÉ',
         texte:
           'Endocrinologie, diabétologie et nutrition : diabète, thyroïde, poids, troubles hormonaux, cholestérol.',
       },
-      { label: 'LE LIEU', texte: 'Sacré-Cœur 3, Dakar. [Étage, repère et accès à préciser]' },
+      { label: 'LE LIEU', texte: 'Cité Keur Gorgui, Dakar. [Étage, repère et accès à préciser]' },
       {
         label: "L'ACCUEIL",
         texte: "Sur rendez-vous, pour prendre le temps d'écouter. [À valider par la doctoresse]",
@@ -193,7 +193,6 @@ export const LE_CABINET: PageDef<LeCabinetContent> = {
           itemLabel: 'une carte',
           titleKey: 'titre',
           fields: [
-            { key: 'sym', label: 'Deux lettres affichées en grand', type: 'text' },
             { key: 'titre', label: 'Titre', type: 'text' },
             { key: 'texte', label: 'Texte', type: 'textarea' },
           ],

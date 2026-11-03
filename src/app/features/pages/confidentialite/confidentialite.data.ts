@@ -27,7 +27,7 @@ export const POLITIQUE: PolitiqueSection[] = [
     id: 'responsable',
     titre: 'Qui est responsable de vos données',
     intro: [
-      'Le responsable du traitement est le cabinet du Dr Aïssatou Mamadou Fall, médecin endocrinologue, diabétologue et nutritionniste, à Sacré-Cœur 3, Dakar (Sénégal). [Forme juridique, adresse complète et numéro d’inscription à l’Ordre : à confirmer par la doctoresse.]',
+      'Le responsable du traitement est le cabinet du Dr Aïssatou Mamadou Fall, médecin endocrinologue, diabétologue et nutritionniste, à la Cité Keur Gorgui, Dakar (Sénégal). [Forme juridique, adresse complète et numéro d’inscription à l’Ordre : à confirmer par la doctoresse.]',
       'Vos informations de santé restent couvertes par le secret médical.',
     ],
   },

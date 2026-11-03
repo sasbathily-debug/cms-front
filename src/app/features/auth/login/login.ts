@@ -16,6 +16,18 @@ export class Login {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
+  /** « Bonjour » le jour, « Bonsoir » à partir de 18 h, à l'heure de Dakar. */
+  readonly salutation =
+    Number(
+      new Intl.DateTimeFormat('fr-FR', {
+        hour: 'numeric',
+        hourCycle: 'h23',
+        timeZone: 'Africa/Dakar',
+      }).format(new Date()),
+    ) >= 18
+      ? 'Bonsoir'
+      : 'Bonjour';
+
   readonly errorMessage = signal<string | null>(null);
   readonly loading = signal(false);
   readonly showPassword = signal(false);

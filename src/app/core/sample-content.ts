@@ -64,7 +64,7 @@ export const SAMPLE_HOME_FAQ: FaqEntry[] = [
   {
     question: 'Comment réserver un rendez-vous ?',
     answer:
-      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp au +221 77 226 39 06. Vous recevez une confirmation par e-mail et un rappel la veille.",
+      "En ligne (choix d'un créneau, nom et téléphone, sans compte), ou par téléphone et WhatsApp au +221 77 226 39 06. Vous recevez une confirmation par e-mail et un rappel la veille.",
   },
   {
     question: 'Que dois-je apporter ?',
@@ -86,6 +86,6 @@ export const SAMPLE_HOME_FAQ: FaqEntry[] = [
   {
     question: "Que faire en cas d'urgence ?",
     answer:
-      'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches. [Numéro à indiquer.]',
+      'Le cabinet ne gère pas les urgences. Rendez-vous aux urgences les plus proches ou appelez le SAMU au 1515.',
   },
 ];

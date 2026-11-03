@@ -1,6 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { MALADIES } from '../../features/pages/maladie/maladies.data';
 import { SiteSettings } from '../../core/services/site-settings';
+
+/** Le jour de l'année (1 à 366), pour qu'un même conseil reste affiché toute la journée et change le lendemain. */
+function dayOfYear(date: Date): number {
+  const start = Date.UTC(date.getFullYear(), 0, 0);
+  return Math.floor(
+    (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - start) / 86_400_000,
+  );
+}
 
 @Component({
   selector: 'app-auth-visual-panel',
@@ -13,9 +22,12 @@ import { SiteSettings } from '../../core/services/site-settings';
 export class AuthVisualPanel {
   protected readonly site = inject(SiteSettings);
 
-  readonly points = [
-    'Réservez un créneau en quelques clics',
-    'Recevez un rappel la veille de chaque rendez-vous',
-    "Retrouvez l'historique de vos consultations",
-  ];
+  /** La phrase de la doctoresse, en grand. */
+  readonly phrase = input('Votre suivi, à votre rythme.');
+
+  /** Un conseil du suivi, tiré des conseils déjà publiés sur la page Diabète ; il change chaque jour. */
+  protected readonly conseil = (() => {
+    const conseils = MALADIES['diabete'].quotidien;
+    return conseils[dayOfYear(new Date()) % conseils.length];
+  })();
 }

@@ -1,12 +1,13 @@
 import { Analytics } from '../../../core/analytics';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, afterNextRender, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PageContent } from '../../../core/services/page-content';
 import { CONTACT } from '../../../core/page-content/defs/contact';
 import { OpeningHours } from '../../../core/services/opening-hours';
-import { OpenNow } from '../../../shared/open-now/open-now';
+import { OpenNow, statusAt } from '../../../shared/open-now/open-now';
+import { NextSlot } from '../../../core/services/next-slot';
 import { PublicPage } from '../../../shared/public-page/public-page';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CtaBand } from '../../../shared/cta-band/cta-band';
@@ -15,7 +16,8 @@ import { ContactService } from '../../../core/services/contact';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 
-const MOTIFS = ['Rendez-vous', "Résultats d'analyses", 'Question sur un traitement', 'Autre'];
+/** Pas de motif « Rendez-vous » ici : pour un rendez-vous, la réservation en ligne est plus rapide qu'un message. */
+const MOTIFS = ["Résultats d'analyses", 'Question sur un traitement', 'Autre'];
 
 @Component({
   selector: 'app-contact',
@@ -36,6 +38,8 @@ export class Contact {
   private readonly analytics = inject(Analytics);
   protected readonly site = inject(SiteSettings);
   private readonly contact = inject(ContactService);
+  private readonly destroyRef = inject(DestroyRef);
+  protected readonly slot = inject(NextSlot);
 
   readonly motifs = MOTIFS;
   /** Pages vers lesquelles mènent les trois cartes « Avant de nous écrire », dans l'ordre. */
@@ -58,6 +62,20 @@ export class Contact {
   readonly errorText = signal('');
 
   protected readonly openingHours = inject(OpeningHours);
+
+  /** Le statut du cabinet en direct, à l'heure de Dakar. */
+  private readonly now = signal(Date.now());
+  protected readonly statut = computed(() => {
+    this.now();
+    return statusAt(new Date(), this.openingHours.days());
+  });
+
+  constructor() {
+    afterNextRender(() => {
+      const tick = setInterval(() => this.now.set(Date.now()), 60_000);
+      this.destroyRef.onDestroy(() => clearInterval(tick));
+    });
+  }
 
   /** Solution de repli si l'envoi échoue : ouvre l'application de messagerie avec le message prérempli. */
   get mailtoHref(): string {

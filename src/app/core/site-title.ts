@@ -2,8 +2,8 @@ import { Service, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, TitleStrategy } from '@angular/router';
 
-const SITE_NAME = 'Dr Aissatou Mamadou Fall';
-const DEFAULT_TITLE = 'Dr Aissatou Mamadou Fall – Endocrinologue à Dakar';
+const SITE_NAME = 'Dr Aïssatou Mamadou Fall';
+const DEFAULT_TITLE = 'Dr Aïssatou Mamadou Fall – Endocrinologue à Dakar';
 const SITE_ORIGIN = 'https://draissatoumamadou.com';
 
 /**

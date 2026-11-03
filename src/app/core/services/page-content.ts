@@ -2,6 +2,7 @@ import { Service, Signal, WritableSignal, computed, inject, signal } from '@angu
 import { HttpErrorResponse } from '@angular/common/http';
 import { SiteContentService } from './site-content';
 import { PageDef, mergeContent } from '../page-content/fields';
+import { masquerBrouillons } from '../page-content/brouillons';
 
 type Saved = Record<string, unknown> | null;
 
@@ -39,12 +40,15 @@ export class PageContent {
   private readonly saved = new Map<string, WritableSignal<Saved>>();
   private readonly requested = new Set<string>();
 
-  /** Les textes de la page, toujours complets (jamais de champ manquant). */
+  /** Les textes de la page, toujours complets (jamais de champ manquant), sans repère « [à compléter] » : voir `brouillons.ts`. */
   use<T extends object>(def: PageDef<T>): Signal<T> {
-    if (def.editable === false) return computed(() => def.defaults);
+    if (def.editable === false) {
+      const propre = masquerBrouillons(def.defaults);
+      return computed(() => propre);
+    }
     this.load(def.slug);
     const saved = this.slot(def.slug);
-    return computed(() => mergeContent(def.defaults, saved()));
+    return computed(() => masquerBrouillons(mergeContent(def.defaults, saved())));
   }
 
   /** Après une modification dans l'admin : le site affiche tout de suite le nouveau contenu. */

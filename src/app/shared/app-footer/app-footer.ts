@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Analytics } from '../../core/analytics';
 import { SiteSettings } from '../../core/services/site-settings';
@@ -9,7 +9,6 @@ import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
 import { InstallButton } from '../install-button/install-button';
 import { BackToTop } from '../back-to-top/back-to-top';
-import { DoodleFooter } from '../doodle-footer/doodle-footer';
 
 /** Les trois liens du bas de page : reconnus par leur libellé, qui reste modifiable depuis l'admin. */
 const LEGAL_ROUTES: [RegExp, string][] = [
@@ -20,13 +19,16 @@ const LEGAL_ROUTES: [RegExp, string][] = [
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, OpenNow, InstallButton, BackToTop, DoodleFooter],
+  imports: [RouterLink, OpenNow, InstallButton, BackToTop],
   styleUrl: './app-footer.css',
   templateUrl: './app-footer.html',
 })
 export class AppFooter {
   protected readonly site = inject(SiteSettings);
   protected readonly analytics = inject(Analytics);
+
+  /** Grand numéro de téléphone dans le pied de page (accueil et conseils santé) ; ailleurs, une version plus sobre. */
+  readonly grand = input(false);
 
   readonly year = new Date().getFullYear();
   readonly instagramUrl = 'https://www.instagram.com/dr_aissatou.m/';
@@ -38,10 +40,9 @@ export class AppFooter {
   ];
   readonly mapsUrl = 'https://www.google.com/maps?q=14.71259593963623,-17.46856689453125';
 
-  protected readonly addressLines = computed(() => [
-    this.site.street(),
-    `${this.site.address()}, Sénégal`,
-  ]);
+  protected readonly addressLines = computed(() =>
+    [this.site.street(), `${this.site.address()}, Sénégal`].filter(Boolean),
+  );
   protected readonly hours = inject(OpeningHours);
   protected readonly c = inject(PageContent).use(PIED_DE_PAGE);
 

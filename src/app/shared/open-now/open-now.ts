@@ -84,7 +84,7 @@ export function statusAt(date: Date, days: OpeningHourDto[] = DEFAULT_DAYS): Sta
     @if (status(); as s) {
       @if (variant() === 'bande') {
         <span class="flex flex-col gap-1.5">
-          <span class="text-[10.5px] font-semibold tracking-[0.2em] text-peach">{{
+          <span class="text-xs font-semibold tracking-[0.2em] text-peach">{{
             s.text.split(' · ')[0].toUpperCase()
           }}</span>
           <span class="font-display text-[21px] font-medium leading-tight text-white">{{

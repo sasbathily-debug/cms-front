@@ -11,8 +11,6 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { InView } from '../../../shared/in-view';
 import { RouterLink } from '@angular/router';
-import { ChatIcon } from '../../../shared/chat-widget/chat-icon';
-import { ChatState } from '../../../core/chat-state';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
 import { PageContent } from '../../../core/services/page-content';
@@ -24,7 +22,7 @@ import { Parallax } from '../../../shared/parallax';
 import { NextSlot } from '../../../core/services/next-slot';
 import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
-import { Specialties } from '../../../core/services/specialties';
+import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 
@@ -32,9 +30,9 @@ import { SrcsetPipe } from '../../../core/page-content/images';
 @Component({
   selector: 'app-home-mobile',
   imports: [
+    SilhouetteSpecialties,
     RouterLink,
     InView,
-    ChatIcon,
     OpenNow,
     OrangeThread,
     Parallax,
@@ -49,7 +47,6 @@ export class HomeMobile {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly site = inject(SiteSettings);
-  protected readonly chat = inject(ChatState);
   protected readonly hours = inject(OpeningHours);
 
   private readonly heroCta = viewChild<ElementRef<HTMLElement>>('heroCta');
@@ -61,7 +58,6 @@ export class HomeMobile {
   readonly faq = computed(() =>
     this.siteFaq.homeItems().map((item, i) => ({ ...item, open: this.openFaq().has(i) })),
   );
-  readonly rows = inject(Specialties).list;
 
   protected readonly c = inject(PageContent).use(ACCUEIL);
   readonly heroWords = computed(() =>
@@ -94,9 +90,6 @@ export class HomeMobile {
   readonly hasSlot = computed(() => this.slots.ticket() !== null);
 
   constructor() {
-    // La barre fixe de cette page porte déjà le bouton de chat : la bulle flottante se retire.
-    this.chat.onBar.set(true);
-    this.destroyRef.onDestroy(() => this.chat.onBar.set(false));
     afterNextRender(() => {
       const cta = this.heroCta()?.nativeElement;
       if (!cta || typeof IntersectionObserver === 'undefined') return;

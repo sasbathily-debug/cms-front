@@ -213,6 +213,30 @@ export class AdminAppointments implements OnInit {
     };
   }
 
+  /** Lien WhatsApp prérempli : pour confirmer ou rappeler un rendez-vous (pas d'envoi automatique par WhatsApp ou SMS pour l'instant). */
+  waLink(appt: {
+    fullName: string;
+    phone: string;
+    preferredDate?: string | null;
+    preferredTime?: string | null;
+  }): string {
+    let digits = appt.phone.replace(/\D/g, '').replace(/^00/, '');
+    if (digits.length === 9) digits = '221' + digits; // numéro sénégalais saisi sans l'indicatif
+    if (digits.length < 8) return '';
+    let quand = '';
+    if (appt.preferredDate) {
+      const d = new Date(`${appt.preferredDate}T${appt.preferredTime ?? '00:00:00'}`);
+      const jour = new Intl.DateTimeFormat('fr-FR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+      }).format(d);
+      quand = ` du ${jour}${appt.preferredTime ? ' à ' + appt.preferredTime.slice(0, 5).replace(':', 'h') : ''}`;
+    }
+    const text = `Bonjour ${appt.fullName}, ici le cabinet du Dr Aïssatou Mamadou Fall. Nous vous confirmons votre rendez-vous${quand}. À bientôt.`;
+    return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
+  }
+
   isOverdue(appointment: AppointmentDto): boolean {
     if (
       appointment.status !== 'CONFIRMED' ||

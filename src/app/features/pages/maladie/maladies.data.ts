@@ -31,7 +31,11 @@ export interface MaladieContent {
     cards: { art?: MaladieArtKind; title: string; text: string }[];
   };
   signes: { title?: string; items: string[]; outro: string };
-  priseEnCharge: { intro: string; examens: { nom: string; texte: string }[] };
+  priseEnCharge: {
+    intro: string;
+    /** `rythme` : à quelle fréquence l'examen revient dans le suivi (facultatif) ; la page en fait une frise. */
+    examens: { nom: string; texte: string; rythme?: string }[];
+  };
   /** Tarifs des formules proposées (facultatif) : une section « Tarifs » s'ajoute à la page. */
   offres?: { title: string; intro: string; items: OffreContent[] };
   quotidien: { titre: string; texte: string }[];
@@ -106,24 +110,29 @@ export const MALADIES: Record<string, MaladieContent> = {
       examens: [
         {
           nom: 'Glycémie à jeun',
+          rythme: 'À chaque bilan',
           texte: 'Mesure le taux de sucre dans le sang le matin, à jeun.',
         },
         {
           nom: 'HbA1c',
+          rythme: 'En général tous les 3 mois',
           texte:
             "Reflète la moyenne de la glycémie sur les trois derniers mois. C'est l'examen de référence du suivi.",
         },
         {
           nom: 'Bilan lipidique',
+          rythme: 'En général une fois par an',
           texte: 'Cholestérol et triglycérides, importants pour protéger le cœur et les vaisseaux.',
         },
         {
           nom: 'Fonction rénale',
+          rythme: 'En général une fois par an',
           texte:
             "Surveille l'état des reins, qui peuvent être touchés par un diabète mal équilibré.",
         },
         {
           nom: "Fond d'œil et pieds",
+          rythme: 'En général une fois par an',
           texte:
             'Un contrôle régulier des yeux et des pieds permet de repérer très tôt les complications. [Examens réalisés au cabinet : à préciser]',
         },
@@ -156,14 +165,14 @@ export const MALADIES: Record<string, MaladieContent> = {
     faqTitle: 'Questions fréquentes sur le diabète',
     faq: [
       {
+        question: 'Puis-je jeûner pendant le Ramadan ?',
+        reponse:
+          "Cela dépend de votre type de diabète, de votre traitement et de votre équilibre : certaines personnes peuvent jeûner avec un suivi adapté, d'autres ne le doivent pas. Parlez-en à la doctoresse plusieurs semaines avant le Ramadan : elle vous dit si c'est possible pour vous, adapte votre traitement et vos repas, et vous explique dans quels cas rompre le jeûne. Ne changez jamais seul vos médicaments. [Réponse à valider]",
+      },
+      {
         question: 'Le diabète peut-il guérir ?',
         reponse:
           "Le diabète est une maladie chronique : on ne le guérit pas, mais on peut très bien le contrôler. Dans certains cas de type 2, une perte de poids et un meilleur mode de vie permettent d'obtenir une rémission. [Réponse à valider]",
-      },
-      {
-        question: 'Puis-je jeûner pendant le Ramadan ?',
-        reponse:
-          'Cela dépend de votre type de diabète, de votre traitement et de votre équilibre. Certaines personnes ne doivent pas jeûner. Parlez-en avec votre médecin plusieurs semaines avant. [Réponse à valider]',
       },
       {
         question: 'Mon enfant peut-il avoir un diabète ?',
@@ -560,7 +569,7 @@ export const MALADIES: Record<string, MaladieContent> = {
           inclusTitre: 'L’accompagnement comprend :',
           inclus: [
             'Tout le contenu de la consultation nutritionnelle',
-            'Un entretien individuel de 30 minutes avec le Dr Aissatou Mamadou Fall',
+            'Un entretien individuel de 30 minutes avec le Dr Aïssatou Mamadou Fall',
             'Une analyse personnalisée de votre situation, de vos objectifs et de vos résultats',
             'Un document récapitulatif personnalisé',
             '2 semaines de menus complets, adaptés à vos besoins et à votre quotidien',

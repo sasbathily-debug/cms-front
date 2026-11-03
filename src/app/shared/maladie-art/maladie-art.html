@@ -3,7 +3,7 @@
     viewBox="0 0 560 280"
     width="100%"
     role="img"
-    aria-label="Courbe de glycémie : trois petites montées après les repas, puis un retour dans la zone cible"
+    aria-label="Courbe de glycémie en grammes par litre : trois petites montées après les repas, puis un retour dans la zone cible, de 0,7 à 1,1 g/L à jeun"
   >
     <rect x="0" y="108" width="560" height="64" rx="10" fill="rgba(241,201,155,0.13)" />
     <line
@@ -24,13 +24,22 @@
     />
     <text
       x="552"
-      y="102"
+      y="190"
       text-anchor="end"
       font-family="Inter, sans-serif"
-      font-size="12.5"
+      font-size="14"
       fill="var(--color-on-plum-muted)"
     >
-      zone cible
+      zone cible : 0,7 à 1,1 g/L à jeun
+    </text>
+    <text
+      x="10"
+      y="26"
+      font-family="Inter, sans-serif"
+      font-size="14"
+      fill="var(--color-on-plum-muted)"
+    >
+      glycémie en g/L
     </text>
     <path
       class="dd-line"
@@ -55,9 +64,9 @@
       fill="var(--color-on-plum-muted)"
       text-anchor="middle"
     >
-      <text x="175" y="214">Petit-déjeuner</text>
-      <text x="370" y="214">Déjeuner</text>
-      <text x="505" y="214">Dîner</text>
+      <text x="175" y="216">Petit-déjeuner</text>
+      <text x="370" y="216">Déjeuner</text>
+      <text x="505" y="216">Dîner</text>
     </g>
     <line x1="10" y1="226" x2="550" y2="226" stroke="rgba(255,255,255,0.18)" />
     <text

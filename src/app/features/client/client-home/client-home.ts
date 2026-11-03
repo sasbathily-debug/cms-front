@@ -219,7 +219,7 @@ export class ClientHome implements OnInit {
       `DTSTART:${fmt(start)}`,
       `DTEND:${fmt(end)}`,
       `SUMMARY:Rendez-vous au cabinet du Dr Fall (${appt.reason})`,
-      `LOCATION:${this.site.street()} ${this.site.address()}`,
+      `LOCATION:${this.site.addressLine()}`,
       'END:VEVENT',
       'END:VCALENDAR',
     ].join('\r\n');

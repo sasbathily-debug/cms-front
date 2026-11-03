@@ -1,14 +1,12 @@
 import {
   Component,
   DestroyRef,
-  OnDestroy,
   afterNextRender,
   computed,
   effect,
   inject,
   input,
   signal,
-  untracked,
 } from '@angular/core';
 import {
   NavigationCancel,
@@ -17,109 +15,86 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
+import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth } from '../../core/services/auth';
 import { MobileMenu } from '../mobile-menu/mobile-menu';
-import { Spotlight } from '../spotlight';
-import { SlideHighlight } from '../slide-highlight';
-import { SlotTicket } from '../slot-ticket/slot-ticket';
-import { NAV_GROUPS, NAV_SIMPLE, NavGroup, preloadNavImages } from '../../core/site-nav';
+import { INTENTS, bookingQuery } from '../../core/site-nav';
+import { NextSlot } from '../../core/services/next-slot';
+import { OpeningHours } from '../../core/services/opening-hours';
+import { PageContent } from '../../core/services/page-content';
+import { SiteArticles } from '../../core/services/site-articles';
+import { SiteSettings } from '../../core/services/site-settings';
+import { Specialties } from '../../core/services/specialties';
+import { CONSEILS_SANTE } from '../../core/page-content/defs/conseils-sante';
+import { INFOS_PRATIQUES } from '../../core/page-content/defs/infos-pratiques';
+import { PREMIERE_CONSULTATION } from '../../core/page-content/defs/premiere-consultation';
+import { statusAt } from '../open-now/open-now';
 
 /** Délai avant de refermer un panneau quand la souris quitte le menu. */
-const CLOSE_DELAY_MS = 150;
+const CLOSE_DELAY_MS = 180;
 
-interface Tile {
-  key: string;
-  sym: string;
-  count: string;
-  label: string;
-  route: string;
-  group?: NavGroup;
-}
+export type TabKey = 'specialites' | 'cabinet' | 'visite' | 'conseils';
 
-const SYMBOLS: Record<string, string> = { specialites: 'Sp', cabinet: 'Lc', patients: 'Pa' };
+export const TABS: { key: TabKey; label: string }[] = [
+  { key: 'specialites', label: 'Spécialités' },
+  { key: 'cabinet', label: 'Le cabinet' },
+  { key: 'visite', label: 'Votre visite' },
+  { key: 'conseils', label: 'Conseils' },
+];
 
 /**
- * En-tête à tuiles (comme un tableau périodique), commun à toutes les pages publiques.
- * `overlay` : posé sur la photo du haut de l'accueil ; `bar` : barre sombre fixe, un peu plus compacte,
- * pour les autres pages (la tuile de la section en cours est mise en évidence).
+ * En-tête du site, commun à toutes les pages publiques : le menu se lit comme un dossier patient. L'onglet survolé
+ * devient une languette crème soudée au panneau qui s'ouvre, comme un intercalaire qu'on tire.
+ * `overlay` : posé sur la photo du haut de l'accueil ; `bar` : barre sombre fixe pour les autres pages.
  */
 @Component({
   selector: 'app-home-header',
-  imports: [RouterLink, MobileMenu, Spotlight, SlideHighlight, SlotTicket],
+  imports: [RouterLink, MobileMenu],
   templateUrl: './home-header.html',
 })
-export class HomeHeader implements OnDestroy {
+export class HomeHeader {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly navSub: Subscription;
+  protected readonly site = inject(SiteSettings);
+  protected readonly hours = inject(OpeningHours);
+  protected readonly slot = inject(NextSlot);
 
+  readonly tabs = TABS;
   readonly variant = input<'overlay' | 'bar'>('overlay');
   /** Menu de l'accueil qui réapparaît en barre fixe quand on remonte la page. */
   readonly stuck = signal(false);
-  private readonly bar = computed(() => this.variant() === 'bar' || this.stuck());
   readonly currentUrl = signal(this.router.url);
 
-  readonly headerClass = computed(() => {
-    if (this.variant() === 'bar') return 'sticky top-0 z-50 border-b border-white/10 bg-plum-900';
-    return this.stuck()
-      ? 'header-reveal fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-plum-900'
-      : 'absolute inset-x-0 top-0 z-50';
-  });
-  readonly innerClass = computed(
-    () =>
-      'mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10 ' +
-      (this.bar() ? 'py-3' : 'py-4 lg:py-6'),
-  );
-  readonly symClass = computed(
-    () => 'font-display font-bold leading-none ' + (this.bar() ? 'text-[18px]' : 'text-[22px]'),
-  );
-  readonly labelClass = computed(
-    () => (this.bar() ? 'whitespace-nowrap text-[11px]' : 'text-[12.5px]') + ' font-medium',
-  );
-  readonly ctaClass = computed(
-    () =>
-      'flex items-center whitespace-nowrap rounded-[14px] bg-accent-500 px-6 font-display text-[15px] font-bold text-on-accent transition hover:bg-accent-600 ' +
-      (this.bar() ? 'h-[60px]' : 'h-[74px]'),
-  );
-  readonly panelClass = computed(
-    () =>
-      'nav-panel absolute left-1/2 top-full z-50 w-[min(700px,calc(100vw-48px))] -translate-x-1/2 ' +
-      (this.bar() ? '-mt-3 pt-3' : '-mt-7 pt-7'),
-  );
-
-  tileClass(tile: Tile): string {
-    const size = this.bar() ? 'h-[60px] w-[96px] px-2 py-2' : 'h-[74px] w-24 px-3 py-2.5';
-    const state = this.isActive(tile)
-      ? 'border-accent-500 bg-[rgba(20,11,25,0.85)]'
-      : 'border-white/35 bg-[rgba(20,11,25,0.55)]';
-    // Un panneau est ouvert : la tuile survolée monte d'un cran, les autres s'estompent.
-    const open = this.openGroup();
-    const reaction = open === null ? '' : open === tile.key ? '-translate-y-0.5' : 'opacity-60';
-    return `flex flex-col justify-between rounded-xl border ${size} ${state} ${reaction} text-white backdrop-blur-sm transition duration-200 motion-reduce:transform-none motion-reduce:transition-none hover:border-accent-500 hover:bg-[rgba(20,11,25,0.8)]`;
-  }
-
-  /** La tuile de la section où l'on se trouve. */
-  isActive(tile: Tile): boolean {
-    const url = this.currentUrl().split(/[?#]/)[0];
-    if (tile.group) {
-      return tile.group.links.some((l) => url === l.route || url.startsWith(l.route + '/'));
-    }
-    return url === tile.route;
-  }
-
-  readonly openGroup = signal<string | null>(null);
+  readonly openTab = signal<TabKey | null>(null);
   readonly mobileOpen = signal(false);
-  readonly mobileGroup = signal<string | null>(null);
 
-  /** Menu plein écran ouvert : la page derrière ne défile plus (voir `html.menu-ouvert` dans styles.css). */
-  private readonly lockPage = effect(() => {
-    document.documentElement.classList.toggle('menu-ouvert', this.mobileOpen());
-  });
-  private readonly unlockOnDestroy = this.destroyRef.onDestroy(() =>
-    document.documentElement.classList.remove('menu-ouvert'),
+  // ---- Contenus des panneaux : ceux des pages, modifiables depuis l'admin ----
+  private readonly specialties = inject(Specialties).list;
+  protected readonly infos = inject(PageContent).use(INFOS_PRATIQUES);
+  protected readonly visite = inject(PageContent).use(PREMIERE_CONSULTATION);
+  protected readonly conseils = inject(PageContent).use(CONSEILS_SANTE);
+  private readonly siteArticles = inject(SiteArticles);
+
+  readonly intents = computed(() =>
+    INTENTS.map((intent) => {
+      const specialty = this.specialties().find((s) => s.key === intent.key);
+      return { ...intent, specialty, query: bookingQuery(intent) };
+    }).filter((i) => i.specialty),
   );
+  readonly intentKey = signal(INTENTS[0].key);
+  readonly intent = computed(
+    () => this.intents().find((i) => i.key === this.intentKey()) ?? this.intents()[0],
+  );
+
+  readonly articles = computed(() => this.siteArticles.items().slice(0, 3));
+  readonly tarifs = computed(() => this.infos().tarifs.lignes.slice(0, 4));
+  readonly now = signal(Date.now());
+  readonly status = computed(() => {
+    this.now();
+    return statusAt(new Date(), this.hours.days());
+  });
 
   readonly spaceLink = computed(() => {
     if (!this.auth.isAuthenticated()) {
@@ -128,42 +103,92 @@ export class HomeHeader implements OnDestroy {
     return this.auth.currentUser()?.role === 'ADMIN' ? '/admin' : '/client';
   });
 
-  readonly tiles = computed<Tile[]>(() => [
-    ...NAV_GROUPS.map((group) => ({
-      key: group.key,
-      sym: SYMBOLS[group.key] ?? group.label.slice(0, 2),
-      count: String(group.links.length),
-      label: group.label + ' ▾',
-      route: group.route,
-      group,
-    })),
-    { key: 'conseils', sym: 'Cs', count: '', label: 'Conseils santé', route: '/conseils-sante' },
-    { key: 'contact', sym: 'Co', count: '', label: 'Contact', route: '/contact' },
-    { key: 'espace', sym: 'Me', count: '', label: 'Mon espace', route: this.spaceLink() },
-  ]);
+  private readonly bar = computed(() => this.variant() === 'bar' || this.stuck());
 
-  readonly simpleLinks = NAV_SIMPLE;
-
-  /** Le menu mobile affiche les tuiles deux par deux ; un panneau s'ouvre sous la rangée de la tuile touchée. */
-  readonly tilePairs = computed(() => {
-    const list = this.tiles();
-    const pairs: Tile[][] = [];
-    for (let i = 0; i < list.length; i += 2) {
-      pairs.push(list.slice(i, i + 2));
-    }
-    return pairs;
+  readonly headerClass = computed(() => {
+    if (this.variant() === 'bar') return 'sticky top-0 z-50 border-b border-white/10 bg-plum-900';
+    return this.stuck()
+      ? 'header-reveal fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-plum-900'
+      : 'absolute inset-x-0 top-0 z-50';
   });
 
-  openMobileTile(pair: Tile[]): Tile | null {
-    return pair.find((tile) => tile.group && this.mobileGroup() === tile.key) ?? null;
+  /** L'onglet de la section où l'on se trouve est souligné quand aucun panneau n'est ouvert. */
+  isCurrent(key: TabKey): boolean {
+    const url = this.currentUrl().split(/[?#]/)[0];
+    const starts = (...routes: string[]) =>
+      routes.some((r) => url === r || url.startsWith(r + '/'));
+    switch (key) {
+      case 'specialites':
+        return starts('/specialites');
+      case 'cabinet':
+        return starts('/le-cabinet', '/a-propos', '/infos-pratiques', '/contact');
+      case 'visite':
+        return starts('/premiere-consultation', '/faq', '/rendez-vous');
+      case 'conseils':
+        return starts('/conseils-sante');
+    }
+  }
+
+  tabClass(key: TabKey): string {
+    const open = this.openTab() === key;
+    const state = open
+      ? 'bg-page text-fg'
+      : 'text-cream-50 hover:bg-white/10' +
+        (this.isCurrent(key) ? ' shadow-[inset_0_-3px_0_var(--color-accent-500)]' : '');
+    return `flex h-full items-center whitespace-nowrap rounded-t-2xl px-4 font-display text-base font-medium 2xl:px-6 2xl:text-lg tracking-[-0.01em] transition-colors duration-200 motion-reduce:transition-none ${state}`;
+  }
+
+  setIntent(key: string): void {
+    this.intentKey.set(key);
+  }
+
+  // ---- Ouverture et fermeture ----
+  private closeTimer: ReturnType<typeof setTimeout> | undefined;
+  private lastPointerType = 'mouse';
+
+  hover(key: TabKey): void {
+    clearTimeout(this.closeTimer);
+    this.openTab.set(key);
+  }
+
+  scheduleClose(): void {
+    clearTimeout(this.closeTimer);
+    this.closeTimer = setTimeout(() => this.openTab.set(null), CLOSE_DELAY_MS);
+  }
+
+  cancelClose(): void {
+    clearTimeout(this.closeTimer);
+  }
+
+  tabPointerDown(event: PointerEvent): void {
+    this.lastPointerType = event.pointerType;
+  }
+
+  /** Souris : le survol a déjà ouvert le panneau, le clic le garde ouvert. Tactile et clavier : le clic ouvre ou ferme. */
+  tabClick(key: TabKey): void {
+    clearTimeout(this.closeTimer);
+    const mouse = this.lastPointerType === 'mouse';
+    this.lastPointerType = 'keyboard';
+    this.openTab.update((open) => (open === key && !mouse ? null : key));
+  }
+
+  toggleMobile(): void {
+    this.mobileOpen.update((open) => !open);
+  }
+
+  closeAll(): void {
+    clearTimeout(this.closeTimer);
+    this.openTab.set(null);
+    this.mobileOpen.set(false);
   }
 
   constructor() {
     afterNextRender(() => {
-      preloadNavImages();
       this.watchScroll();
+      const tick = setInterval(() => this.now.set(Date.now()), 60_000);
+      this.destroyRef.onDestroy(() => clearInterval(tick));
     });
-    this.navSub = this.router.events
+    this.router.events
       .pipe(
         filter(
           (event) =>
@@ -171,6 +196,7 @@ export class HomeHeader implements OnDestroy {
             event instanceof NavigationError ||
             event instanceof NavigationCancel,
         ),
+        takeUntilDestroyed(),
       )
       .subscribe((event) => {
         if (event instanceof NavigationEnd) {
@@ -178,6 +204,9 @@ export class HomeHeader implements OnDestroy {
         }
         this.closeAll();
       });
+    // Le menu mobile ouvert fige la page derrière (voir `html.menu-ouvert` dans styles.css).
+    effect(() => document.documentElement.classList.toggle('menu-ouvert', this.mobileOpen()));
+    this.destroyRef.onDestroy(() => document.documentElement.classList.remove('menu-ouvert'));
   }
 
   /**
@@ -201,7 +230,7 @@ export class HomeHeader implements OnDestroy {
       }
       if (this.stuck()) {
         anchor = Math.min(anchor, y);
-        if (y - anchor > DISTANCE && !this.openGroup() && !this.mobileOpen()) {
+        if (y - anchor > DISTANCE && !this.openTab() && !this.mobileOpen()) {
           this.stuck.set(false);
           anchor = y;
         }
@@ -221,87 +250,5 @@ export class HomeHeader implements OnDestroy {
       cancelAnimationFrame(frame);
       window.removeEventListener('scroll', onScroll);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.navSub.unsubscribe();
-  }
-
-  /** Panneaux déjà ouverts une fois : leur contenu (et ses photos) n'est créé qu'à la première ouverture, puis gardé pour la sortie douce. */
-  readonly seen = signal<ReadonlySet<string>>(new Set());
-  /** Position de l'encoche qui relie la tuile survolée au panneau, en pixels depuis le bord gauche du panneau. */
-  readonly notchX = signal(60);
-  private closeTimer: ReturnType<typeof setTimeout> | undefined;
-
-  private readonly rememberOpened = effect(() => {
-    const key = this.openGroup();
-    if (key && !untracked(this.seen).has(key)) {
-      this.seen.update((set) => new Set(set).add(key));
-    }
-  });
-
-  hover(key: string, tile?: HTMLElement): void {
-    clearTimeout(this.closeTimer);
-    this.placeNotch(tile);
-    this.openGroup.set(key);
-  }
-
-  /** Refermeture après un court délai : on peut traverser l'espace entre la tuile et le panneau sans le perdre. */
-  scheduleClose(): void {
-    clearTimeout(this.closeTimer);
-    this.closeTimer = setTimeout(() => this.openGroup.set(null), CLOSE_DELAY_MS);
-  }
-
-  cancelClose(): void {
-    clearTimeout(this.closeTimer);
-  }
-
-  leave(): void {
-    clearTimeout(this.closeTimer);
-    this.openGroup.set(null);
-  }
-
-  /** Le panneau est centré dans la fenêtre : l'encoche pointe vers le centre de la tuile. */
-  private placeNotch(tile?: HTMLElement): void {
-    if (!tile) return;
-    const rect = tile.getBoundingClientRect();
-    const view = document.documentElement.clientWidth;
-    const width = Math.min(700, view - 48);
-    const left = (view - width) / 2;
-    this.notchX.set(Math.max(28, Math.min(width - 42, rect.left + rect.width / 2 - left - 7)));
-  }
-
-  private lastPointerType = 'mouse';
-  private tileWasOpen = false;
-
-  tilePointerDown(event: PointerEvent, key: string): void {
-    this.lastPointerType = event.pointerType;
-    this.tileWasOpen = this.openGroup() === key;
-  }
-
-  /** Souris : le clic ouvre la page de la tuile. Tactile : un premier toucher ouvre le panneau, un second la page. */
-  tileClick(event: Event, tile: Tile): void {
-    const touch = this.lastPointerType === 'touch' || this.lastPointerType === 'pen';
-    if (tile.group && touch && !this.tileWasOpen) {
-      event.preventDefault();
-      this.placeNotch(event.currentTarget as HTMLElement);
-      this.openGroup.set(tile.key);
-      return;
-    }
-    this.openGroup.set(null);
-  }
-
-  toggleMobile(): void {
-    this.mobileOpen.update((open) => !open);
-  }
-
-  toggleMobileGroup(key: string): void {
-    this.mobileGroup.update((current) => (current === key ? null : key));
-  }
-
-  closeAll(): void {
-    this.openGroup.set(null);
-    this.mobileOpen.set(false);
-    this.mobileGroup.set(null);
   }
 }

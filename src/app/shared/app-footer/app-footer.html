@@ -3,7 +3,8 @@
     <div class="flex flex-col gap-8">
       <a
         [href]="site.telHref()"
-        class="font-display text-[clamp(2.1rem,9.2vw,6.5rem)] font-bold leading-none tracking-[-0.035em] text-cream-50"
+        class="font-display font-bold leading-none tracking-[-0.035em] text-cream-50"
+        [class]="grand() ? 'text-[clamp(2.1rem,9.2vw,6.5rem)]' : 'text-[clamp(1.9rem,6vw,3.25rem)]'"
         >{{ site.phone() }}</a
       >
       <div class="flex flex-wrap gap-3.5">
@@ -46,10 +47,9 @@
               stroke-linejoin="round"
               aria-hidden="true"
             >
-              <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" />
-            </svg><span class="btn-label">
-            Écrire sur WhatsApp
-          </span></a>
+              <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" /></svg
+            ><span class="btn-label"> Écrire sur WhatsApp </span></a
+          >
         }
         <a
           routerLink="/rendez-vous"
@@ -63,7 +63,7 @@
       class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.5fr_1.2fr_0.9fr_1.2fr_1.1fr] lg:gap-10"
     >
       <div class="col-span-2 flex flex-col gap-3 md:col-span-1">
-        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+        <div class="mb-1 text-[13px] font-semibold tracking-[0.1em] text-on-plum-subtle">
           CONTACT
         </div>
         <span class="text-[15.5px] leading-relaxed text-on-plum-muted">
@@ -71,12 +71,14 @@
             {{ line }}<br />
           }
         </span>
-        <a [href]="'mailto:' + site.email()" class="break-all text-[15.5px] text-white">{{
-          site.email()
-        }}</a>
+        <a [href]="'mailto:' + site.email()" class="break-words text-[15.5px] text-white"
+          >{{ site.email().split('@')[0] }}<wbr />{{
+            site.email().includes('@') ? '@' + site.email().split('@')[1] : ''
+          }}</a
+        >
       </div>
       <div class="flex flex-col gap-3">
-        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+        <div class="mb-1 text-[13px] font-semibold tracking-[0.1em] text-on-plum-subtle">
           HORAIRES
         </div>
         <app-open-now tone="dark" />
@@ -87,7 +89,7 @@
         </span>
       </div>
       <div class="flex flex-col gap-3">
-        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+        <div class="mb-1 text-[13px] font-semibold tracking-[0.1em] text-on-plum-subtle">
           RÉSEAUX
         </div>
         <a
@@ -108,7 +110,7 @@
         }
       </div>
       <div class="flex flex-col gap-3">
-        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+        <div class="mb-1 text-[13px] font-semibold tracking-[0.1em] text-on-plum-subtle">
           SPÉCIALITÉS
         </div>
         @for (link of specialties; track link.label) {
@@ -117,7 +119,7 @@
         <a routerLink="/specialites" class="text-[15.5px] text-white">Toutes les spécialités</a>
       </div>
       <div class="flex flex-col gap-3">
-        <div class="mb-1 text-[12.5px] font-semibold tracking-[0.1em] text-on-plum-subtle">
+        <div class="mb-1 text-[13px] font-semibold tracking-[0.1em] text-on-plum-subtle">
           PATIENTS
         </div>
         <a routerLink="/premiere-consultation" class="text-[15.5px] text-white">Première visite</a>
@@ -127,15 +129,6 @@
         <a routerLink="/client" class="text-[15.5px] text-white">Mon espace</a>
       </div>
     </div>
-
-    <!-- Le mot « DR FALL » et ses personnages : chargé seulement quand on approche du bas de la page. -->
-    @defer (on viewport; prefetch on idle) {
-      <app-doodle-footer />
-    } @placeholder {
-      <div style="padding-top: clamp(24px, 4vw, 48px)">
-        <div style="aspect-ratio: 895 / 328"></div>
-      </div>
-    }
 
     <div class="flex flex-wrap items-end justify-between gap-10">
       <p class="m-0 max-w-[460px] whitespace-pre-line text-sm leading-[1.7] text-on-plum-subtle">
@@ -151,9 +144,9 @@
 
   <app-back-to-top class="mx-auto mt-14 block max-w-[1160px]" />
 
-  <!-- Marge basse sur téléphone et tablette : les boutons flottants (appel, chat, WhatsApp) ne couvrent plus les liens -->
+  <!-- Marge basse sur petit écran d'ordinateur : les boutons ronds flottants ne couvrent plus les liens (sur téléphone, la barre fixe a son propre espace) -->
   <div
-    class="mx-auto mt-6 flex max-w-[1160px] flex-wrap justify-between gap-4 pb-40 pt-6 xl:pb-7"
+    class="mx-auto mt-6 flex max-w-[1160px] flex-wrap justify-between gap-4 pb-10 pt-6 lg:pb-40 xl:pb-7"
   >
     <span class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-on-plum-subtle">
       <span>© {{ year }} {{ c().bas.copyright }}</span>

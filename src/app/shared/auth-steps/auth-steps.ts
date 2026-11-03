@@ -37,7 +37,7 @@ import { Component, input } from '@angular/core';
               }
             </span>
             <span
-              class="whitespace-nowrap text-[12.5px]"
+              class="whitespace-nowrap text-[13px]"
               [class]="
                 i + 1 === step()
                   ? 'font-semibold text-fg'

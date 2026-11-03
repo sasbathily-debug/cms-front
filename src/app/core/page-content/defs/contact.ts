@@ -3,10 +3,10 @@ import { PageDef } from '../fields';
 /** Textes d'exemple : les passages entre crochets sont à compléter avec la doctoresse. */
 const defaults = {
   hero: {
-    titre: 'Une question ? Appelez ou écrivez-nous.',
+    titre: 'On vous répond, et on vous attend.',
     intro:
-      "Nous répondons pendant les horaires d'ouverture. Pour un rendez-vous, la réservation en ligne est le moyen le plus rapide.",
-    bouton: 'Prendre rendez-vous en ligne',
+      "Réservez en une minute, ou appelez-nous pendant les horaires d'ouverture. Pour une question médicale qui peut attendre, écrivez-nous plus bas.",
+    bouton: 'Réserver mon créneau',
   },
   carteAppel: {
     label: 'APPELER LE CABINET',
@@ -15,8 +15,8 @@ const defaults = {
     photo: '/img/dr-fall-sourire-640.webp',
   },
   formulaire: {
-    titre: 'Envoyer un message',
-    delai: 'Réponse sous [délai à préciser par la doctoresse].',
+    titre: 'Une question médicale qui peut attendre ?',
+    delai: "Nous répondons par téléphone ou par WhatsApp, pendant les horaires d'ouverture.",
     confirmationTitre: 'Message envoyé',
     confirmationTexte:
       'Le cabinet a bien reçu votre message et vous répondra par téléphone ou par e-mail. Pour une urgence, appelez directement.',
@@ -27,7 +27,7 @@ const defaults = {
       {
         titre: 'Prendre rendez-vous',
         texte:
-          'Créez votre compte en une minute et choisissez votre créneau. La confirmation est immédiate.',
+          'Choisissez votre créneau et laissez votre nom et votre téléphone. Pas besoin de compte.',
         lien: 'Réserver en ligne',
       },
       {

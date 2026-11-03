@@ -20,7 +20,7 @@ import { NextSlot } from '../../core/services/next-slot';
         <span
           class="flex w-16 shrink-0 flex-col items-center justify-center gap-0.5 bg-accent-soft py-2 font-display"
         >
-          <span class="text-[10px] font-bold leading-none tracking-[0.12em] text-accent-800">{{
+          <span class="text-xs font-bold leading-none tracking-[0.12em] text-accent-800">{{
             t.jour
           }}</span>
           <span class="text-2xl font-bold leading-none text-fg">{{ t.numero }}</span>
@@ -39,7 +39,7 @@ import { NextSlot } from '../../core/services/next-slot';
         ></span>
         <span class="flex flex-1 items-center justify-between gap-2 px-4 py-2 font-display">
           <span class="flex flex-col gap-[3px]">
-            <span class="text-[10.5px] font-semibold leading-none tracking-[0.09em] text-accent-700"
+            <span class="text-xs font-semibold leading-none tracking-[0.09em] text-accent-700"
               >PROCHAIN CRÉNEAU LIBRE</span
             >
             <span class="text-base font-bold leading-tight text-fg">{{ t.phrase }}</span>

@@ -27,12 +27,9 @@ export class Faq {
     this.c().bulles.map((b) => ({ q: b.q, a: this.withUrgence(b.a) })),
   );
 
-  /** Remplace `{urgence}` par le numéro d'urgence des réglages (à défaut, le SAMU, à confirmer). */
+  /** Remplace `{urgence}` par le numéro d'urgence des réglages (à défaut, le SAMU national). */
   protected withUrgence(text: string): string {
-    return text.replace(
-      '{urgence}',
-      this.site.emergencyNumber() || 'SAMU au 1515 [numéro à confirmer]',
-    );
+    return text.replace('{urgence}', this.site.emergencyNumber());
   }
 
   protected readonly site = inject(SiteSettings);

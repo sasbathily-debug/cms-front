@@ -5,16 +5,17 @@ const defaults = {
   hero: {
     kicker: 'À PROPOS',
     tagline: 'Endocrinologie · Diabétologie · Nutrition',
-    nom: 'Dr Aissatou Mamadou Fall',
+    nom: 'Dr Aïssatou Mamadou Fall',
     intro:
       "Médecin endocrinologue et nutritionniste à Dakar. J'accompagne les personnes qui vivent avec le diabète, une maladie de la thyroïde ou un trouble hormonal.",
     citation: "« Mieux comprendre sa maladie, c'est déjà commencer à la maîtriser. »",
     citationNote: '[Citation à confirmer par la doctoresse]',
+    preuve: "Autrice du Guide pratique de l'alimentation du diabétique",
     boutonPrincipal: 'Prendre rendez-vous',
     boutonSecondaire: 'Mes spécialités',
     banniere: '/img/photo-1.jpg',
     portrait: '/img/dr-fall-sourire-640.webp',
-    portraitAlt: 'Portrait souriant du Dr Aissatou Mamadou Fall',
+    portraitAlt: 'Portrait souriant du Dr Aïssatou Mamadou Fall',
   },
   histoire: {
     kicker: 'MON HISTOIRE',
@@ -47,31 +48,31 @@ const defaults = {
       {
         periode: 'Depuis [année]',
         titre: "Cabinet d'endocrinologie et de nutrition",
-        lieu: 'Sacré-Cœur, Dakar',
+        lieu: 'Cité Keur Gorgui, Dakar',
       },
     ],
   },
   valeurs: {
-    kicker: 'MA FAÇON DE TRAVAILLER',
-    titre: 'Trois engagements envers mes patients',
+    kicker: 'CE QUE VOUS TROUVEREZ AU CABINET',
+    titre: 'Ce que je vous promets, concrètement',
     items: [
       {
-        sym: 'Éc',
-        titre: 'Écoute',
+        sym: '',
+        titre: 'Un plan écrit',
         texte:
-          'Chaque patient arrive avec son histoire, ses habitudes et ses craintes. La consultation commence toujours par vous écouter.',
+          'Vous repartez de chaque consultation avec une ordonnance, la liste des examens à faire et la date du prochain rendez-vous.',
       },
       {
-        sym: 'Pé',
-        titre: 'Pédagogie',
+        sym: '',
+        titre: 'Des mots simples',
         texte:
-          "Comprendre sa maladie rend le traitement plus facile à suivre. J'explique avec des mots simples, autant de fois que nécessaire.",
+          "J'explique le diagnostic avec des mots simples, autant de fois que nécessaire, jusqu'à ce que ce soit clair.",
       },
       {
-        sym: 'Su',
-        titre: 'Suivi dans la durée',
+        sym: '',
+        titre: 'Votre cuisine, pas un régime importé',
         texte:
-          "Un plan de soins n'est jamais figé : nous l'ajustons ensemble, consultation après consultation.",
+          'Les conseils alimentaires partent de vos vrais repas et de votre quotidien, pour que vous puissiez les tenir.',
       },
     ],
   },
@@ -81,14 +82,14 @@ const defaults = {
       "[Ordre des médecins du Sénégal, n° d'inscription] · [Société d'endocrinologie ou de diabétologie] · [Autres associations]",
   },
   interventions: {
-    titre: 'Enseignement et publications',
+    titre: "Lors d'une intervention publique",
     texte:
-      "Lors d'une intervention [événement et date à préciser]. [Autres interventions, congrès, articles : à renseigner si la doctoresse en a.]",
+      '[Événement, ville et date : à préciser. Autres interventions, congrès, articles : à renseigner si la doctoresse en a.]',
     photo: '/img/dr-fall-conference-640.webp',
-    photoAlt: "Le Dr Aissatou Mamadou Fall, micro à la main, lors d'une intervention publique",
+    photoAlt: "Le Dr Aïssatou Mamadou Fall, micro à la main, lors d'une intervention publique",
   },
   appel: {
-    titre: "Envie d'en parler ? Prenons rendez-vous.",
+    titre: 'Faisons connaissance.',
   },
 };
 
@@ -115,6 +116,12 @@ export const A_PROPOS: PageDef<AProposContent> = {
           label: 'Note sous la citation',
           type: 'text',
           hint: 'Laissez vide pour ne rien afficher.',
+        },
+        {
+          key: 'preuve',
+          label: 'Ligne de reconnaissance sous la présentation',
+          type: 'text',
+          hint: 'Par exemple une société savante ou une publication. Laissez vide pour ne rien afficher.',
         },
         { key: 'boutonPrincipal', label: 'Texte du bouton orange', type: 'text' },
         { key: 'boutonSecondaire', label: 'Texte du bouton contour', type: 'text' },
@@ -178,7 +185,6 @@ export const A_PROPOS: PageDef<AProposContent> = {
           itemLabel: 'un engagement',
           titleKey: 'titre',
           fields: [
-            { key: 'sym', label: 'Deux lettres affichées en grand', type: 'text' },
             { key: 'titre', label: 'Titre', type: 'text' },
             { key: 'texte', label: 'Texte', type: 'textarea' },
           ],

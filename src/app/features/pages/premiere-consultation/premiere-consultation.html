@@ -188,9 +188,7 @@
         <h2 class="m-0 font-display text-2xl font-bold text-fg">{{ c().urgence.titre }}</h2>
         <p class="m-0 text-base leading-[1.7] text-body">
           {{ c().urgence.texte }}
-          <strong class="text-fg">{{
-            site.emergencyNumber() || "[Numéro d'urgence à indiquer]"
-          }}</strong>
+          <strong class="text-fg">{{ site.emergencyNumber() }}</strong>
         </p>
       </div>
     </div>
