@@ -5,7 +5,9 @@ import { filter, map } from 'rxjs';
 import { SiteSettings } from '../../core/services/site-settings';
 
 /** Pages où la barre mobile n'a rien à proposer : on y est déjà, ou le clavier prend la place. */
-const SANS_BARRE = ['/rendez-vous'];
+const SANS_BARRE = ['/rendez-vous', '/contact'];
+/** Pages qui proposent déjà l'appel et WhatsApp en grand : les boutons ronds y feraient doublon. */
+const SANS_BOUTONS_RONDS = ['/contact'];
 
 @Component({
   selector: 'app-floating-actions',
@@ -24,8 +26,11 @@ export class FloatingActions {
     { initialValue: typeof location === 'undefined' ? this.router.url : location.pathname },
   );
 
-  protected readonly showBar = computed(() => {
-    const path = this.url().split(/[?#]/)[0];
-    return !SANS_BARRE.some((p) => path === p || path.startsWith(p + '/'));
-  });
+  private readonly path = computed(() => this.url().split(/[?#]/)[0]);
+  protected readonly showBar = computed(
+    () => !SANS_BARRE.some((p) => this.path() === p || this.path().startsWith(p + '/')),
+  );
+  protected readonly showCircles = computed(
+    () => !SANS_BOUTONS_RONDS.some((p) => this.path() === p || this.path().startsWith(p + '/')),
+  );
 }
