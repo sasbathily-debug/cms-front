@@ -24,6 +24,7 @@ import { SlotTicket } from '../../../shared/slot-ticket/slot-ticket';
 import { SiteSettings } from '../../../core/services/site-settings';
 import { SilhouetteSpecialties } from '../../../shared/silhouette-specialties/silhouette-specialties';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
+import { ChiffrePipe } from '../../../shared/chiffre.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 
 /** L'accueil sur téléphone : une mise en page à part, comme sur les écrans mobiles de la maquette. */
@@ -37,6 +38,7 @@ import { SrcsetPipe } from '../../../core/page-content/images';
     OrangeThread,
     Parallax,
     OptimizedImagePipe,
+    ChiffrePipe,
     SrcsetPipe,
     SlotTicket,
   ],
