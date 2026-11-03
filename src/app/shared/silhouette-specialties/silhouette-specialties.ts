@@ -15,9 +15,9 @@ import { Specialties } from '../../core/services/specialties';
 })
 export class SilhouetteSpecialties {
   readonly eyebrow = input('OÙ AGISSENT LES HORMONES ?');
-  readonly title = input('Chaque spécialité a son organe');
+  readonly title = input('Là où agissent les hormones');
   readonly intro = input(
-    'Passez la souris sur une ligne pour voir où se situe le problème dans le corps.',
+    'Passez la souris sur le diabète, la thyroïde ou les troubles hormonaux : la glande concernée s’allume.',
   );
 
   /** « dark » : version de l'accueil (fond prune, phrase de présentation et flèche sur chaque ligne). */

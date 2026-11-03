@@ -35,6 +35,12 @@ import { MALADIE_DEFS } from '../../../core/page-content/defs/maladies';
 })
 export class Maladie {
   protected readonly site = inject(SiteSettings);
+
+  /** Le texte d'urgence cite parfois déjà le numéro : on ne le répète pas dans la même phrase. */
+  protected citeLeNumero(texte: string): boolean {
+    const chiffres = this.site.emergencyNumber().replace(/\D/g, '');
+    return !!chiffres && texte.replace(/\s/g, '').includes(chiffres);
+  }
   /** Situation choisie dans les schémas de la thyroïde et de l'obésité. */
   protected readonly thyroEtat = signal(0);
   protected readonly obeEtat = signal(0);

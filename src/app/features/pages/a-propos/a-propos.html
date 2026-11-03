@@ -71,9 +71,9 @@
 
   <!-- En une phrase : la citation s'allume mot par mot pendant que le cadre reste collé -->
   <section class="relative -mt-8 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
-    <div data-reveal-scene class="relative h-[calc(max(72svh,34rem)+120svh)]">
+    <div data-reveal-scene class="relative h-[calc(max(54svh,26rem)+70svh)]">
       <div
-        class="sticky top-[calc((100svh_-_max(72svh,34rem))/2)] flex h-[max(72svh,34rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
+        class="sticky top-[calc((100svh_-_max(54svh,26rem))/2)] flex h-[max(54svh,26rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
       >
         <div class="mx-auto w-full max-w-[1040px]">
           <span
@@ -186,11 +186,9 @@
       <div class="grid gap-5 md:grid-cols-3">
         @for (v of c().valeurs.items; track $index) {
           <div
-            class="flex min-h-[260px] flex-col justify-between gap-10 rounded-[26px] border border-peach/40 bg-plum-900 p-[30px] text-white md:min-h-[300px]"
+            class="flex flex-col justify-start gap-8 rounded-[26px] border border-peach/40 bg-plum-900 p-[30px] text-white"
           >
-            <span class="font-display text-[72px] font-bold leading-none text-peach">{{
-              v.sym
-            }}</span>
+            <span aria-hidden="true" class="h-[3px] w-10 rounded bg-accent-500"></span>
             <span class="flex flex-col gap-2.5">
               <span class="font-display text-2xl font-bold">{{ v.titre }}</span>
               <span class="text-[15px] leading-[1.65] text-on-plum-muted">{{ v.texte }}</span>

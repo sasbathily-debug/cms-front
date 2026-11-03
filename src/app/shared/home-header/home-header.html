@@ -172,6 +172,16 @@
           </div>
         }
       </nav>
+      <span class="flex items-center gap-5 pl-2 pr-1">
+        @for (l of sideLinks(); track l.label) {
+          <a
+            [routerLink]="l.route"
+            class="whitespace-nowrap text-[14.5px] font-semibold text-white underline-offset-[6px] hover:underline"
+            [class.underline]="isSideActive(l.route)"
+            >{{ l.label }}</a
+          >
+        }
+      </span>
       <a routerLink="/rendez-vous" class="btn-arrow" [class]="ctaClass()"><span class="btn-label">Prendre rendez-vous</span></a>
     </div>
 

@@ -58,7 +58,9 @@
         >
           <span class="text-[14.5px] leading-normal text-accent-ink">
             <strong class="text-fg">Urgence :</strong> {{ c.essentiel.urgence }}
-            <span class="text-muted">{{ site.emergencyNumber() }}</span>
+            @if (!citeLeNumero(c.essentiel.urgence)) {
+              <span class="text-muted">{{ site.emergencyNumber() }}</span>
+            }
           </span>
           <a
             routerLink="/rendez-vous"
@@ -324,7 +326,9 @@
             </h2>
             <p class="m-0 text-base leading-[1.7] text-body">
               {{ c.urgence }}
-              <strong class="text-fg">{{ site.emergencyNumber() }}</strong>
+              @if (!citeLeNumero(c.urgence)) {
+                <strong class="text-fg">{{ site.emergencyNumber() }}</strong>
+              }
             </p>
           </section>
 

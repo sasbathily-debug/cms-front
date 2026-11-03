@@ -33,8 +33,8 @@ const defaults = {
     kicker: 'SPÉCIALITÉS',
     titre: 'Ce que je prends en charge',
     intro:
-      "Passez la souris sur une spécialité : l'organe concerné s'allume sur la silhouette. Cliquez pour lire la page.",
-    introTelephone: "Touchez une spécialité : l'organe concerné s'allume sur la silhouette.",
+      "Passez la souris sur une spécialité pour lire son résumé. Pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume sur la silhouette.",
+    introTelephone: "Touchez une spécialité pour lire son résumé et ouvrir sa page.",
   },
   doctoresse: {
     kicker: 'LA DOCTORESSE',

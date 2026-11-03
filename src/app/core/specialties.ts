@@ -3,6 +3,7 @@ export interface Specialty {
   sym: string;
   n: string;
   title: string;
+  /** Organe mis en avant sur la silhouette ; vide quand la spécialité ne se résume pas à un organe. */
   organ: string;
   route: string;
   text: string;
@@ -42,7 +43,7 @@ export const SPECIALTIES: Specialty[] = [
     sym: 'Ob',
     n: '03',
     title: 'Obésité et surpoids',
-    organ: "L'hypophyse et les surrénales, liées à l'appétit et au stress",
+    organ: '',
     route: '/specialites/obesite',
     text: 'Un accompagnement progressif et réaliste, fondé sur vos habitudes, sans régime miracle.',
     signs: 'vous avez du mal à stabiliser votre poids malgré vos efforts.',
@@ -53,7 +54,7 @@ export const SPECIALTIES: Specialty[] = [
     sym: 'Nu',
     n: '04',
     title: 'Nutrition clinique',
-    organ: 'Tout le métabolisme, du cerveau au pancréas',
+    organ: '',
     route: '/specialites/nutrition-clinique',
     text: 'Un plan alimentaire adapté à votre maladie, votre âge et votre mode de vie.',
     signs: 'vous souhaitez adapter votre alimentation à une maladie ou à un traitement.',
@@ -64,7 +65,7 @@ export const SPECIALTIES: Specialty[] = [
     sym: 'Ho',
     n: '05',
     title: 'Troubles hormonaux',
-    organ: "Les ovaires, les surrénales et l'hypophyse",
+    organ: "Les ovaires et l'hypophyse",
     route: '/specialites/troubles-hormonaux',
     text: 'Cycles irréguliers, syndrome des ovaires polykystiques, ménopause, puberté précoce ou tardive.',
     signs: 'des cycles irréguliers, une pilosité ou une prise de poids inexpliquées.',
@@ -75,7 +76,7 @@ export const SPECIALTIES: Specialty[] = [
     sym: 'Ch',
     n: '06',
     title: 'Cholestérol et métabolisme',
-    organ: 'Le foie et les surrénales',
+    organ: '',
     route: '/specialites/cholesterol',
     text: "Cholestérol, triglycérides, acide urique : comprendre un résultat d'analyse et agir en conséquence.",
     signs: 'un bilan sanguin montre des valeurs hors normes.',

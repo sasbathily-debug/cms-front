@@ -193,7 +193,6 @@ export const LE_CABINET: PageDef<LeCabinetContent> = {
           itemLabel: 'une carte',
           titleKey: 'titre',
           fields: [
-            { key: 'sym', label: 'Deux lettres affichées en grand', type: 'text' },
             { key: 'titre', label: 'Titre', type: 'text' },
             { key: 'texte', label: 'Texte', type: 'textarea' },
           ],

@@ -178,7 +178,6 @@ export const A_PROPOS: PageDef<AProposContent> = {
           itemLabel: 'un engagement',
           titleKey: 'titre',
           fields: [
-            { key: 'sym', label: 'Deux lettres affichées en grand', type: 'text' },
             { key: 'titre', label: 'Titre', type: 'text' },
             { key: 'texte', label: 'Texte', type: 'textarea' },
           ],

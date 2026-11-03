@@ -177,53 +177,13 @@
   animation: none;
   opacity: 1;
 }
-.sil-grid:has(.row-ob:hover) .g-hy,
-.sil-grid:has(.row-ob:hover) .g-su {
-  animation: none;
-  opacity: 1;
-}
-.sil-grid:has(.row-ob:focus-visible) .g-hy,
-.sil-grid:has(.row-ob:focus-visible) .g-su {
-  animation: none;
-  opacity: 1;
-}
-.sil-grid:has(.row-nu:hover) .g-hy,
-.sil-grid:has(.row-nu:hover) .g-th,
-.sil-grid:has(.row-nu:hover) .g-fo,
-.sil-grid:has(.row-nu:hover) .g-pa,
-.sil-grid:has(.row-nu:hover) .g-su,
-.sil-grid:has(.row-nu:hover) .g-ov {
-  animation: none;
-  opacity: 1;
-}
-.sil-grid:has(.row-nu:focus-visible) .g-hy,
-.sil-grid:has(.row-nu:focus-visible) .g-th,
-.sil-grid:has(.row-nu:focus-visible) .g-fo,
-.sil-grid:has(.row-nu:focus-visible) .g-pa,
-.sil-grid:has(.row-nu:focus-visible) .g-su,
-.sil-grid:has(.row-nu:focus-visible) .g-ov {
-  animation: none;
-  opacity: 1;
-}
 .sil-grid:has(.row-ho:hover) .g-ov,
-.sil-grid:has(.row-ho:hover) .g-su,
 .sil-grid:has(.row-ho:hover) .g-hy {
   animation: none;
   opacity: 1;
 }
 .sil-grid:has(.row-ho:focus-visible) .g-ov,
-.sil-grid:has(.row-ho:focus-visible) .g-su,
 .sil-grid:has(.row-ho:focus-visible) .g-hy {
-  animation: none;
-  opacity: 1;
-}
-.sil-grid:has(.row-ch:hover) .g-fo,
-.sil-grid:has(.row-ch:hover) .g-su {
-  animation: none;
-  opacity: 1;
-}
-.sil-grid:has(.row-ch:focus-visible) .g-fo,
-.sil-grid:has(.row-ch:focus-visible) .g-su {
   animation: none;
   opacity: 1;
 }

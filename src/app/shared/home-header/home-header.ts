@@ -137,17 +137,25 @@ export class HomeHeader implements OnDestroy {
     ...NAV_GROUPS.map((group) => ({
       key: group.key,
       sym: SYMBOLS[group.key] ?? '',
-      count: String(group.links.length),
+      count: '',
       label: group.label + ' ▾',
       route: group.route,
       group,
     })),
     { key: 'conseils', sym: '', count: '', label: 'Conseils santé', route: '/conseils-sante' },
-    { key: 'contact', sym: '', count: '', label: 'Contact', route: '/contact' },
-    { key: 'espace', sym: '', count: '', label: 'Mon espace', route: this.spaceLink() },
   ]);
 
   readonly simpleLinks = NAV_SIMPLE;
+
+  /** Contact et Mon espace : de simples liens à côté du bouton de rendez-vous, sans tuile. */
+  readonly sideLinks = computed(() => [
+    { label: 'Contact', route: '/contact' },
+    { label: 'Mon espace', route: this.spaceLink() },
+  ]);
+
+  isSideActive(route: string): boolean {
+    return this.currentUrl().split(/[?#]/)[0] === route;
+  }
 
   /** Le menu mobile affiche les tuiles deux par deux ; un panneau s'ouvre sous la rangée de la tuile touchée. */
   readonly tilePairs = computed(() => {

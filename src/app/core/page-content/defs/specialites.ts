@@ -14,7 +14,7 @@ const defaults = {
     bouton: 'Prendre rendez-vous',
   },
   cartes: {
-    libelleSignes: 'VOUS POUVEZ CONSULTER SI',
+    libelleSignes: 'Vous pouvez consulter si…',
     lien: 'Lire la page',
   },
   /** Les six spécialités : leurs textes se modifient ; leur page et leur organe sur la silhouette restent ceux du site. */
@@ -80,10 +80,10 @@ export const SPECIALITES: PageDef<SpecialitesContent> = {
     },
     {
       key: 'cartes',
-      label: 'Cartes de la page',
+      label: 'Liste de la page',
       type: 'group',
       fields: [
-        { key: 'libelleSignes', label: 'Intitulé « vous pouvez consulter si »', type: 'text' },
+        { key: 'libelleSignes', label: 'Titre de la liste « vous pouvez consulter si »', type: 'text' },
         { key: 'lien', label: 'Texte du lien', type: 'text' },
       ],
     },
