@@ -81,38 +81,65 @@
       </div>
     }
 
+    <a
+      routerLink="/specialites"
+      (click)="closed.emit()"
+      class="-mt-1 text-[15px] font-semibold text-accent-800"
+      >Toutes les spécialités →</a
+    >
+
     <div class="flex flex-col">
-      <a
-        routerLink="/le-cabinet"
-        (click)="closed.emit()"
-        class="flex min-h-[60px] items-center gap-3.5 border-b border-line py-2"
-        ><span class="flex flex-1 flex-col gap-0.5"
-          ><b class="font-display text-xl font-semibold">Le cabinet</b
-          ><em class="text-[13px] not-italic text-muted">{{ status().text }}</em></span
-        ><span aria-hidden="true" class="text-accent-800">→</span></a
-      >
-      <a
-        routerLink="/premiere-consultation"
-        (click)="closed.emit()"
-        class="flex min-h-[60px] items-center gap-3.5 border-b border-line py-2"
-        ><span class="flex flex-1 flex-col gap-0.5"
-          ><b class="font-display text-xl font-semibold">Votre visite</b
-          ><em class="text-[13px] not-italic text-muted"
-            >Ce qu'il faut apporter, déroulé, tarifs</em
-          ></span
-        ><span aria-hidden="true" class="text-accent-800">→</span></a
-      >
-      <a
-        routerLink="/conseils-sante"
-        (click)="closed.emit()"
-        class="flex min-h-[60px] items-center gap-3.5 border-b border-line py-2"
-        ><span class="flex flex-1 flex-col gap-0.5"
-          ><b class="font-display text-xl font-semibold">Conseils</b
-          ><em class="text-[13px] not-italic text-muted"
-            >Guide de l'alimentation du diabétique, articles</em
-          ></span
-        ><span aria-hidden="true" class="text-accent-800">→</span></a
-      >
+      @for (sec of sections(); track sec.key) {
+        <div class="border-b border-line">
+          <button
+            type="button"
+            (click)="toggleSection(sec.key)"
+            [attr.aria-expanded]="openSection() === sec.key"
+            [attr.aria-controls]="'mm-' + sec.key"
+            class="flex min-h-[60px] w-full items-center gap-3.5 py-2 text-left"
+          >
+            <span class="flex flex-1 flex-col gap-0.5">
+              <b class="font-display text-xl font-semibold">{{ sec.label }}</b>
+              <em class="text-[13px] not-italic text-muted">{{ sec.hint }}</em>
+            </span>
+            <span aria-hidden="true" class="text-[22px] leading-none text-accent-800">{{
+              openSection() === sec.key ? '−' : '+'
+            }}</span>
+          </button>
+          @if (openSection() === sec.key) {
+            <div [id]="'mm-' + sec.key" class="flex flex-col pb-2">
+              @for (l of sec.links; track l.label) {
+                <a
+                  [routerLink]="l.route"
+                  (click)="closed.emit()"
+                  class="flex min-h-12 items-center justify-between gap-3 border-t border-line py-2.5 pl-3 text-[16px] text-fg"
+                  >{{ l.label }}<span aria-hidden="true" class="text-accent-800">→</span></a
+                >
+              }
+              @if (sec.key === 'conseils') {
+                <a
+                  [href]="conseils().alaune.fichier"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex min-h-12 items-center justify-between gap-3 border-t border-line py-2.5 pl-3 text-[16px] font-semibold text-accent-800"
+                  >Télécharger le guide (PDF)<span aria-hidden="true">↓</span></a
+                >
+                @for (a of articles(); track a.title) {
+                  <a
+                    routerLink="/conseils-sante"
+                    (click)="closed.emit()"
+                    class="flex min-h-12 flex-col justify-center gap-0.5 border-t border-line py-2.5 pl-3"
+                    ><small class="text-xs font-semibold tracking-[0.08em] text-accent-800">{{
+                      a.category.toUpperCase()
+                    }}</small
+                    ><span class="text-[16px] text-fg">{{ a.title }}</span></a
+                  >
+                }
+              }
+            </div>
+          }
+        </div>
+      }
       <a
         routerLink="/contact"
         (click)="closed.emit()"
