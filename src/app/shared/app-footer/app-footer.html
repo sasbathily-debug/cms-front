@@ -4,11 +4,7 @@
       <a
         [href]="site.telHref()"
         class="font-display font-bold leading-none tracking-[-0.035em] text-cream-50"
-        [class]="
-          scene()
-            ? 'text-[clamp(2.1rem,9.2vw,6.5rem)]'
-            : 'text-[clamp(1.9rem,6vw,3.25rem)]'
-        "
+        [class]="grand() ? 'text-[clamp(2.1rem,9.2vw,6.5rem)]' : 'text-[clamp(1.9rem,6vw,3.25rem)]'"
         >{{ site.phone() }}</a
       >
       <div class="flex flex-wrap gap-3.5">
@@ -51,10 +47,9 @@
               stroke-linejoin="round"
               aria-hidden="true"
             >
-              <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" />
-            </svg><span class="btn-label">
-            Écrire sur WhatsApp
-          </span></a>
+              <path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z" /></svg
+            ><span class="btn-label"> Écrire sur WhatsApp </span></a
+          >
         }
         <a
           routerLink="/rendez-vous"
@@ -77,7 +72,9 @@
           }
         </span>
         <a [href]="'mailto:' + site.email()" class="break-words text-[15.5px] text-white"
-          >{{ site.email().split('@')[0] }}<wbr />{{ site.email().includes('@') ? '@' + site.email().split('@')[1] : '' }}</a
+          >{{ site.email().split('@')[0] }}<wbr />{{
+            site.email().includes('@') ? '@' + site.email().split('@')[1] : ''
+          }}</a
         >
       </div>
       <div class="flex flex-col gap-3">
@@ -132,17 +129,6 @@
         <a routerLink="/client" class="text-[15.5px] text-white">Mon espace</a>
       </div>
     </div>
-
-    @if (scene()) {
-      <!-- Le mot « DR FALL » et ses personnages : chargé seulement quand on approche du bas de la page. -->
-      @defer (on viewport; prefetch on idle) {
-        <app-doodle-footer />
-      } @placeholder {
-        <div style="padding-top: clamp(24px, 4vw, 48px)">
-          <div style="aspect-ratio: 895 / 328"></div>
-        </div>
-      }
-    }
 
     <div class="flex flex-wrap items-end justify-between gap-10">
       <p class="m-0 max-w-[460px] whitespace-pre-line text-sm leading-[1.7] text-on-plum-subtle">

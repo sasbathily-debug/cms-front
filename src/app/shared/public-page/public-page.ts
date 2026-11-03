@@ -21,7 +21,7 @@ import { FloatingActions } from '../floating-actions/floating-actions';
         }
         <main><ng-content /></main>
       </div>
-      <app-footer [scene]="footerScene()" />
+      <app-footer [grand]="footerGrand()" />
       @if (!hideFloatingOnMobile()) {
         <!-- Laisse la place à la barre fixe du téléphone : le bas du pied de page reste lisible. -->
         <div class="h-[78px] bg-plum-900 lg:hidden" aria-hidden="true"></div>
@@ -37,6 +37,6 @@ export class PublicPage {
   /** Sur l'accueil mobile, la barre de réservation remplace les boutons ronds flottants. */
   readonly hideFloatingOnMobile = input(false);
 
-  /** Affiche la scène « DR FALL » dans le pied de page (accueil et conseils santé seulement). */
-  readonly footerScene = input(false);
+  /** Grand numéro de téléphone dans le pied de page (accueil et conseils santé). */
+  readonly footerGrand = input(false);
 }

@@ -9,7 +9,6 @@ import { SPECIALTY_LINKS } from '../../core/site-nav';
 import { OpenNow } from '../open-now/open-now';
 import { InstallButton } from '../install-button/install-button';
 import { BackToTop } from '../back-to-top/back-to-top';
-import { DoodleFooter } from '../doodle-footer/doodle-footer';
 
 /** Les trois liens du bas de page : reconnus par leur libellé, qui reste modifiable depuis l'admin. */
 const LEGAL_ROUTES: [RegExp, string][] = [
@@ -20,7 +19,7 @@ const LEGAL_ROUTES: [RegExp, string][] = [
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, OpenNow, InstallButton, BackToTop, DoodleFooter],
+  imports: [RouterLink, OpenNow, InstallButton, BackToTop],
   styleUrl: './app-footer.css',
   templateUrl: './app-footer.html',
 })
@@ -28,8 +27,8 @@ export class AppFooter {
   protected readonly site = inject(SiteSettings);
   protected readonly analytics = inject(Analytics);
 
-  /** La scène « DR FALL » est réservée à l'accueil, à la 404 et à la page des conseils : ailleurs, le pied de page reste sobre. */
-  readonly scene = input(false);
+  /** Grand numéro de téléphone dans le pied de page (accueil et conseils santé) ; ailleurs, une version plus sobre. */
+  readonly grand = input(false);
 
   readonly year = new Date().getFullYear();
   readonly instagramUrl = 'https://www.instagram.com/dr_aissatou.m/';
