@@ -15,7 +15,7 @@
         class="mx-auto grid max-w-[1040px] items-start gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]"
       >
         <div
-          class="overflow-hidden rounded-[26px] border border-line bg-surface shadow-[0_36px_70px_rgba(31,18,38,0.28)]"
+          class="overflow-hidden rounded-none border border-line bg-surface shadow-[0_36px_70px_rgba(31,18,38,0.28)]"
         >
           <div
             class="flex flex-wrap items-center justify-between gap-2 bg-accent-500 px-6 py-3.5 sm:px-9"
@@ -44,12 +44,12 @@
             <div class="mt-1 flex flex-wrap gap-3">
               <a
                 routerLink="/rendez-vous"
-                class="btn-arrow rounded-full bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+                class="btn-arrow rounded-md bg-accent-500 px-7 py-4 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
                 ><span class="btn-label">{{ c().hero.boutonPrincipal }}</span></a
               >
               <a
                 routerLink="/specialites"
-                class="btn-arrow rounded-full border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
+                class="btn-arrow rounded-md border-[1.5px] border-fg px-[26px] py-[15px] font-display text-[15px] font-semibold text-fg"
                 ><span class="btn-label">{{ c().hero.boutonSecondaire }}</span></a
               >
             </div>
@@ -57,7 +57,7 @@
         </div>
         <div
           appInView
-          class="photo-life relative h-[420px] overflow-hidden rounded-[26px] bg-plum-800 shadow-[0_30px_60px_rgba(31,18,38,0.22)] lg:h-[560px]"
+          class="photo-life relative h-[420px] overflow-hidden rounded-none bg-plum-800 shadow-[0_30px_60px_rgba(31,18,38,0.22)] lg:h-[560px]"
         >
           <img
             [src]="c().hero.portrait | optimizedImage: 900"
@@ -77,7 +77,7 @@
   </div>
 
   <!-- En une phrase : la citation s'allume mot par mot pendant que le cadre reste collé -->
-  <section class="relative -mt-8 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
+  <section class="relative -mt-8 rounded-t-none bg-plum-900 lg:rounded-t-none">
     <div data-reveal-scene class="relative h-[calc(max(48svh,22rem)+45svh)]">
       <div
         class="sticky top-[calc((100svh_-_max(48svh,22rem))/2)] flex h-[max(48svh,22rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
@@ -147,7 +147,7 @@
   <!-- Le parcours n'apparaît qu'une fois renseigné : une seule ligne donnerait l'effet inverse de celui qu'on cherche. -->
   @if (c().parcours.items.length >= 3) {
     <section
-      class="rounded-t-[32px] bg-plum-900 px-4 py-20 sm:px-6 sm:py-28 lg:rounded-t-[48px] lg:px-10"
+      class="rounded-t-none bg-plum-900 px-4 py-20 sm:px-6 sm:py-28 lg:rounded-t-none lg:px-10"
     >
       <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
         <div class="flex flex-col gap-3.5">
@@ -196,7 +196,7 @@
       <div class="grid gap-5 md:grid-cols-3">
         @for (v of c().valeurs.items; track $index) {
           <div
-            class="flex flex-col justify-start gap-8 rounded-[26px] border border-peach/40 bg-plum-900 p-[30px] text-white"
+            class="flex flex-col justify-start gap-8 rounded-none border border-peach/40 bg-plum-900 p-[30px] text-white"
           >
             <span aria-hidden="true" class="h-[3px] w-10 rounded bg-accent-500"></span>
             <span class="flex flex-col gap-2.5">
@@ -213,7 +213,7 @@
     <div class="mx-auto flex max-w-[1160px] flex-col gap-5">
       <!-- Sur scène : la photo en grand, le texte à côté -->
       <div
-        class="grid overflow-hidden rounded-[28px] border border-line bg-surface lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
+        class="grid overflow-hidden rounded-none border border-line bg-surface lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
       >
         <img
           [src]="c().interventions.photo | optimizedImage: 900"
@@ -238,7 +238,7 @@
       </div>
 
       @if (c().affiliations.texte) {
-        <div class="flex flex-col gap-3 rounded-[26px] border border-line bg-surface p-8">
+        <div class="flex flex-col gap-3 rounded-none border border-line bg-surface p-8">
           <h3 class="m-0 font-display text-[22px] font-bold text-fg">
             {{ c().affiliations.titre }}
           </h3>
@@ -250,13 +250,13 @@
 
       <!-- Le guide qu'elle a écrit -->
       <div
-        class="grid items-center gap-8 rounded-[28px] bg-plum-900 p-7 text-white sm:p-10 md:grid-cols-[200px_minmax(0,1fr)]"
+        class="grid items-center gap-8 rounded-none bg-plum-900 p-7 text-white sm:p-10 md:grid-cols-[200px_minmax(0,1fr)]"
       >
         <img
           [src]="guide().alaune.photo"
           alt="Couverture du Guide pratique de l'alimentation du diabétique"
           loading="lazy"
-          class="mx-auto w-[180px] rounded-xl bg-plum-800 object-cover md:w-full"
+          class="mx-auto w-[180px] rounded-none bg-plum-800 object-cover md:w-full"
         />
         <div class="flex flex-col gap-3.5">
           <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
@@ -274,7 +274,7 @@
             [href]="guide().alaune.fichier"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-arrow mt-1 self-start rounded-full bg-accent-500 px-7 py-3.5 font-display text-[15px] font-semibold text-on-accent"
+            class="btn-arrow mt-1 self-start rounded-md bg-accent-500 px-7 py-3.5 font-display text-[15px] font-semibold text-on-accent"
             ><span class="btn-label">{{ guide().alaune.lien }}</span></a
           >
         </div>

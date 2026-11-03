@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   template: `
     <section class="bg-page px-3 pb-6 sm:px-6">
       <div
-        class="mx-auto flex max-w-[1232px] flex-wrap items-center justify-between gap-8 rounded-[32px] bg-accent-500 px-6 py-12 sm:rounded-[48px] sm:px-12 sm:py-[72px] lg:px-16"
+        class="mx-auto flex max-w-[1232px] flex-wrap items-center justify-between gap-8 rounded-none bg-accent-500 px-6 py-12 sm:rounded-none sm:px-12 sm:py-[72px] lg:px-16"
       >
         <div class="flex max-w-[700px] flex-col gap-4">
           <h2
@@ -23,7 +23,7 @@ import { RouterLink } from '@angular/router';
         <div class="flex flex-col gap-3">
           <a
             [routerLink]="route()"
-            class="btn-arrow rounded-full bg-plum-900 px-8 py-4 text-center font-display text-[17px] font-semibold text-white transition hover:bg-plum-800 sm:px-10 sm:py-5"
+            class="btn-arrow rounded-md bg-plum-900 px-8 py-4 text-center font-display text-[17px] font-semibold text-white transition hover:bg-plum-800 sm:px-10 sm:py-5"
             ><span class="btn-label">{{ label() }}</span></a
           >
           @if (secondaryLabel() && secondaryHref()) {
@@ -31,7 +31,7 @@ import { RouterLink } from '@angular/router';
               [href]="secondaryHref()"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn-arrow rounded-full border-[1.5px] border-plum-900 px-8 py-[14px] text-center font-display text-[17px] font-semibold text-on-accent sm:px-10 sm:py-[18px]"
+              class="btn-arrow rounded-md border-[1.5px] border-plum-900 px-8 py-[14px] text-center font-display text-[17px] font-semibold text-on-accent sm:px-10 sm:py-[18px]"
               ><span class="btn-label">{{ secondaryLabel() }}</span></a
             >
           }

@@ -24,11 +24,17 @@ export class AvailabilityService {
   }
 
   createRule(request: AvailabilityRuleRequest): Observable<AvailabilityRuleDto> {
-    return this.http.post<AvailabilityRuleDto>(`${environment.apiUrl}/site/availability/rules`, request);
+    return this.http.post<AvailabilityRuleDto>(
+      `${environment.apiUrl}/site/availability/rules`,
+      request,
+    );
   }
 
   updateRule(id: string, request: AvailabilityRuleRequest): Observable<AvailabilityRuleDto> {
-    return this.http.put<AvailabilityRuleDto>(`${environment.apiUrl}/site/availability/rules/${id}`, request);
+    return this.http.put<AvailabilityRuleDto>(
+      `${environment.apiUrl}/site/availability/rules/${id}`,
+      request,
+    );
   }
 
   deleteRule(id: string): Observable<void> {
@@ -36,11 +42,16 @@ export class AvailabilityService {
   }
 
   getExceptions(): Observable<ScheduleExceptionDto[]> {
-    return this.http.get<ScheduleExceptionDto[]>(`${environment.apiUrl}/site/availability/exceptions`);
+    return this.http.get<ScheduleExceptionDto[]>(
+      `${environment.apiUrl}/site/availability/exceptions`,
+    );
   }
 
   createException(request: ScheduleExceptionRequest): Observable<ScheduleExceptionDto> {
-    return this.http.post<ScheduleExceptionDto>(`${environment.apiUrl}/site/availability/exceptions`, request);
+    return this.http.post<ScheduleExceptionDto>(
+      `${environment.apiUrl}/site/availability/exceptions`,
+      request,
+    );
   }
 
   deleteException(id: string): Observable<void> {

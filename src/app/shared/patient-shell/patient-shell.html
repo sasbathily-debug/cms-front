@@ -6,7 +6,7 @@
   >
     <aside class="hidden lg:block">
       <div
-        class="sticky top-24 flex flex-col gap-[18px] rounded-3xl border border-line bg-surface p-[22px]"
+        class="sticky top-24 flex flex-col gap-[18px] rounded-none border border-line bg-surface p-[22px]"
       >
         <div class="flex items-center gap-3.5">
           @if (store.user()?.profilePictureUrl) {
@@ -31,9 +31,11 @@
             <a
               [routerLink]="item.route"
               [fragment]="item.fragment"
-              class="flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-[15px] font-medium transition"
+              class="flex items-center gap-3 rounded-none px-3.5 py-3 text-[15px] font-medium transition"
               [class]="
-                item.active === active() ? 'bg-inverse text-inverse-fg' : 'text-body hover:bg-sunken'
+                item.active === active()
+                  ? 'bg-inverse text-inverse-fg'
+                  : 'text-body hover:bg-sunken'
               "
             >
               <app-nav-icon [name]="item.icon" />
@@ -44,7 +46,7 @@
         <button
           type="button"
           (click)="logout()"
-          class="-mt-2 flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-left text-[15px] font-medium text-body transition hover:bg-sunken"
+          class="-mt-2 flex items-center gap-3 rounded-sm px-3.5 py-3 text-left text-[15px] font-medium text-body transition hover:bg-sunken"
         >
           <svg
             width="20"
@@ -61,7 +63,7 @@
           </svg>
           Déconnexion
         </button>
-        <div class="flex flex-col gap-2.5 rounded-[18px] bg-sunken p-[18px]">
+        <div class="flex flex-col gap-2.5 rounded-sm bg-sunken p-[18px]">
           <span class="font-display text-base font-bold text-fg">Une question ?</span>
           <span class="text-[13.5px] leading-relaxed text-body"
             >Appelez le <strong class="text-fg">{{ site.phone() }}</strong> du lundi au
@@ -69,7 +71,7 @@
           >
           <a
             routerLink="/contact"
-            class="btn-arrow self-start rounded-full bg-inverse px-[18px] py-2.5 font-display text-sm font-semibold text-inverse-fg"
+            class="btn-arrow self-start rounded-md bg-inverse px-[18px] py-2.5 font-display text-sm font-semibold text-inverse-fg"
             ><span class="btn-label">Nous écrire</span></a
           >
         </div>
@@ -85,7 +87,7 @@
   <div class="hidden lg:block"><app-floating-actions /></div>
 
   <nav
-    class="fixed inset-x-0 bottom-0 z-30 flex items-start rounded-t-[22px] bg-plum-900 px-2 pb-[max(14px,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_30px_rgba(31,18,38,0.25)] lg:hidden"
+    class="fixed inset-x-0 bottom-0 z-30 flex items-start rounded-t-none bg-plum-900 px-2 pb-[max(14px,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_30px_rgba(31,18,38,0.25)] lg:hidden"
     aria-label="Navigation de l'espace patient"
   >
     @for (tab of tabs; track tab.label) {

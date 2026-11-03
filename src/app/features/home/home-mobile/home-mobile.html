@@ -33,7 +33,7 @@
     </div>
 
     <div
-      class="relative z-[1] -mt-8 flex flex-col gap-3 rounded-t-[28px] bg-page px-5 pb-5 pt-5 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
+      class="relative z-[1] -mt-8 flex flex-col gap-3 rounded-t-none bg-page px-5 pb-5 pt-5 shadow-[0_-18px_40px_rgba(20,11,25,0.35)] [@media(max-height:720px)]:gap-3 [@media(max-height:720px)]:pb-5 [@media(max-height:720px)]:pt-5"
     >
       @if (hasSlot()) {
         <app-slot-ticket />
@@ -68,7 +68,7 @@
         <a
           #heroCta
           routerLink="/rendez-vous"
-          class="btn-arrow flex-1 rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-base font-bold text-on-accent"
+          class="btn-arrow flex-1 rounded-md bg-accent-500 px-6 py-[15px] text-center font-display text-base font-bold text-on-accent"
           ><span class="btn-label">{{ c().hero.boutonPrincipal }}</span></a
         >
         <a
@@ -108,7 +108,7 @@
     >
       <a
         routerLink="/rendez-vous"
-        class="btn-arrow flex-1 rounded-full bg-accent-500 px-5 py-3.5 text-center font-display text-[15px] font-bold text-on-accent"
+        class="btn-arrow flex-1 rounded-md bg-accent-500 px-5 py-3.5 text-center font-display text-[15px] font-bold text-on-accent"
         ><span class="btn-label">{{ c().hero.boutonPrincipal }}</span></a
       >
       <a
@@ -162,9 +162,7 @@
     <app-orange-thread />
 
     <!-- Déclaration : feuille prune qui remonte sur le bas du banner -->
-    <section
-      class="relative -mt-6 flex flex-col gap-6 rounded-t-[32px] bg-plum-900 px-5 pb-16 pt-12"
-    >
+    <section class="relative -mt-6 flex flex-col gap-6 rounded-t-none bg-plum-900 px-5 pb-16 pt-12">
       <div class="flex items-center gap-3.5">
         <img
           [src]="c().doctoresse.photo | optimizedImage: 900"
@@ -184,18 +182,18 @@
       </p>
       <a
         routerLink="/a-propos"
-        class="btn-arrow rounded-full bg-accent-500 px-6 py-[15px] text-center font-display text-[15px] font-bold text-on-accent"
+        class="btn-arrow rounded-md bg-accent-500 px-6 py-[15px] text-center font-display text-[15px] font-bold text-on-accent"
         ><span class="btn-label">{{ c().declaration.boutonPrincipal }}</span></a
       >
       <a
         routerLink="/premiere-consultation"
-        class="btn-arrow rounded-full border-[1.5px] border-peach px-6 py-3.5 text-center font-display text-[15px] font-semibold text-peach"
+        class="btn-arrow rounded-md border-[1.5px] border-peach px-6 py-3.5 text-center font-display text-[15px] font-semibold text-peach"
         ><span class="btn-label">{{ c().declaration.boutonSecondaire }}</span></a
       >
     </section>
 
     <!-- Spécialités : silhouette et « Je viens pour… » (on touche un motif pour allumer l'organe) -->
-    <section class="relative -mt-8 rounded-t-[32px] bg-page px-5 pb-[72px] pt-14">
+    <section class="relative -mt-8 rounded-t-none bg-page px-5 pb-[72px] pt-14">
       <app-silhouette-specialties
         [eyebrow]="c().specialites.kicker"
         [title]="c().specialites.titre"
@@ -204,9 +202,7 @@
     </section>
 
     <!-- Parcours -->
-    <section
-      class="relative -mt-8 flex flex-col gap-8 rounded-t-[32px] bg-plum-900 px-5 pb-20 pt-24"
-    >
+    <section class="relative -mt-8 flex flex-col gap-8 rounded-t-none bg-plum-900 px-5 pb-20 pt-24">
       <div class="flex flex-col gap-2.5">
         <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
           c().parcours.kicker
@@ -221,7 +217,7 @@
       <div class="flex flex-col">
         @for (e of c().parcours.etapes; track $index; let i = $index) {
           <div
-            class="pile sticky mb-6 flex min-h-[30svh] flex-col gap-5 rounded-[26px] border border-white/15 p-6 shadow-[0_-14px_30px_rgba(10,5,14,0.45)]"
+            class="pile sticky mb-6 flex min-h-[30svh] flex-col gap-5 rounded-none border border-white/15 p-6 shadow-[0_-14px_30px_rgba(10,5,14,0.45)]"
             [style.top]="'calc(88px + ' + i * 60 + 'px)'"
             [style.background]="fiches[i]"
           >
@@ -241,7 +237,7 @@
       </div>
 
       <!-- Première consultation -->
-      <div class="flex flex-col gap-4 rounded-[26px] bg-page p-6 text-fg">
+      <div class="flex flex-col gap-4 rounded-none bg-page p-6 text-fg">
         <span class="text-xs font-semibold tracking-[0.1em] text-accent-800">{{
           c().premiere.kicker
         }}</span>
@@ -262,7 +258,7 @@
         </ul>
         <a
           routerLink="/premiere-consultation"
-          class="btn-arrow rounded-full bg-accent-500 px-6 py-3.5 text-center font-display text-[15px] font-bold text-on-accent"
+          class="btn-arrow rounded-md bg-accent-500 px-6 py-3.5 text-center font-display text-[15px] font-bold text-on-accent"
           ><span class="btn-label">{{ c().premiere.bouton }}</span></a
         >
       </div>
@@ -270,11 +266,11 @@
 
     <!-- La doctoresse -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-16 pt-14"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-none bg-page px-5 pb-16 pt-14"
     >
       <div
         appInView
-        class="photo-life devoile relative h-[400px] overflow-hidden rounded-[190px_190px_28px_28px] bg-plum-800"
+        class="photo-life devoile relative h-[400px] overflow-hidden rounded-none bg-plum-800"
       >
         <img
           [src]="c().doctoresse.photo | optimizedImage: 900"
@@ -311,7 +307,7 @@
       </p>
       <div class="grid grid-cols-2 gap-3">
         @for (stat of c().doctoresse.stats; track $index) {
-          <div class="flex flex-col gap-0.5 rounded-[18px] border border-line bg-surface p-[18px]">
+          <div class="flex flex-col gap-0.5 rounded-none border border-line bg-surface p-[18px]">
             <span class="font-display text-2xl font-bold text-fg">{{ stat.big }}</span>
             <span class="text-[13px] text-muted">{{ stat.small }}</span>
           </div>
@@ -322,7 +318,7 @@
     <!-- Avis : la section n'existe que s'il y a de vrais témoignages -->
     @if (c().avis.items.length) {
       <section
-        class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-plum-900 px-5 pb-20 pt-24"
+        class="relative -mt-8 flex flex-col gap-[22px] rounded-t-none bg-plum-900 px-5 pb-20 pt-24"
       >
         <h2
           class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
@@ -330,7 +326,7 @@
           {{ c().avis.titre }}
         </h2>
         @for (a of c().avis.items; track $index) {
-          <figure class="m-0 flex flex-col gap-[18px] rounded-[22px] bg-page p-[26px]">
+          <figure class="m-0 flex flex-col gap-[18px] rounded-none bg-page p-[26px]">
             <blockquote class="m-0 font-display text-lg font-medium leading-[1.45] text-fg">
               {{ a.texte }}
             </blockquote>
@@ -344,17 +340,17 @@
     }
 
     <!-- Nous trouver -->
-    <section class="relative -mt-8 flex flex-col gap-4 rounded-t-[32px] bg-page px-5 pb-20 pt-24">
+    <section class="relative -mt-8 flex flex-col gap-4 rounded-t-none bg-page px-5 pb-20 pt-24">
       <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         {{ c().trouver.titre }}
       </h2>
       <iframe
         title="Plan d'accès au cabinet"
-        class="h-[220px] w-full rounded-3xl border-0"
+        class="h-[220px] w-full rounded-none border-0"
         loading="lazy"
         [src]="mapUrl"
       ></iframe>
-      <div class="flex flex-col gap-4 rounded-3xl border border-line bg-surface p-[26px]">
+      <div class="flex flex-col gap-4 rounded-none border border-line bg-surface p-[26px]">
         <div class="flex flex-col gap-1">
           <span class="text-xs font-semibold tracking-[0.09em] text-accent-700">ADRESSE</span
           ><span class="text-base leading-normal">{{ site.addressLine() }}</span>
@@ -400,9 +396,7 @@
     </section>
 
     <!-- FAQ -->
-    <section
-      class="relative -mt-8 flex flex-col gap-5 rounded-t-[32px] bg-plum-900 px-5 pb-20 pt-24"
-    >
+    <section class="relative -mt-8 flex flex-col gap-5 rounded-t-none bg-plum-900 px-5 pb-20 pt-24">
       <h2
         class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-white"
       >
@@ -436,7 +430,7 @@
 
     <!-- Articles -->
     <section
-      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-[32px] bg-page px-5 pb-20 pt-24"
+      class="relative -mt-8 flex flex-col gap-[22px] rounded-t-none bg-page px-5 pb-20 pt-24"
     >
       <h2 class="m-0 font-display text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-fg">
         {{ c().conseils.titreTelephone }}
@@ -447,7 +441,7 @@
           class="flex items-center gap-4 border-b border-line py-4 text-fg"
         >
           <span
-            class="h-[92px] w-[92px] shrink-0 rounded-[14px] bg-cover bg-center"
+            class="h-[92px] w-[92px] shrink-0 rounded-none bg-cover bg-center"
             [style.background-image]="'url(' + a.photo + ')'"
             role="img"
             [attr.aria-label]="a.titre"
@@ -472,7 +466,7 @@
 
   <!-- Appel final -->
   <section class="bg-page px-2 pb-2">
-    <div class="flex flex-col gap-[18px] rounded-[32px] bg-accent-500 px-6 py-11">
+    <div class="flex flex-col gap-[18px] rounded-none bg-accent-500 px-6 py-11">
       <h2
         class="m-0 font-display text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-on-accent"
       >

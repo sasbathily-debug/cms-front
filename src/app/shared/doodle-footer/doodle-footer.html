@@ -7,24 +7,83 @@
     [attr.aria-label]="wordmark() + ' : ' + label()"
   >
     <defs>
-      <pattern [attr.id]="uid + '-hatch'" width="4.6" height="4.6" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+      <pattern
+        [attr.id]="uid + '-hatch'"
+        width="4.6"
+        height="4.6"
+        patternUnits="userSpaceOnUse"
+        patternTransform="rotate(38)"
+      >
         <line x1="0" y1="0" x2="0" y2="4.6" style="stroke: var(--dcf-ink)" stroke-width="1.25" />
       </pattern>
       <filter [attr.id]="uid + '-ink'" x="-4%" y="-6%" width="108%" height="112%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="11" result="edge" />
-        <feDisplacementMap in="SourceGraphic" in2="edge" scale="5" xChannelSelector="R" yChannelSelector="G" result="rough" />
-        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.32" numOctaves="2" seed="4" result="streak" />
-        <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -16 4.9" result="streakA" />
-        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="1" seed="9" result="speck" />
-        <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -24 6.2" result="speckA" />
-        <feComposite in="streakA" in2="speckA" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="holes" />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.045"
+          numOctaves="3"
+          seed="11"
+          result="edge"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="edge"
+          scale="5"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="rough"
+        />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.018 0.32"
+          numOctaves="2"
+          seed="4"
+          result="streak"
+        />
+        <feColorMatrix
+          in="streak"
+          type="matrix"
+          values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -16 4.9"
+          result="streakA"
+        />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.7"
+          numOctaves="1"
+          seed="9"
+          result="speck"
+        />
+        <feColorMatrix
+          in="speck"
+          type="matrix"
+          values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -24 6.2"
+          result="speckA"
+        />
+        <feComposite
+          in="streakA"
+          in2="speckA"
+          operator="arithmetic"
+          k1="0"
+          k2="1"
+          k3="1"
+          k4="0"
+          result="holes"
+        />
         <feComposite in="rough" in2="holes" operator="out" />
       </filter>
     </defs>
 
     <g class="dcf-ground">
-      <path class="dcf-draw" pathLength="1" [attr.d]="ground().d" [style.--d]="tl().ground + 'ms'" />
-      <path class="dcf-tufts dcf-fade" [attr.d]="ground().tufts" [style.--d]="tl().ground + 500 + 'ms'" />
+      <path
+        class="dcf-draw"
+        pathLength="1"
+        [attr.d]="ground().d"
+        [style.--d]="tl().ground + 'ms'"
+      />
+      <path
+        class="dcf-tufts dcf-fade"
+        [attr.d]="ground().tufts"
+        [style.--d]="tl().ground + 500 + 'ms'"
+      />
       @for (pb of ground().pebbles; track $index) {
         <ellipse
           class="dcf-pebble dcf-fade"
@@ -122,7 +181,12 @@
     @for (p of placed(); track p.i) {
       @if (talking() === p.i) {
         @let b = bubble(p);
-        <div class="dcf-bubble" [class.is-left]="b.leftSide" [style.left]="b.left" [style.top]="b.top">
+        <div
+          class="dcf-bubble"
+          [class.is-left]="b.leftSide"
+          [style.left]="b.left"
+          [style.top]="b.top"
+        >
           {{ p.m.says }}
         </div>
       }

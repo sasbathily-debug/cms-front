@@ -8,13 +8,13 @@ import { PwaUpdate } from '../../core/pwa-update';
     @if (update.prompt()) {
       <div
         role="status"
-        class="fixed bottom-4 left-1/2 z-[90] flex w-[calc(100%-2rem)] max-w-[440px] -translate-x-1/2 items-center justify-between gap-4 rounded-2xl border border-line bg-surface px-4 py-3 text-fg shadow-[0_16px_40px_rgba(0,0,0,0.3)]"
+        class="fixed bottom-4 left-1/2 z-[90] flex w-[calc(100%-2rem)] max-w-[440px] -translate-x-1/2 items-center justify-between gap-4 rounded-none border border-line bg-surface px-4 py-3 text-fg shadow-[0_16px_40px_rgba(0,0,0,0.3)]"
       >
         <span class="text-[14px] leading-snug">Une nouvelle version du site est disponible.</span>
         <button
           type="button"
           (click)="update.refreshNow()"
-          class="shrink-0 cursor-pointer rounded-full border-0 bg-inverse px-4 py-2 font-display text-[13.5px] font-semibold text-inverse-fg"
+          class="shrink-0 cursor-pointer rounded-md border-0 bg-inverse px-4 py-2 font-display text-[13.5px] font-semibold text-inverse-fg"
         >
           Actualiser
         </button>

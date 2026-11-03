@@ -10,7 +10,7 @@ import { Theme } from '../../core/theme';
       (click)="theme.toggle()"
       [attr.aria-label]="label()"
       [attr.title]="label()"
-      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border transition"
       [class]="
         onDark()
           ? 'border-white/40 bg-[rgba(20,11,25,0.55)] text-white hover:bg-white/10'

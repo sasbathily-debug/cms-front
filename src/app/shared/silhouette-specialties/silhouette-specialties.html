@@ -24,7 +24,7 @@
 
   <!-- La silhouette, qui occupe toute la hauteur du bloc -->
   <div
-    class="relative flex flex-col items-center gap-8 rounded-[32px] border bg-plum-900 px-4 pb-12 pt-10 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:px-8"
+    class="relative flex flex-col items-center gap-8 rounded-none border bg-plum-900 px-4 pb-12 pt-10 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:px-8"
     [class]="variant() === 'dark' ? 'border-white/15' : 'border-peach/40'"
   >
     <div
@@ -74,7 +74,7 @@
     <!-- Le détail du motif choisi -->
     @if (active(); as it) {
       <div
-        class="flex w-full max-w-[600px] flex-col gap-4 rounded-[22px] border border-white/15 bg-white/[0.06] p-6 text-white lg:p-7"
+        class="flex w-full max-w-[600px] flex-col gap-4 rounded-none border border-white/15 bg-white/[0.06] p-6 text-white lg:p-7"
         aria-live="polite"
       >
         <div class="flex items-baseline justify-between gap-4">
@@ -93,12 +93,12 @@
           <a
             routerLink="/rendez-vous"
             [queryParams]="it.query"
-            class="btn-arrow rounded-xl bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
+            class="btn-arrow rounded-md bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
             ><span class="btn-label">Réserver pour ce motif</span></a
           >
           <a
             [routerLink]="it.specialty.route"
-            class="rounded-xl border border-white/35 px-5 py-3 font-display text-[15px] font-semibold text-white hover:border-white"
+            class="rounded-md border border-white/35 px-5 py-3 font-display text-[15px] font-semibold text-white hover:border-white"
             >Lire la page</a
           >
         </div>

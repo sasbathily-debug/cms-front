@@ -21,7 +21,10 @@
       </div>
 
       @if (passwordWasReset) {
-        <p class="m-0 rounded-lg bg-success-soft px-3.5 py-2.5 text-sm text-success" role="status">
+        <p
+          class="m-0 rounded-none bg-success-soft px-3.5 py-2.5 text-sm text-success"
+          role="status"
+        >
           Mot de passe modifié. Connectez-vous avec le nouveau.
         </p>
       }
@@ -37,7 +40,7 @@
             formControlName="identifier"
             autocomplete="username"
             placeholder="77 000 00 00 ou vous@exemple.com"
-            class="rounded-[14px] border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+            class="rounded-md border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
           />
         </div>
 
@@ -46,7 +49,7 @@
             >Mot de passe</label
           >
           <div
-            class="flex items-center rounded-[14px] border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+            class="flex items-center rounded-none border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
           >
             <input
               id="login-password"
@@ -94,7 +97,7 @@
         </div>
 
         @if (errorMessage()) {
-          <p class="m-0 rounded-lg bg-danger-soft px-3.5 py-2.5 text-sm text-danger" role="alert">
+          <p class="m-0 rounded-none bg-danger-soft px-3.5 py-2.5 text-sm text-danger" role="alert">
             {{ errorMessage() }}
           </p>
         }

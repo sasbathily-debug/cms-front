@@ -34,7 +34,8 @@ const defaults = {
     titre: 'Ce que je prends en charge',
     intro:
       "Passez la souris sur un motif, ou laissez le schéma tourner : pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume.",
-    introTelephone: "Touchez un motif : pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume.",
+    introTelephone:
+      "Touchez un motif : pour le diabète, la thyroïde et les troubles hormonaux, la glande concernée s'allume.",
   },
   doctoresse: {
     kicker: 'LA DOCTORESSE',

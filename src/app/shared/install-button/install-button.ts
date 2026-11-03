@@ -10,7 +10,7 @@ import { PwaInstall } from '../../core/pwa-install';
         <button
           type="button"
           (click)="pwa.install()"
-          class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/40 bg-transparent px-4 py-2.5 font-display text-[14px] font-semibold text-white transition hover:bg-white/10"
+          class="inline-flex cursor-pointer items-center gap-2 rounded-md border border-white/40 bg-transparent px-4 py-2.5 font-display text-[14px] font-semibold text-white transition hover:bg-white/10"
         >
           <svg
             width="18"

@@ -15,7 +15,7 @@ import { NextSlot } from '../../core/services/next-slot';
     @if (slots.ticket(); as t) {
       <a
         routerLink="/rendez-vous"
-        class="relative flex w-full items-stretch overflow-hidden rounded-[14px] border border-line bg-surface no-underline transition-colors hover:border-accent-500"
+        class="relative flex w-full items-stretch overflow-hidden rounded-none border border-line bg-surface no-underline transition-colors hover:border-accent-500"
       >
         <span
           class="flex w-16 shrink-0 flex-col items-center justify-center gap-0.5 bg-accent-soft py-2 font-display"

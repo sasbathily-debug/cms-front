@@ -7,7 +7,7 @@
   <div class="flex h-16 shrink-0 items-center justify-between bg-plum-900 px-4">
     <a routerLink="/" class="flex items-center gap-2.5 text-white" (click)="closed.emit()">
       <span
-        class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-accent-500"
+        class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-md bg-accent-500"
         ><img src="/logo/logo-icon-dark.png" alt="" class="h-[70%] w-[70%] object-contain"
       /></span>
       <span class="font-display text-[15px] font-bold">Dr Aïssatou Mamadou Fall</span>
@@ -16,7 +16,7 @@
       type="button"
       (click)="closed.emit()"
       aria-label="Fermer le menu"
-      class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/40 text-white"
+      class="flex h-11 w-11 items-center justify-center rounded-md border border-white/40 text-white"
     >
       <svg
         width="22"
@@ -58,7 +58,7 @@
     </div>
 
     @if (intent(); as it) {
-      <div class="flex flex-col gap-2.5 rounded-[20px] bg-plum-900 p-[18px] text-white">
+      <div class="flex flex-col gap-2.5 rounded-none bg-plum-900 p-[18px] text-white">
         <span class="text-xs font-semibold tracking-[0.1em] text-peach"
           >{{ it.specialty!.title }} · VOUS POUVEZ CONSULTER SI</span
         >
@@ -68,7 +68,7 @@
             routerLink="/rendez-vous"
             [queryParams]="it.query"
             (click)="closed.emit()"
-            class="btn-arrow rounded-xl bg-accent-500 px-[18px] py-3 font-display text-[15px] font-semibold text-on-accent"
+            class="btn-arrow rounded-md bg-accent-500 px-[18px] py-3 font-display text-[15px] font-semibold text-on-accent"
             ><span class="btn-label">Réserver ce motif</span></a
           >
           <a
@@ -181,7 +181,7 @@
     <a
       routerLink="/rendez-vous"
       (click)="closed.emit()"
-      class="flex min-h-14 flex-col items-center justify-center rounded-2xl bg-accent-500 text-on-accent"
+      class="flex min-h-14 flex-col items-center justify-center rounded-none bg-accent-500 text-on-accent"
       ><strong class="font-display text-[17px] font-semibold">Prendre rendez-vous</strong>
       @if (slot.ticket(); as t) {
         <span class="text-xs text-plum-900">Prochain créneau · {{ t.phrase }}</span>
@@ -190,7 +190,7 @@
     <div class="grid grid-cols-2 gap-2.5">
       <a
         [href]="site.telHref()"
-        class="flex min-h-12 items-center justify-center rounded-[14px] border border-fg text-[15px] font-semibold text-fg"
+        class="flex min-h-12 items-center justify-center rounded-none border border-fg text-[15px] font-semibold text-fg"
         >Appeler</a
       >
       @if (site.whatsappHref()) {
@@ -198,7 +198,7 @@
           [href]="site.whatsappHref()"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex min-h-12 items-center justify-center rounded-[14px] bg-inverse text-[15px] font-semibold text-inverse-fg"
+          class="flex min-h-12 items-center justify-center rounded-none bg-inverse text-[15px] font-semibold text-inverse-fg"
           >WhatsApp</a
         >
       }

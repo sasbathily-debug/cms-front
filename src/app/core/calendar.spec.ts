@@ -25,6 +25,8 @@ describe('fichier agenda (.ics)', () => {
   });
 
   it('accepte une heure sans secondes', () => {
-    expect(icsFile({ date: '2026-11-10', time: '17:30', title: 'x' }, now)).toContain('DTSTART:20261110T173000Z');
+    expect(icsFile({ date: '2026-11-10', time: '17:30', title: 'x' }, now)).toContain(
+      'DTSTART:20261110T173000Z',
+    );
   });
 });

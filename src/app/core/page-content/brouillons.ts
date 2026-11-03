@@ -10,7 +10,15 @@
  */
 
 const REPERE = /\s*\[[^\]]*\]/g;
-const CHAMPS_PRINCIPAUX = new Set(['texte', 'text', 'reponse', 'answer', 'auteur', 'nom', 'question']);
+const CHAMPS_PRINCIPAUX = new Set([
+  'texte',
+  'text',
+  'reponse',
+  'answer',
+  'auteur',
+  'nom',
+  'question',
+]);
 
 /** Un texte ne gardant presque rien après le retrait des repères (« Depuis ») n'a plus de sens : il est vidé. */
 const TROP_COURT = 8;

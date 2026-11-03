@@ -17,7 +17,7 @@ import { Component, ElementRef, output, signal, viewChildren } from '@angular/co
           (input)="onInput(i, $event)"
           (keydown)="onKeydown(i, $event)"
           [attr.aria-label]="'Chiffre ' + (i + 1)"
-          class="h-[62px] w-0 min-w-0 flex-1 rounded-[14px] border-[1.5px] border-line-strong bg-surface text-center font-display text-[28px] font-bold text-fg outline-none transition focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+          class="h-[62px] w-0 min-w-0 flex-1 rounded-md border-[1.5px] border-line-strong bg-surface text-center font-display text-[28px] font-bold text-fg outline-none transition focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
         />
       }
     </div>

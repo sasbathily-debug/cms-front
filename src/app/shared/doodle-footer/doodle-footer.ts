@@ -12,7 +12,16 @@ import {
   viewChildren,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ART, Art, CREW, CrewKind, CrewMember, DOODLES, DOODLE_KINDS, DoodleKind } from './doodle-footer.art';
+import {
+  ART,
+  Art,
+  CREW,
+  CrewKind,
+  CrewMember,
+  DOODLES,
+  DOODLE_KINDS,
+  DoodleKind,
+} from './doodle-footer.art';
 import {
   Floater,
   Seat,
@@ -80,7 +89,10 @@ const measure = (word: string): Metrics | null => {
     prev = now;
   }
   const box = ctx.measureText(word.replace(/\s/g, '') || 'H');
-  return { advances, cap: box.actualBoundingBoxAscent > 0 ? box.actualBoundingBoxAscent : 0.7 * FONT_SIZE };
+  return {
+    advances,
+    cap: box.actualBoundingBoxAscent > 0 ? box.actualBoundingBoxAscent : 0.7 * FONT_SIZE,
+  };
 };
 
 /**
@@ -137,7 +149,9 @@ export class DoodleFooter {
       k,
       {
         body: this.sanitizer.bypassSecurityTrustHtml(this.scoped(ART[k].body)),
-        front: ART[k].front ? this.sanitizer.bypassSecurityTrustHtml(this.scoped(ART[k].front as string)) : null,
+        front: ART[k].front
+          ? this.sanitizer.bypassSecurityTrustHtml(this.scoped(ART[k].front as string))
+          : null,
       },
     ]),
   ) as Record<CrewKind, { body: SafeHtml; front: SafeHtml | null }>;
@@ -155,7 +169,8 @@ export class DoodleFooter {
   protected readonly hopping = signal(-1);
 
   private readonly metrics = signal<Metrics>(this.initialMetrics());
-  private readonly small = typeof matchMedia !== 'undefined' && matchMedia('(max-width: 700px)').matches;
+  private readonly small =
+    typeof matchMedia !== 'undefined' && matchMedia('(max-width: 700px)').matches;
   private readonly reduced =
     typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -164,7 +179,9 @@ export class DoodleFooter {
   }
 
   private readonly chars = computed(() => Array.from(this.wordmark().toUpperCase()));
-  private readonly layout = computed(() => layoutWord(this.metrics().advances, TRACKING, FONT_SIZE));
+  private readonly layout = computed(() =>
+    layoutWord(this.metrics().advances, TRACKING, FONT_SIZE),
+  );
 
   protected readonly placed = computed<Placed[]>(() => {
     const cap = this.metrics().cap;
@@ -248,8 +265,14 @@ export class DoodleFooter {
     for (let k = 1; k <= n; k++) {
       const x = x0 + ((x1 - x0) * k) / n;
       d +=
-        ' Q' + (x - (x1 - x0) / n / 2).toFixed(1) + ' ' + (6 + (hash(k * 3.1) - 0.5) * 5).toFixed(1) + ' ' +
-        x.toFixed(1) + ' ' + (6 + (hash(k * 7.7) - 0.5) * 2).toFixed(1);
+        ' Q' +
+        (x - (x1 - x0) / n / 2).toFixed(1) +
+        ' ' +
+        (6 + (hash(k * 3.1) - 0.5) * 5).toFixed(1) +
+        ' ' +
+        x.toFixed(1) +
+        ' ' +
+        (6 + (hash(k * 7.7) - 0.5) * 2).toFixed(1);
     }
     let tufts = '';
     for (let k = 0; k < 18; k++) {
@@ -307,7 +330,10 @@ export class DoodleFooter {
   private initialMetrics(): Metrics {
     const word = this.wordmark().toUpperCase();
     try {
-      if (typeof document !== 'undefined' && document.fonts?.check(`${FONT_WEIGHT} ${FONT_SIZE}px Outfit`)) {
+      if (
+        typeof document !== 'undefined' &&
+        document.fonts?.check(`${FONT_WEIGHT} ${FONT_SIZE}px Outfit`)
+      ) {
         const m = measure(word);
         if (m) return m;
       }
@@ -507,10 +533,20 @@ export class DoodleFooter {
 
     for (let c = 0; c < placed.length; c++) {
       const p = placed[c];
-      const g = (s.gaze[c] ||= { tx: 0, ty: 0, next: 0, blinkAt: t + 1 + hash(c * 3.7) * 3, blink: 0, o: [] });
+      const g = (s.gaze[c] ||= {
+        tx: 0,
+        ty: 0,
+        next: 0,
+        blinkAt: t + 1 + hash(c * 3.7) * 3,
+        blink: 0,
+        o: [],
+      });
       if (!target && t > g.next) {
         // au repos : un coup d'œil ailleurs, parfois vers un voisin
-        const other = placed[(c + 1 + Math.floor(this.rand() * Math.max(1, placed.length - 1))) % placed.length];
+        const other =
+          placed[
+            (c + 1 + Math.floor(this.rand() * Math.max(1, placed.length - 1))) % placed.length
+          ];
         if (other && this.rand() < 0.45) {
           g.tx = other.x;
           g.ty = other.y - 60 * other.scale;
@@ -540,7 +576,10 @@ export class DoodleFooter {
         const ny = prev.y + (o.y - prev.y) * ease;
         g.o[e] = { x: nx, y: ny };
         pupil.setAttribute('transform', `translate(${nx.toFixed(2)} ${ny.toFixed(2)})`);
-        blink.setAttribute('transform', `translate(0 ${(eye.y * (1 - lid)).toFixed(2)}) scale(1 ${lid.toFixed(3)})`);
+        blink.setAttribute(
+          'transform',
+          `translate(0 ${(eye.y * (1 - lid)).toFixed(2)}) scale(1 ${lid.toFixed(3)})`,
+        );
       }
     }
 
@@ -548,7 +587,8 @@ export class DoodleFooter {
       const r = root.getBoundingClientRect();
       const px = s.inside ? s.px - r.left : NaN;
       const py = s.inside ? s.py - r.top : NaN;
-      if (!this.reduced) for (const f of s.floaters) stepFloater(f, dt, t, s.w, s.h, px, py, 110, () => this.rand());
+      if (!this.reduced)
+        for (const f of s.floaters) stepFloater(f, dt, t, s.w, s.h, px, py, 110, () => this.rand());
       this.paintDoodles();
     }
   }

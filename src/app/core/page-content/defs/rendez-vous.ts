@@ -17,7 +17,8 @@ const defaults = {
     {
       n: '3',
       titre: 'Confirmez',
-      texte: 'et recevez votre confirmation. Avec une adresse e-mail, un rappel vous est envoyé la veille.',
+      texte:
+        'et recevez votre confirmation. Avec une adresse e-mail, un rappel vous est envoyé la veille.',
     },
   ],
   aide: { titre: 'Vous préférez nous écrire ou appeler ?' },

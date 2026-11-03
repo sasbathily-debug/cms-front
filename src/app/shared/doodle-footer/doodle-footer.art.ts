@@ -127,18 +127,74 @@ export const ART: Record<CrewKind, Art> = {
 };
 
 export const CREW: CrewMember[] = [
-  { kind: 'pomme', letter: 0, seat: 'front', offset: -0.3, name: 'La pomme', says: 'Bienvenue au cabinet !' },
-  { kind: 'goutte', letter: 1, seat: 'top', offset: 0, name: 'La goutte', says: 'Un rendez-vous ? C’est par ici.' },
-  { kind: 'thyroide', letter: 4, seat: 'behind', offset: 0, name: 'La thyroïde', says: 'Coucou ! Je suis une thyroïde.' },
-  { kind: 'coeur', letter: 6, seat: 'top', offset: -0.05, name: 'Le cœur', says: 'On prend soin de vous, ici.' },
+  {
+    kind: 'pomme',
+    letter: 0,
+    seat: 'front',
+    offset: -0.3,
+    name: 'La pomme',
+    says: 'Bienvenue au cabinet !',
+  },
+  {
+    kind: 'goutte',
+    letter: 1,
+    seat: 'top',
+    offset: 0,
+    name: 'La goutte',
+    says: 'Un rendez-vous ? C’est par ici.',
+  },
+  {
+    kind: 'thyroide',
+    letter: 4,
+    seat: 'behind',
+    offset: 0,
+    name: 'La thyroïde',
+    says: 'Coucou ! Je suis une thyroïde.',
+  },
+  {
+    kind: 'coeur',
+    letter: 6,
+    seat: 'top',
+    offset: -0.05,
+    name: 'Le cœur',
+    says: 'On prend soin de vous, ici.',
+  },
 ];
 
 /** Les personnages de la page 404 : ils se sont perdus sur les chiffres. */
 export const CREW_404: CrewMember[] = [
-  { kind: 'pomme', letter: 0, seat: 'front', offset: -0.78, name: 'La pomme', says: 'Cette page n’existe pas… ou plus.' },
-  { kind: 'coeur', letter: 0, seat: 'top', offset: 0.1, name: 'Le cœur', says: 'On a cherché partout !' },
-  { kind: 'goutte', letter: 1, seat: 'top', offset: 0, name: 'La goutte', says: 'Je crois qu’on s’est perdus…' },
-  { kind: 'thyroide', letter: 2, seat: 'behind', offset: 0.12, name: 'La thyroïde', says: 'Essayez l’accueil ?' },
+  {
+    kind: 'pomme',
+    letter: 0,
+    seat: 'front',
+    offset: -0.78,
+    name: 'La pomme',
+    says: 'Cette page n’existe pas… ou plus.',
+  },
+  {
+    kind: 'coeur',
+    letter: 0,
+    seat: 'top',
+    offset: 0.1,
+    name: 'Le cœur',
+    says: 'On a cherché partout !',
+  },
+  {
+    kind: 'goutte',
+    letter: 1,
+    seat: 'top',
+    offset: 0,
+    name: 'La goutte',
+    says: 'Je crois qu’on s’est perdus…',
+  },
+  {
+    kind: 'thyroide',
+    letter: 2,
+    seat: 'behind',
+    offset: 0.12,
+    name: 'La thyroïde',
+    says: 'Essayez l’accueil ?',
+  },
 ];
 
 /** Les petits dessins qui tombent, dans la palette du site (ciel, pêche, orange, menthe), dans une boîte de 32 unités centrée. */
@@ -157,6 +213,25 @@ export const DOODLES: Record<DoodleKind, string> = {
     '<path fill="#cfe0f5" d="M0 -13 C1 -4 4 -1 13 0 C4 1 1 4 0 13 C-1 4 -4 1 -13 0 C-4 -1 -1 -4 0 -13 Z"/>',
 };
 
-export const DOODLE_KINDS: DoodleKind[] = ['goutte', 'pomme', 'coeur', 'etoile', 'goutte', 'pomme', 'eclat', 'coeur'];
+export const DOODLE_KINDS: DoodleKind[] = [
+  'goutte',
+  'pomme',
+  'coeur',
+  'etoile',
+  'goutte',
+  'pomme',
+  'eclat',
+  'coeur',
+];
 
-export const DOODLE_KINDS_404: DoodleKind[] = ['interro', 'goutte', 'pomme', 'interro', 'coeur', 'etoile', 'interro', 'goutte', 'pomme'];
+export const DOODLE_KINDS_404: DoodleKind[] = [
+  'interro',
+  'goutte',
+  'pomme',
+  'interro',
+  'coeur',
+  'etoile',
+  'interro',
+  'goutte',
+  'pomme',
+];
