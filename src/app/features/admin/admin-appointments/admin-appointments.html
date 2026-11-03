@@ -256,7 +256,18 @@
                 class="font-display text-sm font-bold text-fg"
                 [innerHTML]="highlight(appt.fullName)"
               ></div>
-              <div class="text-[13px] text-muted" [innerHTML]="highlight(appt.phone)"></div>
+              <div class="flex flex-wrap items-center gap-x-3 text-[13px] text-muted">
+                <span [innerHTML]="highlight(appt.phone)"></span>
+                @if (waLink(appt); as wa) {
+                  <a
+                    [href]="wa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-semibold text-success underline underline-offset-2"
+                    >Écrire sur WhatsApp</a
+                  >
+                }
+              </div>
             </div>
             <div class="flex flex-wrap items-center justify-end gap-2">
               @if (isOverdue(appt)) {
@@ -265,6 +276,15 @@
                 >
                   <span class="h-1.5 w-1.5 rounded-full bg-danger"></span>
                   En retard
+                </span>
+              }
+              @if (appt.contactVerified === false) {
+                <span
+                  class="inline-flex w-fit items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-semibold text-accent-800"
+                  title="Pris sans compte et sans e-mail confirmé par code : confirmez par téléphone ou WhatsApp."
+                >
+                  <span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>
+                  Non vérifié
                 </span>
               }
               <span
