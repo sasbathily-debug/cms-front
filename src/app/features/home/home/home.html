@@ -59,10 +59,9 @@
             aria-hidden="true"
             class="absolute -top-[13px] left-1/2 h-7 w-24 -translate-x-1/2 rotate-[2.5deg] bg-accent-500/60"
           ></span>
-          <span
-            class="font-display text-xs font-semibold tracking-[0.14em] text-accent-ink"
-            >{{ slotTicket() ? 'PROCHAIN CRÉNEAU LIBRE' : 'RENDEZ-VOUS EN LIGNE' }}</span
-          >
+          <span class="font-display text-xs font-semibold tracking-[0.14em] text-accent-ink">{{
+            slotTicket() ? 'PROCHAIN CRÉNEAU LIBRE' : 'RENDEZ-VOUS EN LIGNE'
+          }}</span>
           @if (slotTicket(); as t) {
             <div class="mb-0.5 mt-2 flex items-baseline gap-3">
               <span class="font-display text-[58px] font-bold leading-none">{{ t.numero }}</span>
@@ -259,6 +258,43 @@
               </div>
             </div>
           </section>
+
+          <!-- Première consultation : mise en avant, pour qui hésite à franchir la porte -->
+          <section class="mx-3 mt-6 sm:mx-6">
+            <div
+              class="mx-auto flex max-w-[1160px] flex-col gap-8 rounded-[32px] border border-line bg-surface p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between lg:gap-14"
+            >
+              <div class="flex max-w-[560px] flex-col gap-3.5">
+                <span class="text-xs font-semibold tracking-[0.12em] text-accent-800">{{
+                  c().premiere.kicker
+                }}</span>
+                <h2
+                  class="m-0 font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.02em] text-fg sm:text-[40px]"
+                >
+                  {{ c().premiere.titre }}
+                </h2>
+                <p class="m-0 text-[17px] leading-[1.65] text-muted">{{ c().premiere.texte }}</p>
+              </div>
+              <div class="flex flex-col gap-6 lg:w-[380px] lg:shrink-0">
+                <ul class="m-0 flex list-none flex-col gap-3 p-0">
+                  @for (p of c().premiere.points; track $index) {
+                    <li class="flex gap-3 text-[16px] leading-snug text-body">
+                      <span
+                        aria-hidden="true"
+                        class="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-accent-500"
+                      ></span>
+                      {{ p }}
+                    </li>
+                  }
+                </ul>
+                <a
+                  routerLink="/premiere-consultation"
+                  class="btn-arrow self-start rounded-full bg-accent-500 px-7 py-3.5 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+                  ><span class="btn-label">{{ c().premiere.bouton }}</span></a
+                >
+              </div>
+            </div>
+          </section>
         </div>
 
         <!-- Conseils -->
@@ -302,31 +338,35 @@
           </div>
         </section>
 
-        <!-- Avis (emplacements à remplir avec de vrais témoignages) -->
-        <section class="bg-sunken px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
-          <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
-            <h2
-              class="m-0 max-w-[640px] font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[44px]"
-            >
-              {{ c().avis.titre }}
-            </h2>
-            <div class="grid gap-5 md:grid-cols-3">
-              @for (a of c().avis.items; track $index) {
-                <figure class="m-0 flex flex-col justify-between gap-7 rounded-[28px] bg-page p-9">
-                  <blockquote
-                    class="m-0 font-display text-[21px] font-medium leading-[1.45] text-fg"
+        <!-- Avis : la section n'existe que s'il y a de vrais témoignages -->
+        @if (c().avis.items.length) {
+          <section class="bg-sunken px-4 py-20 sm:px-6 lg:px-10 lg:py-28">
+            <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
+              <h2
+                class="m-0 max-w-[640px] font-display text-[2rem] font-bold leading-[1.1] tracking-[-0.025em] text-fg sm:text-[44px]"
+              >
+                {{ c().avis.titre }}
+              </h2>
+              <div class="grid gap-5 md:grid-cols-3">
+                @for (a of c().avis.items; track $index) {
+                  <figure
+                    class="m-0 flex flex-col justify-between gap-7 rounded-[28px] bg-page p-9"
                   >
-                    {{ a.texte }}
-                  </blockquote>
-                  <figcaption class="text-sm text-muted">{{ a.auteur }}</figcaption>
-                </figure>
+                    <blockquote
+                      class="m-0 font-display text-[21px] font-medium leading-[1.45] text-fg"
+                    >
+                      {{ a.texte }}
+                    </blockquote>
+                    <figcaption class="text-sm text-muted">{{ a.auteur }}</figcaption>
+                  </figure>
+                }
+              </div>
+              @if (c().avis.note) {
+                <p class="m-0 text-[13.5px] leading-relaxed text-muted">{{ c().avis.note }}</p>
               }
             </div>
-            @if (c().avis.note) {
-              <p class="m-0 text-[13.5px] leading-relaxed text-muted">{{ c().avis.note }}</p>
-            }
-          </div>
-        </section>
+          </section>
+        }
 
         <!-- Nous trouver -->
         <div class="bg-page pt-20 lg:pt-28">

@@ -64,7 +64,7 @@ export const SAMPLE_HOME_FAQ: FaqEntry[] = [
   {
     question: 'Comment réserver un rendez-vous ?',
     answer:
-      "En ligne (création du compte en une minute, puis choix d'un créneau), ou par téléphone et WhatsApp au +221 77 226 39 06. Vous recevez une confirmation par e-mail et un rappel la veille.",
+      "En ligne (choix d'un créneau, nom et téléphone, sans compte), ou par téléphone et WhatsApp au +221 77 226 39 06. Vous recevez une confirmation par e-mail et un rappel la veille.",
   },
   {
     question: 'Que dois-je apporter ?',

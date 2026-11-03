@@ -3,10 +3,10 @@ import { PageDef } from '../fields';
 /** Textes d'exemple : les passages entre crochets sont à compléter avec la doctoresse. */
 const defaults = {
   hero: {
-    kicker: "CABINET D'ENDOCRINOLOGIE · SACRÉ-CŒUR, DAKAR",
-    titre: 'Suivre votre santé hormonale, simplement et dans la durée.',
+    kicker: "CABINET D'ENDOCRINOLOGIE · CITÉ KEUR GORGUI, DAKAR",
+    titre: 'Endocrinologue à Dakar : diabète, thyroïde, poids.',
     sousTitre:
-      "Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer, et un suivi que vous pouvez gérer en ligne.",
+      "Une consultation qui prend le temps d'expliquer, un suivi clair, et un rendez-vous que vous réservez en ligne en trois minutes, sans compte.",
     introTelephone:
       "Endocrinologue à la Cité Keur Gorgui, Dakar. Diabète, thyroïde, poids, nutrition : une consultation qui prend le temps d'expliquer.",
     boutonPrincipal: 'Prendre rendez-vous',
@@ -83,6 +83,18 @@ const defaults = {
       },
     ],
   },
+  premiere: {
+    kicker: 'VOTRE PREMIÈRE VISITE',
+    titre: 'Une première consultation, sans surprise.',
+    texte:
+      "Ce qu'il faut apporter, comment elle se déroule, ce que vous repartez avec : tout est expliqué avant que vous veniez.",
+    points: [
+      'Apportez vos analyses récentes et la liste de vos médicaments',
+      'Une vraie conversation et un examen complet',
+      'Vous repartez avec un plan écrit',
+    ],
+    bouton: 'Préparer ma première visite',
+  },
   conseils: {
     titre: 'Des conseils pour mieux comprendre',
     titreTelephone: 'Comprendre pour mieux se soigner',
@@ -105,7 +117,7 @@ const defaults = {
         auteur: '[Prénom], [ville ou quartier]',
       },
     ],
-    note: "Emplacement des avis : à remplir avec de vrais témoignages, recueillis avec l'accord écrit des patients.",
+    note: '',
   },
   trouver: {
     titre: 'Nous trouver à la Cité Keur Gorgui',
@@ -259,6 +271,18 @@ export const ACCUEIL: PageDef<AccueilContent> = {
             { key: 'texte', label: 'Texte', type: 'textarea' },
           ],
         },
+      ],
+    },
+    {
+      key: 'premiere',
+      label: 'Première consultation',
+      type: 'group',
+      fields: [
+        { key: 'kicker', label: 'Petit titre', type: 'text' },
+        { key: 'titre', label: 'Titre', type: 'text' },
+        { key: 'texte', label: 'Présentation', type: 'textarea' },
+        { key: 'points', label: 'Points', type: 'strings', itemLabel: 'un point' },
+        { key: 'bouton', label: 'Texte du bouton', type: 'text' },
       ],
     },
     {
