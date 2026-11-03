@@ -34,6 +34,13 @@
             <p class="m-0 text-[17px] leading-[1.6] text-body sm:text-[19px]">
               {{ c().hero.intro }}
             </p>
+            @if (c().hero.preuve) {
+              <p
+                class="m-0 border-t border-line pt-4 text-[15.5px] font-semibold leading-snug text-accent-800"
+              >
+                {{ c().hero.preuve }}
+              </p>
+            }
             <div class="mt-1 flex flex-wrap gap-3">
               <a
                 routerLink="/rendez-vous"
@@ -71,9 +78,9 @@
 
   <!-- En une phrase : la citation s'allume mot par mot pendant que le cadre reste collé -->
   <section class="relative -mt-8 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
-    <div data-reveal-scene class="relative h-[calc(max(54svh,26rem)+70svh)]">
+    <div data-reveal-scene class="relative h-[calc(max(48svh,22rem)+45svh)]">
       <div
-        class="sticky top-[calc((100svh_-_max(54svh,26rem))/2)] flex h-[max(54svh,26rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
+        class="sticky top-[calc((100svh_-_max(48svh,22rem))/2)] flex h-[max(48svh,22rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
       >
         <div class="mx-auto w-full max-w-[1040px]">
           <span
@@ -137,39 +144,42 @@
     </div>
   </section>
 
-  <section
-    class="rounded-t-[32px] bg-plum-900 px-4 py-20 sm:px-6 sm:py-28 lg:rounded-t-[48px] lg:px-10"
-  >
-    <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
-      <div class="flex flex-col gap-3.5">
-        <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
-          c().parcours.kicker
-        }}</span>
-        <h2
-          class="m-0 font-display text-[2.2rem] font-bold leading-[1.08] tracking-[-0.025em] text-white sm:text-5xl"
-        >
-          {{ c().parcours.titre }}
-        </h2>
-      </div>
-      <div class="flex flex-col">
-        @for (p of c().parcours.items; track $index) {
-          <div
-            class="grid gap-2 border-t border-white/15 py-7 sm:grid-cols-[200px_minmax(0,1fr)] sm:gap-8"
+  <!-- Le parcours n'apparaît qu'une fois renseigné : une seule ligne donnerait l'effet inverse de celui qu'on cherche. -->
+  @if (c().parcours.items.length >= 3) {
+    <section
+      class="rounded-t-[32px] bg-plum-900 px-4 py-20 sm:px-6 sm:py-28 lg:rounded-t-[48px] lg:px-10"
+    >
+      <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
+        <div class="flex flex-col gap-3.5">
+          <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
+            c().parcours.kicker
+          }}</span>
+          <h2
+            class="m-0 font-display text-[2.2rem] font-bold leading-[1.08] tracking-[-0.025em] text-white sm:text-5xl"
           >
-            <span class="font-display text-[20px] font-bold text-peach sm:text-[22px]">{{
-              p.periode
-            }}</span>
-            <div class="flex flex-col gap-1.5">
-              <span class="font-display text-[20px] font-semibold text-white sm:text-[22px]">{{
-                p.titre
+            {{ c().parcours.titre }}
+          </h2>
+        </div>
+        <div class="flex flex-col">
+          @for (p of c().parcours.items; track $index) {
+            <div
+              class="grid gap-2 border-t border-white/15 py-7 sm:grid-cols-[200px_minmax(0,1fr)] sm:gap-8"
+            >
+              <span class="font-display text-[20px] font-bold text-peach sm:text-[22px]">{{
+                p.periode
               }}</span>
-              <span class="text-base leading-relaxed text-on-plum-muted">{{ p.lieu }}</span>
+              <div class="flex flex-col gap-1.5">
+                <span class="font-display text-[20px] font-semibold text-white sm:text-[22px]">{{
+                  p.titre
+                }}</span>
+                <span class="text-base leading-relaxed text-on-plum-muted">{{ p.lieu }}</span>
+              </div>
             </div>
-          </div>
-        }
+          }
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  }
 
   <section class="bg-page px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:px-10">
     <div class="mx-auto flex max-w-[1160px] flex-col gap-12">
@@ -200,33 +210,73 @@
   </section>
 
   <section class="bg-page px-4 pb-24 sm:px-6 lg:px-10">
-    <div class="mx-auto grid max-w-[1160px] items-start gap-5 md:grid-cols-2">
-      <div class="flex flex-col gap-3 rounded-[26px] border border-line bg-surface p-8">
-        <h3 class="m-0 font-display text-[22px] font-bold text-fg">
-          {{ c().affiliations.titre }}
-        </h3>
-        <p class="m-0 text-[15px] leading-[1.7] text-muted">
-          {{ c().affiliations.texte }}
-        </p>
-      </div>
-      <div class="flex flex-col overflow-hidden rounded-[26px] border border-line bg-surface">
+    <div class="mx-auto flex max-w-[1160px] flex-col gap-5">
+      <!-- Sur scène : la photo en grand, le texte à côté -->
+      <div
+        class="grid overflow-hidden rounded-[28px] border border-line bg-surface lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]"
+      >
         <img
           [src]="c().interventions.photo | optimizedImage: 900"
           [attr.srcset]="c().interventions.photo | srcset"
-          sizes="(max-width: 767px) 92vw, 570px"
+          sizes="(max-width: 1023px) 92vw, 660px"
           [alt]="c().interventions.photoAlt"
           width="952"
           height="552"
           loading="lazy"
-          class="aspect-[952/552] w-full bg-sunken object-cover"
+          class="h-full min-h-[260px] w-full bg-sunken object-cover"
         />
-        <div class="flex flex-col gap-3 p-8">
-          <h3 class="m-0 font-display text-[22px] font-bold text-fg">
+        <div class="flex flex-col justify-center gap-3 p-8 sm:p-10">
+          <h3 class="m-0 font-display text-[26px] font-bold text-fg">
             {{ c().interventions.titre }}
           </h3>
-          <p class="m-0 text-[15px] leading-[1.7] text-muted">
-            {{ c().interventions.texte }}
+          @if (c().interventions.texte) {
+            <p class="m-0 text-[17px] leading-[1.7] text-body">
+              {{ c().interventions.texte }}
+            </p>
+          }
+        </div>
+      </div>
+
+      @if (c().affiliations.texte) {
+        <div class="flex flex-col gap-3 rounded-[26px] border border-line bg-surface p-8">
+          <h3 class="m-0 font-display text-[22px] font-bold text-fg">
+            {{ c().affiliations.titre }}
+          </h3>
+          <p class="m-0 text-[17px] leading-[1.7] text-body">
+            {{ c().affiliations.texte }}
           </p>
+        </div>
+      }
+
+      <!-- Le guide qu'elle a écrit -->
+      <div
+        class="grid items-center gap-8 rounded-[28px] bg-plum-900 p-7 text-white sm:p-10 md:grid-cols-[200px_minmax(0,1fr)]"
+      >
+        <img
+          [src]="guide().alaune.photo"
+          alt="Couverture du Guide pratique de l'alimentation du diabétique"
+          loading="lazy"
+          class="mx-auto w-[180px] rounded-xl bg-plum-800 object-cover md:w-full"
+        />
+        <div class="flex flex-col gap-3.5">
+          <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
+            guide().alaune.kicker
+          }}</span>
+          <h3
+            class="m-0 font-display text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] sm:text-[34px]"
+          >
+            {{ guide().alaune.titre }}
+          </h3>
+          <p class="m-0 max-w-[60ch] text-[17px] leading-[1.65] text-on-plum-muted">
+            {{ guide().alaune.texte }}
+          </p>
+          <a
+            [href]="guide().alaune.fichier"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-arrow mt-1 self-start rounded-full bg-accent-500 px-7 py-3.5 font-display text-[15px] font-semibold text-on-accent"
+            ><span class="btn-label">{{ guide().alaune.lien }}</span></a
+          >
         </div>
       </div>
     </div>

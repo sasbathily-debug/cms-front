@@ -9,6 +9,7 @@ import { CtaBand } from '../../../shared/cta-band/cta-band';
 import { OptimizedImagePipe } from '../../../shared/optimized-image.pipe';
 import { SrcsetPipe } from '../../../core/page-content/images';
 import { MotsLumineux } from '../../../shared/mots-lumineux/mots-lumineux';
+import { CONSEILS_SANTE } from '../../../core/page-content/defs/conseils-sante';
 
 @Component({
   selector: 'app-a-propos',
@@ -26,4 +27,6 @@ import { MotsLumineux } from '../../../shared/mots-lumineux/mots-lumineux';
 })
 export class APropos {
   protected readonly c = inject(PageContent).use(A_PROPOS);
+  /** Le guide à télécharger : le même que sur la page des conseils. */
+  protected readonly guide = inject(PageContent).use(CONSEILS_SANTE);
 }
