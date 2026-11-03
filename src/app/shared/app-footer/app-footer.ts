@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Analytics } from '../../core/analytics';
 import { SiteSettings } from '../../core/services/site-settings';
@@ -27,6 +27,9 @@ const LEGAL_ROUTES: [RegExp, string][] = [
 export class AppFooter {
   protected readonly site = inject(SiteSettings);
   protected readonly analytics = inject(Analytics);
+
+  /** La scène « DR FALL » est réservée à l'accueil, à la 404 et à la page des conseils : ailleurs, le pied de page reste sobre. */
+  readonly scene = input(false);
 
   readonly year = new Date().getFullYear();
   readonly instagramUrl = 'https://www.instagram.com/dr_aissatou.m/';

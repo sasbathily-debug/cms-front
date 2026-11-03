@@ -128,13 +128,15 @@
       </div>
     </div>
 
-    <!-- Le mot « DR FALL » et ses personnages : chargé seulement quand on approche du bas de la page. -->
-    @defer (on viewport; prefetch on idle) {
-      <app-doodle-footer />
-    } @placeholder {
-      <div style="padding-top: clamp(24px, 4vw, 48px)">
-        <div style="aspect-ratio: 895 / 328"></div>
-      </div>
+    @if (scene()) {
+      <!-- Le mot « DR FALL » et ses personnages : chargé seulement quand on approche du bas de la page. -->
+      @defer (on viewport; prefetch on idle) {
+        <app-doodle-footer />
+      } @placeholder {
+        <div style="padding-top: clamp(24px, 4vw, 48px)">
+          <div style="aspect-ratio: 895 / 328"></div>
+        </div>
+      }
     }
 
     <div class="flex flex-wrap items-end justify-between gap-10">
@@ -151,9 +153,9 @@
 
   <app-back-to-top class="mx-auto mt-14 block max-w-[1160px]" />
 
-  <!-- Marge basse sur téléphone et tablette : les boutons flottants (appel, chat, WhatsApp) ne couvrent plus les liens -->
+  <!-- Marge basse sur petit écran d'ordinateur : les boutons ronds flottants ne couvrent plus les liens (sur téléphone, la barre fixe a son propre espace) -->
   <div
-    class="mx-auto mt-6 flex max-w-[1160px] flex-wrap justify-between gap-4 pb-40 pt-6 xl:pb-7"
+    class="mx-auto mt-6 flex max-w-[1160px] flex-wrap justify-between gap-4 pb-10 pt-6 lg:pb-40 xl:pb-7"
   >
     <span class="flex flex-wrap items-center gap-x-5 gap-y-1 text-[13px] text-on-plum-subtle">
       <span>© {{ year }} {{ c().bas.copyright }}</span>
