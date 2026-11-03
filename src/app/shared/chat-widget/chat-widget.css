@@ -73,30 +73,9 @@
   }
 }
 
-/* Rappel discret, une fois par visite : un anneau orange (transform et opacité seulement) et, sur mobile, une étiquette. */
-.chat-attn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 2px solid rgba(224, 135, 63, 0.7);
-  pointer-events: none;
-  animation: chat-attn 1.6s ease-out 2;
-}
-
+/* Rappel discret, une fois par visite : sur mobile, une étiquette qui apparaît en fondu (pas d'anneau qui pulse). */
 .chat-tip {
   animation: chat-tip 0.3s ease-out;
-}
-
-@keyframes chat-attn {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(1.35);
-  }
 }
 
 @keyframes chat-tip {
@@ -106,7 +85,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chat-attn::after,
   .chat-tip {
     animation: none;
   }

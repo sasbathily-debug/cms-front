@@ -274,67 +274,6 @@ button,
   }
 }
 
-/* Boutons ronds appel / WhatsApp (flottants) */
-@keyframes call-wiggle {
-  0%,
-  84%,
-  100% {
-    transform: rotate(0);
-  }
-  86% {
-    transform: rotate(-16deg);
-  }
-  88% {
-    transform: rotate(14deg);
-  }
-  90% {
-    transform: rotate(-10deg);
-  }
-  92% {
-    transform: rotate(8deg);
-  }
-  94% {
-    transform: rotate(0);
-  }
-}
-
-/* Halo du bouton d'appel : un disque orange derrière le bouton qui grossit et s'estompe.
-   Seuls transform et opacité bougent (l'ancien halo animait une ombre, repeinte à chaque image sur toutes les pages). */
-@keyframes call-halo {
-  0%,
-  100% {
-    transform: scale(1.25);
-    opacity: 0.28;
-  }
-  50% {
-    transform: scale(1.56);
-    opacity: 0.06;
-  }
-}
-
-.call-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--color-accent-500);
-  pointer-events: none;
-  animation: call-halo 3s ease-in-out infinite;
-}
-.call-ico {
-  animation: call-wiggle 8s ease-in-out infinite;
-  transform-origin: center;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .call-btn::before {
-    display: none;
-  }
-  .call-ico {
-    animation: none;
-  }
-}
 
 /* ---------------------------------------------------------------------------
  * Animations et survols

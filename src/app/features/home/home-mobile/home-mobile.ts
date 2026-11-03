@@ -11,8 +11,6 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { InView } from '../../../shared/in-view';
 import { RouterLink } from '@angular/router';
-import { ChatIcon } from '../../../shared/chat-widget/chat-icon';
-import { ChatState } from '../../../core/chat-state';
 import { SiteArticles } from '../../../core/services/site-articles';
 import { SiteFaq } from '../../../core/services/site-faq';
 import { PageContent } from '../../../core/services/page-content';
@@ -34,7 +32,6 @@ import { SrcsetPipe } from '../../../core/page-content/images';
   imports: [
     RouterLink,
     InView,
-    ChatIcon,
     OpenNow,
     OrangeThread,
     Parallax,
@@ -49,7 +46,6 @@ export class HomeMobile {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly destroyRef = inject(DestroyRef);
   protected readonly site = inject(SiteSettings);
-  protected readonly chat = inject(ChatState);
   protected readonly hours = inject(OpeningHours);
 
   private readonly heroCta = viewChild<ElementRef<HTMLElement>>('heroCta');
@@ -94,9 +90,6 @@ export class HomeMobile {
   readonly hasSlot = computed(() => this.slots.ticket() !== null);
 
   constructor() {
-    // La barre fixe de cette page porte déjà le bouton de chat : la bulle flottante se retire.
-    this.chat.onBar.set(true);
-    this.destroyRef.onDestroy(() => this.chat.onBar.set(false));
     afterNextRender(() => {
       const cta = this.heroCta()?.nativeElement;
       if (!cta || typeof IntersectionObserver === 'undefined') return;

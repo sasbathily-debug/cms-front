@@ -22,6 +22,10 @@ import { FloatingActions } from '../floating-actions/floating-actions';
         <main><ng-content /></main>
       </div>
       <app-footer />
+      @if (!hideFloatingOnMobile()) {
+        <!-- Laisse la place à la barre fixe du téléphone : le bas du pied de page reste lisible. -->
+        <div class="h-[78px] bg-plum-900 lg:hidden" aria-hidden="true"></div>
+      }
       <div [class]="hideFloatingOnMobile() ? 'hidden lg:block' : ''"><app-floating-actions /></div>
     </div>
   `,
