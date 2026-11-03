@@ -4,12 +4,12 @@
   </h1>
 
   @if (loading()) {
-    <div class="skeleton h-40 rounded-3xl"></div>
-    <div class="skeleton h-72 rounded-3xl"></div>
+    <div class="skeleton h-40 rounded-none"></div>
+    <div class="skeleton h-72 rounded-none"></div>
   } @else {
     <div class="flex max-w-[820px] flex-col gap-[22px]">
       <div
-        class="flex items-center gap-[22px] rounded-3xl border border-line bg-surface p-6 sm:p-7"
+        class="flex items-center gap-[22px] rounded-none border border-line bg-surface p-6 sm:p-7"
       >
         <div class="relative shrink-0">
           @if (profilePictureUrl()) {
@@ -36,7 +36,7 @@
         </div>
         <div class="flex min-w-0 flex-col gap-2.5">
           <label
-            class="inline-flex w-fit cursor-pointer rounded-full border-[1.5px] border-fg px-[18px] py-[9px] font-display text-sm font-semibold text-fg transition hover:bg-inverse hover:text-inverse-fg"
+            class="inline-flex w-fit cursor-pointer rounded-md border-[1.5px] border-fg px-[18px] py-[9px] font-display text-sm font-semibold text-fg transition hover:bg-inverse hover:text-inverse-fg"
           >
             Changer la photo
             <input type="file" accept="image/*" (change)="onFileSelected($event)" class="sr-only" />
@@ -46,7 +46,7 @@
       </div>
 
       <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col gap-[22px]">
-        <div class="flex flex-col gap-5 rounded-3xl border border-line bg-surface p-6 sm:p-7">
+        <div class="flex flex-col gap-5 rounded-none border border-line bg-surface p-6 sm:p-7">
           <div class="flex flex-col gap-1">
             <h2 class="m-0 font-display text-[21px] font-bold text-fg">Informations générales</h2>
             <span class="text-sm text-muted"
@@ -62,7 +62,7 @@
                 type="text"
                 formControlName="firstName"
                 autocomplete="given-name"
-                class="rounded-[14px] border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-md border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               />
             </div>
             <div class="flex flex-col gap-2">
@@ -72,7 +72,7 @@
                 type="text"
                 formControlName="lastName"
                 autocomplete="family-name"
-                class="rounded-[14px] border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-md border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               />
             </div>
           </div>
@@ -86,7 +86,7 @@
                 formControlName="phone"
                 autocomplete="tel"
                 placeholder="+221 77 000 00 00"
-                class="rounded-[14px] border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-md border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               /><span class="text-[13px] text-muted">Utilisé pour les rappels de rendez-vous</span>
             </div>
             <div class="flex flex-col gap-2">
@@ -97,7 +97,7 @@
                 type="date"
                 formControlName="dateOfBirth"
                 autocomplete="bday"
-                class="rounded-[14px] border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-md border-[1.5px] border-line-strong bg-surface px-4 py-[15px] text-base text-fg outline-none transition placeholder:text-subtle focus:border-accent-500 focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               />
             </div>
           </div>
@@ -108,14 +108,14 @@
               type="email"
               [value]="email()"
               disabled
-              class="rounded-[14px] border-[1.5px] border-line-strong bg-sunken px-4 py-[15px] text-base text-subtle"
+              class="rounded-sm border-[1.5px] border-line-strong bg-sunken px-4 py-[15px] text-base text-subtle"
             /><span class="text-[13px] text-muted"
               >Contactez le cabinet pour modifier votre adresse email</span
             >
           </div>
         </div>
 
-        <div class="flex flex-col gap-5 rounded-3xl border border-line bg-surface p-6 sm:p-7">
+        <div class="flex flex-col gap-5 rounded-none border border-line bg-surface p-6 sm:p-7">
           <div class="flex flex-col gap-1">
             <h2 class="m-0 font-display text-[21px] font-bold text-fg">Notifications</h2>
             <span class="text-sm text-muted"
@@ -123,7 +123,7 @@
             >
           </div>
           <label
-            class="flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-line px-[18px] py-4"
+            class="flex cursor-pointer items-center justify-between gap-4 rounded-none border border-line px-[18px] py-4"
           >
             <span class="flex flex-col gap-0.5"
               ><span class="text-[15px] font-semibold text-fg">Rappels par email</span
@@ -137,7 +137,7 @@
             ></span>
           </label>
           <label
-            class="flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-line px-[18px] py-4"
+            class="flex cursor-pointer items-center justify-between gap-4 rounded-none border border-line px-[18px] py-4"
           >
             <span class="flex flex-col gap-0.5"
               ><span class="text-[15px] font-semibold text-fg">Rappels par SMS</span
@@ -163,7 +163,7 @@
         <button
           type="submit"
           [disabled]="form.invalid || saving()"
-          class="self-start rounded-full bg-accent-500 px-[30px] py-[15px] font-display text-base font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
+          class="self-start rounded-md bg-accent-500 px-[30px] py-[15px] font-display text-base font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
         >
           {{ saving() ? 'Enregistrement…' : 'Enregistrer' }}
         </button>
@@ -172,7 +172,7 @@
       <form
         (ngSubmit)="submitPassword()"
         [formGroup]="passwordForm"
-        class="flex flex-col gap-5 rounded-3xl border border-line bg-surface p-6 sm:p-7"
+        class="flex flex-col gap-5 rounded-none border border-line bg-surface p-6 sm:p-7"
       >
         <div class="flex flex-col gap-1">
           <h2 class="m-0 font-display text-[21px] font-bold text-fg">Sécurité</h2>
@@ -183,7 +183,7 @@
             >Mot de passe actuel</label
           >
           <div
-            class="flex items-center rounded-[14px] border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+            class="flex items-center rounded-none border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
           >
             <input
               id="profile-currentPassword"
@@ -226,7 +226,7 @@
               >Nouveau mot de passe</label
             >
             <div
-              class="flex items-center rounded-[14px] border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+              class="flex items-center rounded-none border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
             >
               <input
                 id="profile-newPassword"
@@ -269,7 +269,7 @@
               >Confirmer</label
             >
             <div
-              class="flex items-center rounded-[14px] border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+              class="flex items-center rounded-none border-[1.5px] border-line-strong bg-surface transition focus-within:border-accent-500 focus-within:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
             >
               <input
                 id="profile-confirmPassword"
@@ -318,7 +318,7 @@
         <button
           type="submit"
           [disabled]="passwordForm.invalid || passwordSaving()"
-          class="self-start rounded-full bg-inverse px-[26px] py-3.5 font-display text-[15px] font-semibold text-inverse-fg transition hover:bg-inverse/90 disabled:opacity-50"
+          class="self-start rounded-md bg-inverse px-[26px] py-3.5 font-display text-[15px] font-semibold text-inverse-fg transition hover:bg-inverse/90 disabled:opacity-50"
         >
           {{ passwordSaving() ? 'Enregistrement…' : 'Changer le mot de passe' }}
         </button>
@@ -353,7 +353,7 @@
         [src]="profilePictureUrl()"
         alt="Photo de profil en grand"
         (click)="$event.stopPropagation()"
-        class="max-h-[85svh] max-w-full rounded-2xl object-contain"
+        class="max-h-[85svh] max-w-full rounded-none object-contain"
       />
     </div>
   }

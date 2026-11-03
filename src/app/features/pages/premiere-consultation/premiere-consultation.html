@@ -16,44 +16,59 @@
         <div class="flex flex-wrap gap-3">
           <a
             routerLink="/rendez-vous"
-            class="btn-arrow rounded-full bg-accent-500 px-[30px] py-4 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+            class="btn-arrow rounded-md bg-accent-500 px-[30px] py-4 font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
             ><span class="btn-label">{{ c().hero.bouton }}</span></a
           >
         </div>
       </div>
-      <div
-        appInView
-        class="photo-life relative h-[380px] w-full min-w-0 overflow-hidden rounded-[200px_200px_36px_36px] bg-plum-800 sm:h-[460px] lg:h-[520px] lg:w-auto lg:flex-[0_1_420px]"
-      >
-        <img
-          [src]="c().hero.photo | optimizedImage: 900"
-          [attr.srcset]="c().hero.photo | srcset"
-          sizes="(max-width: 1023px) 92vw, 540px"
-          [alt]="c().hero.photoAlt"
-          width="1024"
-          height="793"
-          fetchpriority="high"
-          class="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-[50%_30%]"
-          [appParallax]="0.08"
-          [parallaxMax]="20"
-        />
+      <div class="relative w-full min-w-0 lg:w-auto lg:flex-[0_1_420px]">
+        <div
+          appInView
+          class="photo-life relative h-[380px] w-full overflow-hidden rounded-none bg-plum-800 sm:h-[460px] lg:h-[520px]"
+        >
+          <img
+            [src]="c().hero.photo | optimizedImage: 900"
+            [attr.srcset]="c().hero.photo | srcset"
+            sizes="(max-width: 1023px) 92vw, 540px"
+            [alt]="c().hero.photoAlt"
+            width="1024"
+            height="793"
+            fetchpriority="high"
+            class="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover object-[50%_30%]"
+            [appParallax]="0.08"
+            [parallaxMax]="20"
+          />
+          <div
+            aria-hidden="true"
+            class="absolute inset-0"
+            style="
+              background: linear-gradient(
+                180deg,
+                rgba(31, 18, 38, 0) 60%,
+                rgba(31, 18, 38, 0.45) 100%
+              );
+            "
+          ></div>
+        </div>
+        <!-- Carte du cabinet, posée de travers sur la photo -->
         <div
           aria-hidden="true"
-          class="absolute inset-0"
-          style="
-            background: linear-gradient(
-              180deg,
-              rgba(31, 18, 38, 0) 60%,
-              rgba(31, 18, 38, 0.45) 100%
-            );
-          "
-        ></div>
+          class="absolute left-1 -bottom-2 flex -rotate-[12deg] flex-col gap-1 rounded-none bg-cream-50 px-4 py-3 shadow-[0_10px_24px_rgba(20,11,25,0.4)] sm:-left-4 sm:bottom-8 sm:px-5 sm:py-3.5"
+        >
+          <span class="text-[10px] font-bold tracking-[0.16em] text-accent-700 sm:text-[11px]"
+            >CABINET MÉDICAL</span
+          >
+          <span
+            class="font-display text-[17px] font-bold leading-none tracking-[-0.02em] text-plum-900 sm:text-xl"
+            >Dr Aïssatou Fall</span
+          >
+        </div>
       </div>
     </div>
   </section>
 
   <!-- En une phrase : les mots s'allument pendant que le cadre reste collé -->
-  <section class="relative -mt-12 rounded-t-[32px] bg-plum-900 lg:rounded-t-[48px]">
+  <section class="relative -mt-12 rounded-t-none bg-plum-900 lg:rounded-t-none">
     <div data-reveal-scene class="relative h-[calc(max(64svh,30rem)+70svh)]">
       <div
         class="sticky top-[calc((100svh_-_max(64svh,30rem))/2)] flex h-[max(64svh,30rem)] flex-col justify-center px-5 sm:px-8 lg:px-10"
@@ -118,12 +133,10 @@
   </section>
 
   <section
-    class="rounded-t-[32px] bg-page px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:rounded-t-[48px] lg:px-10 lg:pb-24"
+    class="rounded-t-none bg-page px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:rounded-t-none lg:px-10 lg:pb-24"
   >
     <div class="mx-auto grid max-w-[1160px] gap-5 md:grid-cols-2">
-      <div
-        class="flex flex-col gap-[22px] rounded-[32px] border border-line bg-surface p-7 sm:p-11"
-      >
+      <div class="flex flex-col gap-[22px] rounded-sm border border-line bg-surface p-7 sm:p-11">
         <h2
           class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-fg sm:text-[34px]"
         >
@@ -156,7 +169,7 @@
         </ul>
       </div>
       <div
-        class="flex flex-col justify-between gap-[22px] rounded-[32px] border border-peach/40 bg-plum-900 p-7 text-white sm:p-11"
+        class="flex flex-col justify-between gap-[22px] rounded-sm border border-peach/40 bg-plum-900 p-7 text-white sm:p-11"
       >
         <h2 class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] sm:text-[34px]">
           {{ c().tarifs.titre }}
@@ -178,13 +191,13 @@
 
   <section class="bg-page px-4 pb-24 sm:px-6 lg:px-10 lg:pb-28">
     <div class="mx-auto grid max-w-[1160px] gap-5 md:grid-cols-2">
-      <div class="flex flex-col gap-3 rounded-[28px] bg-sunken p-9">
+      <div class="flex flex-col gap-3 rounded-sm bg-sunken p-9">
         <h2 class="m-0 font-display text-2xl font-bold text-fg">{{ c().report.titre }}</h2>
         <p class="m-0 text-base leading-[1.7] text-body">
           {{ c().report.texte }}
         </p>
       </div>
-      <div class="flex flex-col gap-3 rounded-[28px] border-2 border-accent-500 bg-surface p-9">
+      <div class="flex flex-col gap-3 rounded-none border-2 border-accent-500 bg-surface p-9">
         <h2 class="m-0 font-display text-2xl font-bold text-fg">{{ c().urgence.titre }}</h2>
         <p class="m-0 text-base leading-[1.7] text-body">
           {{ c().urgence.texte }}

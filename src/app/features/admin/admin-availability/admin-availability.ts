@@ -2,7 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AvailabilityService } from '../../../core/services/availability';
-import { AvailabilityRuleDto, DayOfWeek, ScheduleExceptionDto } from '../../../core/models/availability.models';
+import {
+  AvailabilityRuleDto,
+  DayOfWeek,
+  ScheduleExceptionDto,
+} from '../../../core/models/availability.models';
 
 const DAY_LABELS: Record<DayOfWeek, string> = {
   MONDAY: 'Lundi',
@@ -14,7 +18,15 @@ const DAY_LABELS: Record<DayOfWeek, string> = {
   SUNDAY: 'Dimanche',
 };
 
-const DAY_ORDER: DayOfWeek[] = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+const DAY_ORDER: DayOfWeek[] = [
+  'MONDAY',
+  'TUESDAY',
+  'WEDNESDAY',
+  'THURSDAY',
+  'FRIDAY',
+  'SATURDAY',
+  'SUNDAY',
+];
 
 @Component({
   selector: 'app-admin-availability',

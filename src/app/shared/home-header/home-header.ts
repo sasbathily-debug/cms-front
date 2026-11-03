@@ -135,7 +135,7 @@ export class HomeHeader {
       ? 'bg-page text-fg'
       : 'text-cream-50 hover:bg-white/10' +
         (this.isCurrent(key) ? ' shadow-[inset_0_-3px_0_var(--color-accent-500)]' : '');
-    return `flex h-full items-center whitespace-nowrap rounded-t-2xl px-4 font-display text-base font-medium 2xl:px-6 2xl:text-lg tracking-[-0.01em] transition-colors duration-200 motion-reduce:transition-none ${state}`;
+    return `flex h-full items-center whitespace-nowrap rounded-t-none px-4 font-display text-base font-medium 2xl:px-6 2xl:text-lg tracking-[-0.01em] transition-colors duration-200 motion-reduce:transition-none ${state}`;
   }
 
   setIntent(key: string): void {

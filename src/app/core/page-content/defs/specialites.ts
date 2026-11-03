@@ -83,7 +83,11 @@ export const SPECIALITES: PageDef<SpecialitesContent> = {
       label: 'Liste de la page',
       type: 'group',
       fields: [
-        { key: 'libelleSignes', label: 'Titre de la liste « vous pouvez consulter si »', type: 'text' },
+        {
+          key: 'libelleSignes',
+          label: 'Titre de la liste « vous pouvez consulter si »',
+          type: 'text',
+        },
         { key: 'lien', label: 'Texte du lien', type: 'text' },
       ],
     },

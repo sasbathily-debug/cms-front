@@ -1,43 +1,40 @@
 <app-public-page>
   <app-page-hero [crumbs]="crumbs" [title]="c().hero.titre" [lead]="c().hero.intro">
     @if (c().hero.photoCabinet || c().hero.photoAccueil || c().hero.photoSalle) {
-    <div
-      aside
-      class="relative mx-auto h-[300px] w-full max-w-[520px] sm:h-[330px]"
-      aria-hidden="true"
-    >
       <div
-        class="cb-t1 absolute left-0 top-0 flex h-[200px] w-[62%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-4 sm:h-[220px] bg-cover bg-center"
-        [style.background-image]="
-          c().hero.photoCabinet
-            ? 'url(' + (c().hero.photoCabinet | optimizedImage: 800) + ')'
-            : null
-        "
+        aside
+        class="relative mx-auto h-[300px] w-full max-w-[520px] sm:h-[330px]"
+        aria-hidden="true"
       >
+        <div
+          class="cb-t1 absolute left-0 top-0 flex h-[200px] w-[62%] items-end rounded-none border border-white/15 bg-plum-800 p-4 sm:h-[220px] bg-cover bg-center"
+          [style.background-image]="
+            c().hero.photoCabinet
+              ? 'url(' + (c().hero.photoCabinet | optimizedImage: 800) + ')'
+              : null
+          "
+        ></div>
+        <div
+          class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-none border border-white/15 bg-plum-800 p-3 sm:h-[160px] bg-cover bg-center"
+          [style.background-image]="
+            c().hero.photoAccueil
+              ? 'url(' + (c().hero.photoAccueil | optimizedImage: 800) + ')'
+              : null
+          "
+        ></div>
+        <div
+          class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-none border border-white/15 bg-plum-800 p-3 sm:h-[130px] bg-cover bg-center"
+          [style.background-image]="
+            c().hero.photoSalle ? 'url(' + (c().hero.photoSalle | optimizedImage: 800) + ')' : null
+          "
+        ></div>
       </div>
-      <div
-        class="cb-t2 absolute right-0 top-10 flex h-[150px] w-[36%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-3 sm:h-[160px] bg-cover bg-center"
-        [style.background-image]="
-          c().hero.photoAccueil
-            ? 'url(' + (c().hero.photoAccueil | optimizedImage: 800) + ')'
-            : null
-        "
-      >
-      </div>
-      <div
-        class="cb-t3 absolute bottom-0 right-[14%] flex h-[120px] w-[54%] items-end rounded-[28px] border border-white/15 bg-plum-800 p-3 sm:h-[130px] bg-cover bg-center"
-        [style.background-image]="
-          c().hero.photoSalle ? 'url(' + (c().hero.photoSalle | optimizedImage: 800) + ')' : null
-        "
-      >
-      </div>
-    </div>
     }
   </app-page-hero>
 
   <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
     <div
-      class="mx-auto max-w-[1040px] overflow-hidden rounded-3xl border border-line bg-surface shadow-[0_36px_70px_rgba(31,18,38,0.3)]"
+      class="mx-auto max-w-[1040px] overflow-hidden rounded-none border border-line bg-surface shadow-[0_36px_70px_rgba(31,18,38,0.3)]"
     >
       <div
         class="flex flex-wrap items-center justify-between gap-2 bg-accent-500 px-6 py-3.5 sm:px-9"
@@ -65,7 +62,7 @@
         <span class="text-[14.5px] leading-normal text-accent-ink">{{ c().enBref.pied }}</span>
         <a
           routerLink="/infos-pratiques"
-          class="btn-arrow whitespace-nowrap rounded-full bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
+          class="btn-arrow whitespace-nowrap rounded-md bg-inverse px-6 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
           ><span class="btn-label">{{ c().enBref.bouton }}</span></a
         >
       </div>
@@ -112,7 +109,7 @@
       <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         @for (l of c().lieux.items; track $index) {
           <div
-            class="flex flex-col justify-start gap-6 rounded-[26px] border border-peach/40 bg-plum-900 p-7 text-white"
+            class="flex flex-col justify-start gap-6 rounded-none border border-peach/40 bg-plum-900 p-7 text-white"
           >
             <span aria-hidden="true" class="h-[3px] w-10 rounded bg-accent-500"></span>
             <span class="flex flex-col gap-1.5">
@@ -134,9 +131,9 @@
       </h2>
       <div class="grid gap-5 md:grid-cols-3">
         @for (m of c().equipe.items; track $index) {
-          <div class="flex flex-col gap-4 rounded-[26px] border border-line bg-surface p-6">
+          <div class="flex flex-col gap-4 rounded-none border border-line bg-surface p-6">
             @if (m.photo) {
-              <div class="relative h-[200px] overflow-hidden rounded-[18px] bg-plum-800">
+              <div class="relative h-[200px] overflow-hidden rounded-none bg-plum-800">
                 <img
                   [src]="m.photo"
                   [alt]="'Portrait de ' + m.nom"
@@ -148,7 +145,7 @@
               </div>
             } @else {
               <div
-                class="flex h-[200px] items-center justify-center rounded-[18px] bg-sunken font-display text-[72px] font-bold text-accent-700"
+                class="flex h-[200px] items-center justify-center rounded-none bg-sunken font-display text-[72px] font-bold text-accent-700"
                 aria-hidden="true"
               >
                 {{ m.nom.charAt(0) }}

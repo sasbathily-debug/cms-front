@@ -9,7 +9,7 @@
       (mouseenter)="scheduleClose()"
     >
       <span
-        class="pulse-logo flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] bg-accent-500"
+        class="pulse-logo flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-none bg-accent-500"
       >
         <img src="/logo/logo-icon-dark.png" alt="" class="h-[70%] w-[70%] object-contain" />
       </span>
@@ -43,7 +43,7 @@
     @if (openTab(); as tab) {
       <div
         id="menu-panneau"
-        class="absolute left-1/2 top-full z-50 hidden w-[min(1232px,calc(100vw-48px))] -translate-x-1/2 overflow-hidden rounded-b-[28px] bg-page text-fg shadow-[0_40px_80px_-30px_rgba(0,0,0,0.5)] xl:block"
+        class="absolute left-1/2 top-full z-50 hidden w-[min(1232px,calc(100vw-48px))] -translate-x-1/2 overflow-hidden rounded-b-none bg-page text-fg shadow-[0_40px_80px_-30px_rgba(0,0,0,0.5)] xl:block"
         (mouseenter)="cancelClose()"
       >
         @switch (tab) {
@@ -75,7 +75,7 @@
                 }
               </div>
               @if (intent(); as it) {
-                <div class="flex flex-col gap-5 rounded-[22px] bg-plum-900 p-[30px] text-white">
+                <div class="flex flex-col gap-5 rounded-none bg-plum-900 p-[30px] text-white">
                   <div class="flex items-baseline justify-between gap-4">
                     <span class="font-display text-[26px] font-semibold tracking-[-0.02em]">{{
                       it.specialty!.title
@@ -96,12 +96,12 @@
                     <a
                       routerLink="/rendez-vous"
                       [queryParams]="it.query"
-                      class="btn-arrow rounded-xl bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
+                      class="btn-arrow rounded-md bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
                       ><span class="btn-label">Réserver pour ce motif</span></a
                     >
                     <a
                       [routerLink]="it.specialty!.route"
-                      class="rounded-xl border border-white/35 px-5 py-3 font-display text-[15px] font-semibold text-white hover:border-white"
+                      class="rounded-md border border-white/35 px-5 py-3 font-display text-[15px] font-semibold text-white hover:border-white"
                       >Lire la page</a
                     >
                   </div>
@@ -160,12 +160,12 @@
                     href="https://www.google.com/maps?q=14.71259593963623,-17.46856689453125"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="rounded-xl bg-inverse px-5 py-3 font-display text-[15px] font-semibold text-inverse-fg"
+                    class="rounded-md bg-inverse px-5 py-3 font-display text-[15px] font-semibold text-inverse-fg"
                     >Itinéraire</a
                   >
                   <a
                     routerLink="/le-cabinet"
-                    class="rounded-xl border border-fg px-5 py-3 font-display text-[15px] font-semibold text-fg"
+                    class="rounded-md border border-fg px-5 py-3 font-display text-[15px] font-semibold text-fg"
                     >Visiter le cabinet</a
                   >
                 </div>
@@ -217,9 +217,7 @@
                 </h3>
                 <ol class="m-0 grid list-none grid-cols-4 gap-3.5 p-0">
                   @for (e of visite().deroule.items; track $index) {
-                    <li
-                      class="flex min-h-[200px] flex-col gap-2.5 rounded-[18px] bg-sunken p-[22px]"
-                    >
+                    <li class="flex min-h-[200px] flex-col gap-2.5 rounded-none bg-sunken p-[22px]">
                       <small class="text-xs font-semibold tracking-[0.06em] text-accent-800"
                         >{{ e.n }} · {{ e.moment }}</small
                       >
@@ -256,14 +254,12 @@
           }
           @case ('conseils') {
             <div class="grid grid-cols-[1.2fr_1fr] gap-12 px-14 pb-10 pt-12">
-              <div
-                class="grid grid-cols-[200px_1fr] gap-7 rounded-[22px] bg-plum-900 p-7 text-white"
-              >
+              <div class="grid grid-cols-[200px_1fr] gap-7 rounded-none bg-plum-900 p-7 text-white">
                 <img
                   [src]="conseils().alaune.photo"
                   alt=""
                   loading="lazy"
-                  class="h-[260px] w-full rounded-xl bg-plum-800 object-cover"
+                  class="h-[260px] w-full rounded-none bg-plum-800 object-cover"
                 />
                 <div class="flex flex-col gap-3.5">
                   <span class="text-xs font-semibold tracking-[0.1em] text-peach">{{
@@ -281,7 +277,7 @@
                     [href]="conseils().alaune.fichier"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="btn-arrow mt-auto self-start rounded-xl bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
+                    class="btn-arrow mt-auto self-start rounded-md bg-accent-500 px-5 py-3 font-display text-[15px] font-semibold text-on-accent"
                     ><span class="btn-label">Télécharger le guide</span></a
                   >
                 </div>
@@ -347,7 +343,7 @@
       >
       <a
         routerLink="/rendez-vous"
-        class="flex flex-col justify-center gap-0.5 whitespace-nowrap rounded-[14px] bg-accent-500 px-5 py-2.5 text-on-accent transition hover:bg-accent-600"
+        class="flex flex-col justify-center gap-0.5 whitespace-nowrap rounded-[10px] bg-accent-500 px-5 py-2.5 text-on-accent transition hover:bg-accent-600"
         ><strong class="font-display text-base font-semibold">Prendre rendez-vous</strong>
         @if (slot.ticket(); as t) {
           <span class="text-xs font-medium text-plum-900">Prochain créneau · {{ t.phrase }}</span>
@@ -357,7 +353,7 @@
 
     <button
       type="button"
-      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/40 bg-[rgba(20,11,25,0.55)] text-white xl:hidden"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-white/40 bg-[rgba(20,11,25,0.55)] text-white xl:hidden"
       (click)="toggleMobile()"
       [attr.aria-expanded]="mobileOpen()"
       aria-label="Ouvrir le menu"

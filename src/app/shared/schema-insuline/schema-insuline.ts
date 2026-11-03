@@ -112,14 +112,14 @@ const DEPARTS: [number, number][] = [
     }
   `,
   template: `
-    <div class="flex flex-col gap-4 rounded-[22px] bg-plum-800 p-4 sm:p-6">
+    <div class="flex flex-col gap-4 rounded-none bg-plum-800 p-4 sm:p-6">
       <div class="flex flex-wrap gap-2" role="group" aria-label="Situation à comparer">
         @for (o of onglets(); track o.etat) {
           <button
             type="button"
             (click)="etat.set(o.etat)"
             [attr.aria-pressed]="etat() === o.etat"
-            class="cursor-pointer rounded-full border-[1.5px] px-4 py-2 font-display text-[14px] font-semibold transition-colors duration-200"
+            class="cursor-pointer rounded-md border-[1.5px] px-4 py-2 font-display text-[14px] font-semibold transition-colors duration-200"
             [class]="
               etat() === o.etat
                 ? 'border-accent-500 bg-accent-500 text-on-accent'
@@ -243,7 +243,7 @@ const DEPARTS: [number, number][] = [
         <span class="ml-auto">Schéma simplifié, pour comprendre le principe.</span>
       </div>
 
-      <div class="rounded-2xl bg-white/[0.05] px-5 py-4">
+      <div class="rounded-none bg-white/[0.05] px-5 py-4">
         <h3 class="m-0 font-display text-xl font-bold text-peach">{{ courante().title }}</h3>
         <p class="m-0 mt-2 text-[14.5px] leading-[1.65] text-on-plum-muted">
           {{ courante().text }}

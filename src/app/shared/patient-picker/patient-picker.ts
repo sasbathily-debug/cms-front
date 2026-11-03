@@ -20,7 +20,8 @@ export class PatientPicker {
     const filtered = q
       ? list.filter(
           (p) =>
-            `${p.firstName} ${p.lastName}`.toLowerCase().includes(q) || p.email.toLowerCase().includes(q),
+            `${p.firstName} ${p.lastName}`.toLowerCase().includes(q) ||
+            p.email.toLowerCase().includes(q),
         )
       : list;
     return filtered.slice(0, 8);

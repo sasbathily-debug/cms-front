@@ -20,6 +20,8 @@ export class PageHero {
   readonly crumbs = input<Crumb[]>([]);
   readonly title = input.required<string>();
   readonly lead = input<string>('');
+  /** Garde la place basse pour une carte qui chevauche le bandeau ; à désactiver quand rien ne chevauche. */
+  readonly overlap = input(true);
 
   /** Espace insécable avant « ? ! : ; » pour ne pas casser la ligne devant la ponctuation. */
   protected readonly displayTitle = computed(() => this.title().replace(/ ([?!:;])/g, '\u00A0$1'));

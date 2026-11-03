@@ -2,7 +2,11 @@ import { Service, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AppointmentDto, AppointmentStatus, AppointmentStatusEventDto } from '../models/appointment.models';
+import {
+  AppointmentDto,
+  AppointmentStatus,
+  AppointmentStatusEventDto,
+} from '../models/appointment.models';
 import { Page } from '../models/user.models';
 
 export interface AppointmentRequest {
@@ -55,7 +59,11 @@ export class AppointmentService {
 
   /** Envoie à l'adresse e-mail du patient le code qui confirme un rendez-vous pris sans compte. */
   requestGuestCode(email: string, fullName: string, website = ''): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrl}/appointments/guest/code`, { email, fullName, website });
+    return this.http.post<void>(`${environment.apiUrl}/appointments/guest/code`, {
+      email,
+      fullName,
+      website,
+    });
   }
 
   /** Réserve un créneau sans compte (nom et téléphone suffisent ; l'e-mail demande le code reçu). */
@@ -73,9 +81,13 @@ export class AppointmentService {
     return this.http.get<Page<AppointmentDto>>(`${environment.apiUrl}/appointments`, { params });
   }
 
-  getCounts(filter: Pick<AppointmentFilter, 'date' | 'from' | 'to' | 'search'>): Observable<AppointmentCountsDto> {
+  getCounts(
+    filter: Pick<AppointmentFilter, 'date' | 'from' | 'to' | 'search'>,
+  ): Observable<AppointmentCountsDto> {
     const params = this.buildParams(filter);
-    return this.http.get<AppointmentCountsDto>(`${environment.apiUrl}/appointments/counts`, { params });
+    return this.http.get<AppointmentCountsDto>(`${environment.apiUrl}/appointments/counts`, {
+      params,
+    });
   }
 
   getStats(): Observable<AppointmentStatsDto> {
@@ -84,15 +96,22 @@ export class AppointmentService {
 
   exportCsv(filter: AppointmentFilter): Observable<Blob> {
     const params = this.buildParams(filter);
-    return this.http.get(`${environment.apiUrl}/appointments/export`, { params, responseType: 'blob' });
+    return this.http.get(`${environment.apiUrl}/appointments/export`, {
+      params,
+      responseType: 'blob',
+    });
   }
 
   updateStatus(id: string, status: AppointmentStatus): Observable<AppointmentDto> {
-    return this.http.patch<AppointmentDto>(`${environment.apiUrl}/appointments/${id}/status`, { status });
+    return this.http.patch<AppointmentDto>(`${environment.apiUrl}/appointments/${id}/status`, {
+      status,
+    });
   }
 
   getHistory(id: string): Observable<AppointmentStatusEventDto[]> {
-    return this.http.get<AppointmentStatusEventDto[]>(`${environment.apiUrl}/appointments/${id}/history`);
+    return this.http.get<AppointmentStatusEventDto[]>(
+      `${environment.apiUrl}/appointments/${id}/history`,
+    );
   }
 
   private buildParams(filter: Partial<AppointmentFilter>): HttpParams {

@@ -11,7 +11,9 @@ export class PatientDocumentService {
 
   findMine(page = 0, size = 50): Observable<Page<PatientDocumentDto>> {
     const params = new HttpParams().set('page', page).set('size', size);
-    return this.http.get<Page<PatientDocumentDto>>(`${environment.apiUrl}/documents/me`, { params });
+    return this.http.get<Page<PatientDocumentDto>>(`${environment.apiUrl}/documents/me`, {
+      params,
+    });
   }
 
   findAll(userId: string | null, page = 0, size = 50): Observable<Page<PatientDocumentDto>> {

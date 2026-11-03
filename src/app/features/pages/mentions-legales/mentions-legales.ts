@@ -25,7 +25,7 @@ import {
       avertissement="Version provisoire : ces mentions sont à relire et à compléter par la doctoresse (passages entre crochets) avant publication."
       contactIntro="Pour toute question sur ce site :"
     >
-      <div aside class="flex flex-col gap-2.5 rounded-[22px] bg-sunken p-[26px]">
+      <div aside class="flex flex-col gap-2.5 rounded-sm bg-sunken p-[26px]">
         <h2 class="m-0 font-display text-lg font-bold text-fg">Vos données</h2>
         <span class="text-[14.5px] leading-relaxed text-body"
           >Ce que le site recueille et vos droits sont expliqués dans la politique de

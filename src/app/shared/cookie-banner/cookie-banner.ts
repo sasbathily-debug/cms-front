@@ -23,7 +23,7 @@ import { Analytics } from '../../core/analytics';
         role="dialog"
         aria-labelledby="cookie-text"
         tabindex="-1"
-        class="cookie-bar fixed bottom-3 left-1/2 z-[80] w-[calc(100%-1.5rem)] max-w-[1040px] -translate-x-1/2 rounded-[10px] border border-white/15 bg-plum-950 px-5 py-6 text-cream-50 shadow-[0_18px_60px_rgba(0,0,0,0.45)] outline-none sm:bottom-6 sm:px-12 sm:py-8"
+        class="cookie-bar fixed bottom-3 left-1/2 z-[80] w-[calc(100%-1.5rem)] max-w-[1040px] -translate-x-1/2 rounded-md border border-white/15 bg-plum-950 px-5 py-6 text-cream-50 shadow-[0_18px_60px_rgba(0,0,0,0.45)] outline-none sm:bottom-6 sm:px-12 sm:py-8"
       >
         <p
           id="cookie-text"
@@ -43,14 +43,14 @@ import { Analytics } from '../../core/analytics';
           <button
             type="button"
             (click)="analytics.accept()"
-            class="cursor-pointer rounded-full border-[1.5px] border-cream-50 bg-cream-50 px-9 py-3.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-plum-900 transition hover:bg-white"
+            class="cursor-pointer rounded-md border-[1.5px] border-cream-50 bg-cream-50 px-9 py-3.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-plum-900 transition hover:bg-white"
           >
             Oui, j'accepte
           </button>
           <button
             type="button"
             (click)="analytics.refuse()"
-            class="cursor-pointer rounded-full border-[1.5px] border-cream-50 bg-transparent px-9 py-3.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-cream-50 transition hover:bg-white/10"
+            class="cursor-pointer rounded-md border-[1.5px] border-cream-50 bg-transparent px-9 py-3.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-cream-50 transition hover:bg-white/10"
           >
             Non, je refuse
           </button>

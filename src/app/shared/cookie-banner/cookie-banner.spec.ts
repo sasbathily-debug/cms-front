@@ -51,7 +51,7 @@ describe('CookieBanner', () => {
     for (const b of [accept, refuse]) {
       expect(b.className).toContain('px-9');
       expect(b.className).toContain('py-3.5');
-      expect(b.className).toContain('rounded-full');
+      expect(b.className).toContain('rounded-md');
     }
   });
 

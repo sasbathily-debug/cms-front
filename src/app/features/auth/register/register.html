@@ -23,7 +23,7 @@
       </div>
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-[26px]">
-        <div class="flex flex-col gap-4 rounded-[22px] border border-line bg-surface p-[22px]">
+        <div class="flex flex-col gap-4 rounded-none border border-line bg-surface p-[22px]">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700"
             >VOS INFORMATIONS</span
           >
@@ -38,7 +38,7 @@
                 formControlName="firstName"
                 autocomplete="given-name"
                 placeholder="Awa"
-                class="rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-md border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
                 [class]="fieldClass('firstName')"
               />
             </div>
@@ -50,14 +50,14 @@
                 formControlName="lastName"
                 autocomplete="family-name"
                 placeholder="Diop"
-                class="rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="rounded-md border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
                 [class]="fieldClass('lastName')"
               />
             </div>
           </div>
         </div>
 
-        <div class="flex flex-col gap-4 rounded-[22px] border border-line bg-surface p-[22px]">
+        <div class="flex flex-col gap-4 rounded-none border border-line bg-surface p-[22px]">
           <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">VOTRE NUMÉRO</span>
           <div class="flex flex-col gap-2">
             <label for="register-phone" class="text-[14.5px] font-semibold text-fg"
@@ -65,7 +65,7 @@
             >
             <div class="flex gap-2.5">
               <span
-                class="flex shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-line-strong bg-surface px-3.5 py-[15px] text-base font-semibold text-fg"
+                class="flex shrink-0 items-center gap-2 rounded-none border-[1.5px] border-line-strong bg-surface px-3.5 py-[15px] text-base font-semibold text-fg"
               >
                 +221
                 <svg
@@ -88,7 +88,7 @@
                 formControlName="phone"
                 autocomplete="tel-national"
                 placeholder="77 000 00 00"
-                class="min-w-0 flex-1 rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+                class="min-w-0 flex-1 rounded-md border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
                 [class]="fieldClass('phone')"
               />
             </div>
@@ -106,7 +106,7 @@
               formControlName="email"
               autocomplete="email"
               placeholder="vous@exemple.com"
-              class="rounded-[14px] border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
+              class="rounded-md border-[1.5px] bg-surface px-4 py-[15px] text-base text-fg outline-none placeholder:text-subtle focus:shadow-[0_0_0_4px_rgba(224,135,63,0.2)]"
               [class]="fieldClass('email')"
             />
             <span class="text-[13px] text-muted"
@@ -117,7 +117,7 @@
         </div>
 
         @if (errorMessage()) {
-          <div class="rounded-lg bg-danger-soft px-3.5 py-2.5 text-sm text-danger" role="alert">
+          <div class="rounded-none bg-danger-soft px-3.5 py-2.5 text-sm text-danger" role="alert">
             {{ errorMessage() }}
             @if (unverifiedEmail()) {
               <a

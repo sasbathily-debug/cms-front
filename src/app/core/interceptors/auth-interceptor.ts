@@ -1,4 +1,11 @@
-import { HttpClient, HttpContext, HttpContextToken, HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpContext,
+  HttpContextToken,
+  HttpErrorResponse,
+  HttpInterceptorFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, finalize, of, share, switchMap, throwError } from 'rxjs';
@@ -48,7 +55,9 @@ function ensureCsrfCookie(http: HttpClient): Observable<unknown> {
     return of(null);
   }
   return http
-    .get(`${environment.apiUrl}/users/me`, { context: new HttpContext().set(SKIP_AUTH_REDIRECT, true) })
+    .get(`${environment.apiUrl}/users/me`, {
+      context: new HttpContext().set(SKIP_AUTH_REDIRECT, true),
+    })
     .pipe(catchError(() => of(null)));
 }
 

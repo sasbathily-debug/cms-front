@@ -2,19 +2,19 @@
   <app-page-hero [crumbs]="crumbs" [title]="c().hero.titre" [lead]="c().hero.intro">
     <div
       aside
-      class="relative h-[270px] rounded-[28px] border border-white/15 bg-white/[0.06] p-5 sm:p-7"
+      class="relative h-[270px] rounded-none border border-white/15 bg-white/[0.06] p-5 sm:p-7"
       aria-hidden="true"
     >
       <div class="relative h-full">
         @for (pair of bubbles(); track $index; let i = $index) {
           <div
-            class="qa qa-q absolute left-0 top-0 max-w-[82%] rounded-[20px_20px_20px_5px] bg-page px-5 py-4 text-base font-medium leading-snug text-fg"
+            class="qa qa-q absolute left-0 top-0 max-w-[82%] rounded-none bg-page px-5 py-4 text-base font-medium leading-snug text-fg"
             [class]="'qa-p' + i"
           >
             {{ pair.q }}
           </div>
           <div
-            class="qa qa-a absolute right-0 top-24 max-w-[82%] rounded-[20px_20px_5px_20px] bg-accent-500 px-5 py-4 text-base font-semibold leading-snug text-on-accent"
+            class="qa qa-a absolute right-0 top-24 max-w-[82%] rounded-none bg-accent-500 px-5 py-4 text-base font-semibold leading-snug text-on-accent"
             [class]="'qa-p' + i"
           >
             {{ pair.a }}
@@ -26,7 +26,7 @@
 
   <section class="relative z-10 -mt-28 px-4 sm:px-6 lg:-mt-[120px] lg:px-10">
     <div
-      class="mx-auto flex max-w-[1040px] flex-col gap-[18px] rounded-[28px] border border-line bg-surface px-5 py-7 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:px-9 sm:py-8"
+      class="mx-auto flex max-w-[1040px] flex-col gap-[18px] rounded-none border border-line bg-surface px-5 py-7 shadow-[0_36px_70px_rgba(31,18,38,0.3)] sm:px-9 sm:py-8"
     >
       <label
         class="flex items-center gap-3.5 rounded-full border-[1.5px] border-line-strong bg-page px-6 py-4"
@@ -71,7 +71,6 @@
   <section class="px-4 pb-24 pt-14 sm:px-6 lg:px-10 lg:pt-[72px]">
     <div class="mx-auto flex max-w-[1160px] flex-wrap items-start gap-14">
       <div class="flex min-w-0 flex-[1_1_640px] flex-col gap-[52px]">
-
         @for (group of groups(); track group.id) {
           <section [id]="group.id" class="flex scroll-mt-28 flex-col gap-1.5">
             <h2
@@ -107,7 +106,7 @@
       </div>
 
       <aside class="flex min-w-0 flex-[0_1_320px] flex-col gap-5">
-        <div class="flex flex-col gap-3 rounded-[22px] border border-line bg-surface p-[26px]">
+        <div class="flex flex-col gap-3 rounded-none border border-line bg-surface p-[26px]">
           <h2 class="m-0 font-display text-lg font-bold text-fg">Sur cette page</h2>
           @for (group of allGroups(); track group.id) {
             <button
@@ -119,7 +118,7 @@
             </button>
           }
         </div>
-        <div class="flex flex-col gap-3.5 rounded-[22px] bg-plum-900 p-7">
+        <div class="flex flex-col gap-3.5 rounded-none bg-plum-900 p-7">
           <h2 class="m-0 font-display text-[22px] font-bold leading-tight text-white">
             {{ c().contact.titre }}
           </h2>
@@ -128,11 +127,11 @@
           </p>
           <a
             routerLink="/contact"
-            class="btn-arrow rounded-full bg-accent-500 px-[22px] py-3.5 text-center font-display text-[15px] font-semibold text-on-accent"
+            class="btn-arrow rounded-md bg-accent-500 px-[22px] py-3.5 text-center font-display text-[15px] font-semibold text-on-accent"
             ><span class="btn-label">{{ c().contact.bouton }}</span></a
           >
         </div>
-        <div class="flex flex-col gap-2.5 rounded-[22px] bg-sunken p-[26px]">
+        <div class="flex flex-col gap-2.5 rounded-sm bg-sunken p-[26px]">
           <h2 class="m-0 font-display text-lg font-bold text-fg">
             {{ c().urgence.titre }}
           </h2>

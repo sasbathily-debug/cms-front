@@ -2,7 +2,7 @@
   <section class="bg-page px-3 pb-24 pt-8 sm:px-6 sm:pt-10">
     <div class="mx-auto flex max-w-[1232px] flex-wrap items-stretch gap-5">
       <div
-        class="flex min-w-0 flex-[1_1_420px] flex-col justify-between gap-10 rounded-[32px] border border-peach/40 bg-plum-900 px-6 py-10 text-white sm:rounded-[40px] sm:px-12 sm:py-14"
+        class="flex min-w-0 flex-[1_1_420px] flex-col justify-between gap-10 rounded-none border border-peach/40 bg-plum-900 px-6 py-10 text-white sm:rounded-none sm:px-12 sm:py-14"
       >
         <div class="flex flex-col gap-[26px]">
           <span class="text-xs font-semibold tracking-[0.12em] text-peach">{{
@@ -29,7 +29,7 @@
             </li>
           }
         </ol>
-        <div class="flex flex-col gap-3 rounded-3xl bg-white/[0.08] p-6">
+        <div class="flex flex-col gap-3 rounded-none bg-white/[0.08] p-6">
           <span class="font-display text-[17px] font-semibold">{{ c().aide.titre }}</span>
           <span class="text-[14.5px] leading-relaxed text-on-plum-muted"
             >{{ site.phone() }}, {{ openingHours.sentence() }}.</span
@@ -37,7 +37,7 @@
           <div class="flex flex-wrap gap-3">
             <a
               [href]="site.telHref()"
-              class="btn-arrow rounded-full bg-accent-500 px-6 py-3 font-display text-[15px] font-semibold text-on-accent"
+              class="btn-arrow rounded-md bg-accent-500 px-6 py-3 font-display text-[15px] font-semibold text-on-accent"
               ><span class="btn-label">Appeler</span></a
             >
             @if (site.whatsappHref()) {
@@ -45,7 +45,7 @@
                 [href]="site.whatsappHref()"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn-arrow rounded-full bg-success-solid px-6 py-3 font-display text-[15px] font-semibold text-white"
+                class="btn-arrow rounded-md bg-success-solid px-6 py-3 font-display text-[15px] font-semibold text-white"
                 ><span class="btn-label">Écrire sur WhatsApp</span></a
               >
             }
@@ -54,11 +54,11 @@
       </div>
 
       <div
-        class="flex min-w-0 flex-[1_1_560px] flex-col gap-[26px] rounded-[32px] border border-line bg-surface px-5 py-8 sm:rounded-[40px] sm:p-12"
+        class="flex min-w-0 flex-[1_1_560px] flex-col gap-[26px] rounded-none border border-line bg-surface px-5 py-8 sm:rounded-none sm:p-12"
       >
         @if (!submitted()) {
           @if (dernier()) {
-            <div class="flex flex-col gap-3 rounded-[22px] border border-line bg-sunken p-5">
+            <div class="flex flex-col gap-3 rounded-sm border border-line bg-sunken p-5">
               <span class="text-xs font-semibold tracking-[0.1em] text-accent-800"
                 >VOTRE PROCHAIN RENDEZ-VOUS</span
               >
@@ -99,7 +99,7 @@
 
             @if (!isAuthenticated() && !awaitingCode()) {
               <p
-                class="m-0 rounded-[18px] bg-accent-soft px-5 py-4 text-[14.5px] leading-relaxed text-body"
+                class="m-0 rounded-none bg-accent-soft px-5 py-4 text-[14.5px] leading-relaxed text-body"
               >
                 <strong class="font-display text-fg">{{ c().sansCompte.titre }}.</strong>
                 {{ c().sansCompte.texte }}
@@ -146,7 +146,7 @@
                     id="rdv-name"
                     formControlName="fullName"
                     autocomplete="name"
-                    class="rounded-[14px] border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none focus:border-accent-500"
+                    class="rounded-md border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none focus:border-accent-500"
                   />
                 </label>
                 <label class="flex flex-col gap-2 text-sm font-semibold text-fg" for="rdv-phone">
@@ -157,7 +157,7 @@
                     type="tel"
                     autocomplete="tel"
                     placeholder="+221 77 000 00 00"
-                    class="rounded-[14px] border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none placeholder:text-subtle focus:border-accent-500"
+                    class="rounded-md border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none placeholder:text-subtle focus:border-accent-500"
                   />
                 </label>
               </div>
@@ -169,7 +169,7 @@
                   type="email"
                   autocomplete="email"
                   aria-describedby="rdv-email-hint"
-                  class="rounded-[14px] border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none focus:border-accent-500"
+                  class="rounded-md border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none focus:border-accent-500"
                 />
                 <span id="rdv-email-hint" class="text-[13px] font-normal text-muted">
                   Pour recevoir la confirmation et le rappel de la veille.
@@ -192,13 +192,13 @@
                   formControlName="message"
                   rows="3"
                   placeholder="Ex. : je suis suivie depuis 2 ans pour un diabète de type 2."
-                  class="resize-none rounded-[14px] border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none placeholder:text-subtle focus:border-accent-500"
+                  class="resize-none rounded-md border border-line-strong bg-surface px-4 py-3.5 text-[15px] font-normal text-fg outline-none placeholder:text-subtle focus:border-accent-500"
                 ></textarea>
               </label>
             </div>
 
             @if (awaitingCode()) {
-              <div class="flex flex-col gap-4 rounded-[24px] border border-line bg-sunken p-6">
+              <div class="flex flex-col gap-4 rounded-sm border border-line bg-sunken p-6">
                 <p class="m-0 text-[15px] leading-relaxed text-body">
                   Nous avons envoyé un code à 6 chiffres à
                   <strong class="break-all text-fg">{{ form.value.email }}</strong
@@ -212,7 +212,7 @@
                     inputmode="numeric"
                     autocomplete="one-time-code"
                     maxlength="6"
-                    class="rounded-[14px] border border-line-strong bg-surface px-4 py-3.5 text-center font-display text-2xl font-bold tracking-[0.4em] text-fg outline-none focus:border-accent-500"
+                    class="rounded-md border border-line-strong bg-surface px-4 py-3.5 text-center font-display text-2xl font-bold tracking-[0.4em] text-fg outline-none focus:border-accent-500"
                   />
                 </label>
                 @if (resent()) {
@@ -247,7 +247,7 @@
             <button
               type="submit"
               [disabled]="submitting()"
-              class="btn-arrow rounded-full bg-accent-500 px-7 py-[18px] text-center font-display text-[17px] font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
+              class="btn-arrow rounded-md bg-accent-500 px-7 py-[18px] text-center font-display text-[17px] font-bold text-on-accent transition hover:bg-accent-600 disabled:opacity-50"
             >
               <span class="btn-label">
                 {{
@@ -268,7 +268,7 @@
         } @else {
           <div class="flex min-h-[340px] flex-col items-start justify-center gap-4" role="status">
             <div
-              class="flex items-center gap-4 rounded-[18px] border border-success-line bg-success-soft px-5 py-4"
+              class="flex items-center gap-4 rounded-none border border-success-line bg-success-soft px-5 py-4"
             >
               <svg width="46" height="46" viewBox="0 0 44 44" fill="none" aria-hidden="true">
                 <circle
@@ -310,7 +310,7 @@
               @if (!guestBooking()) {
                 <a
                   routerLink="/client"
-                  class="btn-arrow rounded-full bg-inverse px-7 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
+                  class="btn-arrow rounded-md bg-inverse px-7 py-3.5 font-display text-[15px] font-semibold text-inverse-fg"
                   ><span class="btn-label">Voir mon espace</span></a
                 >
               } @else if (!guestVerified() && whatsappConfirm()) {
@@ -318,14 +318,14 @@
                   [href]="whatsappConfirm()"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn-arrow rounded-full bg-success-solid px-7 py-3.5 font-display text-[15px] font-semibold text-white"
+                  class="btn-arrow rounded-md bg-success-solid px-7 py-3.5 font-display text-[15px] font-semibold text-white"
                   ><span class="btn-label">Prévenir sur WhatsApp</span></a
                 >
               }
               <button
                 type="button"
                 (click)="reset()"
-                class="rounded-full border-[1.5px] border-fg px-7 py-3.5 font-display text-[15px] font-semibold text-fg"
+                class="rounded-md border-[1.5px] border-fg px-7 py-3.5 font-display text-[15px] font-semibold text-fg"
               >
                 Prendre un autre rendez-vous
               </button>

@@ -58,12 +58,12 @@
     <div class="relative mx-auto max-w-[1160px]">
       <iframe
         title="Plan d'accès au cabinet"
-        class="map-calm block h-[420px] w-full rounded-[28px] border-0 lg:h-[520px] lg:rounded-[36px]"
+        class="map-calm block h-[420px] w-full rounded-none border-0 lg:h-[520px] lg:rounded-none"
         loading="lazy"
         [src]="mapUrl"
       ></iframe>
       <div
-        class="mt-4 flex flex-col gap-3 rounded-[24px] border border-line bg-surface p-6 shadow-[0_24px_50px_rgba(31,18,38,0.14)] lg:absolute lg:bottom-8 lg:left-8 lg:mt-0 lg:w-[340px]"
+        class="mt-4 flex flex-col gap-3 rounded-none border border-line bg-surface p-6 shadow-[0_24px_50px_rgba(31,18,38,0.14)] lg:absolute lg:bottom-8 lg:left-8 lg:mt-0 lg:w-[340px]"
       >
         <span class="text-xs font-semibold tracking-[0.1em] text-accent-700">{{
           c().acces.titre.toUpperCase()
@@ -78,7 +78,7 @@
           [href]="itineraire"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-arrow self-start rounded-full bg-inverse px-6 py-3 font-display text-[15px] font-semibold text-inverse-fg"
+          class="btn-arrow self-start rounded-md bg-inverse px-6 py-3 font-display text-[15px] font-semibold text-inverse-fg"
           ><span class="btn-label">{{ c().acces.bouton }}</span></a
         >
       </div>
@@ -88,7 +88,7 @@
   <!-- Les horaires et les tarifs, à poids égal -->
   <section class="px-4 pb-16 sm:px-6 lg:px-10 lg:pb-24">
     <div class="mx-auto grid max-w-[1160px] gap-5 lg:grid-cols-2">
-      <div class="flex flex-col gap-6 rounded-[28px] border border-line bg-surface p-7 sm:p-10">
+      <div class="flex flex-col gap-6 rounded-none border border-line bg-surface p-7 sm:p-10">
         <h2
           class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-fg sm:text-[34px]"
         >
@@ -106,12 +106,12 @@
         </div>
         <a
           routerLink="/rendez-vous"
-          class="btn-arrow mt-auto self-start rounded-full bg-accent-500 px-[26px] py-[15px] text-center font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
+          class="btn-arrow mt-auto self-start rounded-md bg-accent-500 px-[26px] py-[15px] text-center font-display text-[15px] font-semibold text-on-accent transition hover:bg-accent-600"
           ><span class="btn-label">{{ c().horaires.bouton }}</span></a
         >
       </div>
 
-      <div class="flex flex-col gap-6 rounded-[28px] border border-line bg-surface p-7 sm:p-10">
+      <div class="flex flex-col gap-6 rounded-none border border-line bg-surface p-7 sm:p-10">
         <h2
           class="m-0 font-display text-[28px] font-bold tracking-[-0.02em] text-fg sm:text-[34px]"
         >

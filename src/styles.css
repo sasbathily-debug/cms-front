@@ -179,11 +179,11 @@ button,
 }
 @media (pointer: coarse) {
   :is(input, textarea, select):not(
-      [class*='text-base'],
-      [class*='text-lg'],
-      [class*='text-xl'],
-      [class*='text-[2']
-    ) {
+    [class*='text-base'],
+    [class*='text-lg'],
+    [class*='text-xl'],
+    [class*='text-[2']
+  ) {
     font-size: 16px;
   }
 }
@@ -277,7 +277,6 @@ button,
     background-color: var(--color-plum-800);
   }
 }
-
 
 /* ---------------------------------------------------------------------------
  * Animations et survols
@@ -469,12 +468,25 @@ router-outlet + * {
 .btn-arrow:focus-visible .btn-label {
   transform: translateX(-13px);
 }
+/* Icône placée avant le texte (WhatsApp…) : elle glisse avec lui, sinon le texte vient la recouvrir. */
+.btn-arrow > svg {
+  transition: transform 0.2s ease-out;
+}
+@media (hover: hover) {
+  .btn-arrow:hover > svg {
+    transform: translateX(-13px);
+  }
+}
+.btn-arrow:focus-visible > svg {
+  transform: translateX(-13px);
+}
 .btn-arrow:focus-visible::after {
   opacity: 1;
   transform: translate(0, -50%);
 }
 @media (prefers-reduced-motion: reduce) {
   .btn-arrow .btn-label,
+  .btn-arrow > svg,
   .btn-arrow::after {
     transition: none;
   }
@@ -712,9 +724,7 @@ button[class*='rounded-']:not([class*='rounded-full']):not(:disabled):active {
   display: inline-block;
   white-space: pre;
   --l: 0;
-  color: rgb(
-    calc(90 + 165 * var(--l)) calc(80 + 175 * var(--l)) calc(98 + 157 * var(--l))
-  );
+  color: rgb(calc(90 + 165 * var(--l)) calc(80 + 175 * var(--l)) calc(98 + 157 * var(--l)));
 }
 [data-mots-actif]:not(.mots-fini) .mots-cta {
   opacity: 0;
